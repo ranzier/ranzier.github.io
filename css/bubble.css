@@ -34,3 +34,45 @@
   color: #f0f0f0 !important;
 }
 
+
+
+
+
+/* 页脚背景颜色，可选深色或半透明 */
+/* 页脚整体背景 + 文字可读性 */
+.footer {
+  background-color: rgba(0, 0, 0, 0.85);  /* 深色半透明背景，增强对比 */
+  color: #ffffff !important;             /* 白色文字 */
+  text-align: center;
+  padding: 1.5rem 0;
+  font-weight: 700;                      /* 文字加粗 */
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* 增加文字阴影，提高可读性 */
+  z-index: 5;                            /* 保证在背景上方 */
+}
+
+/* 页脚链接和图标 */
+.footer a,
+.footer i {
+  color: #ffffff !important;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* PV/UV 统计数字 */
+.footer .busuanzi_container span {
+  color: #ffffff !important;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* 暗色模式下页脚 */
+[data-theme="dark"] .footer {
+  background-color: rgba(30, 30, 30, 0.95); /* 更深暗色背景 */
+  color: #f0f0f0 !important;
+}
+
+[data-theme="dark"] .footer a,
+[data-theme="dark"] .footer i,
+[data-theme="dark"] .footer .busuanzi_container span {
+  color: #f0f0f0 !important;
+}

@@ -6,6 +6,6 @@ document
   .querySelector("#banner")
   .setAttribute('style', 'background-image: url()')
 
-document
-  .querySelector("#banner .mask")
-  .setAttribute('style', 'background-color:rgba(0,0,0,0)')
+// document
+//  .querySelector("#banner .mask")
+//  .setAttribute('style', 'background-color:rgba(0,0,0,0)')
