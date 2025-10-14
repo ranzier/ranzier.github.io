@@ -1,4 +1,7 @@
 (function () {
+    // 仅在首页运行
+    if (!document.body.classList.contains('home')) return;
+
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     canvas.id = 'bubbleCanvas';
@@ -39,7 +42,14 @@
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+        const baseColors = [
+            [255, 183, 76],   // 柔和橙光
+            [255, 150, 90],   // 晚霞橘粉
+            [255, 200, 120]   // 金色微光
+          ];
+        const color = baseColors[Math.floor(Math.random() * baseColors.length)];
+        ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${this.alpha})`;
+        // ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
         ctx.fill();
       }
     }
