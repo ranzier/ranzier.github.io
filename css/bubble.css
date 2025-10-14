@@ -7,4 +7,30 @@
     z-index: 2;
     pointer-events: none;
   }
-  
+
+
+/* 让 TOC 彻底变成纯白背景，不透出背景图 */
+#toc,
+.post-toc,
+.toc-wrapper,
+.post .toc-wrapper,
+.post-toc-content {
+  background: #ffffff !important;  /* 纯白背景 */
+  background-image: none !important; /* 禁止继承任何背景图 */
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  color: #1a1a1a !important;
+  backdrop-filter: none !important; /* 禁止毛玻璃层混合背景 */
+  z-index: 10; /* 确保盖在背景图之上 */
+}
+
+/* 暗色模式下 */
+[data-theme="dark"] #toc,
+[data-theme="dark"] .post-toc,
+[data-theme="dark"] .toc-wrapper {
+  background: #1e1e1e !important;
+  background-image: none !important;
+  color: #f0f0f0 !important;
+}
+
