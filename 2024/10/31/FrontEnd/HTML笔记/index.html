@@ -1,0 +1,1135 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/about/dogs.jpg">
+  <link rel="icon" href="/img/about/dogs.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ranzier">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. Web标准   语言 作用 说明    HTML 结构 页面元素和内容   CSS 表现 美化用的，网页元素的外观位置颜色等   JavaScript 行为 页面交互和动态效果   2. HTML页面固定结构12345678&lt;html&gt;    &lt;head&gt;        &lt;title&gt;网页的标题&lt;&#x2F;title&gt;    &lt;&#x2F;head&gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML学习笔记">
+<meta property="og:url" content="http://example.com/2024/10/31/FrontEnd/HTML%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="RANZIER">
+<meta property="og:description" content="1. Web标准   语言 作用 说明    HTML 结构 页面元素和内容   CSS 表现 美化用的，网页元素的外观位置颜色等   JavaScript 行为 页面交互和动态效果   2. HTML页面固定结构12345678&lt;html&gt;    &lt;head&gt;        &lt;title&gt;网页的标题&lt;&#x2F;title&gt;    &lt;&#x2F;head&gt;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/bg/18.jpg">
+<meta property="article:published_time" content="2024-10-31T08:12:18.000Z">
+<meta property="article:modified_time" content="2025-10-13T13:14:16.009Z">
+<meta property="article:author" content="ranzier">
+<meta property="article:tag" content="HTML">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/bg/18.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>HTML学习笔记 - RANZIER</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3846514_kabxni94auf.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/gundongtiao.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"🌟","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 80vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>RANZIER</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/3.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.35)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTML学习笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-31 16:12" pubdate>
+          2024年10月31日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          本文阅读次数：<span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTML学习笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-Web标准"><a href="#1-Web标准" class="headerlink" title="1. Web标准"></a>1. Web标准</h2><table>
+<thead>
+<tr>
+<th align="center">语言</th>
+<th>作用</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">HTML</td>
+<td>结构</td>
+<td>页面元素和内容</td>
+</tr>
+<tr>
+<td align="center">CSS</td>
+<td>表现</td>
+<td>美化用的，网页元素的外观位置颜色等</td>
+</tr>
+<tr>
+<td align="center">JavaScript</td>
+<td>行为</td>
+<td>页面交互和动态效果</td>
+</tr>
+</tbody></table>
+<h2 id="2-HTML页面固定结构"><a href="#2-HTML页面固定结构" class="headerlink" title="2. HTML页面固定结构"></a>2. HTML页面固定结构</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>网页的标题<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>        网页的主体内容<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="3-注释"><a href="#3-注释" class="headerlink" title="3. 注释"></a>3. 注释</h2><p>VScode用<code>Ctrl+/</code>注释和取消注释<br><code>&lt;!--这是注释--&gt;</code></p>
+<h2 id="4-标签之间的关系"><a href="#4-标签之间的关系" class="headerlink" title="4. 标签之间的关系"></a>4. 标签之间的关系</h2><ol>
+<li>父子关系(嵌套关系)</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>兄弟关系(并列关系)</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="5-标题标签"><a href="#5-标题标签" class="headerlink" title="5. 标题标签"></a>5. 标题标签</h2><p>使用h系列标签</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>1级标题<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>2级标题<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>3级标题<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">h4</span>&gt;</span>4级标题<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">h5</span>&gt;</span>5级标题<span class="hljs-tag">&lt;/<span class="hljs-name">h5</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">h6</span>&gt;</span>6级标题<span class="hljs-tag">&lt;/<span class="hljs-name">h6</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>1~6级标题的重要程度依次递减</li>
+<li>加粗，变大，独占一行</li>
+</ul>
+<h2 id="6-段落标签"><a href="#6-段落标签" class="headerlink" title="6. 段落标签"></a>6. 段落标签</h2><p>使用p标签</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>我是一段文字<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>段落之间存在间隙</li>
+<li>独占一行</li>
+</ul>
+<h2 id="7-换行标签"><a href="#7-换行标签" class="headerlink" title="7. 换行标签"></a>7. 换行标签</h2><p><code>&lt;br&gt;</code>用来强制换行</p>
+<h2 id="8-水平分割线标签"><a href="#8-水平分割线标签" class="headerlink" title="8. 水平分割线标签"></a>8. 水平分割线标签</h2><p><code>&lt;hr&gt;</code>用来分割不同区域的水平线</p>
+<h2 id="9-文本格式化标签"><a href="#9-文本格式化标签" class="headerlink" title="9. 文本格式化标签"></a>9. 文本格式化标签</h2><table>
+<thead>
+<tr>
+<th>作用</th>
+<th align="center">标签1</th>
+<th align="center">标签2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>加粗</td>
+<td align="center">b</td>
+<td align="center">strong</td>
+</tr>
+<tr>
+<td>下划线</td>
+<td align="center">u</td>
+<td align="center">ins</td>
+</tr>
+<tr>
+<td>倾斜</td>
+<td align="center">i</td>
+<td align="center">em</td>
+</tr>
+<tr>
+<td>删除线</td>
+<td align="center">s</td>
+<td align="center">del</td>
+</tr>
+</tbody></table>
+<ul>
+<li>两种标签最终实现的效果是一样的</li>
+<li>只不过标签2更加突出强调语境</li>
+</ul>
+<h2 id="10-图片标签"><a href="#10-图片标签" class="headerlink" title="10. 图片标签"></a>10. 图片标签</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot; &quot;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&quot; &quot;</span>&gt;</span> src和alt是属性<br><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./1.jpg&quot;</span>&gt;</span>  显示当前文件夹的1.jpg图片<br></code></pre></td></tr></table></figure>
+<ul>
+<li>标签属性写在开始标签内部</li>
+<li>标签可以有多个属性，且属性之间没有顺序之分</li>
+<li>属性之间以空格隔开；标签与属性之间以空格隔开</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;dog.jpg&quot;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&quot;这是一只狗&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;鼠标悬停时显示&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;200&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;800&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>alt属性是替换文本，图片不显示的时候显示alt</li>
+<li>title是图片的标题，鼠标悬停时显示</li>
+<li>width和height设置一个即可，等比例缩放不变形</li>
+</ul>
+<h2 id="11-路径"><a href="#11-路径" class="headerlink" title="11. 路径"></a>11. 路径</h2><p>页面需要加载图片，音频或视频等，怎么找到对应的文件</p>
+<ol>
+<li>绝对路径(了解)<br>目录下的绝对位置，可直接到达目标位置，从盘符开始<br>例：<code>D:\study\html\image\1.jpg</code> (盘符开头)<br><code>https://www.abc.cn/1234/1.jpg</code> (完整网址)</li>
+<li>相对路径(常用)<br>从当前文件出发找目标文件的过程</li>
+</ol>
+<ul>
+<li>同级目录<br>使用<code>&lt;img src=&quot;目标图片.jpg&quot;&gt;</code>或者<code>&lt;img src=&quot;./目标图片.jpg&quot;&gt;</code></li>
+<li>下级目录<br>使用<code>&lt;img src=&quot;目标文件夹/目标图片.jpg&quot;&gt;</code></li>
+<li>上级目录<br>到上一级目录用<code>../</code>;返回上两级就是<code>../../</code></li>
+</ul>
+<h2 id="12-音频标签"><a href="#12-音频标签" class="headerlink" title="12.音频标签"></a>12.音频标签</h2><p>在页面插入音频</p>
+<table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">src</td>
+<td>音频的路径</td>
+</tr>
+<tr>
+<td align="center">controls</td>
+<td>显示播放的控件</td>
+</tr>
+<tr>
+<td align="center">autoplay</td>
+<td>自动播放</td>
+</tr>
+<tr>
+<td align="center">loop</td>
+<td>循环播放</td>
+</tr>
+</tbody></table>
+<p>例: </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">audio</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./music.mp3&quot;</span> <span class="hljs-attr">controls</span> <span class="hljs-attr">autoplay</span> <span class="hljs-attr">loop</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">audio</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="13-视频标签"><a href="#13-视频标签" class="headerlink" title="13. 视频标签"></a>13. 视频标签</h2><p>属性类型与音频相同</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">video</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./video.mp4&quot;</span> <span class="hljs-attr">controls</span> <span class="hljs-attr">autoplay</span> <span class="hljs-attr">muted</span> <span class="hljs-attr">loop</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">video</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>属性muted用来静音播放</p>
+<h2 id="14-超链接"><a href="#14-超链接" class="headerlink" title="14. 超链接"></a>14. 超链接</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://www.baidu.com/&quot;</span>&gt;</span>跳转到百度<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;目标地址.html&quot;</span>&gt;</span>跳转到目标地址<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;#&quot;</span>&gt;</span>空链接用#<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<table border="1">
+    <tr>
+        <th>属性</th> 
+        <th>取值</th> 
+        <th>效果</th>  
+    </tr>
+    <tr>
+        <td rowspan="2">target</td>
+        <td>_self</td>
+        <td>默认，在当前窗口中跳转(覆盖原网页)</td>
+    </tr>
+    <tr>
+        <td>_blank</td>
+        <td>在新窗口中跳转(保留原网页)</td>
+    </tr>
+</table>
+在新窗口跳转：
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://www.baidu.com/&quot;</span> <span class="hljs-attr">target</span>=<span class="hljs-string">&quot;_blank&quot;</span>&gt;</span>跳转到百度<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="15-列表标签"><a href="#15-列表标签" class="headerlink" title="15. 列表标签"></a>15. 列表标签</h2><h4 id="1-无序标签"><a href="#1-无序标签" class="headerlink" title="1. 无序标签"></a>1. 无序标签</h4><table>
+<thead>
+<tr>
+<th align="center">标签</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">ul</td>
+<td>无序标签的整体</td>
+</tr>
+<tr>
+<td align="center">li</td>
+<td>无序列表的每一项</td>
+</tr>
+</tbody></table>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>华为<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>苹果<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>小米<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>注意:</strong></p>
+<ul>
+<li>ul只允许包含li标签</li>
+<li>li标签可包含任意内容</li>
+</ul>
+<h4 id="2-有序标签"><a href="#2-有序标签" class="headerlink" title="2. 有序标签"></a>2. 有序标签</h4><p>与无序列表类似；用ol和li</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ol</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>第一<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>第二<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>第三<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">ol</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="3-自定义标签"><a href="#3-自定义标签" class="headerlink" title="3. 自定义标签"></a>3. 自定义标签</h4><table>
+<thead>
+<tr>
+<th align="center">标签</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">dl</td>
+<td>自定义列表的整体</td>
+</tr>
+<tr>
+<td align="center">dt</td>
+<td>自定义列表的主题</td>
+</tr>
+<tr>
+<td align="center">dd</td>
+<td>自定义列表中主题下的每一项</td>
+</tr>
+</tbody></table>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">dl</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dt</span>&gt;</span>985大学<span class="hljs-tag">&lt;/<span class="hljs-name">dt</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dd</span>&gt;</span>清华大学<span class="hljs-tag">&lt;/<span class="hljs-name">dd</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dd</span>&gt;</span>北京大学<span class="hljs-tag">&lt;/<span class="hljs-name">dd</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dl</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>注意:</strong> dl中只允许包含dt和dd标签</p>
+<h2 id="16-表格标签"><a href="#16-表格标签" class="headerlink" title="16. 表格标签"></a>16. 表格标签</h2><h4 id="A-标签"><a href="#A-标签" class="headerlink" title="A. 标签"></a>A. 标签</h4><table>
+<thead>
+<tr>
+<th align="center">标签名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">table</td>
+<td>表格整体</td>
+</tr>
+<tr>
+<td align="center">tr</td>
+<td>表格每行</td>
+</tr>
+<tr>
+<td align="center">td</td>
+<td>表格单元格</td>
+</tr>
+<tr>
+<td align="center">caption</td>
+<td>表格大标题</td>
+</tr>
+<tr>
+<td align="center">th</td>
+<td>表头单元格</td>
+</tr>
+</tbody></table>
+<h4 id="B-属性"><a href="#B-属性" class="headerlink" title="B. 属性"></a>B. 属性</h4><table>
+<thead>
+<tr>
+<th align="center">属性名</th>
+<th>作用</th>
+<th align="center">属性值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">border</td>
+<td>边框宽度</td>
+<td align="center">数字</td>
+</tr>
+<tr>
+<td align="center">width</td>
+<td>表格宽度</td>
+<td align="center">数字</td>
+</tr>
+<tr>
+<td align="center">height</td>
+<td>表格高度</td>
+<td align="center">数字</td>
+</tr>
+<tr>
+<td align="center">rowspan</td>
+<td>跨行合并</td>
+<td align="center">合并单元格的个数</td>
+</tr>
+<tr>
+<td align="center">colspan</td>
+<td>跨列合并</td>
+<td align="center">合并单元格的个数</td>
+</tr>
+</tbody></table>
+<h4 id="C-示例"><a href="#C-示例" class="headerlink" title="C. 示例"></a>C. 示例</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">border</span>=<span class="hljs-string">&quot;1&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;500&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;300&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">caption</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">strong</span>&gt;</span>高校简介<span class="hljs-tag">&lt;/<span class="hljs-name">strong</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">caption</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>高校<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span> <br>        <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>人数<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span> <br>        <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>面积<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>  <br>    <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>清华<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">rowspan</span>=<span class="hljs-string">&quot;2&quot;</span>&gt;</span>2000<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>5000<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>北大<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>4000<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>安大<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">colspan</span>=<span class="hljs-string">&quot;2&quot;</span>&gt;</span>1000<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="17-表单标签"><a href="#17-表单标签" class="headerlink" title="17. 表单标签"></a>17. 表单标签</h2><h4 id="A-input标签"><a href="#A-input标签" class="headerlink" title="A. input标签"></a>A. input标签</h4><table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>type</td>
+<td>指明类型</td>
+</tr>
+<tr>
+<td>placeholder</td>
+<td>输入框中的提示字</td>
+</tr>
+<tr>
+<td>name</td>
+<td>分组，有相同Name值的是同一组</td>
+</tr>
+<tr>
+<td>checked</td>
+<td>默认选中</td>
+</tr>
+<tr>
+<td>multiple</td>
+<td>多文件选择</td>
+</tr>
+<tr>
+<td>form</td>
+<td>按钮的父标签</td>
+</tr>
+<tr>
+<td>value</td>
+<td>按钮名字</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>type属性值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>text</td>
+<td>文本框，输入单行文本</td>
+</tr>
+<tr>
+<td>password</td>
+<td>密码框，输入密码</td>
+</tr>
+<tr>
+<td>radio</td>
+<td>单选框</td>
+</tr>
+<tr>
+<td>checkbox</td>
+<td>多选框</td>
+</tr>
+<tr>
+<td>file</td>
+<td>文件选择，上传文件</td>
+</tr>
+<tr>
+<td>submit</td>
+<td>提交按钮</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>重置按钮</td>
+</tr>
+<tr>
+<td>button</td>
+<td>普通按钮，默认无功能</td>
+</tr>
+</tbody></table>
+<ul>
+<li>placeholder属性</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;请输入用户名&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>name和checked属性</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html">性别：<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;radio&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;sex&quot;</span>&gt;</span>男<br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;radio&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;sex&quot;</span> <span class="hljs-attr">checked</span>&gt;</span>女<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>multiple属性</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;file&quot;</span> <span class="hljs-attr">multiple</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>form和value属性</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;提交的地址&quot;</span>&gt;</span><br>    用户名：<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>    密码：<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;password&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;注册&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;reset&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;普通按钮&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="B-button按钮标签"><a href="#B-button按钮标签" class="headerlink" title="B. button按钮标签"></a>B. button按钮标签</h4><table>
+<thead>
+<tr>
+<th>type属性值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>submit</td>
+<td>提交按钮</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>重置按钮</td>
+</tr>
+<tr>
+<td>button</td>
+<td>普通按钮，默认无功能</td>
+</tr>
+</tbody></table>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span>提交<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;reset&quot;</span>&gt;</span>重置<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span>&gt;</span>普通按钮<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="C-select下拉菜单按钮"><a href="#C-select下拉菜单按钮" class="headerlink" title="C. select下拉菜单按钮"></a>C. select下拉菜单按钮</h4><table>
+<thead>
+<tr>
+<th>标签名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>select</td>
+<td>下拉菜单的整体</td>
+</tr>
+<tr>
+<td>option</td>
+<td>下拉菜单的每一项</td>
+</tr>
+</tbody></table>
+<ul>
+<li>selected属性：默认选中</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">select</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>北京<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">selected</span>&gt;</span>上海<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>广州<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h4 id="D-textarea文本域标签"><a href="#D-textarea文本域标签" class="headerlink" title="D. textarea文本域标签"></a>D. textarea文本域标签</h4><p>提供可输入多行文本的控件</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cols</td>
+<td>宽度</td>
+</tr>
+<tr>
+<td>rows</td>
+<td>行数</td>
+</tr>
+</tbody></table>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">cols</span>=<span class="hljs-string">&quot;60&quot;</span> <span class="hljs-attr">rows</span>=<span class="hljs-string">&quot;30&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="E-label标签"><a href="#E-label标签" class="headerlink" title="E. label标签"></a>E. label标签</h4><p>使用label标签把内容和表单标签一起包裹起来；把label中的for属性删除。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;radio&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;sex&quot;</span>&gt;</span>男<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;radio&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;sex&quot;</span>&gt;</span>女<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="18-语义化标签"><a href="#18-语义化标签" class="headerlink" title="18. 语义化标签"></a>18. 语义化标签</h2><p>无语义的布局标签</p>
+<ul>
+<li>div:一行只显示一个</li>
+<li>span:一行可显示多个</li>
+</ul>
+<h2 id="19-字符实体"><a href="#19-字符实体" class="headerlink" title="19. 字符实体"></a>19. 字符实体</h2><p>例如空格用<code>&amp;nbsp;</code><br>其他的不用记，用到的时候上网查。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%89%8D%E7%AB%AF/" class="print-no-link">#前端</a>
+      
+        <a href="/tags/HTML/" class="print-no-link">#HTML</a>
+      
+        <a href="/tags/%E5%AD%A6%E4%B9%A0/" class="print-no-link">#学习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/10/31/FrontEnd/CSS%E7%AC%94%E8%AE%B0/" title="CSS学习笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CSS学习笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/06/15/CyberSec/%E5%A6%82%E4%BD%95%E5%9C%A8VS2019%E5%AE%89%E8%A3%85crypto%E5%8C%85/" title="如何在VS2019安装crypto包">
+                        <span class="hidden-mobile">如何在VS2019安装crypto包</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"sj2tGuxMGSDhkN5hNuOIVta1-gzGzoHsz","appKey":"ysR5OTuTzoby2oNvNyGOtXFQ","path":"window.location.pathname","placeholder":"如有问题，欢迎指正~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>AI</span> <i class="iconfont icon-love"></i> <span>CPP</span> <i class="iconfont icon-love"></i> <span>JAVA</span> <i class="iconfont icon-love"></i> <span>CyberSec</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/love.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiaoxingxing.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
