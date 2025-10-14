@@ -1,6 +1,13 @@
 (function () {
-    // 仅在首页运行
-    if (!document.body.classList.contains('home')) return;
+    // 首页识别（兼容 Fluid 所有版本和子路径）
+    const path = window.location.pathname;
+    const homePaths = ['/', '/index.html']; // 修改 /blog/ 为你自己的路径
+    const isHomeClass =
+    document.body.classList.contains('home') ||
+    document.body.classList.contains('index') ||
+    document.body.classList.contains('page-home');
+
+    if (!isHomeClass && !homePaths.includes(path)) return;
 
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
