@@ -4,25 +4,6 @@
   
   
   <entry>
-    <title>随笔</title>
-    <link href="/2025/12/18/Suibi/%E9%9A%8F%E7%AC%941/"/>
-    <url>/2025/12/18/Suibi/%E9%9A%8F%E7%AC%941/</url>
-    
-    <content type="html"><![CDATA[<p>111</p>]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>随笔</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>智能体搭建-智能医疗问诊</title>
     <link href="/2025/10/16/AI/%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/"/>
     <url>/2025/10/16/AI/%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/</url>
@@ -126,9 +107,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>MySQL</tag>
       
@@ -155,9 +136,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>JVM</tag>
       
@@ -184,9 +165,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>JUC</tag>
       
@@ -213,9 +194,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>Redis</tag>
       
@@ -242,9 +223,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>SpringCloud</tag>
       
@@ -329,9 +310,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>开发工具</tag>
+      
+      <tag>学习</tag>
       
       <tag>Docker</tag>
       
@@ -445,11 +426,11 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>git</tag>
       
       <tag>开发工具</tag>
+      
+      <tag>学习</tag>
       
     </tags>
     
@@ -474,9 +455,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javaweb</tag>
       
@@ -503,9 +484,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javase</tag>
       
@@ -532,9 +513,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javase</tag>
       
@@ -561,11 +542,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>前端</tag>
       
       <tag>JavaScript</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -617,9 +598,9 @@
     
     <tags>
       
-      <tag>前端</tag>
-      
       <tag>学习</tag>
+      
+      <tag>前端</tag>
       
       <tag>CSS</tag>
       
@@ -646,9 +627,9 @@
     
     <tags>
       
-      <tag>前端</tag>
-      
       <tag>学习</tag>
+      
+      <tag>前端</tag>
       
       <tag>HTML</tag>
       
@@ -704,11 +685,11 @@
       
       <tag>AI</tag>
       
+      <tag>论文</tag>
+      
       <tag>信息与通信</tag>
       
       <tag>强化学习</tag>
-      
-      <tag>论文</tag>
       
     </tags>
     
