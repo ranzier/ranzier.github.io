@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>如何将IDEA中的项目推送到Github上</title>
+    <link href="/2025/11/10/DeveloperTools/%E5%A6%82%E4%BD%95%E5%B0%86idea%E9%A1%B9%E7%9B%AEgit%E5%88%B0github/"/>
+    <url>/2025/11/10/DeveloperTools/%E5%A6%82%E4%BD%95%E5%B0%86idea%E9%A1%B9%E7%9B%AEgit%E5%88%B0github/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">如何将IDEA中的项目推送到Github上</h1><h3 id="1-电脑必须安装-Git"><a href="#1-电脑必须安装-Git" class="headerlink" title="1. 电脑必须安装 Git"></a>1. 电脑必须安装 Git</h3><p>检查是否安装：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git --version<br></code></pre></td></tr></table></figure><p>如果没有安装，下载地址：<a href="https://git-scm.com/downloads">Git官网</a></p><h3 id="2-在IDEA中配置-Git（只需一次）"><a href="#2-在IDEA中配置-Git（只需一次）" class="headerlink" title="2. 在IDEA中配置 Git（只需一次）"></a>2. 在IDEA中配置 Git（只需一次）</h3><ol><li>打开 IDEA → File → Settings</li><li>找到：Version Control → Git</li></ol><p>IDEA 会自动检测到 Git 路径</p><p><img src="/img/blogs/git/img/1.png"></p><h3 id="3-将项目初始化为-Git-仓库"><a href="#3-将项目初始化为-Git-仓库" class="headerlink" title="3. 将项目初始化为 Git 仓库"></a>3. 将项目初始化为 Git 仓库</h3><p>IDEA 左上角：<br>Version Control -&gt; Create Git Repository</p><p><img src="/img/blogs/git/img/2.png"></p><p>选择当前项目的文件夹即可：</p><p><img src="/img/blogs/git/img/3.png"></p><h3 id="4-在Github创建自己的远程仓库，并添加到当前项目中"><a href="#4-在Github创建自己的远程仓库，并添加到当前项目中" class="headerlink" title="4. 在Github创建自己的远程仓库，并添加到当前项目中"></a>4. 在Github创建自己的远程仓库，并添加到当前项目中</h3><p><img src="/img/blogs/git/img/4.png"></p><p>填写对应的信息（仓库的名称）即可：</p><p><img src="/img/blogs/git/img/5.png"></p><p>创建成功后，查看咱们的远程仓库地址：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/yourname/y</span>ourrepo.git<br></code></pre></td></tr></table></figure><p><img src="/img/blogs/git/img/6.png"></p><p>找到：菜单栏 -&gt; Git  -&gt; Manage Remotes</p><p><img src="/img/blogs/git/img/7.png"></p><p>把我们的Github仓库地址添加到当前项目中</p><p><img src="/img/blogs/git/img/8.png"></p><h3 id="5-推送到-GitHub"><a href="#5-推送到-GitHub" class="headerlink" title="5. 推送到 GitHub"></a>5. 推送到 GitHub</h3><p>在IDEA左侧找到Commit这一栏，勾选要推送的内容，添加日志说明，最后点击Commit and Push -&gt; Commit Anyway and Push -&gt; Push</p><p><img src="/img/blogs/git/img/9.png"></p><p>推送成功，在Github上查看自己的仓库就完成了</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>开发工具</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>git</tag>
+      
+      <tag>开发工具</tag>
+      
+      <tag>学习</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>租房注意事项</title>
     <link href="/2025/10/18/Suibi/%E7%A7%9F%E6%88%BF%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"/>
     <url>/2025/10/18/Suibi/%E7%A7%9F%E6%88%BF%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
@@ -68,9 +97,9 @@
       
       <tag>JAVA</tag>
       
-      <tag>SpringCloud</tag>
-      
       <tag>SpringBoot</tag>
+      
+      <tag>SpringCloud</tag>
       
     </tags>
     
@@ -126,9 +155,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>MySQL</tag>
       
@@ -155,9 +184,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>JVM</tag>
       
@@ -184,9 +213,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>JUC</tag>
       
@@ -213,9 +242,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>Redis</tag>
       
@@ -242,9 +271,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>SpringCloud</tag>
       
@@ -474,9 +503,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>javaweb</tag>
       
@@ -503,9 +532,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>javase</tag>
       
@@ -532,9 +561,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>javase</tag>
       
