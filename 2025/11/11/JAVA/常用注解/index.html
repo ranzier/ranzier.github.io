@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/bg/41.jpg">
 <meta property="article:published_time" content="2025-11-11T08:18:35.000Z">
-<meta property="article:modified_time" content="2025-11-11T08:20:11.028Z">
+<meta property="article:modified_time" content="2025-11-12T11:01:40.172Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="JAVA">
 <meta property="article:tag" content="SpringBoot">
@@ -249,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k 字
+          4.7k 字
         
       </span>
     
@@ -260,7 +260,7 @@
         
         
         
-          13 分钟
+          24 分钟
         
       </span>
     
@@ -340,12 +340,13 @@
 
 
 
-<h3 id="2-Spring-Spring-Boot-核心注解"><a href="#2-Spring-Spring-Boot-核心注解" class="headerlink" title="2. Spring &#x2F; Spring Boot 核心注解"></a>2. Spring &#x2F; Spring Boot 核心注解</h3><h4 id="2-1-Spring-Boot-核心注解"><a href="#2-1-Spring-Boot-核心注解" class="headerlink" title="2.1 Spring Boot 核心注解"></a>2.1 Spring Boot 核心注解</h4><ul>
+<h3 id="2-Spring-Spring-Boot-Spring-Cloud核心注解"><a href="#2-Spring-Spring-Boot-Spring-Cloud核心注解" class="headerlink" title="2. Spring &#x2F; Spring Boot &#x2F; Spring Cloud核心注解"></a>2. Spring &#x2F; Spring Boot &#x2F; Spring Cloud核心注解</h3><h4 id="2-1-Spring-Boot-核心注解"><a href="#2-1-Spring-Boot-核心注解" class="headerlink" title="2.1 Spring Boot 核心注解"></a>2.1 Spring Boot 核心注解</h4><ul>
 <li><a href="#211-springbootapplication">@SpringBootApplication</a>: 用于标注SpringBoot主启动类: 等同于<code>@EnableAutoConfiguration</code> + <code>@ComponentScan</code> + <code>@Configuration</code></li>
 <li><a href="#212-enableautoconfiguration">@EnableAutoConfiguration</a>: 启用 Spring Boot 的自动配置机制</li>
 <li><a href="#213-componentscan">@ComponentScan</a>: 扫描 @Component、@Service、@Repository、@Controller 等注解的类</li>
 <li><a href="#214-configuration">@Configuration</a>: 用于告诉Spring：这个类是一个配置类，可以向 Spring容器注册Bean</li>
 <li><a href="#215-bean">@Bean</a>: @Bean让你可以手动创建对象并交给 Spring容器管理</li>
+<li><a href="#216-conditional">@Conditional</a>: 只有当指定条件满足时，Spring 才会创建这个 Bean；否则此 Bean 不会加载进入容器</li>
 </ul>
 <h5 id="2-1-1-SpringBootApplication"><a href="#2-1-1-SpringBootApplication" class="headerlink" title="2.1.1 @SpringBootApplication"></a>2.1.1 @SpringBootApplication</h5><p>是 Spring Boot 应用的核心注解，通常用于标注主启动类</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpringSecurityJwtGuideApplication</span> &#123;<br>      <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(java.lang.String[] args)</span> &#123;<br>        SpringApplication.run(SpringSecurityJwtGuideApplication.class, args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -391,7 +392,7 @@
 <p>上面的 userService() 返回的对象就会被 Spring 容器管理。<br>你可以这样注入它：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Autowired</span><br><span class="hljs-keyword">private</span> UserService userService;<br></code></pre></td></tr></table></figure>
 
-
+<h5 id="2-1-6-Conditional"><a href="#2-1-6-Conditional" class="headerlink" title="2.1.6 @Conditional"></a>2.1.6 @Conditional</h5><p><strong>条件化配置</strong>: <strong>只有当指定条件满足时</strong>,Spring 才会创建这个 Bean；否则此 Bean 不会加载进入容器。</p>
 <h4 id="2-2-Bean注册注解"><a href="#2-2-Bean注册注解" class="headerlink" title="2.2 Bean注册注解"></a>2.2 Bean注册注解</h4><p>Spring 容器需要知道哪些类需要被管理为 Bean,以下注解注解在类上，可以让 Spring 自动发现并注册这些类作为 Bean对象。</p>
 <ul>
 <li><code>@Component</code>：<strong>通用的注解</strong>，可标注任意类为 Spring 组件</li>
@@ -548,43 +549,202 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> org.aspectj.lang.annotation.*;<br><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LogAspect</span> &#123;<br><br>    <span class="hljs-comment">// 定义切点（service 包下所有方法）</span><br>    <span class="hljs-meta">@Pointcut(&quot;execution(* com.example.service.*.*(..))&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">serviceMethods</span><span class="hljs-params">()</span> &#123;&#125;<br><br>    <span class="hljs-comment">// 方法执行前</span><br>    <span class="hljs-meta">@Before(&quot;serviceMethods()&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">before</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;【AOP Before】方法开始执行！&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 方法执行后</span><br>    <span class="hljs-meta">@After(&quot;serviceMethods()&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">after</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;【AOP After】方法执行结束！&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 环绕通知</span><br>    <span class="hljs-meta">@Around(&quot;serviceMethods()&quot;)</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">around</span><span class="hljs-params">(ProceedingJoinPoint pjp)</span> <span class="hljs-keyword">throws</span> Throwable &#123;<br>        System.out.println(<span class="hljs-string">&quot;【AOP Around】进入方法&quot;</span>);<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> pjp.proceed(); <span class="hljs-comment">// 方法继续执行</span><br>        System.out.println(<span class="hljs-string">&quot;【AOP Around】方法返回&quot;</span>);<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
+<h4 id="2-6-Transactional-声明式事务管理注解"><a href="#2-6-Transactional-声明式事务管理注解" class="headerlink" title="2.6 @Transactional-声明式事务管理注解"></a>2.6 @Transactional-声明式事务管理注解</h4><p>可以让某段代码（通常是 Service 方法）<strong>在一个数据库事务中执行，要么全部成功，要么全部失败</strong>（回滚）</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>原子性（Atomicity）</strong></td>
+<td>全部成功，全失败</td>
+</tr>
+<tr>
+<td><strong>一致性（Consistency）</strong></td>
+<td>数据保持一致性</td>
+</tr>
+<tr>
+<td><strong>隔离性（Isolation）</strong></td>
+<td>并发下保证数据隔离</td>
+</tr>
+<tr>
+<td><strong>持久性（Durability）</strong></td>
+<td>提交后数据永久保存</td>
+</tr>
+<tr>
+<td><strong>异常自动回滚</strong></td>
+<td>RuntimeException &#x2F; Error 默认回滚</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderService</span> &#123;<br><br>    <span class="hljs-meta">@Transactional</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">createOrder</span><span class="hljs-params">()</span> &#123;<br>        orderMapper.insertOrder();<br>        stockMapper.reduceStock();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果减少库存时抛异常，insertOrder 也会自动回滚</p>
+<h5 id="常用属性"><a href="#常用属性" class="headerlink" title="常用属性"></a>常用属性</h5><ol>
+<li><strong>rollbackFor</strong>（很重要）<br>默认只对 <strong>运行时异常</strong> 回滚<br>如果你希望对受检异常也回滚：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Transactional(rollbackFor = Exception.class)</span><br></code></pre></td></tr></table></figure>
 
+<ol start="2">
+<li><strong>propagation</strong>（事务传播行为）<br>控制方法之间事务的嵌套与传播方式</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>REQUIRED</strong>（默认）</td>
+<td>有事务就加入，没有就创建一个</td>
+</tr>
+<tr>
+<td>REQUIRES_NEW</td>
+<td>总是创建新事务</td>
+</tr>
+<tr>
+<td>SUPPORTS</td>
+<td>有事务就加入，没有就无事务执行</td>
+</tr>
+<tr>
+<td>NOT_SUPPORTED</td>
+<td>强制不用事务</td>
+</tr>
+<tr>
+<td>MANDATORY</td>
+<td>必须在现有事务下执行，否则报错</td>
+</tr>
+<tr>
+<td>NEVER</td>
+<td>不能在事务内执行，有事务就报错</td>
+</tr>
+<tr>
+<td>NESTED</td>
+<td>创建嵌套事务（子事务）</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li><strong>isolation</strong>（隔离级别）<br>控制并发时的读取行为：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>READ_UNCOMMITTED</td>
+<td>最低，允许脏读</td>
+</tr>
+<tr>
+<td>READ_COMMITTED</td>
+<td>Oracle&#x2F;MySQL 默认，不允许脏读</td>
+</tr>
+<tr>
+<td>REPEATABLE_READ</td>
+<td>MySQL 默认，保证重复读</td>
+</tr>
+<tr>
+<td>SERIALIZABLE</td>
+<td>最强，几乎不并发了</td>
+</tr>
+</tbody></table>
+<h4 id="2-7-Cacheable"><a href="#2-7-Cacheable" class="headerlink" title="2.7 @Cacheable"></a>2.7 @Cacheable</h4><p><strong>将方法的返回结果缓存起来</strong>，当下次再以相同参数调用该方法时，就直接从缓存中取值，而不再执行方法逻辑。</p>
+<p><strong>常见属性</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>value</code> 或 <code>cacheNames</code></td>
+<td>指定缓存名称（必填）</td>
+</tr>
+<tr>
+<td><code>key</code></td>
+<td>指定缓存键（默认是方法参数）</td>
+</tr>
+<tr>
+<td><code>condition</code></td>
+<td>满足条件才缓存</td>
+</tr>
+<tr>
+<td><code>unless</code></td>
+<td>满足条件不缓存</td>
+</tr>
+<tr>
+<td><code>keyGenerator</code></td>
+<td>自定义 Key 生成器</td>
+</tr>
+<tr>
+<td><code>sync</code></td>
+<td>是否启用同步缓存（防止并发）</td>
+</tr>
+</tbody></table>
+<p>假设我们有一个用户查询接口，从数据库查用户信息:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserService</span> &#123;<br><br>    <span class="hljs-meta">@Cacheable(value = &quot;user&quot;, key = &quot;#id&quot;)</span><br>    <span class="hljs-keyword">public</span> User <span class="hljs-title function_">getUserById</span><span class="hljs-params">(Long id)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;正在查询数据库...&quot;</span>); <span class="hljs-comment">// 模拟数据库访问</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>(id, <span class="hljs-string">&quot;然子而&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<p>调用两次：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">userService.getUserById(<span class="hljs-number">1L</span>);<br>userService.getUserById(<span class="hljs-number">1L</span>);<br></code></pre></td></tr></table></figure>
 
+<p>输出结果：第一次查询数据库，第二次直接查询缓存</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">正在查询数据库<span class="hljs-string">...</span>   ← 第一次执行，走数据库<br>（第二次不打印，直接返回缓存结果）<br></code></pre></td></tr></table></figure>
 
+<h4 id="2-8-SpringCloud常用的注解"><a href="#2-8-SpringCloud常用的注解" class="headerlink" title="2.8 SpringCloud常用的注解"></a>2.8 SpringCloud常用的注解</h4><ul>
+<li><a href="#281-feignclientenablefeignclients">@FeignClient</a>: 让你像调用本地方法一样调用远程服务的 HTTP 接口</li>
+<li><a href="#282-loadbalanced">@LoadBalanced</a>: 启用负载均衡能力</li>
+</ul>
+<h5 id="2-8-1-FeignClient-EnableFeignClients"><a href="#2-8-1-FeignClient-EnableFeignClients" class="headerlink" title="2.8.1 @FeignClient&#x2F;@EnableFeignClients"></a>2.8.1 @FeignClient&#x2F;@EnableFeignClients</h5><p><code>@FeignClient</code> 是 Spring Cloud OpenFeign 提供的注解</p>
+<p>在 Spring Cloud 微服务体系中，常见有多个独立模块</p>
+<ul>
+<li>当你想在微服务1调用微服务2的接口时，就需要用 <code>@FeignClient</code></li>
+</ul>
+<p>1️⃣ 步骤一：<strong>开启Feign功能</strong>(@EnableFeignClients)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@EnableFeignClients</span><br><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AdminApplication</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(AdminApplication.class, args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<p>2️⃣ 步骤二：<strong>创建Feign接口</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FeignClient(name = &quot;aimin-auth&quot;)</span>  <span class="hljs-comment">// 指定要调用的服务名称（注册在 Nacos）</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">AuthFeignClient</span> &#123;<br><br>    <span class="hljs-meta">@GetMapping(&quot;/aimin-auth/user/info/&#123;id&#125;&quot;)</span><br>    UserInfo <span class="hljs-title function_">getUserInfo</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable(&quot;id&quot;)</span> Long id)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<p>这个接口不需要写实现类，Spring Cloud 会在运行时自动创建一个代理类，帮你发起 HTTP 请求</p>
+<p>3️⃣ 步骤三：<strong>在其他服务中注入使用</strong></p>
+<h5 id="2-8-2-LoadBalanced"><a href="#2-8-2-LoadBalanced" class="headerlink" title="2.8.2 @LoadBalanced"></a>2.8.2 @LoadBalanced</h5><p><code>@LoadBalanced</code> 是 Spring Cloud LoadBalancer 提供的注解</p>
+<p>让你的 RestTemplate 或 WebClient 具备通过服务名进行调用的能力，并自动实现负载均衡</p>
+<p>在微服务架构中，我们通常有多个服务实例，例如：</p>
+<table>
+<thead>
+<tr>
+<th>服务名</th>
+<th>实例</th>
+<th>地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>aimin-auth</td>
+<td>2个</td>
+<td>192.168.1.10:8081, 192.168.1.11:8081</td>
+</tr>
+<tr>
+<td>aimin-admin</td>
+<td>1个</td>
+<td>192.168.1.20:8084</td>
+</tr>
+</tbody></table>
+<p>如果你在 aimin-admin 里想调用 aimin-auth 的接口:<strong>使用服务名 + @LoadBalanced</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-meta">@LoadBalanced</span><br><span class="hljs-keyword">public</span> RestTemplate <span class="hljs-title function_">restTemplate</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RestTemplate</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<p>此时你就可以直接使用服务名：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;http://aimin-auth/aimin-auth/user/info/1&quot;</span>;<br><span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> restTemplate.getForObject(url, User.class);<br></code></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>Spring Cloud 会：</p>
+<ol>
+<li>从注册中心（如 Nacos、Eureka）获取所有 aimin-auth 实例；</li>
+<li><strong>自动选择一个实例</strong>；</li>
+<li>发送请求，实现<strong>客户端负载均衡</strong>。</li>
+</ol>
 <h3 id="3-Lombok第三方框架的常用注解"><a href="#3-Lombok第三方框架的常用注解" class="headerlink" title="3. Lombok第三方框架的常用注解"></a>3. Lombok第三方框架的常用注解</h3><ul>
 <li><a href="#31-gettersetter">@Getter</a>: 为所有字段生成 getter 方法</li>
 <li><a href="#31-gettersetter">@Setter</a>: 为所有字段生成 setter 方法</li>
@@ -594,6 +754,7 @@
 <li><a href="#35-noargsconstructor--allargsconstructor">@NoArgsConstructor</a>: 无参构造方法</li>
 <li><a href="#35-noargsconstructor--allargsconstructor">@AllArgsConstructor</a>: 全参数构造方法</li>
 <li><a href="#36-slf4j">@Slf4j</a>: 生成一个 Logger 日志对象,用于所有需要打印日志的类</li>
+<li><a href="#37-requiredargsconstructor">@RequiredArgsConstructor</a>:为类中所有 <code>final</code> 字段和所有带 <code>@NonNull</code> 注解的字段自动生成一个包含这些字段的构造方法。</li>
 </ul>
 <h4 id="3-1-Getter-Setter"><a href="#3-1-Getter-Setter" class="headerlink" title="3.1 @Getter&#x2F;@Setter"></a>3.1 @Getter&#x2F;@Setter</h4><p>为当前类中的 <strong>所有属性自动生成 getter 和 setter 方法</strong>，避免手写。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Getter</span><br><span class="hljs-meta">@Setter</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span> &#123;<br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> age;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -649,7 +810,210 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserService</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">save</span><span class="hljs-params">()</span> &#123;<br>        log.info(<span class="hljs-string">&quot;保存用户成功！&quot;</span>);<br>        log.error(<span class="hljs-string">&quot;发生错误&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
-<h3 id="持续更新中……"><a href="#持续更新中……" class="headerlink" title="持续更新中……"></a>持续更新中……</h3>
+<h4 id="3-7-RequiredArgsConstructor"><a href="#3-7-RequiredArgsConstructor" class="headerlink" title="3.7 @RequiredArgsConstructor"></a>3.7 @RequiredArgsConstructor</h4><p>为类中所有 <code>final</code> 字段和所有带 <code>@NonNull</code> 注解的字段自动生成一个包含这些字段的构造方法。</p>
+<p>假设我们有一个类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RequiredArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserService</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> UserRepository userRepository;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> EmailService emailService;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> threshold;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Lombok 会自动生成：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-title function_">UserService</span><span class="hljs-params">(UserRepository userRepository, EmailService emailService)</span> &#123;<br>    <span class="hljs-built_in">this</span>.userRepository = userRepository;<br>    <span class="hljs-built_in">this</span>.emailService = emailService;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个构造方法只包含了含有final的userRepository和emailService这两个字段，并没有包含常规的字段threshold</p>
+<p><strong>为什么使用@RequiredArgsConstructor</strong>？</p>
+<p>RequiredArgsConstructor 的含义是：</p>
+<ul>
+<li>为所有“<strong>必需初始化</strong>”的字段生成构造器。</li>
+</ul>
+<p>而“<strong>必需初始化</strong>”的字段包括：<br>✔ <code>final</code></p>
+<ul>
+<li>一定要在构造期间赋值</li>
+<li>否则对象创建不完整</li>
+</ul>
+<p>✔ <code>@NonNull</code></p>
+<ul>
+<li>推断为“业务上必须提供的参数”</li>
+<li>Lombok 会强制要求构造器传值，否则抛出 NPE</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RequiredArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span> &#123;<br>    <span class="hljs-meta">@NonNull</span> <span class="hljs-keyword">private</span> String username;  <span class="hljs-comment">// 必需</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> age;                   <span class="hljs-comment">// 可选</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>生成：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-title function_">User</span><span class="hljs-params">(String username)</span> &#123;<br>    <span class="hljs-keyword">if</span> (username == <span class="hljs-literal">null</span>) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NullPointerException</span>(<span class="hljs-string">&quot;username is marked @NonNull but is null&quot;</span>);<br>    <span class="hljs-built_in">this</span>.username = username;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-Swagger-OpenAPI3-常用注解"><a href="#4-Swagger-OpenAPI3-常用注解" class="headerlink" title="4. Swagger&#x2F;OpenAPI3 常用注解"></a>4. Swagger&#x2F;OpenAPI3 常用注解</h3><p>以下这些注解帮助生成我们的接口文档Swagger，从而使我们通过接口文档调试我们的接口。</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>注解</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>接口级别</strong></td>
+<td><code>@Operation</code></td>
+<td>描述一个 API 方法（标题、描述、参数等）</td>
+</tr>
+<tr>
+<td></td>
+<td><code>@Tag</code></td>
+<td>给 Controller 分组（类似旧版 <code>@Api</code>）</td>
+</tr>
+<tr>
+<td><strong>参数、响应</strong></td>
+<td><code>@Parameter</code></td>
+<td>描述 Query &#x2F; Path 参数</td>
+</tr>
+<tr>
+<td></td>
+<td><code>@Parameters</code></td>
+<td>多个 @Parameter</td>
+</tr>
+<tr>
+<td></td>
+<td><code>@Schema</code></td>
+<td>描述 model 类或字段</td>
+</tr>
+</tbody></table>
+<h4 id="4-1-Tag"><a href="#4-1-Tag" class="headerlink" title="4.1 @Tag"></a>4.1 @Tag</h4><p>用于标记 Controller 分组</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Tag(name = &quot;用户管理模块&quot;, description = &quot;包含用户增删查改相关接口&quot;)</span><br><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@RequestMapping(&quot;/user&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserController</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="4-2-Operation"><a href="#4-2-Operation" class="headerlink" title="4.2 @Operation"></a>4.2 @Operation</h4><p>描述某个接口（方法）的用途</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Operation(</span><br><span class="hljs-meta">    summary = &quot;用户登录&quot;,</span><br><span class="hljs-meta">    description = &quot;根据账号密码登录，返回 Token&quot;</span><br><span class="hljs-meta">)</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="4-3-Parameter"><a href="#4-3-Parameter" class="headerlink" title="4.3 @Parameter"></a>4.3 @Parameter</h4><p>描述路径参数（Path）或查询参数（Query）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(&quot;/&#123;id&#125;&quot;)</span><br><span class="hljs-meta">@Operation(summary = &quot;查询用户&quot;)</span><br><span class="hljs-keyword">public</span> User <span class="hljs-title function_">getUser</span><span class="hljs-params">(</span><br><span class="hljs-params">    <span class="hljs-meta">@Parameter(description = &quot;用户ID&quot;, required = true)</span></span><br><span class="hljs-params">    <span class="hljs-meta">@PathVariable</span> Long id</span><br><span class="hljs-params">)</span> &#123;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="4-4-Schema"><a href="#4-4-Schema" class="headerlink" title="4.4 @Schema"></a>4.4 @Schema</h4><p>用于描述类和属性，是模型文档的核心</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginRequest</span> &#123;<br><br>    <span class="hljs-meta">@Schema(description = &quot;登录账号&quot;, example = &quot;admin&quot;)</span><br>    <span class="hljs-keyword">private</span> String username;<br><br>    <span class="hljs-meta">@Schema(description = &quot;登录密码&quot;, example = &quot;123456&quot;)</span><br>    <span class="hljs-keyword">private</span> String password;<br>&#125;<br><br><span class="hljs-comment">// 也可以加在类上：</span><br><br><span class="hljs-meta">@Schema(description = &quot;用户登录参数&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginRequest</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="5-MyBatis-MyBatis-Plus-常用注解"><a href="#5-MyBatis-MyBatis-Plus-常用注解" class="headerlink" title="5. MyBatis &#x2F; MyBatis-Plus 常用注解"></a>5. MyBatis &#x2F; MyBatis-Plus 常用注解</h3><table>
+<thead>
+<tr>
+<th>注解</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>@Mapper</strong></td>
+<td>标记 Mapper 接口，为其创建代理对象</td>
+</tr>
+<tr>
+<td><strong>@Select&#x2F;Insert&#x2F;Update&#x2F;Delete</strong></td>
+<td>直接写 SQL 的注解</td>
+</tr>
+<tr>
+<td><strong>@TableName</strong></td>
+<td>实体类对应表名</td>
+</tr>
+<tr>
+<td><strong>@TableId</strong></td>
+<td>主键字段及策略</td>
+</tr>
+<tr>
+<td><strong>@TableField</strong></td>
+<td>字段映射控制（列名、忽略字段）</td>
+</tr>
+<tr>
+<td><strong>@Version</strong></td>
+<td>乐观锁字段</td>
+</tr>
+<tr>
+<td><strong>@TableLogic</strong></td>
+<td>逻辑删除字段</td>
+</tr>
+</tbody></table>
+<h4 id="5-1-Mapper"><a href="#5-1-Mapper" class="headerlink" title="5.1 @Mapper"></a>5.1 @Mapper</h4><p>标记当前接口是一个 MyBatis 的 Mapper，让 Spring 能扫描并创建它的代理对象。</p>
+<p>编写数据库访问层（DAO）接口时使用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Mapper</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">UserMapper</span> &#123;<br>    User <span class="hljs-title function_">selectById</span><span class="hljs-params">(Long id)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Spring 在启动时会帮你生成一个代理对象（实现类），然后能够自动注入</p>
+<h4 id="5-2-MapperScan"><a href="#5-2-MapperScan" class="headerlink" title="5.2 @MapperScan"></a>5.2 @MapperScan</h4><p>指定 Mapper 接口所在包路径，自动<strong>扫描包下所有的Mapper接口</strong>，<strong>批量注册成Bean</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@MapperScan(&quot;com.oimc.aimin.admin.mapper&quot;)</span><br><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AdminApplication</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>把 com.oimc.aimin.admin.mapper 包下的所有接口都当成 Mapper</li>
+<li>自动给它们创建代理对象</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>比较项</th>
+<th><code>@Mapper</code></th>
+<th><code>@MapperScan</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>作用对象</td>
+<td>单个 Mapper 接口</td>
+<td>整个包（批量生效）</td>
+</tr>
+<tr>
+<td>写法</td>
+<td>写在每个 Mapper 接口上</td>
+<td>在配置类&#x2F;启动类写一次</td>
+</tr>
+<tr>
+<td>是否方便</td>
+<td>❌ Mapper 多时非常麻烦</td>
+<td>✔ 一行配置搞定全部</td>
+</tr>
+<tr>
+<td>推荐程度</td>
+<td>不推荐大量使用</td>
+<td>✔ 企业项目普遍使用</td>
+</tr>
+<tr>
+<td>Spring 识别方式</td>
+<td>接口级别注解</td>
+<td>包扫描式注解</td>
+</tr>
+</tbody></table>
+<h4 id="5-3-Select-Insert-Update-Delete"><a href="#5-3-Select-Insert-Update-Delete" class="headerlink" title="5.3 @Select &#x2F; @Insert &#x2F; @Update &#x2F; @Delete"></a>5.3 @Select &#x2F; @Insert &#x2F; @Update &#x2F; @Delete</h4><p>这些是 MyBatis 的注解 SQL 方法，允许你直接在 Mapper 方法上编写 SQL，适合简单 SQL</p>
+<ul>
+<li>适用于非常简单的 SQL 或测试环境。</li>
+<li>复杂 SQL 应该写在 XML 中。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Select(&quot;SELECT * FROM user WHERE id = #&#123;id&#125;&quot;)</span><br>User <span class="hljs-title function_">selectById</span><span class="hljs-params">(Long id)</span>;<br><br><span class="hljs-meta">@Insert(&quot;INSERT INTO user(name, age) VALUES(#&#123;name&#125;, #&#123;age&#125;)&quot;)</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">insert</span><span class="hljs-params">(User user)</span>;<br><br><span class="hljs-meta">@Update(&quot;UPDATE user SET name = #&#123;name&#125; WHERE id = #&#123;id&#125;&quot;)</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">update</span><span class="hljs-params">(User user)</span>;<br><br><br><span class="hljs-meta">@Delete(&quot;DELETE FROM user WHERE id = #&#123;id&#125;&quot;)</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">delete</span><span class="hljs-params">(Long id)</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="5-4-TableName"><a href="#5-4-TableName" class="headerlink" title="5.4 @TableName"></a>5.4 @TableName</h4><p>在 MyBatis-Plus 中，用来指定<strong>该实体类对应数据库的表名</strong></p>
+<ul>
+<li>实体类名和表名不一致时必须写</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@TableName(&quot;t_user&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span> &#123;<br>    <span class="hljs-keyword">private</span> Long id;<br>    <span class="hljs-keyword">private</span> String name;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="5-5-TableId"><a href="#5-5-TableId" class="headerlink" title="5.5 @TableId"></a>5.5 @TableId</h4><p>标识实体类中的<strong>主键字段</strong>，并可以指定主键生成策略。</p>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>IdType.AUTO</code></td>
+<td>数据库自增</td>
+</tr>
+<tr>
+<td><code>IdType.ASSIGN_ID</code></td>
+<td>MP 自动生成（雪花算法）</td>
+</tr>
+<tr>
+<td><code>IdType.INPUT</code></td>
+<td>需要手动设置主键</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@TableId(value = &quot;id&quot;, type = IdType.AUTO)</span><br><span class="hljs-keyword">private</span> Long id;<br></code></pre></td></tr></table></figure>
+
+<h4 id="5-6-TableField"><a href="#5-6-TableField" class="headerlink" title="5.6 @TableField"></a>5.6 @TableField</h4><p>指定<strong>实体类字段与数据库表字段的映射关系</strong>，或设置字段不参与查询、更新</p>
+<ul>
+<li>字段名与数据库列名不同</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@TableField(&quot;user_name&quot;)</span><br><span class="hljs-keyword">private</span> String name;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>
                 
               </div>
             
