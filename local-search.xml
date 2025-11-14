@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>如何为项目添加swagger接口文档</title>
+    <link href="/2025/11/14/JAVA/%E5%A6%82%E4%BD%95%E4%B8%BA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0swagger%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/"/>
+    <url>/2025/11/14/JAVA/%E5%A6%82%E4%BD%95%E4%B8%BA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0swagger%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">如何为项目添加swagger接口文档</h1><h3 id="第一步：添加-Maven-依赖"><a href="#第一步：添加-Maven-依赖" class="headerlink" title="第一步：添加 Maven 依赖"></a>第一步：添加 Maven 依赖</h3><p>在 aimin-ai 的 pom.xml 加上：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springdoc<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>springdoc-openapi-starter-webmvc-ui<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.5.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure><h3 id="第二步：新建一个-Swagger-配置类"><a href="#第二步：新建一个-Swagger-配置类" class="headerlink" title="第二步：新建一个 Swagger 配置类"></a>第二步：新建一个 Swagger 配置类</h3><p>在 <code>config/</code> 目录下创建：<code>SpringDocConfig.java</code></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.oimc.aimin.ai.config.swagger;<br><br><span class="hljs-keyword">import</span> io.swagger.v3.oas.models.ExternalDocumentation;<br><span class="hljs-keyword">import</span> io.swagger.v3.oas.models.OpenAPI;<br><span class="hljs-keyword">import</span> io.swagger.v3.oas.models.info.Info;<br><span class="hljs-keyword">import</span> io.swagger.v3.oas.models.info.License;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Bean;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;<br><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpringDocConfig</span> &#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> OpenAPI <span class="hljs-title function_">restfulOpenAPI</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">OpenAPI</span>()<br>                .info(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Info</span>().title(<span class="hljs-string">&quot;Aimin-AI-Server-API&quot;</span>)<br>                        .description(<span class="hljs-string">&quot;RESTful风格接口&quot;</span>)<br>                        .version(<span class="hljs-string">&quot;V1.0.0&quot;</span>)<br>                        .license(<span class="hljs-keyword">new</span> <span class="hljs-title class_">License</span>().name(<span class="hljs-string">&quot;Aimin-AI-Server&quot;</span>)))<br>                .externalDocs(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ExternalDocumentation</span>()<br>                        .description(<span class="hljs-string">&quot;&quot;</span>));<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure><h3 id="启动项目后访问-Swagger-UI"><a href="#启动项目后访问-Swagger-UI" class="headerlink" title="启动项目后访问 Swagger UI"></a>启动项目后访问 Swagger UI</h3><p>默认访问地址：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>你的ip:端口号<span class="hljs-regexp">/swagger-ui/i</span>ndex.html<br></code></pre></td></tr></table></figure><p>例如：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">8087</span><span class="hljs-regexp">/aimin-ai/</span>swagger-ui/index.html<br></code></pre></td></tr></table></figure><p>如果你使用 gateway：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">8080</span><span class="hljs-regexp">/aimin-ai/</span>swagger-ui/index.html<br></code></pre></td></tr></table></figure><h3 id="顺带建议：给你的接口补充-Tag-Operation-注解"><a href="#顺带建议：给你的接口补充-Tag-Operation-注解" class="headerlink" title="顺带建议：给你的接口补充 @Tag&#x2F;@Operation 注解"></a>顺带建议：给你的接口补充 @Tag&#x2F;@Operation 注解</h3><p><a href="https://ranzier.github.io/2025/11/11/JAVA/%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/">@Tag&#x2F;@Operation注解的含义可以点击此链接查看</a></p><p>例如：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Tag(name=&quot;AI对话&quot;,description = &quot;AI聊天机器人对话功能&quot;)</span><br><span class="hljs-meta">@RequiredArgsConstructor</span><br><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@RequestMapping(&quot;/ai&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ChatController</span> &#123;<br>&#125;<br></code></pre></td></tr></table></figure><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Operation(summary = &quot;AI 问诊聊天接口&quot;, description = &quot;基于大模型的医疗问诊系统，支持流式输出&quot;)</span><br><span class="hljs-meta">@GetMapping(&quot;/chat&quot;)</span><br><span class="hljs-keyword">public</span> Flux&lt;String&gt; <span class="hljs-title function_">chat</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam</span> String message)</span> &#123; ... &#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>JAVA</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JAVA</tag>
+      
+      <tag>swagger</tag>
+      
+      <tag>openapi</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>JAVA中的常用注解</title>
     <link href="/2025/11/11/JAVA/%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/"/>
     <url>/2025/11/11/JAVA/%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/</url>
@@ -47,11 +76,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>git</tag>
       
       <tag>开发工具</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -385,9 +414,9 @@
     
     <tags>
       
-      <tag>开发工具</tag>
-      
       <tag>学习</tag>
+      
+      <tag>开发工具</tag>
       
       <tag>Docker</tag>
       
@@ -501,11 +530,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>git</tag>
       
       <tag>开发工具</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -646,9 +675,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>markdown</tag>
+      
+      <tag>学习</tag>
       
     </tags>
     
