@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>解决在父级pom文件中使用spring-ai-bom统一管理版本下导入spring-ai-openai-spring-boot-starter依赖出现报错的问题</title>
+    <link href="/2025/11/16/JAVA/%E8%A7%A3%E5%86%B3springai%E4%BE%9D%E8%B5%96%E5%AF%BC%E5%85%A5%E9%94%99%E8%AF%AF%E9%97%AE%E9%A2%98/"/>
+    <url>/2025/11/16/JAVA/%E8%A7%A3%E5%86%B3springai%E4%BE%9D%E8%B5%96%E5%AF%BC%E5%85%A5%E9%94%99%E8%AF%AF%E9%97%AE%E9%A2%98/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">解决在父级pom文件中使用spring-ai-bom统一管理版本下导入spring-ai-openai-spring-boot-starter依赖出现报错的问题</h1><h2 id="1-引入spring-ai的依赖"><a href="#1-引入spring-ai的依赖" class="headerlink" title="1. 引入spring ai的依赖"></a>1. 引入spring ai的依赖</h2><p>通常我们如果想要在 Spring Boot项目里简单地接入 OpenAI 系列模型，我们会引入Spring AI官方提供的OpenAI集成Starter：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.ai<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-ai-openai-spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure><h2 id="2-spring-ai-bom"><a href="#2-spring-ai-bom" class="headerlink" title="2. spring-ai-bom"></a>2. spring-ai-bom</h2><p>如果我们引入了很多spring ai相关的依赖，我们通常会使用<code>spring-ai-bom</code>进行<strong>版本管理</strong></p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.ai<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-ai-bom<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0.0-M8<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">type</span>&gt;</span>pom<span class="hljs-tag">&lt;/<span class="hljs-name">type</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>import<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure><p><code>spring-ai-bom</code>指明所有spring-ai相关的依赖都在1.0.0-M8这个版本下。</p><h2 id="3-maven编译的时候，于是就出现了以下报错："><a href="#3-maven编译的时候，于是就出现了以下报错：" class="headerlink" title="3. maven编译的时候，于是就出现了以下报错："></a>3. maven编译的时候，于是就出现了以下报错：</h2><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">org.springframework.ai:spring-ai-openai-spring-boot-starter:jar:<span class="hljs-type">unknown</span> was <span class="hljs-keyword">not</span> <span class="hljs-built_in">found</span> <span class="hljs-keyword">in</span> http://maven.aliyun.com/nexus/content/<span class="hljs-keyword">groups</span>/<span class="hljs-built_in">public</span>/ during a previous attempt. This failure was cached <span class="hljs-keyword">in</span> the <span class="hljs-keyword">local</span> repository <span class="hljs-keyword">and</span> resolution <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> reattempted <span class="hljs-keyword">until</span> the <span class="hljs-keyword">update</span> <span class="hljs-type">interval</span> <span class="hljs-keyword">of</span> alimaven has elapsed <span class="hljs-keyword">or</span> updates are forced<br><br>Try <span class="hljs-keyword">to</span> run Maven <span class="hljs-keyword">import</span> <span class="hljs-keyword">with</span> -U flag (force <span class="hljs-keyword">update</span> snapshots)<br></code></pre></td></tr></table></figure><p>这个错误表示无法下载对应的<code>spring-ai-openai-spring-boot-starter</code>依赖。。。。</p><h2 id="4-解决方案"><a href="#4-解决方案" class="headerlink" title="4. 解决方案"></a>4. 解决方案</h2><ol><li>删除<code>spring-ai-openai-spring-boot-starter</code></li><li>添加引入<code>spring-ai-starter-model-openai</code>这个依赖</li></ol><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--        &lt;dependency&gt;--&gt;</span><br><span class="hljs-comment">&lt;!--            &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;--&gt;</span><br><span class="hljs-comment">&lt;!--            &lt;artifactId&gt;spring-ai-openai-spring-boot-starter&lt;/artifactId&gt;--&gt;</span><br><span class="hljs-comment">&lt;!--        &lt;/dependency&gt;--&gt;</span><br><br>        <span class="hljs-comment">&lt;!-- Spring AI OpenAI Starter --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.ai<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-ai-starter-model-openai<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure><p>再重新编译就成功了。</p><h2 id="5-原因"><a href="#5-原因" class="headerlink" title="5. 原因"></a>5. 原因</h2><p><a href="https://docs.springframework.org.cn/spring-ai/reference/upgrade-notes.html#common-artifact-id-changes">1.0.0-M8 Spring AI starter artifact 的命名模式已更改</a></p><ul><li><code>spring-ai-openai-spring-boot-starter</code> 在M8已被官方删除，在M8版本下使用它当然下载不到。</li><li>正确的依赖名称是 <code>spring-ai-starter-model-openai</code>。</li></ul><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- BEFORE --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.ai<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-ai-openai-spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- AFTER --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.ai<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-ai-starter-model-openai<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>JAVA</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JAVA</tag>
+      
+      <tag>Spring AI</tag>
+      
+      <tag>openai</tag>
+      
+      <tag>maven</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>如何为项目添加swagger接口文档</title>
     <link href="/2025/11/14/JAVA/%E5%A6%82%E4%BD%95%E4%B8%BA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0swagger%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/"/>
     <url>/2025/11/14/JAVA/%E5%A6%82%E4%BD%95%E4%B8%BA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0swagger%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/</url>
@@ -76,11 +107,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>git</tag>
       
       <tag>开发工具</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -182,11 +213,11 @@
       
       <tag>算法</tag>
       
+      <tag>JAVA</tag>
+      
       <tag>LeetCode</tag>
       
       <tag>hot100</tag>
-      
-      <tag>JAVA</tag>
       
     </tags>
     
@@ -414,9 +445,9 @@
     
     <tags>
       
-      <tag>开发工具</tag>
-      
       <tag>学习</tag>
+      
+      <tag>开发工具</tag>
       
       <tag>Docker</tag>
       
@@ -530,11 +561,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>git</tag>
       
       <tag>开发工具</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -646,9 +677,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
+      
+      <tag>学习</tag>
       
       <tag>JavaScript</tag>
       
@@ -702,9 +733,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
+      
+      <tag>学习</tag>
       
       <tag>CSS</tag>
       
@@ -731,11 +762,11 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
       
       <tag>HTML</tag>
+      
+      <tag>学习</tag>
       
     </tags>
     
