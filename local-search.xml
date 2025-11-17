@@ -4,6 +4,62 @@
   
   
   <entry>
+    <title>如何使用Jmeter对接口进行压力测试</title>
+    <link href="/2025/11/17/DeveloperTools/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Jmeter%E5%AF%B9%E6%8E%A5%E5%8F%A3%E8%BF%9B%E8%A1%8C%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/"/>
+    <url>/2025/11/17/DeveloperTools/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Jmeter%E5%AF%B9%E6%8E%A5%E5%8F%A3%E8%BF%9B%E8%A1%8C%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">如何使用Jmeter对接口进行压力测试</h1><h2 id="1-Jmeter下载"><a href="#1-Jmeter下载" class="headerlink" title="1. Jmeter下载"></a>1. Jmeter下载</h2><p><a href="https://jmeter.apache.org/download_jmeter.cgi">Jmeter官网下载</a></p><p>选择这两个链接其中之一下载即可：（科学上网下载速度更快）</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">apache</span>-jmeter-<span class="hljs-number">5</span>.<span class="hljs-number">6</span>.<span class="hljs-number">3</span>.tgzsha512pgp<br><span class="hljs-attribute">apache</span>-jmeter-<span class="hljs-number">5</span>.<span class="hljs-number">6</span>.<span class="hljs-number">3</span>.zipsha512pgp<br></code></pre></td></tr></table></figure><h2 id="2-设置为中文"><a href="#2-设置为中文" class="headerlink" title="2. 设置为中文"></a>2. 设置为中文</h2><p>默认Jmeter的语言是英文，需要设置：</p><p>打开jmeter文件夹，在bin目录中找到 <strong>jmeter.properties</strong>，添加下面配置：</p><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">language</span>=<span class="hljs-string">zh_CN</span><br></code></pre></td></tr></table></figure><h2 id="3-打开Jmeter"><a href="#3-打开Jmeter" class="headerlink" title="3. 打开Jmeter"></a>3. 打开Jmeter</h2><p>在bin目录中找到 <strong>jmeter.bat</strong><br>双击即可运行</p><p><img src="/img/blogs/Jmeter/1.png"></p><h2 id="4-快速入门"><a href="#4-快速入门" class="headerlink" title="4. 快速入门"></a>4. 快速入门</h2><h3 id="4-1-创建一个线程组"><a href="#4-1-创建一个线程组" class="headerlink" title="4.1 创建一个线程组"></a>4.1 创建一个线程组</h3><p>左侧右键 Test Plan（测试计划） → Add（添加） → Threads（线程） → Thread Group（线程组）</p><table><thead><tr><th>参数</th><th>含义</th></tr></thead><tbody><tr><td>Number of Threads（线程数）</td><td>并发用户数</td></tr><tr><td>Ramp-up Period（加压时间）</td><td>多久把这些用户压起来</td></tr><tr><td>Loop Count（循环次数）</td><td>每个线程执行几次</td></tr></tbody></table><p><img src="/img/blogs/Jmeter/2.png"></p><p>例如：</p><ul><li>线程数：100</li><li>Ramp-up：1 秒</li><li>Loop：1 次<br>表示 <strong>100个用户在1秒内全部启动，每个用户发送1次请求</strong>。</li></ul><h3 id="4-2-创建-HTTP-请求采样器"><a href="#4-2-创建-HTTP-请求采样器" class="headerlink" title="4.2 创建 HTTP 请求采样器"></a>4.2 创建 HTTP 请求采样器</h3><p>右键 <strong>Thread Group（线程组） → Add（添加） → Sampler（取样器） → HTTP Request（HTTP请求）</strong></p><table><thead><tr><th>字段</th><th>需要填写的内容</th></tr></thead><tbody><tr><td>Method</td><td>GET</td></tr><tr><td>Server Name or IP</td><td>localhost</td></tr><tr><td>Port Number</td><td>8084</td></tr><tr><td>Path</td><td>&#x2F;aimin-admin&#x2F;drug&#x2F;category</td></tr><tr><td>Parameters</td><td>不填</td></tr><tr><td>Body Data</td><td>不填</td></tr></tbody></table><p><img src="/img/blogs/Jmeter/3.png"></p><h2 id="5-添加监听器查看压测结果"><a href="#5-添加监听器查看压测结果" class="headerlink" title="5. 添加监听器查看压测结果"></a>5. 添加监听器查看压测结果</h2><p>右键 Thread Group（线程组） → Add（添加） → Listener（监听器）</p><p>可以选择以下常用监听器：</p><ul><li>View Results Tree（查看树） → 查看每次请求响应内容</li><li>Summary Report（汇总报告） → 吞吐量、平均响应时间</li><li>Aggregate Report（聚合报告） → 常用性能统计</li><li>Response Time Graph → 响应时间图表</li></ul><p>压测时常用 <strong>Summary Report + Aggregate Report</strong>即可。</p><h2 id="6-保存测试计划，并启动压力测试"><a href="#6-保存测试计划，并启动压力测试" class="headerlink" title="6. 保存测试计划，并启动压力测试"></a>6. 保存测试计划，并启动压力测试</h2><p>点击顶部的 绿色 ▶ 运行按钮。</p><p><img src="/img/blogs/Jmeter/4.png"></p><p><img src="/img/blogs/Jmeter/5.png"></p><p><img src="/img/blogs/Jmeter/6.png"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>开发工具</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Jmeter</tag>
+      
+      <tag>SpringCloud</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>如何使用Sentinel实现微服务的请求限流、线程隔离、服务熔断和降级</title>
+    <link href="/2025/11/17/JAVA/SpringCloud/%E5%9F%BA%E4%BA%8Esentinel%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E7%86%94%E6%96%AD%E5%92%8C%E6%9C%8D%E5%8A%A1%E9%99%8D%E7%BA%A7/"/>
+    <url>/2025/11/17/JAVA/SpringCloud/%E5%9F%BA%E4%BA%8Esentinel%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E7%86%94%E6%96%AD%E5%92%8C%E6%9C%8D%E5%8A%A1%E9%99%8D%E7%BA%A7/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">基于OpenFeign和Sentinel实现服务的请求限流、服务熔断和自动降级</h1><h2 id="0-前提和准备"><a href="#0-前提和准备" class="headerlink" title="0. 前提和准备"></a>0. 前提和准备</h2><p>你已经使用openFeign实现了微服务之间的调用。</p><p>你会使用Jmeter进行压力测试，不会也没事，我这里有快速入门教学：<br><a href="">如何使用Jmeter对接口进行压力测试</a></p><h2 id="1-Sentinel控制台的下载和安装"><a href="#1-Sentinel控制台的下载和安装" class="headerlink" title="1. Sentinel控制台的下载和安装"></a>1. Sentinel控制台的下载和安装</h2><p>下载sentinel控制台的地址：</p><p><a href="https://github.com/alibaba/Sentinel/releases">sentinel</a></p><p>在jar包的目录下，cmd输入以下运行命令：</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">java</span> -jar sentinel-dashboard-<span class="hljs-number">1</span>.<span class="hljs-number">8</span>.<span class="hljs-number">6</span>.jar --server.port=<span class="hljs-number">8858</span> \<br></code></pre></td></tr></table></figure><p>访问地址：</p><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-symbol">http:</span><span class="hljs-comment">//localhost:8858</span><br></code></pre></td></tr></table></figure><p>默认账号密码都是sentinel，进入首页：</p><p><img src="/img/blogs/java/sentinel/1.1.png"></p><h2 id="2-在服务中引入sentinel的依赖"><a href="#2-在服务中引入sentinel的依赖" class="headerlink" title="2. 在服务中引入sentinel的依赖"></a>2. 在服务中引入sentinel的依赖</h2><p>例如：A服务要调用B服务的接口<br>则A服务的pom.xml文件加入sentinel的依赖：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--sentinel--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-sentinel<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure><p>如果还没有用到openfeign，则还要添加openFeign的依赖：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure><h2 id="3-配置Sentinel"><a href="#3-配置Sentinel" class="headerlink" title="3. 配置Sentinel"></a>3. 配置Sentinel</h2><p>在A服务（服务调用方）的bootstrap.yml(或者application.yml)配置文件中引入以下配置：</p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment"># 控制服务和Sentinel控制台之间的通信行为</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">cloud:</span><br>    <span class="hljs-attr">sentinel:</span><br>      <span class="hljs-attr">transport:</span><br>        <span class="hljs-attr">port:</span> <span class="hljs-number">8719</span><br>        <span class="hljs-attr">dashboard:</span> <span class="hljs-string">localhost:8858</span><br><br><span class="hljs-comment"># 开启Feign与Sentinel的整合</span><br><span class="hljs-attr">feign:</span><br>  <span class="hljs-attr">sentinel:</span><br>    <span class="hljs-attr">enabled:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure><h2 id="4-使用Sentinel控制台"><a href="#4-使用Sentinel控制台" class="headerlink" title="4. 使用Sentinel控制台"></a>4. 使用Sentinel控制台</h2><p>此时访问你要调用的远程接口。</p><p>例如，在swagger中访问以下接口：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">8084</span><span class="hljs-regexp">/aimin-admin/</span>drug/category<br></code></pre></td></tr></table></figure><p>然后再打开Sentinel控制台，刷新一下：</p><p><img src="/img/blogs/java/sentinel/1.2.png"></p><p>可以看到Sentinel开始监控我们的服务了。</p><h2 id="5-服务降级"><a href="#5-服务降级" class="headerlink" title="5. 服务降级"></a>5. 服务降级</h2><h3 id="5-1-在FeignClient接口上加入fallback，指向fallback实现类"><a href="#5-1-在FeignClient接口上加入fallback，指向fallback实现类" class="headerlink" title="5.1 在FeignClient接口上加入fallback，指向fallback实现类"></a>5.1 在FeignClient接口上加入fallback，指向fallback实现类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FeignClient(name = &quot;aimin-drug&quot;,path = &quot;/aimin-drug&quot;,fallback = DrugFeignFallback.class)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">DrugFeignClient</span> &#123;<br>    <span class="hljs-comment">// .....</span><br>    <span class="hljs-comment">// 你的代码逻辑</span><br>&#125;<br></code></pre></td></tr></table></figure><h3 id="5-2-实现fallback类"><a href="#5-2-实现fallback类" class="headerlink" title="5.2 实现fallback类"></a>5.2 实现fallback类</h3><p>我这边要实现的是<code>DrugFeignFallback.java</code></p><p>因为<code>DrugFeignFallback</code>是<code>DrugFeignClient</code>接口的实现类，所以要重写所有的接口方法</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.oimc.aimin.admin.feign;<br><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DrugFeignFallback</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">DrugFeignClient</span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;?&gt; insert(DrugRequest drug) &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;药品服务暂不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;?&gt; batchDelete(List&lt;Integer&gt; ids) &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;药品服务暂不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;?&gt; update(DrugRequest drug) &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;药品服务暂不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;?&gt; getById(String id) &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;药品服务暂不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;?&gt; drugList() &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;药品服务暂不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;?&gt; page(PageDrugRequest page) &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;药品服务暂不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;?&gt; categoryTree(Integer id) &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;药品服务暂不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;?&gt; categoryList() &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;药品服务暂不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;?&gt; insertCategory(DrugCategoryRequest request) &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;药品服务暂不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;?&gt; updateCategory(Integer id, DrugCategoryRequest request) &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;药品服务暂不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;?&gt; deleteCategory(Integer id) &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;药品服务暂不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;?&gt; batchUpload(<span class="hljs-meta">@RequestPart</span> List&lt;MultipartFile&gt; files) &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;药品上传服务暂不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;Boolean&gt; <span class="hljs-title function_">setMainImage</span><span class="hljs-params">(Integer imageId)</span> &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;图片设置失败，药品服务不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;?&gt; getById(Integer imageId) &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;图片查询失败，药品服务不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;?&gt; listByDrugId(Integer drugId) &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;药品图片列表服务暂不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result&lt;Boolean&gt; <span class="hljs-title function_">deleteImage</span><span class="hljs-params">(Integer imageId)</span> &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;图片删除失败，药品服务不可用（降级）&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">deleteImageByPath</span><span class="hljs-params">(String path)</span> &#123;<br>        <span class="hljs-comment">// void 方法不返回值，降级处理方式：只打印日志即可</span><br>        System.err.println(<span class="hljs-string">&quot;药品服务不可用，无法删除图片路径!&quot;</span>);<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure><h3 id="5-3-测试"><a href="#5-3-测试" class="headerlink" title="5.3 测试"></a>5.3 测试</h3><p><strong>正常情况下</strong><br>启动admin微服务和Drug微服务<br>调用查询药品信息的接口：</p><p><img src="/img/blogs/java/sentinel/1.3.png"></p><p>关闭被调用的服务Drug微服务，再次在swagger中调用查询药品信息的接口，出现降级的信息：</p><p><img src="/img/blogs/java/sentinel/1.4.png"></p><h2 id="6-请求限流"><a href="#6-请求限流" class="headerlink" title="6. 请求限流"></a>6. 请求限流</h2><p>在Sentinel控制台中添加<strong>流控</strong>规则：</p><p><img src="/img/blogs/java/sentinel/2.1.png"></p><p><img src="/img/blogs/java/sentinel/2.2.png"></p><p>每秒只能请求5次</p><p><img src="/img/blogs/java/sentinel/2.3.png"></p><p>使用Jmeter进行压力测试：</p><p><img src="/img/blogs/java/sentinel/2.4.png"></p><p>Jmeter配置：</p><ul><li>线程数：100</li><li>Ramp-up：1 秒</li><li>Loop：1 次<br>表示 <strong>100个用户在1秒内全部启动，每个用户发送1次请求</strong>。</li></ul><p>测试结果：</p><p><img src="/img/blogs/java/sentinel/2.5.png"></p><p>100个请求只成功了一个</p><h2 id="7-服务熔断"><a href="#7-服务熔断" class="headerlink" title="7. 服务熔断"></a>7. 服务熔断</h2><p><img src="/img/blogs/java/sentinel/3.1.png"></p><p><img src="/img/blogs/java/sentinel/3.2.png"></p><p><img src="/img/blogs/java/sentinel/3.3.png"></p><p>该熔断配置的含义是：</p><p><strong>当1秒内收到至少5个请求，其中超过50%的请求响应超过200ms时，该接口将进入20秒的熔断状态</strong>。</p><p>Jmeter配置：</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://b11et3un53m.feishu.cn/wiki/QfVrw3sZvihmnPkmALYcUHIDnff">可以参考白马的SpringCloud资料</a></p><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>SpringCloud</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>SpringCloud</tag>
+      
+      <tag>OpenFeign</tag>
+      
+      <tag>Sentinel</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>SpringCloud Gateway网关微服务实现动态路由功能</title>
     <link href="/2025/11/17/JAVA/SpringCloud%20Gateway%E7%BD%91%E5%85%B3%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E7%8E%B0%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8A%9F%E8%83%BD/"/>
     <url>/2025/11/17/JAVA/SpringCloud%20Gateway%E7%BD%91%E5%85%B3%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E7%8E%B0%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8A%9F%E8%83%BD/</url>
@@ -136,11 +192,11 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>git</tag>
       
       <tag>开发工具</tag>
+      
+      <tag>学习</tag>
       
     </tags>
     
@@ -474,9 +530,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>开发工具</tag>
+      
+      <tag>学习</tag>
       
       <tag>Docker</tag>
       
@@ -590,11 +646,11 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>git</tag>
       
       <tag>开发工具</tag>
+      
+      <tag>学习</tag>
       
     </tags>
     
@@ -706,9 +762,9 @@
     
     <tags>
       
-      <tag>前端</tag>
-      
       <tag>学习</tag>
+      
+      <tag>前端</tag>
       
       <tag>JavaScript</tag>
       
@@ -762,9 +818,9 @@
     
     <tags>
       
-      <tag>前端</tag>
-      
       <tag>学习</tag>
+      
+      <tag>前端</tag>
       
       <tag>CSS</tag>
       
@@ -791,11 +847,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>前端</tag>
       
       <tag>HTML</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
