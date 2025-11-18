@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>将Sa-Token集成到Spring Cloud Gateway实现网关统一鉴权</title>
+    <link href="/2025/11/18/JAVA/satoken%E7%BB%9F%E4%B8%80%E9%89%B4%E6%9D%83/"/>
+    <url>/2025/11/18/JAVA/satoken%E7%BB%9F%E4%B8%80%E9%89%B4%E6%9D%83/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">将Sa-Token集成到Spring Cloud Gateway实现网关统一鉴权</h1><p><a href="https://zha-ge.cn/aimin">项目地址</a></p><h2 id="一、整体思路与架构"><a href="#一、整体思路与架构" class="headerlink" title="一、整体思路与架构"></a>一、整体思路与架构</h2><p>对Sa-Token做了一个独立封装模块 <code>aimin-satoken</code>，然后在各个微服务（包括 <code>aimin-gateway</code>网关）中引入这个模块，实现统一的登录逻辑和配置。</p><p>整体鉴权流程如下：</p><ol><li><strong>用户&#x2F;管理员在对应服务（auth&#x2F;admin）登录</strong>，由Sa-Token生成Token（<code>aimin-auth-token</code>&#x2F; <code>aimin-admin-token</code>）。</li><li><strong>所有请求先经过Spring Cloud Gateway</strong>。</li><li>网关中注册一个全局过滤器<code>SaReactorFilter</code>：<ul><li>拦截所有请求</li><li>根据请求路径(<code>/aimin-auth/**</code>、<code>/aimin-admin/**</code>等)选择不同的鉴权策略</li><li>调用<code>StpUserUtil</code>或<code>StpAdminUtil</code>进行登录校验</li></ul></li><li>校验通过后，才放行到真实微服务。</li></ol><h2 id="二、从引入依赖开始"><a href="#二、从引入依赖开始" class="headerlink" title="二、从引入依赖开始"></a>二、从引入依赖开始</h2><p>在aimin-satoken中引入以下satoken相关的依赖：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>cn.dev33<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>sa-token-spring-boot3-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>cn.dev33<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>sa-token-redis-jackson<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>cn.dev33<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>sa-token-reactor-spring-boot3-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure><p>在其他的微服务例如：aimin-admin&#x2F;aimin-gateway，引入aimin-satoken的依赖即可</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.oimc<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>aimin-satoken<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">exclusions</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">exclusion</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>cn.dev33<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>sa-token-reactor-spring-boot3-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">exclusion</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">exclusions</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure><h2 id="三、在Gateway中集成Sa-Token统一鉴权"><a href="#三、在Gateway中集成Sa-Token统一鉴权" class="headerlink" title="三、在Gateway中集成Sa-Token统一鉴权"></a>三、在Gateway中集成Sa-Token统一鉴权</h2><h3 id="3-1-配置白名单路径（security-ignore）"><a href="#3-1-配置白名单路径（security-ignore）" class="headerlink" title="3.1 配置白名单路径（security.ignore）"></a>3.1 配置白名单路径（security.ignore）</h3><p>在<code>aimin-gateway</code>的<code>bootstrap.yml</code>中，配置了白名单：用户访问这些地址是不受管控的</p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">security:</span><br>  <span class="hljs-attr">ignore:</span><br>    <span class="hljs-attr">whites:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/aimin-auth/public/wx/token</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/aimin-admin/public/auth/token</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/aimin-admin/public/auth/captchaVerify</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/public/**</span><br></code></pre></td></tr></table></figure><p>配套的配置类：<code>IgnoreWhiteProperties</code></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Data</span><br><span class="hljs-meta">@NoArgsConstructor</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@RefreshScope</span><br><span class="hljs-meta">@ConfigurationProperties(prefix = &quot;security.ignore&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IgnoreWhiteProperties</span> &#123;<br><br>    <span class="hljs-keyword">private</span> List&lt;String&gt; whites = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br><br>&#125;<br></code></pre></td></tr></table></figure><p>这样可以把白名单放在配置中心（比如Nacos）里，通过 <code>@RefreshScope</code> 热更新。</p><h3 id="3-2-网关注册Sa-Token全局过滤器：SaReactorFilter"><a href="#3-2-网关注册Sa-Token全局过滤器：SaReactorFilter" class="headerlink" title="3.2 网关注册Sa-Token全局过滤器：SaReactorFilter"></a>3.2 网关注册Sa-Token全局过滤器：SaReactorFilter</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SaTokenConfigure</span> &#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> SaReactorFilter <span class="hljs-title function_">getSaReactorFilter</span><span class="hljs-params">()</span> &#123;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SaReactorFilter</span>()<br>                <span class="hljs-comment">// 排除无需权限的接口（这里额外写了一个）</span><br>                .addExclude(<span class="hljs-string">&quot;/aimin-admin/public/**&quot;</span>)<br>                <span class="hljs-comment">// 拦截所有路由</span><br>                .addInclude(<span class="hljs-string">&quot;/**&quot;</span>)<br>                <span class="hljs-comment">// 认证函数：每次请求都会执行</span><br>                .setAuth(obj -&gt; &#123;<br>                    <span class="hljs-type">String</span> <span class="hljs-variable">path</span> <span class="hljs-operator">=</span> SaHolder.getRequest().getRequestPath();<br>                    StrategyFactory.getStrategy(path).checkAuth();<br>                &#125;)<br>                <span class="hljs-comment">// 异常处理：统一返回 JSON 错误信息</span><br>                .setError(e -&gt; &#123;<br>                    logger.log(Level.WARNING,<span class="hljs-string">&quot;sa全局异常&quot;</span>,e);<br>                    <span class="hljs-keyword">return</span> SaResult.error(e.getMessage());<br>                &#125;)<br>                <span class="hljs-comment">// 前置处理：统一设置跨域</span><br>                .setBeforeAuth(obj -&gt; &#123;<br>                    SaHolder.getResponse()<br>                            .setHeader(<span class="hljs-string">&quot;Access-Control-Allow-Origin&quot;</span>, <span class="hljs-string">&quot;*&quot;</span>)<br>                            .setHeader(<span class="hljs-string">&quot;Access-Control-Allow-Methods&quot;</span>, <span class="hljs-string">&quot;POST, GET, OPTIONS, DELETE, PUT, HEAD&quot;</span>)<br>                            .setHeader(<span class="hljs-string">&quot;Access-Control-Max-Age&quot;</span>, <span class="hljs-string">&quot;3600&quot;</span>)<br>                            .setHeader(<span class="hljs-string">&quot;Access-Control-Allow-Headers&quot;</span>, <span class="hljs-string">&quot;*&quot;</span>);<br>                    SaRouter.match(SaHttpMethod.OPTIONS)<br>                            .free(r -&gt; &#123;&#125;)<br>                            .back();<br>                &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>关键点：</p><ul><li><code>addInclude(&quot;/**&quot;)</code>：<strong>拦截所有请求</strong></li><li><code>setAuth()</code>中只做了一件事：<strong>交给StrategyFactory按路径选择鉴权策略</strong></li></ul><h3 id="3-3-路径策略：根据路径决定使用哪套登录体系"><a href="#3-3-路径策略：根据路径决定使用哪套登录体系" class="headerlink" title="3.3 路径策略：根据路径决定使用哪套登录体系"></a>3.3 路径策略：根据路径决定使用哪套登录体系</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">StrategyFactory</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">AntPathMatcher</span> <span class="hljs-variable">pathMatcher</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AntPathMatcher</span>();<br><br>    <span class="hljs-comment">// 路由 -&gt; 策略 的映射（有顺序）</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Map&lt;String, LoginCheckStrategy&gt; strategyMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedHashMap</span>&lt;&gt;();<br><br>    <span class="hljs-keyword">static</span> &#123;<br>        strategyMap.put(<span class="hljs-string">&quot;/aimin-auth/public/**&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">PublicPathStrategy</span>());<br>        strategyMap.put(<span class="hljs-string">&quot;/aimin-admin/public/**&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">PublicPathStrategy</span>());<br>        strategyMap.put(<span class="hljs-string">&quot;/aimin-auth/**&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserPathStrategy</span>());<br>        strategyMap.put(<span class="hljs-string">&quot;/aimin-admin/**&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">AdminPathStrategy</span>());<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> LoginCheckStrategy <span class="hljs-title function_">getStrategy</span><span class="hljs-params">(String requestPath)</span> &#123;<br>        <span class="hljs-keyword">for</span> (Map.Entry&lt;String, LoginCheckStrategy&gt; entry : strategyMap.entrySet()) &#123;<br>            <span class="hljs-keyword">if</span> (pathMatcher.match(entry.getKey(), requestPath)) &#123;<br>                <span class="hljs-keyword">return</span> entry.getValue();<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PublicPathStrategy</span>(); <span class="hljs-comment">// 默认策略：放行</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>说明：</p><ul><li><code>/aimin-auth/public/**</code>、<code>/aimin-admin/public/**</code> → 公共接口，走 <code>PublicPathStrategy</code>，不校验登录。</li><li><code>/aimin-auth/**</code> → <strong>用户端接口</strong>，走 <code>UserPathStrategy</code>，需要用户登录。</li><li><code>/aimin-admin/**</code> → <strong>管理端接口</strong>，走 <code>AdminPathStrategy</code>，需要管理员登录。</li></ul><h3 id="3-4-具体策略实现：AdminPathStrategy-UserPathStrategy"><a href="#3-4-具体策略实现：AdminPathStrategy-UserPathStrategy" class="headerlink" title="3.4 具体策略实现：AdminPathStrategy &amp; UserPathStrategy"></a>3.4 具体策略实现：AdminPathStrategy &amp; UserPathStrategy</h3><p><strong>管理端策略：AdminPathStrategy</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AdminPathStrategy</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">LoginCheckStrategy</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">checkAuth</span><span class="hljs-params">()</span> &#123;<br>        log.info(<span class="hljs-string">&quot;admin path check auth&quot;</span>);<br>        <span class="hljs-comment">// 调用 Sa-Token 的 ADMIN 体系进行登录校验</span><br>        StpAdminUtil.stpLogic.checkLogin();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p><strong>用户端策略：UserPathStrategy</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserPathStrategy</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">LoginCheckStrategy</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">checkAuth</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">// 调用 Sa-Token 的 USER 体系进行登录校验</span><br>        StpUserUtil.stpLogic.checkLogin();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>PublicPathStrategy 很简单，大概率就是一个空实现（直接放行）：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PublicPathStrategy</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">LoginCheckStrategy</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">checkAuth</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">// do nothing, 直接通过</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="四、一次完整请求的鉴权流程"><a href="#四、一次完整请求的鉴权流程" class="headerlink" title="四、一次完整请求的鉴权流程"></a>四、一次完整请求的鉴权流程</h2><p>以请求后台接口<code>/aimin-admin/user/list</code>为例：</p><ol><li>浏览器&#x2F;前端带着 <code>aimin-admin-token=xxx</code>请求网关。</li><li>Gateway收到请求 → <code>SaReactorFilter</code>拦截。</li><li><code>setAuth()</code>中拿到请求路径<code>/aimin-admin/user/list</code>。</li><li>调用<code>StrategyFactory.getStrategy(&quot;/aimin-admin/user/list&quot;)</code>：<ul><li>匹配上 <code>/aimin-admin/**</code> → 返回 <strong>AdminPathStrategy</strong>。</li></ul></li><li>执行<code>AdminPathStrategy.checkAuth()</code>：<ul><li>内部执行<code>StpAdminUtil.stpLogic.checkLogin()</code>。</li><li>Sa-Token会从请求头 &#x2F; Cookie &#x2F; param 中解析<code>aimin-admin-token</code>，判断是否已登录。</li></ul></li><li>已登录 → 放行请求到aimin-admin微服务。<br>未登录 → 抛出异常 → 被setError()捕获并返回统一的JSON错误（比如”admin未登录”）。</li></ol><h2 id="五、-整体流程图"><a href="#五、-整体流程图" class="headerlink" title="五、 整体流程图"></a>五、 整体流程图</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs awk">┌───────────────┐<br>│   网关收到请求  │<br>└───────┬───────┘<br>        │<br>        ▼<br>SaReactorFilter（全局过滤器）<br><br>        │<br>        ▼<br>StrategyFactory 根据路径选择登录策略<br><br>        │<br>        ├── <span class="hljs-regexp">/aimin-admin/</span>** → AdminPathStrategy → StpAdminUtil.checkLogin()<br>        │       <br>        │<br>        ├── <span class="hljs-regexp">/aimin-auth/</span>** → UserPathStrategy → StpUserUtil.checkLogin()<br>        │       <br>        │<br>        └── <span class="hljs-regexp">/public/</span>** → PublicPathStrategy（放行）<br><br>        │<br>        ▼<br>权限检查通过 → 放行到具体微服务<br></code></pre></td></tr></table></figure><h2 id="附录：封装-Sa-Token-公共组件"><a href="#附录：封装-Sa-Token-公共组件" class="headerlink" title="附录：封装 Sa-Token 公共组件"></a>附录：封装 Sa-Token 公共组件</h2><h3 id="管理员端工具类：StpAdminUtil"><a href="#管理员端工具类：StpAdminUtil" class="headerlink" title="管理员端工具类：StpAdminUtil"></a>管理员端工具类：StpAdminUtil</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">StpAdminUtil</span> &#123;<br><br>    <span class="hljs-comment">// ADMIN 命名空间，代表“管理员登录体系”</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">StpLogic</span> <span class="hljs-variable">stpLogic</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StpLogic</span>(<span class="hljs-string">&quot;ADMIN&quot;</span>);<br><br>    <span class="hljs-comment">// 获取当前登录管理员 ID</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Integer <span class="hljs-title function_">getLoginId</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">loginId</span> <span class="hljs-operator">=</span> stpLogic.getLoginId();<br>        <span class="hljs-keyword">if</span> (loginId == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">throw</span> BusinessException.of(<span class="hljs-string">&quot;admin未登录&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">return</span> Integer.parseInt(loginId.toString());<br>    &#125;<br><br>    <span class="hljs-comment">// PC 端登录（后台管理）</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> SaTokenInfo <span class="hljs-title function_">loginByPc</span><span class="hljs-params">(Integer id)</span> &#123;<br>        <span class="hljs-type">SaLoginModel</span> <span class="hljs-variable">config</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SaLoginModel</span>();<br>        config.setDevice(Device.PC);<br>        config.setIsWriteHeader(<span class="hljs-literal">false</span>);<br>        stpLogic.login(id, config);<br>        <span class="hljs-keyword">return</span> getTokenInfo();<br>    &#125;<br><br>    <span class="hljs-comment">// 获取 Token 信息</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> SaTokenInfo <span class="hljs-title function_">getTokenInfo</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> stpLogic.getTokenInfo();<br>    &#125;<br><br>    <span class="hljs-comment">// 退出登录</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">logout</span><span class="hljs-params">()</span> &#123;<br>        stpLogic.logout();<br>    &#125;<br><br>    <span class="hljs-comment">// 获取权限列表</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> List&lt;String&gt; <span class="hljs-title function_">permissions</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> stpLogic.getPermissionList();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h3 id="用户端工具类：StpUserUtil"><a href="#用户端工具类：StpUserUtil" class="headerlink" title="用户端工具类：StpUserUtil"></a>用户端工具类：StpUserUtil</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">StpUserUtil</span> &#123;<br><br>    <span class="hljs-comment">// USER 命名空间，代表“用户登录体系”（小程序 / H5）</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">StpLogic</span> <span class="hljs-variable">stpLogic</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StpLogic</span>(<span class="hljs-string">&quot;USER&quot;</span>);<br><br>    <span class="hljs-comment">// 获取当前登录用户 openId</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">getLoginId</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">loginId</span> <span class="hljs-operator">=</span> stpLogic.getLoginId();<br>        <span class="hljs-keyword">if</span> (loginId == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">throw</span> BusinessException.of(<span class="hljs-string">&quot;用户未登录&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">return</span> loginId.toString();<br>    &#125;<br><br>    <span class="hljs-comment">// PC 端登录（如果有 Web 用户）</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">loginByPc</span><span class="hljs-params">(String openId)</span> &#123;<br>        <span class="hljs-type">SaLoginModel</span> <span class="hljs-variable">config</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SaLoginModel</span>();<br>        config.setDevice(Device.PC);<br>        config.setIsWriteHeader(<span class="hljs-literal">false</span>);<br>        stpLogic.login(openId, config);<br>    &#125;<br><br>    <span class="hljs-comment">// 小程序登录</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> SaTokenInfo <span class="hljs-title function_">loginByMiniProgram</span><span class="hljs-params">(String openId)</span> &#123;<br>        <span class="hljs-type">SaLoginModel</span> <span class="hljs-variable">config</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SaLoginModel</span>();<br>        config.setDevice(Device.MINI_PROGRAM);<br>        config.setIsWriteHeader(<span class="hljs-literal">false</span>);<br>        stpLogic.login(openId, config);<br>        <span class="hljs-keyword">return</span> getTokenInfo();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> SaTokenInfo <span class="hljs-title function_">getTokenInfo</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> stpLogic.getTokenInfo();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Boolean <span class="hljs-title function_">isLogin</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> stpLogic.isLogin();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h3 id="两套体系的-Token-配置：StpUtilConfig"><a href="#两套体系的-Token-配置：StpUtilConfig" class="headerlink" title="两套体系的 Token 配置：StpUtilConfig"></a>两套体系的 Token 配置：StpUtilConfig</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">StpUtilConfig</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">init</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">// 管理端配置</span><br>        <span class="hljs-type">SaTokenConfig</span> <span class="hljs-variable">adminConfig</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SaTokenConfig</span>();<br>        adminConfig.setTokenName(<span class="hljs-string">&quot;aimin-admin-token&quot;</span>);<br>        adminConfig.setTimeout(<span class="hljs-number">2592000</span>);       <span class="hljs-comment">// 30 天</span><br>        adminConfig.setActiveTimeout(-<span class="hljs-number">1L</span>);<br>        adminConfig.setIsConcurrent(<span class="hljs-literal">false</span>);    <span class="hljs-comment">// 禁止并发登录</span><br>        adminConfig.setIsShare(<span class="hljs-literal">true</span>);<br>        adminConfig.setIsLog(<span class="hljs-literal">true</span>);<br>        adminConfig.setTokenStyle(<span class="hljs-string">&quot;random-64&quot;</span>);<br>        StpAdminUtil.stpLogic.setConfig(adminConfig);<br><br>        <span class="hljs-comment">// 用户端配置</span><br>        <span class="hljs-type">SaTokenConfig</span> <span class="hljs-variable">userConfig</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SaTokenConfig</span>();<br>        userConfig.setTokenName(<span class="hljs-string">&quot;aimin-auth-token&quot;</span>);<br>        userConfig.setTimeout(<span class="hljs-number">2592000</span>);<br>        userConfig.setActiveTimeout(-<span class="hljs-number">1</span>);<br>        userConfig.setIsConcurrent(<span class="hljs-literal">false</span>);<br>        userConfig.setIsShare(<span class="hljs-literal">true</span>);<br>        userConfig.setIsLog(<span class="hljs-literal">true</span>);<br>        userConfig.setTokenStyle(<span class="hljs-string">&quot;random-64&quot;</span>);<br>        StpUserUtil.stpLogic.setConfig(userConfig);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h3 id="自动配置：SaTokenAutoConfiguration"><a href="#自动配置：SaTokenAutoConfiguration" class="headerlink" title="自动配置：SaTokenAutoConfiguration"></a>自动配置：SaTokenAutoConfiguration</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SaTokenAutoConfiguration</span> &#123;<br><br>    <span class="hljs-meta">@Bean(initMethod = &quot;init&quot;)</span><br>    <span class="hljs-keyword">public</span> StpUtilConfig <span class="hljs-title function_">setSaTokenConfig</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StpUtilConfig</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>只要在微服务中引入<code>aimin-satoken</code>依赖，Spring Boot启动时就会自动创建Bean,并执行<code>init()</code>，把Sa-Token的配置塞进Admin&#x2F;User两套登录体系。</p><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>SpringCloud</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>SpringCloud</tag>
+      
+      <tag>Sa-Token</tag>
+      
+      <tag>Gateway</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>如何使用Jmeter对接口进行压力测试</title>
     <link href="/2025/11/17/DeveloperTools/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Jmeter%E5%AF%B9%E6%8E%A5%E5%8F%A3%E8%BF%9B%E8%A1%8C%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/"/>
     <url>/2025/11/17/DeveloperTools/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Jmeter%E5%AF%B9%E6%8E%A5%E5%8F%A3%E8%BF%9B%E8%A1%8C%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/</url>
@@ -192,11 +221,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>git</tag>
       
       <tag>开发工具</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -267,9 +296,9 @@
     
     <tags>
       
-      <tag>SpringCloud</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>SpringCloud</tag>
       
       <tag>SpringBoot</tag>
       
@@ -327,9 +356,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>MySQL</tag>
       
@@ -356,9 +385,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>JVM</tag>
       
@@ -385,9 +414,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>JUC</tag>
       
@@ -414,9 +443,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>Redis</tag>
       
@@ -443,11 +472,11 @@
     
     <tags>
       
-      <tag>学习</tag>
+      <tag>JAVA</tag>
       
       <tag>SpringCloud</tag>
       
-      <tag>JAVA</tag>
+      <tag>学习</tag>
       
     </tags>
     
@@ -472,9 +501,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>SpringCloud</tag>
+      
+      <tag>学习</tag>
       
       <tag>Elasticsearch</tag>
       
@@ -501,9 +530,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>SpringCloud</tag>
+      
+      <tag>学习</tag>
       
       <tag>RabbitMQ</tag>
       
@@ -530,9 +559,9 @@
     
     <tags>
       
-      <tag>开发工具</tag>
-      
       <tag>学习</tag>
+      
+      <tag>开发工具</tag>
       
       <tag>Docker</tag>
       
@@ -559,9 +588,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>SpringCloud</tag>
+      
+      <tag>学习</tag>
       
       <tag>MybatisPlus</tag>
       
@@ -646,11 +675,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>git</tag>
       
       <tag>开发工具</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -675,9 +704,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javaweb</tag>
       
@@ -704,9 +733,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javase</tag>
       
@@ -733,9 +762,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javase</tag>
       
@@ -762,9 +791,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
+      
+      <tag>学习</tag>
       
       <tag>JavaScript</tag>
       
@@ -818,9 +847,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
+      
+      <tag>学习</tag>
       
       <tag>CSS</tag>
       
@@ -847,11 +876,11 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
       
       <tag>HTML</tag>
+      
+      <tag>学习</tag>
       
     </tags>
     
