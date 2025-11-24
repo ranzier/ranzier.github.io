@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/bg/48.jpg">
 <meta property="article:published_time" content="2025-11-20T12:35:35.000Z">
-<meta property="article:modified_time" content="2025-11-20T13:01:23.385Z">
+<meta property="article:modified_time" content="2025-11-24T08:35:54.533Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="ElasticSearch">
 <meta property="article:tag" content="SpringCloud">
@@ -427,7 +427,7 @@
 <h4 id="4）封装成统一分页响应"><a href="#4）封装成统一分页响应" class="headerlink" title="4）封装成统一分页响应"></a>4）封装成统一分页响应</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">return</span> PageResp.of(request.getCurrentPage(), request.getPageSize(), list, (<span class="hljs-type">int</span>)searchHits.getTotalHits());<br></code></pre></td></tr></table></figure>
 
 
-<h2 id="6-3-带高亮的分页搜索：lightQuery"><a href="#6-3-带高亮的分页搜索：lightQuery" class="headerlink" title="6.3 带高亮的分页搜索：lightQuery"></a>6.3 带高亮的分页搜索：<code>lightQuery</code></h2><ul>
+<h3 id="6-3-带高亮的分页搜索：lightQuery"><a href="#6-3-带高亮的分页搜索：lightQuery" class="headerlink" title="6.3 带高亮的分页搜索：lightQuery"></a>6.3 带高亮的分页搜索：<code>lightQuery</code></h3><ul>
 <li>在 <code>multi_match</code> 的基础上增加高亮配置，对多个字段同时开启高亮。</li>
 <li>使用 <code>Hutool JSONObject</code> 对命中的 <code>DrugIndex</code> 对象进行字段覆盖，把 ES返回的高亮片段替换到实体字段中。</li>
 <li>最终返回的 <code>DrugIndex</code> 列表中的字段已带高亮 <code>HTML</code>标签，方便前端直接展示搜索高亮效果。</li>
@@ -477,7 +477,7 @@
 <h4 id="5）封装分页结果"><a href="#5）封装分页结果" class="headerlink" title="5）封装分页结果"></a>5）封装分页结果</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">return</span> PageResp.of(request.getCurrentPage(), request.getPageSize(), indices, (<span class="hljs-type">int</span>)searchResult.getTotalHits());<br></code></pre></td></tr></table></figure>
 
 <p>和普通查询一样，只不过 list 换成了带高亮后的 <code>indices</code>。</p>
-<h2 id="五、构建高亮字段配置："><a href="#五、构建高亮字段配置：" class="headerlink" title="五、构建高亮字段配置："></a>五、构建高亮字段配置：</h2><p>高亮字段统一管理（buildHighlightQuery + DrugHighlightFields）</p>
+<h3 id="6-4-构建高亮字段配置buildHighlightQuery"><a href="#6-4-构建高亮字段配置buildHighlightQuery" class="headerlink" title="6.4 构建高亮字段配置buildHighlightQuery"></a>6.4 构建高亮字段配置<code>buildHighlightQuery</code></h3><p>高亮字段统一管理（buildHighlightQuery + DrugHighlightFields）</p>
 <p><code>buildHighlightQuery</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> HighlightQuery <span class="hljs-title function_">buildHighlightQuery</span><span class="hljs-params">()</span> &#123;<br>    List&lt;String&gt; allFieldList = DrugHighlightFields.getAllFieldList();<br>    List&lt;HighlightField&gt; highlightFieldList = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>    allFieldList.forEach(field -&gt; &#123;<br>        highlightFieldList.add(<span class="hljs-keyword">new</span> <span class="hljs-title class_">HighlightField</span>(field));<br>    &#125;);<br>    <span class="hljs-type">Highlight</span> <span class="hljs-variable">highlight</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Highlight</span>(highlightFieldList);<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">HighlightQuery</span>(highlight, DrugIndex.class);<br>&#125;<br></code></pre></td></tr></table></figure>
 

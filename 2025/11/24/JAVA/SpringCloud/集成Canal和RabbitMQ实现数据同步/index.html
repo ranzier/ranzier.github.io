@@ -1,0 +1,851 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/about/dogs.jpg">
+  <link rel="icon" href="/img/about/dogs.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ranzier">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="使用Canal将数据库中的变更同步到ES中，实现数据同步功能  1. 前言1.1 什么是Canal？Canal 组件是一个基于 MySQL 数据库增量日志解析，提供增量数据订阅和消费，支持将增量数据投递到下游消费者（如 Kafka、RocketMQ 等）或者存储（如 Elasticsearch、HBase 等）的组件。  Canal 感知到MySQL数据变动，然后解析变动数据，将变动数据发送到MQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Canal将数据库中的变更同步到ES中，实现数据同步功能">
+<meta property="og:url" content="http://example.com/2025/11/24/JAVA/SpringCloud/%E9%9B%86%E6%88%90Canal%E5%92%8CRabbitMQ%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/index.html">
+<meta property="og:site_name" content="RANZIER">
+<meta property="og:description" content="使用Canal将数据库中的变更同步到ES中，实现数据同步功能  1. 前言1.1 什么是Canal？Canal 组件是一个基于 MySQL 数据库增量日志解析，提供增量数据订阅和消费，支持将增量数据投递到下游消费者（如 Kafka、RocketMQ 等）或者存储（如 Elasticsearch、HBase 等）的组件。  Canal 感知到MySQL数据变动，然后解析变动数据，将变动数据发送到MQ">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/bg/50.jpg">
+<meta property="article:published_time" content="2025-11-24T14:35:35.000Z">
+<meta property="article:modified_time" content="2025-11-24T09:57:12.497Z">
+<meta property="article:author" content="ranzier">
+<meta property="article:tag" content="Canal">
+<meta property="article:tag" content="ES">
+<meta property="article:tag" content="JAVA">
+<meta property="article:tag" content="SpringCloud">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/bg/50.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>使用Canal将数据库中的变更同步到ES中，实现数据同步功能 - RANZIER</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3846514_kabxni94auf.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/gundongtiao.css">
+<link rel="stylesheet" href="/css/bubble.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"🌟","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 80vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>RANZIER</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/suibi/" target="_self">
+                <i class="iconfont icon-pen"></i>
+                <span>随笔</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/3.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.35)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="使用Canal将数据库中的变更同步到ES中，实现数据同步功能"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-24 22:35" pubdate>
+          2025年11月24日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          6 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          本文阅读次数：<span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">使用Canal将数据库中的变更同步到ES中，实现数据同步功能</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 align="center">使用Canal将数据库中的变更同步到ES中，实现数据同步功能</h1>
+
+<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h1><h2 id="1-1-什么是Canal？"><a href="#1-1-什么是Canal？" class="headerlink" title="1.1 什么是Canal？"></a>1.1 什么是Canal？</h2><p>Canal 组件是一个基于 MySQL 数据库增量日志解析，提供增量数据订阅和消费，支持将增量数据投递到下游消费者（如 Kafka、RocketMQ 等）或者存储（如 Elasticsearch、HBase 等）的组件。<br>  Canal 感知到MySQL数据变动，然后解析变动数据，将变动数据发送到MQ或者同步到其他数据库，等待进一步业务逻辑处理</p>
+<h2 id="1-2-Canal的工作原理"><a href="#1-2-Canal的工作原理" class="headerlink" title="1.2 Canal的工作原理"></a>1.2 Canal的工作原理</h2><h1 id="2-Canal在项目中的作用"><a href="#2-Canal在项目中的作用" class="headerlink" title="2. Canal在项目中的作用"></a>2. Canal在项目中的作用</h1><p><a target="_blank" rel="noopener" href="https://zha-ge.cn/aimin/">项目地址</a></p>
+<p><strong>Canal 的主要作用是实现 MySQL → Elasticsearch 的实时数据同步</strong></p>
+<p>drug 微服务中的药品数据存储在 MySQL，而搜索功能（aimin-search 微服务）依赖的是 <strong>Elasticsearch 索引库 DrugIndex</strong>。</p>
+<p>如果：</p>
+<ul>
+<li>后台管理员修改药品信息（MySQL 更新）</li>
+<li>新增&#x2F;删除药品记录（MySQL 插入&#x2F;删除）</li>
+</ul>
+<p>如果 ES 不同步，就会出现：</p>
+<ul>
+<li>搜索不到新药品</li>
+<li>搜索结果无变化</li>
+<li>搜索字段是旧数据</li>
+<li>药品名改了，但搜索结果不变</li>
+</ul>
+<p>所以项目使用 <strong>Canal 监听 MySQL binlog</strong>，实现<strong>数据库变化事件驱动的实时ES同步</strong>。</p>
+<p>项目中 Canal 的完整链路：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">管理员在 aimin-<span class="hljs-keyword">admin</span> 中修改药品 <br>        ↓  <br>MySQL drug 表执行 <span class="hljs-keyword">UPDATE</span>  <br>        ↓  <br>MySQL 写入 binlog  <br>        ↓  <br>Canal <span class="hljs-keyword">Server</span> 监听 binlog  <br>        ↓  <br>CanalReceiver（drug 微服务）接收到事件  <br>        ↓  <br>解析 rowData 转为 DrugIndex  <br>        ↓  <br>调用 ElasticsearchTemplate.save()  <br>        ↓  <br>ES 索引库实现实时更新  <br>        ↓  <br>aimin-<span class="hljs-keyword">search</span> 搜索接口返回最新结果<br></code></pre></td></tr></table></figure>
+
+
+<h1 id="3-如何集成Canal实现ES的数据同步"><a href="#3-如何集成Canal实现ES的数据同步" class="headerlink" title="3. 如何集成Canal实现ES的数据同步"></a>3. 如何集成Canal实现ES的数据同步</h1><h2 id="3-1-引入-Canal-客户端依赖（POM）"><a href="#3-1-引入-Canal-客户端依赖（POM）" class="headerlink" title="3.1 引入 Canal 客户端依赖（POM）"></a>3.1 引入 Canal 客户端依赖（POM）</h2><p>在 <code>aimin-drug</code> 的 <code>pom.xml</code> 中引入 Canal 客户端：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.otter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>canal.client<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.1.8<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 必须手动补上协议依赖，否则 Message 类找不到 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.otter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>canal.protocol<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.1.8<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.otter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>canal.common<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.1.8<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这一步让 drug 微服务具备连接 Canal Server 并解析 binlog 的能力。</p>
+<h2 id="3-2-在-bootstrap-yml-中配置-Canal-客户端"><a href="#3-2-在-bootstrap-yml-中配置-Canal-客户端" class="headerlink" title="3.2 在 bootstrap.yml 中配置 Canal 客户端"></a>3.2 在 <code>bootstrap.yml</code> 中配置 Canal 客户端</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">canal:</span><br>  <span class="hljs-attr">server:</span><br>    <span class="hljs-attr">ip:</span> <span class="hljs-string">localhost</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-number">11111</span><br>  <span class="hljs-attr">destination:</span> <span class="hljs-string">example</span><br>  <span class="hljs-attr">initialDelay:</span> <span class="hljs-number">5000</span><br>  <span class="hljs-attr">fixedDelay:</span> <span class="hljs-number">5000</span><br>  <span class="hljs-attr">subscribe:</span> <span class="hljs-string">.*\..*</span><br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ip</code>、<code>port</code></td>
+<td>Canal Server 地址</td>
+</tr>
+<tr>
+<td><code>destination</code></td>
+<td>默认 Canal 实例名 example</td>
+</tr>
+<tr>
+<td><code>subscribe</code></td>
+<td>订阅所有表</td>
+</tr>
+<tr>
+<td><code>initialDelay</code></td>
+<td>延迟 5 秒启动同步</td>
+</tr>
+<tr>
+<td><code>fixedDelay</code></td>
+<td>每 5 秒轮询一次 Canal</td>
+</tr>
+</tbody></table>
+<h2 id="3-3-CanalProperties-将-YAML-配置绑定为-Java-对象"><a href="#3-3-CanalProperties-将-YAML-配置绑定为-Java-对象" class="headerlink" title="3.3 CanalProperties 将 YAML 配置绑定为 Java 对象"></a>3.3 CanalProperties 将 YAML 配置绑定为 Java 对象</h2><p>这里将 <code>YAML</code> 配置映射为 POJO，用于建立 CanalConnector:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@ConfigurationProperties(prefix = &quot;canal&quot;)</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CanalProperties</span> &#123;<br>    <span class="hljs-keyword">private</span> String destination;<br>    <span class="hljs-keyword">private</span> Server server;<br>    <span class="hljs-keyword">private</span> Long initialDelay;<br>    <span class="hljs-keyword">private</span> Long fixedDelay;<br>    <span class="hljs-keyword">private</span> String subscribe;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-4-用-CanalConfig-创建-CanalConnector（核心配置类）"><a href="#3-4-用-CanalConfig-创建-CanalConnector（核心配置类）" class="headerlink" title="3.4 用 CanalConfig 创建 CanalConnector（核心配置类）"></a>3.4 用 CanalConfig 创建 CanalConnector（核心配置类）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-keyword">public</span> CanalConnector <span class="hljs-title function_">newSingleConnector</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> CanalConnectors.newSingleConnector(<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">InetSocketAddress</span>(canalProperties.getServer().getIp(),<br>                                  canalProperties.getServer().getPort()),<br>            canalProperties.getDestination(),<br>            <span class="hljs-string">&quot;canal&quot;</span>, <span class="hljs-string">&quot;canal&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>创建Canal客户端监听binlog</p>
+<p><code>newSingleConnector()</code> 会创建一个直连 Canal Server 的客户端，用 canal&#x2F;canal 登录，并指定 destination&#x3D;example。<br>之后，所有 binlog 消息都通过此连接读取。</p>
+<h2 id="3-5-CanalReceiver"><a href="#3-5-CanalReceiver" class="headerlink" title="3.5 CanalReceiver"></a>3.5 CanalReceiver</h2><p><strong>真正消费 MySQL binlog 的地方（核心类）</strong></p>
+<h3 id="3-5-1-PostConstruct：项目启动后连接-Canal-Server"><a href="#3-5-1-PostConstruct：项目启动后连接-Canal-Server" class="headerlink" title="3.5.1 @PostConstruct：项目启动后连接 Canal Server"></a>3.5.1 @PostConstruct：项目启动后连接 Canal Server</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostConstruct</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">connect</span><span class="hljs-params">()</span> &#123;<br>    canalConnector.connect();<br>    canalConnector.subscribe(canalProperties.getSubscribe());<br>    canalConnector.rollback();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>流程：</p>
+<ul>
+<li>connect()：连接 canal server</li>
+<li>subscribe(“...”)：订阅所有 schema 下的所有表</li>
+<li>rollback()：回滚到上次未 ack 的位置，保证不丢 binlog</li>
+</ul>
+<h3 id="3-5-2-Scheduled-Async-定时异步拉取-binlog"><a href="#3-5-2-Scheduled-Async-定时异步拉取-binlog" class="headerlink" title="3.5.2 @Scheduled + @Async 定时异步拉取 binlog"></a>3.5.2 @Scheduled + @Async 定时异步拉取 binlog</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Async</span><br><span class="hljs-meta">@Scheduled(initialDelayString = &quot;$&#123;canal.initialDelay&#125;&quot;, fixedDelayString = &quot;$&#123;canal.fixedDelay&#125;&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">processData</span><span class="hljs-params">()</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>实现方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>定时任务</td>
+<td>@Scheduled 每 5 秒执行一次</td>
+</tr>
+<tr>
+<td>异步执行</td>
+<td>@Async 不阻塞主线程</td>
+</tr>
+<tr>
+<td>自动重连</td>
+<td>canalConnector.checkValid()</td>
+</tr>
+</tbody></table>
+<h3 id="3-5-3-从-Canal-读取-binlog-数据"><a href="#3-5-3-从-Canal-读取-binlog-数据" class="headerlink" title="3.5.3 从 Canal 读取 binlog 数据"></a>3.5.3 从 Canal 读取 binlog 数据</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Message</span> <span class="hljs-variable">message</span> <span class="hljs-operator">=</span> canalConnector.getWithoutAck(<span class="hljs-number">100</span>, <span class="hljs-number">100L</span>, TimeUnit.MILLISECONDS);<br>batchId = message.getId();<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-5-4-解析-binlog-RowChange（真实业务处理）"><a href="#3-5-4-解析-binlog-RowChange（真实业务处理）" class="headerlink" title="3.5.4 解析 binlog RowChange（真实业务处理）"></a>3.5.4 解析 binlog RowChange（真实业务处理）</h3><p>得到事件类型：</p>
+<ul>
+<li>INSERT</li>
+<li>UPDATE</li>
+<li>DELETE</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">CanalEntry.<span class="hljs-type">RowChange</span> <span class="hljs-variable">rowChange</span> <span class="hljs-operator">=</span> CanalEntry.RowChange.parseFrom(entry.getStoreValue());<br>CanalEntry.<span class="hljs-type">EventType</span> <span class="hljs-variable">eventType</span> <span class="hljs-operator">=</span> rowChange.getEventType();<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-5-5-根据-eventType-对药品表进行处理"><a href="#3-5-5-根据-eventType-对药品表进行处理" class="headerlink" title="3.5.5 根据 eventType 对药品表进行处理"></a>3.5.5 根据 eventType 对药品表进行处理</h3><p>在 <code>handleData()</code> 中处理不同表：</p>
+<ul>
+<li>处理 t_drug 表（药品信息表）<ul>
+<li><code>updateDrug(afterParam);</code></li>
+</ul>
+</li>
+<li>处理 t_drug_img 表（药品图片表）</li>
+</ul>
+<h3 id="3-5-6-插入-更新-删除药品：同步到-Elasticsearch"><a href="#3-5-6-插入-更新-删除药品：同步到-Elasticsearch" class="headerlink" title="3.5.6 插入&#x2F;更新&#x2F;删除药品：同步到 Elasticsearch"></a>3.5.6 插入&#x2F;更新&#x2F;删除药品：同步到 Elasticsearch</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">insertDrug</span><span class="hljs-params">(Map&lt;String, Object&gt; afterParam)</span>&#123;<br>    <span class="hljs-type">DrugIndex</span> <span class="hljs-variable">bean</span> <span class="hljs-operator">=</span> BeanUtil.toBean(afterParam, DrugIndex.class);<br><br>    <span class="hljs-keyword">if</span>(bean.getCategoryId() != <span class="hljs-literal">null</span>)&#123;<br>        <span class="hljs-type">DrugCategory</span> <span class="hljs-variable">category</span> <span class="hljs-operator">=</span> categoryService.getByIdDeep(bean.getCategoryId());<br>        bean.setCategoryName(category.getName());<br>    &#125;<br><br>    elasticsearchTemplate.save(bean);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>MySQL 新增药品 → 立即写入 ES 索引库</li>
+<li>自动补充分类名称（从 categoryService 查询）</li>
+</ul>
+<h3 id="3-5-7-最终-ack"><a href="#3-5-7-最终-ack" class="headerlink" title="3.5.7 最终 ack"></a>3.5.7 最终 ack</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">canalConnector.ack(batchId);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>当前 binlog batch 已正确消费</li>
+<li>下次采集从下一批开始</li>
+</ul>
+<h2 id="3-6-数据流动图"><a href="#3-6-数据流动图" class="headerlink" title="3.6 数据流动图:"></a>3.6 数据流动图:</h2><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">MySQL drug 表数据变化<br>         ↓  写入 binlog<br>Canal <span class="hljs-keyword">Server</span> 监听 binlog<br>         ↓ 发送给 Canal 客户端<br>aimin-drug 中的 CanalReceiver 拉取消息<br>         ↓ 解析表名 + 字段 + eventType<br>根据事件类型处理：<br>  <span class="hljs-keyword">INSERT</span> → ES 新增索引<br>  <span class="hljs-keyword">UPDATE</span> → ES 更新索引<br>  <span class="hljs-keyword">DELETE</span> → ES 删除索引<br>         ↓<br>Elasticsearch 保存最新药品索引信息<br>         ↓<br>aimin-<span class="hljs-keyword">search</span> 搜索服务即时返回最新数据<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+<p><strong>参考文献：</strong><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/langfeiyes/article/details/130711899">一篇文章让你上手Canal数据同步神技~</a></p>
+<h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/SpringCloud/" class="category-chain-item">SpringCloud</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/SpringCloud/" class="print-no-link">#SpringCloud</a>
+      
+        <a href="/tags/JAVA/" class="print-no-link">#JAVA</a>
+      
+        <a href="/tags/Canal/" class="print-no-link">#Canal</a>
+      
+        <a href="/tags/ES/" class="print-no-link">#ES</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/24/JAVA/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" title="Canal实现数据同步的工作原理">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Canal实现数据同步的工作原理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/21/JAVA/%E4%B8%BA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98%E5%8A%9F%E8%83%BD/" title="JAVA项目中使用Caffeine和Redis实现二级（多级）缓存">
+                        <span class="hidden-mobile">JAVA项目中使用Caffeine和Redis实现二级（多级）缓存</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"sj2tGuxMGSDhkN5hNuOIVta1-gzGzoHsz","appKey":"ysR5OTuTzoby2oNvNyGOtXFQ","path":"window.location.pathname","placeholder":"如有问题，欢迎指正~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>AI</span> <i class="iconfont icon-love"></i> <span>CPP</span> <i class="iconfont icon-love"></i> <span>JAVA</span> <i class="iconfont icon-love"></i> <span>CyberSec</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/love.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiaoxingxing.js"></script>
+<script src="/js/bubble.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>
