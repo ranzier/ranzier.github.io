@@ -21,29 +21,30 @@
   <meta name="author" content="ranzier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Canal实现数据同步的工作原理   1. Canal的核心原理和整体流程Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。 Canal 数据流动的整体链路： 123456789MySQL 写入（INSER">
+    <meta name="description" content="如何为自己的JAVA项目集成AI对话服务（含prompt工程、对话持久化至MongoDB、会话上下文记忆）   1. 总体概览项目地址 亮点：  实现基于Spring AI的大模型对话服务 构建面向医疗问诊场景的 Prompt 工程体系 支持流式响应与多轮会话上下文记忆 将完整对话内容持久化到 MongoDB 数据库  核心技术栈：    能力 技术    大模型调用 Spring AI &amp;#x2">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Canal实现数据同步的工作原理">
-<meta property="og:url" content="http://example.com/2025/11/24/JAVA/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:title" content="基于SpringAI实现会话记忆和对话内容持久化的AI对话服务">
+<meta property="og:url" content="http://example.com/2025/11/24/AI/%E5%A6%82%E4%BD%95%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90AI%E5%AF%B9%E8%AF%9D%E5%8A%9F%E8%83%BD/index.html">
 <meta property="og:site_name" content="RANZIER">
-<meta property="og:description" content="Canal实现数据同步的工作原理   1. Canal的核心原理和整体流程Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。 Canal 数据流动的整体链路： 123456789MySQL 写入（INSER">
+<meta property="og:description" content="如何为自己的JAVA项目集成AI对话服务（含prompt工程、对话持久化至MongoDB、会话上下文记忆）   1. 总体概览项目地址 亮点：  实现基于Spring AI的大模型对话服务 构建面向医疗问诊场景的 Prompt 工程体系 支持流式响应与多轮会话上下文记忆 将完整对话内容持久化到 MongoDB 数据库  核心技术栈：    能力 技术    大模型调用 Spring AI &amp;#x2">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/bg/51.jpg">
-<meta property="article:published_time" content="2025-11-24T14:35:35.000Z">
-<meta property="article:modified_time" content="2025-11-24T09:45:08.007Z">
+<meta property="og:image" content="http://example.com/img/bg/52.jpg">
+<meta property="article:published_time" content="2025-11-24T14:15:35.000Z">
+<meta property="article:modified_time" content="2025-11-25T12:38:09.981Z">
 <meta property="article:author" content="ranzier">
-<meta property="article:tag" content="Canal">
-<meta property="article:tag" content="ES">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Agent">
 <meta property="article:tag" content="JAVA">
-<meta property="article:tag" content="MQ">
+<meta property="article:tag" content="Prompt">
+<meta property="article:tag" content="Spring AI">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/bg/51.jpg">
+<meta name="twitter:image" content="http://example.com/img/bg/52.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Canal实现数据同步的工作原理 - RANZIER</title>
+  <title>基于SpringAI实现会话记忆和对话内容持久化的AI对话服务 - RANZIER</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Canal实现数据同步的工作原理"></span>
+            <span id="subtitle" data-typed-text="基于SpringAI实现会话记忆和对话内容持久化的AI对话服务"></span>
           
         </div>
 
@@ -239,7 +240,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-11-24 22:35" pubdate>
+        <time datetime="2025-11-24 22:15" pubdate>
           2025年11月24日 晚上
         </time>
       </span>
@@ -251,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          281 字
+          832 字
         
       </span>
     
@@ -262,7 +263,7 @@
         
         
         
-          2 分钟
+          5 分钟
         
       </span>
     
@@ -312,63 +313,137 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Canal实现数据同步的工作原理</h1>
+            <h1 id="seo-header">基于SpringAI实现会话记忆和对话内容持久化的AI对话服务</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 align="center">Canal实现数据同步的工作原理</h1>
+                <h1 align="center">如何为自己的JAVA项目集成AI对话服务（含prompt工程、对话持久化至MongoDB、会话上下文记忆）</h1>
 
 
-<h1 id="1-Canal的核心原理和整体流程"><a href="#1-Canal的核心原理和整体流程" class="headerlink" title="1. Canal的核心原理和整体流程"></a>1. Canal的核心原理和整体流程</h1><p><strong>Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。</strong></p>
-<p>Canal 数据流动的整体链路：</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">MySQL 写入（<span class="hljs-keyword">INSERT</span>/<span class="hljs-keyword">UPDATE</span>/<span class="hljs-keyword">DELETE</span>）<br>          ↓（生成binlog）<br>Canal <span class="hljs-keyword">Server</span> 订阅 binlog（伪装成 slave）<br>          ↓<br>Canal Client（你的 aimin-drug 微服务）<br>          ↓<br>你写的 CanalReceiver 对数据进行处理<br>          ↓<br>同步到 ES / Redis / MQ / 其他地方<br></code></pre></td></tr></table></figure>
-
-<p><img src="/img/blogs/canal/1.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="2-MySQL-产生-binlog（变更日志）"><a href="#2-MySQL-产生-binlog（变更日志）" class="headerlink" title="2. MySQL 产生 binlog（变更日志）"></a>2. MySQL 产生 binlog（变更日志）</h1><p>只要执行：</p>
+<h1 id="1-总体概览"><a href="#1-总体概览" class="headerlink" title="1. 总体概览"></a>1. 总体概览</h1><p><a target="_blank" rel="noopener" href="https://zha-ge.cn/aimin">项目地址</a></p>
+<p><strong>亮点：</strong></p>
 <ul>
-<li>INSERT</li>
-<li>UPDATE</li>
-<li>DELETE</li>
+<li>实现基于Spring AI的大模型对话服务</li>
+<li>构建面向医疗问诊场景的 Prompt 工程体系</li>
+<li>支持流式响应与多轮会话上下文记忆</li>
+<li>将完整对话内容持久化到 MongoDB 数据库</li>
 </ul>
-<p>MySQL都会把变化记录到 binlog（Binary log）中。</p>
-<p>binlog 里面存的是<strong>数据变更事件</strong>，例如：</p>
+<p>核心技术栈：</p>
 <table>
 <thead>
 <tr>
-<th>操作</th>
-<th>binlog中记录</th>
+<th>能力</th>
+<th>技术</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>Insert</td>
-<td>row 新增的数据</td>
+<td>大模型调用</td>
+<td>Spring AI &#x2F; OpenAI 兼容模式</td>
 </tr>
 <tr>
-<td>Update</td>
-<td>修改前 &amp; 修改后的值</td>
+<td>Prompt 工程</td>
+<td>Spring AI Prompt API</td>
 </tr>
 <tr>
-<td>Delete</td>
-<td>删除前的值</td>
+<td>流式输出</td>
+<td>WebFlux + Flux</td>
+</tr>
+<tr>
+<td>会话记忆</td>
+<td>Spring AI ChatMemory</td>
+</tr>
+<tr>
+<td>持久化</td>
+<td>MongoDB（存储用户、AI、系统消息）</td>
+</tr>
+<tr>
+<td>检索增强</td>
+<td>Milvus VectorStore（已集成）</td>
 </tr>
 </tbody></table>
-<h1 id="3-Canal的具体工作流程"><a href="#3-Canal的具体工作流程" class="headerlink" title="3. Canal的具体工作流程"></a>3. Canal的具体工作流程</h1><ol>
-<li>Canal Server 会去连接 MySQL：<ul>
-<li>以 <code>slave</code> 的身份注册</li>
-<li>发送 <code>show master status</code></li>
-<li>读取 binlog 的位置点（binlog filename + position）</li>
-<li>持续向 MySQL 发送 dump 请求 —— 和从库一样</li>
-</ul>
-</li>
-<li>MySQL 不断把 binlog 推给 Canal Server<ul>
-<li>当 Canal Server 模拟从库连接后，MySQL 会不断把 binlog 内容“推送”给 Canal。</li>
-</ul>
-</li>
-<li>Canal Server 把 binlog 解析并封装成 Java 对象，执行后续逻辑</li>
+<h1 id="2-Spring-AI-大模型对话服务实现"><a href="#2-Spring-AI-大模型对话服务实现" class="headerlink" title="2. Spring AI 大模型对话服务实现"></a>2. Spring AI 大模型对话服务实现</h1><h2 id="2-1-大模型配置"><a href="#2-1-大模型配置" class="headerlink" title="2.1 大模型配置"></a>2.1 大模型配置</h2><p>application.yml：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">ai:</span><br>    <span class="hljs-attr">openai:</span><br>      <span class="hljs-attr">base-url:</span> <span class="hljs-string">https://dashscope.aliyuncs.com/compatible-mode</span><br>      <span class="hljs-attr">api-key:</span> <span class="hljs-string">xxx</span><br>      <span class="hljs-attr">chat:</span><br>        <span class="hljs-attr">options:</span><br>          <span class="hljs-attr">model:</span> <span class="hljs-string">qwen-vl-max</span>   <span class="hljs-comment"># 多模态模型</span><br></code></pre></td></tr></table></figure>
+
+<p>通过 <strong>OpenAI 兼容模式</strong>直接<strong>调用 Qwen 系列模型</strong>，Spring AI 会自动组合成 ChatModel Bean。</p>
+<h2 id="2-2-ChatClient-装配（对话客户端）"><a href="#2-2-ChatClient-装配（对话客户端）" class="headerlink" title="2.2 ChatClient 装配（对话客户端）"></a>2.2 ChatClient 装配（对话客户端）</h2><p>核心配置类：<code>AiConfiguration</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-keyword">public</span> ChatClient <span class="hljs-title function_">chatClient</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">MessageChatMemoryAdvisor</span> <span class="hljs-variable">messageChatMemoryAdvisor</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageChatMemoryAdvisor</span>(chatMemory);<br><br>    <span class="hljs-keyword">return</span> ChatClient.builder(chatModel)<br>            .defaultAdvisors(<br>                messageChatMemoryAdvisor,      <span class="hljs-comment">// 会话记忆</span><br>                <span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleLoggerAdvisor</span>(),     <span class="hljs-comment">// 日志</span><br>                <span class="hljs-keyword">new</span> <span class="hljs-title class_">QuestionAnswerAdvisor</span>(vectorStore)  <span class="hljs-comment">// RAG，可选</span><br>            )<br>            .build();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="它做了三件事："><a href="#它做了三件事：" class="headerlink" title="它做了三件事："></a>它做了三件事：</h3><ol>
+<li><strong>绑定大模型 chatModel</strong></li>
+<li><strong>给所有对话默认挂载对话记忆 MessageChatMemoryAdvisor</strong></li>
+<li><strong>集成 RAG（Milvus）语义检索能力</strong></li>
 </ol>
-<p><img src="/img/blogs/canal/2.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>
+<p>因此，在任何 Controller 里调用 chatClient 时，都会自动带上记忆能力。</p>
+<h1 id="3-构建医疗场景-Prompt-工程体系"><a href="#3-构建医疗场景-Prompt-工程体系" class="headerlink" title="3. 构建医疗场景 Prompt 工程体系"></a>3. 构建医疗场景 Prompt 工程体系</h1><p>在 Controller 层，为医疗场景定义了系统级 Prompt：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">.system(<span class="hljs-string">&quot;你是一个医疗问诊助手，你会根据用户的问题，提供相关的医疗咨询。拒绝回答非医疗相关的问题。&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这相当于每个对话的「角色设定」：</p>
+<ul>
+<li>限制 AI 回答范围</li>
+<li>让 AI 遵循医疗问诊风格进行回复</li>
+<li>自动过滤不相关问题</li>
+</ul>
+<h1 id="4-Spring-AI-流式输出（Flux-流式推送）"><a href="#4-Spring-AI-流式输出（Flux-流式推送）" class="headerlink" title="4. Spring AI 流式输出（Flux 流式推送）"></a>4. Spring AI 流式输出（Flux 流式推送）</h1><p>Controller：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(&quot;/chat&quot;)</span><br><span class="hljs-keyword">public</span> Flux&lt;String&gt; <span class="hljs-title function_">chat</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam(&quot;message&quot;)</span> String message)</span> &#123;<br>    <span class="hljs-keyword">return</span> chatClient<br>            .prompt()<br>            .system(<span class="hljs-string">&quot;你是一个医疗问诊助手...&quot;</span>)<br>            .user(message)<br>            .advisors(a -&gt; a.param(ChatMemory.DEFAULT_CONVERSATION_ID, conversationId))<br>            .stream()<br>            .content();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="A-stream-的作用"><a href="#A-stream-的作用" class="headerlink" title="A. .stream() 的作用"></a>A. <code>.stream()</code> 的作用</h3><p>启动大模型的 <strong>Streaming 模式</strong>（Server-Sent Events），返回类型为 <code>Flux&lt;String&gt;</code>，可让前端实时显示 Token。</p>
+<h3 id="B-使用advisors绑定会话ID，实现对话记忆功能"><a href="#B-使用advisors绑定会话ID，实现对话记忆功能" class="headerlink" title="B. 使用advisors绑定会话ID，实现对话记忆功能"></a>B. 使用<code>advisors</code>绑定会话ID，实现对话记忆功能</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">.advisors(a -&gt; a.param(ChatMemory.DEFAULT_CONVERSATION_ID, conversationId))<br></code></pre></td></tr></table></figure>
+
+<p>它将当前对话请求绑定到指定的会话ID（conversationId），从而让你的<strong>多轮对话记忆生效</strong>。</p>
+<h1 id="5-多轮会话记忆实现-对话内容持久化到-MongoDB"><a href="#5-多轮会话记忆实现-对话内容持久化到-MongoDB" class="headerlink" title="5. 多轮会话记忆实现 + 对话内容持久化到 MongoDB"></a>5. 多轮会话记忆实现 + 对话内容持久化到 MongoDB</h1><p>Spring AI 会话记忆的机制：<br><code>ChatClient → MessageChatMemoryAdvisor → ChatMemory</code></p>
+<h2 id="5-1-定义存入MongoDB的Msg类"><a href="#5-1-定义存入MongoDB的Msg类" class="headerlink" title="5.1 定义存入MongoDB的Msg类"></a>5.1 定义存入MongoDB的<code>Msg</code>类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Document(&quot;msg&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Msg</span> &#123;<br>    <span class="hljs-keyword">private</span> String conversationId;<br>    <span class="hljs-keyword">private</span> String text;<br>    <span class="hljs-keyword">private</span> Date date;<br>    <span class="hljs-keyword">private</span> String type;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>每一条对话都会自动生成：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>conversationId</td>
+<td>同一个会话的唯一 ID</td>
+</tr>
+<tr>
+<td>text</td>
+<td>聊天文本</td>
+</tr>
+<tr>
+<td>type</td>
+<td>user &#x2F; assistant &#x2F; system</td>
+</tr>
+<tr>
+<td>date</td>
+<td>时间戳</td>
+</tr>
+</tbody></table>
+<h2 id="5-2-新消息写入-MongoDB"><a href="#5-2-新消息写入-MongoDB" class="headerlink" title="5.2 新消息写入 MongoDB"></a>5.2 新消息写入 MongoDB</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">add</span><span class="hljs-params">(String conversationId, List&lt;Message&gt; messages)</span> &#123;<br>    <span class="hljs-keyword">for</span> (Message message : messages) &#123;<br>        <span class="hljs-type">Msg</span> <span class="hljs-variable">msg</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Msg</span>(conversationId, message);<br>        msgRepository.save(msg);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Message（user&#x2F;assistant&#x2F;system）</li>
+<li>持久化为 Msg</li>
+<li>存入 MongoDB “msg” 集合</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;conversationId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;sessionId-xxxx&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;发烧怎么办？&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;user&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2025-11-25&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="5-3-ChatClient-查询历史记忆"><a href="#5-3-ChatClient-查询历史记忆" class="headerlink" title="5.3 ChatClient 查询历史记忆"></a>5.3 ChatClient 查询历史记忆</h3><p>当再次调用对话 API 时，Spring AI 会自动调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> List&lt;Message&gt; <span class="hljs-title function_">get</span><span class="hljs-params">(String conversationId, <span class="hljs-type">int</span> lastN)</span><br></code></pre></td></tr></table></figure>
+
+<p>读取 MongoDB 中该会话 ID 的历史消息：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">query.addCriteria(Criteria.where(<span class="hljs-string">&quot;conversationId&quot;</span>).is(id)).limit(lastN);<br><span class="hljs-keyword">return</span> mongoTemplate.find(query, Msg.class);<br></code></pre></td></tr></table></figure>
+
+<p>并将其转换回 Spring AI 的 Message：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">case</span> <span class="hljs-string">&quot;user&quot;</span> -&gt; <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserMessage</span>(msg.getText());<br></code></pre></td></tr></table></figure>
+
+<p>这意味着所有历史聊天都会再次被送入大模型，实现：</p>
+<ul>
+<li>上下文理解</li>
+<li>多轮连续对话</li>
+</ul>
+
                 
               </div>
             
@@ -386,7 +461,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/JAVA/" class="category-chain-item">JAVA</a>
+  <a href="/categories/AI/" class="category-chain-item">AI</a>
   
   
 
@@ -403,11 +478,13 @@
       
         <a href="/tags/JAVA/" class="print-no-link">#JAVA</a>
       
-        <a href="/tags/Canal/" class="print-no-link">#Canal</a>
+        <a href="/tags/AI/" class="print-no-link">#AI</a>
       
-        <a href="/tags/ES/" class="print-no-link">#ES</a>
+        <a href="/tags/Spring-AI/" class="print-no-link">#Spring AI</a>
       
-        <a href="/tags/MQ/" class="print-no-link">#MQ</a>
+        <a href="/tags/Agent/" class="print-no-link">#Agent</a>
+      
+        <a href="/tags/Prompt/" class="print-no-link">#Prompt</a>
       
     </div>
   
@@ -421,9 +498,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/11/25/AI/%E4%B8%BAAI%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90RAG%E5%8A%9F%E8%83%BD/" title="基于SpringAI + 向量数据库实现RAG文档知识库">
+                      <a href="/2025/11/24/JAVA/SpringCloud/%E9%9B%86%E6%88%90Canal%E5%92%8CRabbitMQ%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/" title="使用Canal将数据库中的变更同步到ES中，实现数据同步功能">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">基于SpringAI + 向量数据库实现RAG文档知识库</span>
+                        <span class="hidden-mobile">使用Canal将数据库中的变更同步到ES中，实现数据同步功能</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -431,8 +508,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/11/24/JAVA/SpringCloud/%E9%9B%86%E6%88%90Canal%E5%92%8CRabbitMQ%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/" title="使用Canal将数据库中的变更同步到ES中，实现数据同步功能">
-                        <span class="hidden-mobile">使用Canal将数据库中的变更同步到ES中，实现数据同步功能</span>
+                      <a href="/2025/11/21/JAVA/%E4%B8%BA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98%E5%8A%9F%E8%83%BD/" title="JAVA项目中使用Caffeine和Redis实现二级（多级）缓存">
+                        <span class="hidden-mobile">JAVA项目中使用Caffeine和Redis实现二级（多级）缓存</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -21,29 +21,29 @@
   <meta name="author" content="ranzier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Canal实现数据同步的工作原理   1. Canal的核心原理和整体流程Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。 Canal 数据流动的整体链路： 123456789MySQL 写入（INSER">
+    <meta name="description" content="基于SpringAI使用云端大模型解析OSS中的文件实现多模态理解对话   一、总体设计：多模态对话的完整链路多模态对话涉及三个关键环节：  图片上传到对象存储（OSS） 用户上传图片 → 由 aimin-ai 转发给 aimin-drug → OSS aimin-drug 返回可公开访问的 OSS URL   将 OSS 图片 URL 作为 Vision 模型输入（例如 Qwen-VL-Max）">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Canal实现数据同步的工作原理">
-<meta property="og:url" content="http://example.com/2025/11/24/JAVA/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:title" content="基于SpringAI使用云端大模型解析OSS中的文件实现多模态理解对话">
+<meta property="og:url" content="http://example.com/2025/11/25/AI/%E4%B8%BAAI%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90%E5%A4%9A%E6%A8%A1%E6%80%81%E5%8A%9F%E8%83%BD/index.html">
 <meta property="og:site_name" content="RANZIER">
-<meta property="og:description" content="Canal实现数据同步的工作原理   1. Canal的核心原理和整体流程Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。 Canal 数据流动的整体链路： 123456789MySQL 写入（INSER">
+<meta property="og:description" content="基于SpringAI使用云端大模型解析OSS中的文件实现多模态理解对话   一、总体设计：多模态对话的完整链路多模态对话涉及三个关键环节：  图片上传到对象存储（OSS） 用户上传图片 → 由 aimin-ai 转发给 aimin-drug → OSS aimin-drug 返回可公开访问的 OSS URL   将 OSS 图片 URL 作为 Vision 模型输入（例如 Qwen-VL-Max）">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/bg/51.jpg">
-<meta property="article:published_time" content="2025-11-24T14:35:35.000Z">
-<meta property="article:modified_time" content="2025-11-24T09:45:08.007Z">
+<meta property="og:image" content="http://example.com/img/bg/54.jpg">
+<meta property="article:published_time" content="2025-11-25T15:15:35.000Z">
+<meta property="article:modified_time" content="2025-11-25T13:10:25.316Z">
 <meta property="article:author" content="ranzier">
-<meta property="article:tag" content="Canal">
-<meta property="article:tag" content="ES">
-<meta property="article:tag" content="JAVA">
-<meta property="article:tag" content="MQ">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="OSS">
+<meta property="article:tag" content="Spring AI">
+<meta property="article:tag" content="多模态">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/bg/51.jpg">
+<meta name="twitter:image" content="http://example.com/img/bg/54.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Canal实现数据同步的工作原理 - RANZIER</title>
+  <title>基于SpringAI使用云端大模型解析OSS中的文件实现多模态理解对话 - RANZIER</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +228,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Canal实现数据同步的工作原理"></span>
+            <span id="subtitle" data-typed-text="基于SpringAI使用云端大模型解析OSS中的文件实现多模态理解对话"></span>
           
         </div>
 
@@ -239,8 +239,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-11-24 22:35" pubdate>
-          2025年11月24日 晚上
+        <time datetime="2025-11-25 23:15" pubdate>
+          2025年11月25日 晚上
         </time>
       </span>
     
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          281 字
+          739 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          2 分钟
+          4 分钟
         
       </span>
     
@@ -312,63 +312,84 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Canal实现数据同步的工作原理</h1>
+            <h1 id="seo-header">基于SpringAI使用云端大模型解析OSS中的文件实现多模态理解对话</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 align="center">Canal实现数据同步的工作原理</h1>
+                <h1 align="center">基于SpringAI使用云端大模型解析OSS中的文件实现多模态理解对话</h1>
 
 
-<h1 id="1-Canal的核心原理和整体流程"><a href="#1-Canal的核心原理和整体流程" class="headerlink" title="1. Canal的核心原理和整体流程"></a>1. Canal的核心原理和整体流程</h1><p><strong>Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。</strong></p>
-<p>Canal 数据流动的整体链路：</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">MySQL 写入（<span class="hljs-keyword">INSERT</span>/<span class="hljs-keyword">UPDATE</span>/<span class="hljs-keyword">DELETE</span>）<br>          ↓（生成binlog）<br>Canal <span class="hljs-keyword">Server</span> 订阅 binlog（伪装成 slave）<br>          ↓<br>Canal Client（你的 aimin-drug 微服务）<br>          ↓<br>你写的 CanalReceiver 对数据进行处理<br>          ↓<br>同步到 ES / Redis / MQ / 其他地方<br></code></pre></td></tr></table></figure>
-
-<p><img src="/img/blogs/canal/1.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="2-MySQL-产生-binlog（变更日志）"><a href="#2-MySQL-产生-binlog（变更日志）" class="headerlink" title="2. MySQL 产生 binlog（变更日志）"></a>2. MySQL 产生 binlog（变更日志）</h1><p>只要执行：</p>
-<ul>
-<li>INSERT</li>
-<li>UPDATE</li>
-<li>DELETE</li>
-</ul>
-<p>MySQL都会把变化记录到 binlog（Binary log）中。</p>
-<p>binlog 里面存的是<strong>数据变更事件</strong>，例如：</p>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>binlog中记录</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Insert</td>
-<td>row 新增的数据</td>
-</tr>
-<tr>
-<td>Update</td>
-<td>修改前 &amp; 修改后的值</td>
-</tr>
-<tr>
-<td>Delete</td>
-<td>删除前的值</td>
-</tr>
-</tbody></table>
-<h1 id="3-Canal的具体工作流程"><a href="#3-Canal的具体工作流程" class="headerlink" title="3. Canal的具体工作流程"></a>3. Canal的具体工作流程</h1><ol>
-<li>Canal Server 会去连接 MySQL：<ul>
-<li>以 <code>slave</code> 的身份注册</li>
-<li>发送 <code>show master status</code></li>
-<li>读取 binlog 的位置点（binlog filename + position）</li>
-<li>持续向 MySQL 发送 dump 请求 —— 和从库一样</li>
+<h1 id="一、总体设计：多模态对话的完整链路"><a href="#一、总体设计：多模态对话的完整链路" class="headerlink" title="一、总体设计：多模态对话的完整链路"></a>一、总体设计：多模态对话的完整链路</h1><p>多模态对话涉及三个关键环节：</p>
+<ol>
+<li><strong>图片上传到对象存储</strong>（OSS）<ul>
+<li>用户上传图片 → 由 aimin-ai 转发给 aimin-drug → OSS</li>
+<li>aimin-drug 返回可公开访问的 OSS URL</li>
 </ul>
 </li>
-<li>MySQL 不断把 binlog 推给 Canal Server<ul>
-<li>当 Canal Server 模拟从库连接后，MySQL 会不断把 binlog 内容“推送”给 Canal。</li>
+<li><strong>将 OSS 图片 URL 作为 Vision 模型输入</strong>（例如 Qwen-VL-Max）<ul>
+<li>Spring AI 支持直接使用 <code>.media()</code> 上传 URL 或 Resource 对象给模型</li>
 </ul>
 </li>
-<li>Canal Server 把 binlog 解析并封装成 Java 对象，执行后续逻辑</li>
+<li>结合文本 + 图片做<strong>多模态推理</strong>（Vision Chat）<ul>
+<li>AI 根据图片内容生成诊断分析</li>
+</ul>
+</li>
 </ol>
-<p><img src="/img/blogs/canal/2.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>
+<p>最终架构示意如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs">用户 → aimin-ai → aimin-drug → OSS  <br>                       ↓  <br>        AI Vision 模型（Spring AI ChatClient）  <br>                       ↓  <br>                    流式返回<br></code></pre></td></tr></table></figure>
+
+
+<h1 id="二、Controller-层：对外暴露多模态对话接口"><a href="#二、Controller-层：对外暴露多模态对话接口" class="headerlink" title="二、Controller 层：对外暴露多模态对话接口"></a>二、Controller 层：对外暴露多模态对话接口</h1><p>多模态接口如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Operation(summary = &quot;多模态对话功能&quot;)</span><br><span class="hljs-meta">@PostMapping(value = &quot;/vision&quot;, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)</span><br><span class="hljs-keyword">public</span> Flux&lt;String&gt; <span class="hljs-title function_">visionChat</span><span class="hljs-params">(</span><br><span class="hljs-params">        <span class="hljs-meta">@RequestParam(&quot;files&quot;)</span> List&lt;MultipartFile&gt; files,</span><br><span class="hljs-params">        <span class="hljs-meta">@RequestParam(&quot;question&quot;)</span> String question</span><br><span class="hljs-params">)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br><br><br>    <span class="hljs-comment">// 1. 调用 aimin-drug 上传 OSS</span><br>    Result&lt;List&lt;DrugImgVO&gt;&gt; result = drugFeign.batchUpload(files);<br><br>    <span class="hljs-keyword">if</span> (result == <span class="hljs-literal">null</span> || result.getData() == <span class="hljs-literal">null</span> || result.getData().isEmpty()) &#123;<br>        <span class="hljs-keyword">return</span> Flux.just(<span class="hljs-string">&quot;图片上传失败，无法进行分析&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 2. 获取 OSS 图片 URL</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">ossUrl</span> <span class="hljs-operator">=</span> result.getData().getFirst().getExternalPath();<br>    log.info(<span class="hljs-string">&quot;OSS 图片 URL: &#123;&#125;&quot;</span>, ossUrl);<br><br>    <span class="hljs-type">Resource</span> <span class="hljs-variable">resource</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UrlResource</span>(ossUrl);<br><br>    <span class="hljs-keyword">return</span> chatClient<br>            .prompt()<br>            .system(<span class="hljs-string">&quot;你是一个医学影像分析助手，请根据图片内容进行诊断建议。&quot;</span>)<br>            .user(u -&gt; u.text(question)<br>                    .media(MimeTypeUtils.IMAGE_PNG, resource))<br>            .advisors(a -&gt; a.param(ChatMemory.DEFAULT_CONVERSATION_ID, conversationId))<br>            .stream()<br>            .content();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>接收用户上传的图片 + 文本问题</li>
+<li>通过 Feign 调用 aimin-drug 微服务上传图片<ul>
+<li>因为 <strong>aimin-drug 已经封装了一套非常完善的文件上传 + OSS 外链体系</strong></li>
+</ul>
+</li>
+<li>从 aimin-drug 返回的 VO 中获取 OSS 外链URL,例如：<code>https://oss-xxx.aliyuncs.com/rag/2025/11/25/xxxxxx.png </code></li>
+<li>用 UrlResource 包装 URL<ul>
+<li>Spring AI 的 .media() 支持：<ul>
+<li>FileSystemResource</li>
+<li>UrlResource</li>
+<li>ClassPathResource</li>
+<li>ByteArrayResource等多种资源类型</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>构建 prompt，并将图片作为输入传入模型</li>
+<li>绑定多轮会话记忆</li>
+<li>最后流式返回</li>
+</ul>
+<h1 id="三、文件上传与-OSS-外链生成"><a href="#三、文件上传与-OSS-外链生成" class="headerlink" title="三、文件上传与 OSS 外链生成"></a>三、文件上传与 OSS 外链生成</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> Result&lt;?&gt; uploadDrugImg(List&lt;MultipartFile&gt; files) &#123;<br><br>    List&lt;FileUploadResult&gt; fileUploadResults =<br>            fileService.batchUploadImages(files, Constants.DRUG_FILE_MODULE);<br><br>    <span class="hljs-keyword">if</span> (fileUploadResults.isEmpty()) &#123;<br>        <span class="hljs-keyword">return</span> Result.error(<span class="hljs-string">&quot;图片上传失败&quot;</span>);<br>    &#125;<br><br>    List&lt;DrugImg&gt; list = objectConvertor.toDrugImg(fileUploadResults);<br><br>    <span class="hljs-comment">// 将上传结果缓存（省略）</span><br><br>    List&lt;DrugImgVO&gt; drugImgVOS = objectConvertor.toVO(list);<br><br>    drugImgVOS.forEach(img -&gt; &#123;<br>        img.setExternalPath(fileService.externalPath(img.getPath()));<br>    &#125;);<br><br>    <span class="hljs-keyword">return</span> Result.success(drugImgVOS);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>将图片上传至 OSS</strong></li>
+<li>把 OSS 的内部路径转换为可外部访问的 URL</li>
+<li><strong>外链URL返回给 aimin-ai</strong> 作为 Vision 模型输入</li>
+</ol>
+<h1 id="四、Spring-AI-Vision-模型调用：多模态的核心"><a href="#四、Spring-AI-Vision-模型调用：多模态的核心" class="headerlink" title="四、Spring AI Vision 模型调用：多模态的核心"></a>四、Spring AI Vision 模型调用：多模态的核心</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">.user(u -&gt; u.text(question)<br>        .media(MimeTypeUtils.IMAGE_PNG, resource))<br></code></pre></td></tr></table></figure>
+
+<p>等价于告诉大模型：</p>
+<ul>
+<li>用户说这段话（question），并附带了一张图片，请结合图片理解并回答。</li>
+</ul>
+<h1 id="四、完整流程图"><a href="#四、完整流程图" class="headerlink" title="四、完整流程图"></a>四、完整流程图</h1><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs mathematica">用户上传图片 <span class="hljs-operator">+</span> 问题<br>        │<br>        ▼<br><span class="hljs-variable">aimin</span><span class="hljs-operator">-</span><span class="hljs-variable">ai</span> <span class="hljs-punctuation">(</span><span class="hljs-variable">visionChat</span>接口<span class="hljs-punctuation">)</span><br>        │ 通过<span class="hljs-variable">Feign</span>传文件<br>        ▼<br><span class="hljs-variable">aimin</span><span class="hljs-operator">-</span><span class="hljs-variable">drug</span> 微服务<br>        │ 上传图片到 <span class="hljs-variable">OSS</span><br>        ▼<br><span class="hljs-variable">OSS</span> 对象存储<br>        │ 返回外链 <span class="hljs-variable">externalPath</span><br>        ▼<br><span class="hljs-variable">aimin</span><span class="hljs-operator">-</span><span class="hljs-variable">ai</span><br>        │ 构造 <span class="hljs-variable">UrlResource</span><br>        ▼<br><span class="hljs-variable">Spring</span> <span class="hljs-variable">AI</span> <span class="hljs-variable">ChatClient</span><br>        │<br>        ├── <span class="hljs-variable">system</span>：医学影像分析助手<br>        ├── <span class="hljs-variable">user</span>：文本 <span class="hljs-variable">question</span><br>        └── <span class="hljs-variable">user</span>：<span class="hljs-variable">media</span><span class="hljs-punctuation">(</span>图像 <span class="hljs-built_in">URL</span><span class="hljs-punctuation">)</span><br>        ▼<br>调用 <span class="hljs-variable">Vision</span> 模型（如 <span class="hljs-variable">Qwen</span><span class="hljs-operator">-</span><span class="hljs-variable">VL</span><span class="hljs-operator">-</span><span class="hljs-built_in">Max</span>）<br>        ▼<br>流式推理返回 <span class="hljs-variable">Flux</span><span class="hljs-operator">&lt;</span><span class="hljs-built_in">String</span><span class="hljs-operator">&gt;</span><br>        ▼<br>前端实时显示诊断内容<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
                 
               </div>
             
@@ -386,7 +407,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/JAVA/" class="category-chain-item">JAVA</a>
+  <a href="/categories/AI/" class="category-chain-item">AI</a>
   
   
 
@@ -401,13 +422,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/JAVA/" class="print-no-link">#JAVA</a>
+        <a href="/tags/AI/" class="print-no-link">#AI</a>
       
-        <a href="/tags/Canal/" class="print-no-link">#Canal</a>
+        <a href="/tags/Spring-AI/" class="print-no-link">#Spring AI</a>
       
-        <a href="/tags/ES/" class="print-no-link">#ES</a>
+        <a href="/tags/%E5%A4%9A%E6%A8%A1%E6%80%81/" class="print-no-link">#多模态</a>
       
-        <a href="/tags/MQ/" class="print-no-link">#MQ</a>
+        <a href="/tags/OSS/" class="print-no-link">#OSS</a>
       
     </div>
   
@@ -421,18 +442,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/11/25/AI/%E4%B8%BAAI%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90RAG%E5%8A%9F%E8%83%BD/" title="基于SpringAI + 向量数据库实现RAG文档知识库">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">基于SpringAI + 向量数据库实现RAG文档知识库</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/11/24/JAVA/SpringCloud/%E9%9B%86%E6%88%90Canal%E5%92%8CRabbitMQ%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/" title="使用Canal将数据库中的变更同步到ES中，实现数据同步功能">
-                        <span class="hidden-mobile">使用Canal将数据库中的变更同步到ES中，实现数据同步功能</span>
+                      <a href="/2025/11/25/AI/%E4%B8%BAAI%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90RAG%E5%8A%9F%E8%83%BD/" title="基于SpringAI + 向量数据库实现RAG文档知识库">
+                        <span class="hidden-mobile">基于SpringAI + 向量数据库实现RAG文档知识库</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
