@@ -21,30 +21,29 @@
   <meta name="author" content="ranzier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="如何为自己的JAVA项目集成AI对话服务（含prompt工程、对话持久化至MongoDB、会话上下文记忆）   1. 总体概览项目地址 亮点：  实现基于Spring AI的大模型对话服务 构建面向医疗问诊场景的 Prompt 工程体系 支持流式响应与多轮会话上下文记忆 将完整对话内容持久化到 MongoDB 数据库  核心技术栈：    能力 技术    大模型调用 Spring AI &amp;#x2">
+    <meta name="description" content="一起学习Transformer这篇论文    论文下载地址：Attention Is All You Need 1. Transformer为什么这么强？完全摆脱 RNN&#x2F;CNN，只依赖注意力机制（Attention）来建模序列中的依赖关系。 1.1 注意力机制让模型能捕捉任意距离的依赖 传统 RNN：词间距离越远，信息越难传递 Transformer：一步通过 Attention 就能">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基于SpringAI实现会话记忆和对话内容持久化的AI对话服务">
-<meta property="og:url" content="http://example.com/2025/11/24/AI/%E5%A6%82%E4%BD%95%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90AI%E5%AF%B9%E8%AF%9D%E5%8A%9F%E8%83%BD/index.html">
+<meta property="og:title" content="一起学习Transformer这篇论文">
+<meta property="og:url" content="http://example.com/2025/11/26/AI/Transformer/index.html">
 <meta property="og:site_name" content="RANZIER">
-<meta property="og:description" content="如何为自己的JAVA项目集成AI对话服务（含prompt工程、对话持久化至MongoDB、会话上下文记忆）   1. 总体概览项目地址 亮点：  实现基于Spring AI的大模型对话服务 构建面向医疗问诊场景的 Prompt 工程体系 支持流式响应与多轮会话上下文记忆 将完整对话内容持久化到 MongoDB 数据库  核心技术栈：    能力 技术    大模型调用 Spring AI &amp;#x2">
+<meta property="og:description" content="一起学习Transformer这篇论文    论文下载地址：Attention Is All You Need 1. Transformer为什么这么强？完全摆脱 RNN&#x2F;CNN，只依赖注意力机制（Attention）来建模序列中的依赖关系。 1.1 注意力机制让模型能捕捉任意距离的依赖 传统 RNN：词间距离越远，信息越难传递 Transformer：一步通过 Attention 就能">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/bg/52.jpg">
-<meta property="article:published_time" content="2025-11-24T14:15:35.000Z">
-<meta property="article:modified_time" content="2025-11-25T13:17:30.836Z">
+<meta property="og:image" content="http://example.com/img/bg/55.jpg">
+<meta property="article:published_time" content="2025-11-26T06:43:35.000Z">
+<meta property="article:modified_time" content="2025-11-26T09:17:24.249Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="AI">
-<meta property="article:tag" content="Agent">
-<meta property="article:tag" content="JAVA">
-<meta property="article:tag" content="Prompt">
-<meta property="article:tag" content="Spring AI">
+<meta property="article:tag" content="Attention">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Transformer">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/bg/52.jpg">
+<meta name="twitter:image" content="http://example.com/img/bg/55.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>基于SpringAI实现会话记忆和对话内容持久化的AI对话服务 - RANZIER</title>
+  <title>一起学习Transformer这篇论文 - RANZIER</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +228,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="基于SpringAI实现会话记忆和对话内容持久化的AI对话服务"></span>
+            <span id="subtitle" data-typed-text="一起学习Transformer这篇论文"></span>
           
         </div>
 
@@ -240,8 +239,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-11-24 22:15" pubdate>
-          2025年11月24日 晚上
+        <time datetime="2025-11-26 14:43" pubdate>
+          2025年11月26日 下午
         </time>
       </span>
     
@@ -252,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          832 字
+          1.7k 字
         
       </span>
     
@@ -263,7 +262,7 @@
         
         
         
-          5 分钟
+          9 分钟
         
       </span>
     
@@ -313,136 +312,236 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">基于SpringAI实现会话记忆和对话内容持久化的AI对话服务</h1>
+            <h1 id="seo-header">一起学习Transformer这篇论文</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 align="center">如何为自己的JAVA项目集成AI对话服务（含prompt工程、对话持久化至MongoDB、会话上下文记忆）</h1>
+                <h1 align="center">一起学习Transformer这篇论文</h1>
 
 
-<h1 id="1-总体概览"><a href="#1-总体概览" class="headerlink" title="1. 总体概览"></a>1. 总体概览</h1><p><a target="_blank" rel="noopener" href="https://zha-ge.cn/aimin">项目地址</a></p>
-<p><strong>亮点：</strong></p>
-<ul>
-<li>实现基于Spring AI的大模型对话服务</li>
-<li>构建面向医疗问诊场景的 Prompt 工程体系</li>
-<li>支持流式响应与多轮会话上下文记忆</li>
-<li>将完整对话内容持久化到 MongoDB 数据库</li>
+
+<p>论文下载地址：<br><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a></p>
+<h2 id="1-Transformer为什么这么强？"><a href="#1-Transformer为什么这么强？" class="headerlink" title="1. Transformer为什么这么强？"></a>1. Transformer为什么这么强？</h2><p><strong>完全摆脱 RNN&#x2F;CNN，只依赖注意力机制（Attention）来建模序列中的依赖关系。</strong></p>
+<h3 id="1-1-注意力机制让模型能捕捉任意距离的依赖"><a href="#1-1-注意力机制让模型能捕捉任意距离的依赖" class="headerlink" title="1.1 注意力机制让模型能捕捉任意距离的依赖"></a>1.1 注意力机制让模型能捕捉任意距离的依赖</h3><ul>
+<li>传统 RNN：词间距离越远，信息越难传递</li>
+<li>Transformer：一步通过 Attention 就能让“第一个词”关注到“最后一个词”</li>
 </ul>
-<p>核心技术栈：</p>
+<h3 id="1-2-完全并行化，更快"><a href="#1-2-完全并行化，更快" class="headerlink" title="1.2 完全并行化，更快"></a>1.2 完全并行化，更快</h3><ul>
+<li>RNN 必须按顺序处理：t1 → t2 → t3 → …</li>
+<li>Transformer 全部输入一次性计算，所以可以大规模并行（特别适合 GPU&#x2F;TPU）。</li>
+</ul>
+<h3 id="1-3-多头注意力让模型表达能力极强"><a href="#1-3-多头注意力让模型表达能力极强" class="headerlink" title="1.3 多头注意力让模型表达能力极强"></a>1.3 多头注意力让模型表达能力极强</h3><p>多个注意力头 &#x3D; 多个不同的理解视角，让模型更加丰富多样。</p>
+<h2 id="2-编码器和解码器-Encoder-Decoder架构"><a href="#2-编码器和解码器-Encoder-Decoder架构" class="headerlink" title="2. 编码器和解码器&#x2F;Encoder-Decoder架构"></a>2. 编码器和解码器&#x2F;Encoder-Decoder架构</h2><p>Transformer由两部分组成：</p>
+<ul>
+<li>编码器</li>
+<li>解码器（GPT就是纯解码器）</li>
+</ul>
+<p><img src="/img/blogs/Transformer/1.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-1-Encoder-——-负责“把输入句子变成深层语义表示”"><a href="#2-1-Encoder-——-负责“把输入句子变成深层语义表示”" class="headerlink" title="2.1 Encoder —— 负责“把输入句子变成深层语义表示”"></a>2.1 Encoder —— 负责“把输入句子变成深层语义表示”</h3><p>编码器的工作是：<br><strong>通过多层Self-Attention，把一句话从“表层的词”转换为“深层语义向量表示”。</strong></p>
+<h4 id="A-Self-Attention-——-学习词与词之间的关系"><a href="#A-Self-Attention-——-学习词与词之间的关系" class="headerlink" title="A. Self-Attention —— 学习词与词之间的关系"></a>A. Self-Attention —— 学习词与词之间的关系</h4><p>例如输入：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">小明 把 球 踢 给 了 小红<br></code></pre></td></tr></table></figure>
+
+<p>Self-Attention 会计算：</p>
+<ul>
+<li>“小明”与“踢”的关系</li>
+<li>“踢”与“给”的关系</li>
+<li>“球”在句子中属于宾语</li>
+<li>“小红”是接收者</li>
+</ul>
+<p>也就是让模型理解<strong>谁对谁重要</strong>。</p>
+<h4 id="B-Multi-Head-Attention-——-不同角度的语义抽取"><a href="#B-Multi-Head-Attention-——-不同角度的语义抽取" class="headerlink" title="B. Multi-Head Attention —— 不同角度的语义抽取"></a>B. Multi-Head Attention —— 不同角度的语义抽取</h4><p>多个注意力头像多个“理解维度”：</p>
+<ul>
+<li>一个头关注语法</li>
+<li>一个头关注指代</li>
+<li>一个头关注动作</li>
+<li>一个头关注对象</li>
+</ul>
+<p>然后把这些不同理解拼接起来。</p>
+<h4 id="C-Feed-Forward-Network（前馈网络）"><a href="#C-Feed-Forward-Network（前馈网络）" class="headerlink" title="C. Feed Forward Network（前馈网络）"></a>C. Feed Forward Network（前馈网络）</h4><p>每一层 Encoder 都在 Attention 后加上 FFN，用来：</p>
+<ul>
+<li>增强非线性表达</li>
+<li>提炼信息</li>
+<li>提高模型的抽象能力</li>
+</ul>
+<p>再加上：</p>
+<ul>
+<li><strong>残差连接（Residual）</strong>——避免梯度消失</li>
+<li><strong>LayerNorm</strong>——稳定训练</li>
+<li><strong>位置编码</strong>——补充顺序信息</li>
+</ul>
+<p><strong>所以 Encoder 的最终结果是：</strong></p>
+<ul>
+<li>把整句输入变成一串蕴含丰富上下文关系的语义向量（Contextual Embeddings）。</li>
+</ul>
+<h3 id="2️-2-Decoder-——-负责“根据语义向量逐步生成输出”"><a href="#2️-2-Decoder-——-负责“根据语义向量逐步生成输出”" class="headerlink" title="2️.2 Decoder —— 负责“根据语义向量逐步生成输出”"></a>2️.2 Decoder —— 负责“根据语义向量逐步生成输出”</h3><h4 id="A-Masked-Self-Attention-掩码自注意力-——-不能偷看未来词"><a href="#A-Masked-Self-Attention-掩码自注意力-——-不能偷看未来词" class="headerlink" title="A. Masked Self-Attention(掩码自注意力) —— 不能偷看未来词"></a>A. Masked Self-Attention(掩码自注意力) —— 不能偷看未来词</h4><p><img src="/img/blogs/Transformer/6.png" srcset="/img/loading.gif" lazyload></p>
+<p>Decoder 在生成句子时：</p>
+<p>第一个词 → 第二个词 → 第三个词 …</p>
+<p>每一步都只能依赖已生成内容，而不能看到未来词。</p>
+<p>这叫：<code>Masked Multi-Head Self-Attention</code></p>
+<p>它保证模型生成时符合“从左到右”的逻辑。</p>
+<h4 id="B-Cross-Attention-——-对-Encoder-的输出进行关注"><a href="#B-Cross-Attention-——-对-Encoder-的输出进行关注" class="headerlink" title="B. Cross-Attention —— 对 Encoder 的输出进行关注"></a>B. Cross-Attention —— 对 Encoder 的输出进行关注</h4><p>在每一层 Decoder 中，注意力要分两类：</p>
 <table>
 <thead>
 <tr>
-<th>能力</th>
-<th>技术</th>
+<th>Attention 类型</th>
+<th>作用</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>大模型调用</td>
-<td>Spring AI &#x2F; OpenAI 兼容模式</td>
+<td>Masked Self-Attention</td>
+<td>看自己已经生成的部分</td>
 </tr>
 <tr>
-<td>Prompt 工程</td>
-<td>Spring AI Prompt API</td>
-</tr>
-<tr>
-<td>流式输出</td>
-<td>WebFlux + Flux</td>
-</tr>
-<tr>
-<td>会话记忆</td>
-<td>Spring AI ChatMemory</td>
-</tr>
-<tr>
-<td>持久化</td>
-<td>MongoDB（存储用户、AI、系统消息）</td>
-</tr>
-<tr>
-<td>检索增强</td>
-<td>Milvus VectorStore（已集成）</td>
+<td><strong>Cross-Attention</strong></td>
+<td>看 Encoder 输出的语义向量</td>
 </tr>
 </tbody></table>
-<h1 id="2-Spring-AI-大模型对话服务实现"><a href="#2-Spring-AI-大模型对话服务实现" class="headerlink" title="2. Spring AI 大模型对话服务实现"></a>2. Spring AI 大模型对话服务实现</h1><h2 id="2-1-大模型配置"><a href="#2-1-大模型配置" class="headerlink" title="2.1 大模型配置"></a>2.1 大模型配置</h2><p>application.yml：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">ai:</span><br>    <span class="hljs-attr">openai:</span><br>      <span class="hljs-attr">base-url:</span> <span class="hljs-string">https://dashscope.aliyuncs.com/compatible-mode</span><br>      <span class="hljs-attr">api-key:</span> <span class="hljs-string">xxx</span><br>      <span class="hljs-attr">chat:</span><br>        <span class="hljs-attr">options:</span><br>          <span class="hljs-attr">model:</span> <span class="hljs-string">qwen-vl-max</span>   <span class="hljs-comment"># 多模态模型</span><br></code></pre></td></tr></table></figure>
-
-<p>通过 <strong>OpenAI 兼容模式</strong>直接<strong>调用 Qwen 系列模型</strong>，Spring AI 会自动组合成 ChatModel Bean。</p>
-<h2 id="2-2-ChatClient-装配（对话客户端）"><a href="#2-2-ChatClient-装配（对话客户端）" class="headerlink" title="2.2 ChatClient 装配（对话客户端）"></a>2.2 ChatClient 装配（对话客户端）</h2><p>核心配置类：<code>AiConfiguration</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-keyword">public</span> ChatClient <span class="hljs-title function_">chatClient</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">MessageChatMemoryAdvisor</span> <span class="hljs-variable">messageChatMemoryAdvisor</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageChatMemoryAdvisor</span>(chatMemory);<br><br>    <span class="hljs-keyword">return</span> ChatClient.builder(chatModel)<br>            .defaultAdvisors(<br>                messageChatMemoryAdvisor,      <span class="hljs-comment">// 会话记忆</span><br>                <span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleLoggerAdvisor</span>(),     <span class="hljs-comment">// 日志</span><br>                <span class="hljs-keyword">new</span> <span class="hljs-title class_">QuestionAnswerAdvisor</span>(vectorStore)  <span class="hljs-comment">// RAG，可选</span><br>            )<br>            .build();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><strong>它做了三件事：</strong></p>
+<p>Cross-Attention &#x3D; Decoder 问 Encoder：</p>
+<blockquote>
+<p>“你帮我理解的输入里，哪些部分与我现在要生成的内容最相关？”</p>
+</blockquote>
+<p>比如翻译：</p>
 <ol>
-<li><strong>绑定大模型 chatModel</strong></li>
-<li><strong>给所有对话默认挂载对话记忆 MessageChatMemoryAdvisor</strong></li>
-<li><strong>集成 RAG（Milvus）语义检索能力</strong></li>
+<li>Encoder 得到中文语义向量</li>
+<li>Decoder 生成英文句子</li>
+<li>每生成一词，都需要关注输入语义中的不同部分</li>
 </ol>
-<p>因此，在任何 Controller 里调用 chatClient 时，都会自动带上记忆能力。</p>
-<h1 id="3-构建医疗场景-Prompt-工程体系"><a href="#3-构建医疗场景-Prompt-工程体系" class="headerlink" title="3. 构建医疗场景 Prompt 工程体系"></a>3. 构建医疗场景 Prompt 工程体系</h1><p>在 Controller 层，为医疗场景定义了系统级 Prompt：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">.system(<span class="hljs-string">&quot;你是一个医疗问诊助手，你会根据用户的问题，提供相关的医疗咨询。拒绝回答非医疗相关的问题。&quot;</span>)<br></code></pre></td></tr></table></figure>
-
-<p>这相当于每个对话的「角色设定」：</p>
+<h4 id="C-Feed-Forward-Network-残差等结构"><a href="#C-Feed-Forward-Network-残差等结构" class="headerlink" title="C. Feed Forward Network + 残差等结构"></a>C. Feed Forward Network + 残差等结构</h4><p>与 Encoder 一样，Decoder 也必须包含：</p>
 <ul>
-<li>限制 AI 回答范围</li>
-<li>让 AI 遵循医疗问诊风格进行回复</li>
-<li>自动过滤不相关问题</li>
+<li>FFN（增强抽象能力）</li>
+<li>残差连接（防止梯度问题）</li>
+<li>LayerNorm（稳定训练）</li>
 </ul>
-<h1 id="4-Spring-AI-流式输出（Flux-流式推送）"><a href="#4-Spring-AI-流式输出（Flux-流式推送）" class="headerlink" title="4. Spring AI 流式输出（Flux 流式推送）"></a>4. Spring AI 流式输出（Flux 流式推送）</h1><p>Controller：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(&quot;/chat&quot;)</span><br><span class="hljs-keyword">public</span> Flux&lt;String&gt; <span class="hljs-title function_">chat</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam(&quot;message&quot;)</span> String message)</span> &#123;<br>    <span class="hljs-keyword">return</span> chatClient<br>            .prompt()<br>            .system(<span class="hljs-string">&quot;你是一个医疗问诊助手...&quot;</span>)<br>            .user(message)<br>            .advisors(a -&gt; a.param(ChatMemory.DEFAULT_CONVERSATION_ID, conversationId))<br>            .stream()<br>            .content();<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="2-3-总结"><a href="#2-3-总结" class="headerlink" title="2.3 总结"></a>2.3 总结</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs css">输入句子 → <span class="hljs-selector-attr">[Encoder 多层：Self-Attention + FFN]</span> → 语义向量<br>语义向量 + 已生成词 → <span class="hljs-selector-attr">[Decoder 多层：Masked Attention + Cross Attention + FFN]</span> → 输出新词<br></code></pre></td></tr></table></figure>
 
-<h3 id="A-stream-的作用"><a href="#A-stream-的作用" class="headerlink" title="A. .stream() 的作用"></a>A. <code>.stream()</code> 的作用</h3><p>启动大模型的 <strong>Streaming 模式</strong>（Server-Sent Events），返回类型为 <code>Flux&lt;String&gt;</code>，可让前端实时显示 Token。</p>
-<h3 id="B-使用advisors绑定会话ID，实现对话记忆功能"><a href="#B-使用advisors绑定会话ID，实现对话记忆功能" class="headerlink" title="B. 使用advisors绑定会话ID，实现对话记忆功能"></a>B. 使用<code>advisors</code>绑定会话ID，实现对话记忆功能</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">.advisors(a -&gt; a.param(ChatMemory.DEFAULT_CONVERSATION_ID, conversationId))<br></code></pre></td></tr></table></figure>
 
-<p>它将当前对话请求绑定到指定的会话ID（conversationId），从而让你的<strong>多轮对话记忆生效</strong>。</p>
-<h1 id="5-多轮会话记忆实现-对话内容持久化到-MongoDB"><a href="#5-多轮会话记忆实现-对话内容持久化到-MongoDB" class="headerlink" title="5. 多轮会话记忆实现 + 对话内容持久化到 MongoDB"></a>5. 多轮会话记忆实现 + 对话内容持久化到 MongoDB</h1><p>Spring AI 会话记忆的机制：<br><code>ChatClient → MessageChatMemoryAdvisor → ChatMemory</code></p>
-<h2 id="5-1-定义存入MongoDB的Msg类"><a href="#5-1-定义存入MongoDB的Msg类" class="headerlink" title="5.1 定义存入MongoDB的Msg类"></a>5.1 定义存入MongoDB的<code>Msg</code>类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Document(&quot;msg&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Msg</span> &#123;<br>    <span class="hljs-keyword">private</span> String conversationId;<br>    <span class="hljs-keyword">private</span> String text;<br>    <span class="hljs-keyword">private</span> Date date;<br>    <span class="hljs-keyword">private</span> String type;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>每一条对话都会自动生成：</p>
+<h2 id="3-Self-Attention（自注意力机制）"><a href="#3-Self-Attention（自注意力机制）" class="headerlink" title="3. Self-Attention（自注意力机制）"></a>3. Self-Attention（自注意力机制）</h2><p><strong>自注意力就是“一个词在理解自己时，会自动去找句子里哪些词和它有关，并根据相关程度给它们不同权重，再综合起来形成新的表达”</strong></p>
+<h3 id="3-1-举例"><a href="#3-1-举例" class="headerlink" title="3.1 举例"></a>3.1 举例</h3><p>例如输入句子：<code>他 把 球 踢 给 了 小明</code></p>
+<p>模型处理“他”时，会计算它与“球”“小明”“踢”等词的相关性权重。</p>
+<p><strong>每个词会对所有词打一个“重要性分数”，然后根据分数对信息加权求和。</strong></p>
+<h3 id="3-2-原理"><a href="#3-2-原理" class="headerlink" title="3.2 原理"></a>3.2 原理</h3><h4 id="3-2-1-每个词都生成-3-个向量：Q、K、V"><a href="#3-2-1-每个词都生成-3-个向量：Q、K、V" class="headerlink" title="3.2.1 每个词都生成 3 个向量：Q、K、V"></a>3.2.1 每个词都生成 3 个向量：Q、K、V</h4><ul>
+<li>Q（Query）：我想知道自己要关注谁</li>
+<li>K（Key）：我是什么，别人用这个来判断该不该关注我</li>
+<li>V（Value）：我的实际内容（语义）</li>
+</ul>
 <table>
 <thead>
 <tr>
-<th>字段</th>
-<th>内容</th>
+<th>向量</th>
+<th>类比</th>
+<th>作用</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>conversationId</td>
-<td>同一个会话的唯一 ID</td>
+<td>Q</td>
+<td>问题卡</td>
+<td>你要找相关信息</td>
 </tr>
 <tr>
-<td>text</td>
-<td>聊天文本</td>
+<td>K</td>
+<td>身份卡</td>
+<td>别人是否应该关注你</td>
 </tr>
 <tr>
-<td>type</td>
-<td>user &#x2F; assistant &#x2F; system</td>
-</tr>
-<tr>
-<td>date</td>
-<td>时间戳</td>
+<td>V</td>
+<td>信息卡</td>
+<td>你真正想提供的内容</td>
 </tr>
 </tbody></table>
-<h2 id="5-2-新消息写入-MongoDB"><a href="#5-2-新消息写入-MongoDB" class="headerlink" title="5.2 新消息写入 MongoDB"></a>5.2 新消息写入 MongoDB</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">add</span><span class="hljs-params">(String conversationId, List&lt;Message&gt; messages)</span> &#123;<br>    <span class="hljs-keyword">for</span> (Message message : messages) &#123;<br>        <span class="hljs-type">Msg</span> <span class="hljs-variable">msg</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Msg</span>(conversationId, message);<br>        msgRepository.save(msg);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
+<h4 id="3-2-2-用-Q-和-K-计算“相关性分数”"><a href="#3-2-2-用-Q-和-K-计算“相关性分数”" class="headerlink" title="3.2.2 用 Q 和 K 计算“相关性分数”"></a>3.2.2 用 Q 和 K 计算“相关性分数”</h4><p>在处理词 A 时，词 B 对它有多重要？</p>
 <ul>
-<li>Message（user&#x2F;assistant&#x2F;system）</li>
-<li>持久化为 Msg</li>
-<li>存入 MongoDB “msg” 集合</li>
+<li>公式：score &#x3D; Q × K^T</li>
 </ul>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;conversationId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;sessionId-xxxx&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;发烧怎么办？&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;user&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2025-11-25&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
-
-
-<h2 id="5-3-ChatClient-查询历史记忆"><a href="#5-3-ChatClient-查询历史记忆" class="headerlink" title="5.3 ChatClient 查询历史记忆"></a>5.3 ChatClient 查询历史记忆</h2><p>当再次调用对话 API 时，Spring AI 会自动调用：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> List&lt;Message&gt; <span class="hljs-title function_">get</span><span class="hljs-params">(String conversationId, <span class="hljs-type">int</span> lastN)</span><br></code></pre></td></tr></table></figure>
-
-<p>读取 MongoDB 中该会话 ID 的历史消息：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">query.addCriteria(Criteria.where(<span class="hljs-string">&quot;conversationId&quot;</span>).is(id)).limit(lastN);<br><span class="hljs-keyword">return</span> mongoTemplate.find(query, Msg.class);<br></code></pre></td></tr></table></figure>
-
-<p>并将其转换回 Spring AI 的 Message：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">case</span> <span class="hljs-string">&quot;user&quot;</span> -&gt; <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserMessage</span>(msg.getText());<br></code></pre></td></tr></table></figure>
-
-<p>这意味着所有历史聊天都会再次被送入大模型，实现：</p>
+<p>例如：</p>
 <ul>
-<li>上下文理解</li>
-<li>多轮连续对话</li>
+<li>“踢” 对 “小明”的分数高</li>
+<li>“踢” 对 “了”的分数很低</li>
+</ul>
+<h4 id="3-2-3-用-Softmax-把分数变成权重"><a href="#3-2-3-用-Softmax-把分数变成权重" class="headerlink" title="3.2.3 用 Softmax 把分数变成权重"></a>3.2.3 用 Softmax 把分数变成权重</h4><p>让所有权重加起来 &#x3D; 1（类似概率分布）</p>
+<table>
+<thead>
+<tr>
+<th>词</th>
+<th>权重</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>小明</td>
+<td>0.45</td>
+</tr>
+<tr>
+<td>球</td>
+<td>0.30</td>
+</tr>
+<tr>
+<td>小红</td>
+<td>0.20</td>
+</tr>
+<tr>
+<td>把 &#x2F; 给 &#x2F; 了</td>
+<td>很低</td>
+</tr>
+</tbody></table>
+<h4 id="3-2-4-把所有相关信息按重要程度加权求和，形成“踢”的新语义向量"><a href="#3-2-4-把所有相关信息按重要程度加权求和，形成“踢”的新语义向量" class="headerlink" title="3.2.4 把所有相关信息按重要程度加权求和，形成“踢”的新语义向量"></a>3.2.4 把所有相关信息按重要程度加权求和，形成“踢”的新语义向量</h4><p>这样“踢”就不再是一个孤立的词，而是一个：</p>
+<ul>
+<li><strong>结合了整个句子语境的词向量</strong></li>
+</ul>
+<h2 id="4-Multi-Head-Attention（多头注意力）"><a href="#4-Multi-Head-Attention（多头注意力）" class="headerlink" title="4. Multi-Head Attention（多头注意力）"></a>4. Multi-Head Attention（多头注意力）</h2><p><img src="/img/blogs/Transformer/2.png" srcset="/img/loading.gif" lazyload></p>
+<p>不是只算一次注意力，而是<strong>算多次、用多个“头”并行</strong></p>
+<p>每个 head 关注不同类型的信息：</p>
+<ul>
+<li>一个 head 关注句法结</li>
+<li>一个 head 关注主谓关系</li>
+<li>一个 head 关注指代关系</li>
+</ul>
+<p>最后把所有 head 拼接起来，表达能力更强。</p>
+<h2 id="5-词嵌入Embedding"><a href="#5-词嵌入Embedding" class="headerlink" title="5. 词嵌入Embedding"></a>5. 词嵌入Embedding</h2><p><strong>Embedding 的作用是把“离散的、无法直接计算的符号（如词、字、图片块）转换成连续的、带语义的向量表示，方便神经网络进行理解和推理。</strong></p>
+<p><img src="/img/blogs/Transformer/3.png" srcset="/img/loading.gif" lazyload></p>
+<p>计算机不能理解“人”“苹果”“跑步”这些文字，它只懂数字。</p>
+<ul>
+<li>所以需要一种方法<strong>把“符号”变成“向量”</strong>，并且这个向量要带有语义结构。</li>
+</ul>
+<h3 id="5-1-把离散符号转换成神经网络能处理的连续向量"><a href="#5-1-把离散符号转换成神经网络能处理的连续向量" class="headerlink" title="5.1 把离散符号转换成神经网络能处理的连续向量"></a>5.1 把离散符号转换成神经网络能处理的连续向量</h3><p>Embedding 把每个 Token <strong>映射到一个维度为 d 的向量</strong>，例如 768、1024、4096。</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">“猫” -&gt; <span class="hljs-string">[0.12, -0.88, 0.03, 0.55, …]</span><br>“狗” -&gt; <span class="hljs-string">[0.15, -0.75, 0.02, 0.61, …]</span><br></code></pre></td></tr></table></figure>
+
+<p>这就让 Transformer 可以进行：</p>
+<ul>
+<li>点积运算（计算相似度）</li>
+<li>其他运算</li>
+</ul>
+<h3 id="5-2-表达语义上的相似与差异"><a href="#5-2-表达语义上的相似与差异" class="headerlink" title="5.2 表达语义上的相似与差异"></a>5.2 表达语义上的相似与差异</h3><p><strong>向量空间中“距离 + 方向”能表达语义关系。</strong></p>
+<p>例如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">国王 - 男人 + 女人 ≈ 女王<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs scss">(猫, 狗) 的向量很近<br>(苹果, 跑步) 的向量很远<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>语义相似 → 向量相近</li>
+<li>语义不同 → 向量分离</li>
+</ul>
+<h2 id="6-Positional-Encoding（位置编码）"><a href="#6-Positional-Encoding（位置编码）" class="headerlink" title="6. Positional Encoding（位置编码）"></a>6. Positional Encoding（位置编码）</h2><p><img src="/img/blogs/Transformer/4.png" srcset="/img/loading.gif" lazyload></p>
+<p>由于 Transformer 没有 RNN 的<strong>顺序结构</strong>，模型本身不知道词在句子里的顺序。</p>
+<p>所以要额外加入位置信息：</p>
+<ul>
+<li><strong>sin&#x2F;cos位置编码</strong>（原论文）</li>
+<li>或可学习位置编码</li>
+</ul>
+<p><strong>作用：</strong><br>告诉模型：<code>“今天 下雨 了”</code>和<code>“下雨 今天 了”</code>位置不一样，含义不同。</p>
+<h2 id="7-Feed-Forward-Network（前馈神经网络）"><a href="#7-Feed-Forward-Network（前馈神经网络）" class="headerlink" title="7. Feed Forward Network（前馈神经网络）"></a>7. Feed Forward Network（前馈神经网络）</h2><p>每一层 Transformer 中都有一个位置独立的 FFN：</p>
+<p><img src="/img/blogs/Transformer/5.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs armasm">(xW1 + b1)<br><span class="hljs-symbol">ReLU</span><br>再加一层 <span class="hljs-built_in">W2</span><br></code></pre></td></tr></table></figure>
+
+
+<p>作用：</p>
+<ul>
+<li>提升非线性表达能力</li>
+<li>提取更复杂的特征</li>
+</ul>
+<p>并且每层都包含：</p>
+<ul>
+<li><strong>残差连接</strong>（Residual Connection）</li>
+<li><strong>LayerNorm</strong>（<strong>层归一化</strong>）<br>来保证训练稳定性。</li>
 </ul>
 
                 
@@ -477,15 +576,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/Transformer/" class="print-no-link">#Transformer</a>
+      
+        <a href="/tags/Attention/" class="print-no-link">#Attention</a>
+      
+        <a href="/tags/LLM/" class="print-no-link">#LLM</a>
+      
         <a href="/tags/AI/" class="print-no-link">#AI</a>
-      
-        <a href="/tags/Spring-AI/" class="print-no-link">#Spring AI</a>
-      
-        <a href="/tags/JAVA/" class="print-no-link">#JAVA</a>
-      
-        <a href="/tags/Agent/" class="print-no-link">#Agent</a>
-      
-        <a href="/tags/Prompt/" class="print-no-link">#Prompt</a>
       
     </div>
   
@@ -499,18 +596,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/11/24/JAVA/SpringCloud/%E9%9B%86%E6%88%90Canal%E5%92%8CRabbitMQ%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/" title="使用Canal将数据库中的变更同步到ES中，实现数据同步功能">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">使用Canal将数据库中的变更同步到ES中，实现数据同步功能</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/11/21/JAVA/%E4%B8%BA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98%E5%8A%9F%E8%83%BD/" title="JAVA项目中使用Caffeine和Redis实现二级（多级）缓存">
-                        <span class="hidden-mobile">JAVA项目中使用Caffeine和Redis实现二级（多级）缓存</span>
+                      <a href="/2025/11/25/AI/%E4%B8%BAAI%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90%E5%A4%9A%E6%A8%A1%E6%80%81%E5%8A%9F%E8%83%BD/" title="基于SpringAI使用云端大模型解析OSS中的文件实现多模态理解对话">
+                        <span class="hidden-mobile">基于SpringAI使用云端大模型解析OSS中的文件实现多模态理解对话</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
