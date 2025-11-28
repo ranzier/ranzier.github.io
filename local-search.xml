@@ -15,20 +15,20 @@
       
       <category>八股</category>
       
-      <category>AI</category>
+      <category>AI八股</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>AI</tag>
-      
-      <tag>LLM</tag>
-      
       <tag>Transformer</tag>
       
       <tag>Attention</tag>
+      
+      <tag>LLM</tag>
+      
+      <tag>AI</tag>
       
     </tags>
     
@@ -272,9 +272,9 @@
       
       <tag>SpringCloud</tag>
       
-      <tag>Gateway</tag>
-      
       <tag>Sa-Token</tag>
+      
+      <tag>Gateway</tag>
       
     </tags>
     
@@ -437,7 +437,9 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>八股</category>
+      
+      <category>JAVA基础</category>
       
     </categories>
     
@@ -471,11 +473,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>git</tag>
       
       <tag>开发工具</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -519,9 +521,9 @@
     
     <tags>
       
-      <tag>AI</tag>
-      
       <tag>LLM</tag>
+      
+      <tag>AI</tag>
       
     </tags>
     
@@ -599,7 +601,9 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>八股</category>
+      
+      <category>MySQL八股</category>
       
     </categories>
     
@@ -628,7 +632,9 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>八股</category>
+      
+      <category>JVM八股</category>
       
     </categories>
     
@@ -657,7 +663,9 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>八股</category>
+      
+      <category>JAVA并发</category>
       
     </categories>
     
@@ -686,7 +694,9 @@
     
     <categories>
       
-      <category>JAVA</category>
+      <category>八股</category>
+      
+      <category>Redis八股</category>
       
     </categories>
     
@@ -744,7 +754,9 @@
     
     <categories>
       
-      <category>SpringCloud</category>
+      <category>八股</category>
+      
+      <category>Elasticsearch八股</category>
       
     </categories>
     
@@ -773,7 +785,9 @@
     
     <categories>
       
-      <category>SpringCloud</category>
+      <category>八股</category>
+      
+      <category>消息队列八股</category>
       
     </categories>
     
@@ -809,9 +823,9 @@
     
     <tags>
       
-      <tag>开发工具</tag>
-      
       <tag>学习</tag>
+      
+      <tag>开发工具</tag>
       
       <tag>Docker</tag>
       
@@ -831,7 +845,9 @@
     
     <categories>
       
-      <category>SpringCloud</category>
+      <category>八股</category>
+      
+      <category>Mybatis八股</category>
       
     </categories>
     
@@ -925,11 +941,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>git</tag>
       
       <tag>开发工具</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -1041,9 +1057,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
+      
+      <tag>学习</tag>
       
       <tag>JavaScript</tag>
       
@@ -1097,9 +1113,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
+      
+      <tag>学习</tag>
       
       <tag>CSS</tag>
       
@@ -1126,11 +1142,11 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
       
       <tag>HTML</tag>
+      
+      <tag>学习</tag>
       
     </tags>
     
@@ -1182,9 +1198,9 @@
     
     <tags>
       
-      <tag>论文</tag>
-      
       <tag>AI</tag>
+      
+      <tag>论文</tag>
       
       <tag>信息与通信</tag>
       
