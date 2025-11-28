@@ -4,6 +4,101 @@
   
   
   <entry>
+    <title>Cookie、Session和Token的详解</title>
+    <link href="/2025/11/28/JAVA/JAVA%E5%85%AB%E8%82%A1/JAVA%E5%9F%BA%E7%A1%80/%E4%BB%80%E4%B9%88%E6%98%AFcookie%EF%BC%8Csession%E5%92%8Ctoken/"/>
+    <url>/2025/11/28/JAVA/JAVA%E5%85%AB%E8%82%A1/JAVA%E5%9F%BA%E7%A1%80/%E4%BB%80%E4%B9%88%E6%98%AFcookie%EF%BC%8Csession%E5%92%8Ctoken/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">什么是Cookie、Session和Token？</h1><h1 id="1-Cookie"><a href="#1-Cookie" class="headerlink" title="1. Cookie"></a>1. Cookie</h1><p><strong>什么是Cookie？</strong><br><strong>Cookie是存储在浏览器端的一小段文本数据</strong>，由服务器通过HTTP响应头的Set-Cookie字段发送给浏览器，浏览器随后会自动在每次请求中通过Cookie头将其带回给服务器。</p><p><strong>工作流程</strong></p><p><img src="/img/blogs/bagu/cookie/1.png"></p><ol><li>用户第一次访问服务器；</li><li>服务器通过响应头<code>Set-Cookie</code>返回一个 Cookie；</li><li>浏览器保存 Cookie；</li><li><strong>以后每次请求都会自动携带该Cookie</strong>。</li></ol><h1 id="2-Session"><a href="#2-Session" class="headerlink" title="2. Session"></a>2. Session</h1><p><strong>什么是Session？</strong><br><strong>Session是存储在服务器端的用户状态信息</strong>。服务器为每个用户创建一个唯一的<code>Session ID</code>，并通过Cookie将这个ID传递给浏览器，<strong>浏览器后续请求时带上这个ID，服务器就能识别用户身份</strong>。</p><ul><li><strong>SessionId通常放在 Cookie 里</strong></li></ul><p><strong>工作流程</strong></p><ol><li>用户第一次访问 → 服务器创建 Session；</li><li>服务器生成一个<code>SessionId</code>；</li><li>通过 Cookie 发给浏览器；</li><li><strong>后续请求</strong>：浏览器携带 <code>SessionId</code>；</li><li>服务器根据 <code>SessionId</code> 找到对应 Session 数据。</li></ol><ul><li><strong>数据存在服务器，安全性高</strong></li></ul><h1 id="3-Token"><a href="#3-Token" class="headerlink" title="3. Token"></a>3. Token</h1><p><strong>什么是Token？</strong><br><strong>Token是服务器生成的一串“访问凭证字符串”，用于身份认证，通常不依赖服务器存储状态（无状态）</strong></p><p><strong>工作流程（以 JWT 为例）</strong></p><ol><li>用户登录成功；</li><li><strong>服务器生成 Token</strong>（包含用户信息）；</li><li>返回给客户端；</li><li><strong>客户端存储 Token</strong>（Cookie &#x2F; LocalStorage）；</li><li>每次请求在请求头携带：<code>Authorization: Bearer token值</code></li><li>服务器校验 Token 是否合法</li></ol><ul><li><strong>无状态（不依赖服务器存储）</strong></li><li>经常用在OAuth2 &#x2F; JWT 登录体系</li></ul><h1 id="4-三者的主要区别"><a href="#4-三者的主要区别" class="headerlink" title="4. 三者的主要区别"></a>4. 三者的主要区别</h1><ol><li><strong>Cookie ≠ Session</strong></li></ol><ul><li>Cookie 是 <strong>客户端</strong> 的</li><li>Session 是 <strong>服务器端</strong> 的</li><li>但：Session 通常通过 Cookie 传 <code>SessionId</code></li></ul><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">Cookie</span> 存的是 SessionId<br>Session 存的是用户真实数据<br></code></pre></td></tr></table></figure><ol start="2"><li><strong>Token 可以完全替代 Session</strong></li></ol><p>现代系统通常这样做：</p><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gauss">不再用 Session<br>只用 <span class="hljs-built_in">Token</span> + JWT<br></code></pre></td></tr></table></figure><ol start="3"><li><strong>Cookie、Session、Token 对比总结</strong></li></ol><table><thead><tr><th>对比项</th><th>Cookie</th><th>Session</th><th>Token</th></tr></thead><tbody><tr><td>存储位置</td><td>客户端</td><td>服务器</td><td>客户端</td></tr><tr><td>安全性</td><td>低</td><td>高</td><td>中</td></tr><tr><td>是否占服务器内存</td><td>否</td><td>✅ 是</td><td>否</td></tr><tr><td>是否支持分布式</td><td>✅</td><td>❌ 默认不支持</td><td>✅</td></tr><tr><td>是否无状态</td><td>❌</td><td>❌</td><td>✅</td></tr><tr><td>是否前后端分离友好</td><td>❌</td><td>❌</td><td>✅</td></tr><tr><td>是否自动携带</td><td>✅</td><td>✅（通过 Cookie）</td><td>❌（需手动加 Header）</td></tr></tbody></table><h1 id="5-JWT：现代化的Token标准"><a href="#5-JWT：现代化的Token标准" class="headerlink" title="5. JWT：现代化的Token标准"></a>5. JWT：现代化的Token标准</h1><p>JWT 是一种“自包含”的 <strong>Token 格式标准</strong>，用来在客户端和服务器之间安全地传递用户身份信息。<br>本质上：</p><ul><li><p>是 <strong>Token</strong></p></li><li><p>是一种统一的<strong>Token 格式规范</strong></p></li><li><p><strong>JWT &#x3D; 身份证格式</strong></p></li><li><p><strong>Token &#x3D; 身份证号码</strong></p></li></ul><p><strong>JWT的结构</strong></p><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus">xxxxx<span class="hljs-selector-class">.yyyyy</span><span class="hljs-selector-class">.zzzzz</span><br><br><span class="hljs-comment">// 也就是：</span><br>Header<span class="hljs-selector-class">.Payload</span>.Signature<br></code></pre></td></tr></table></figure><p>三部分组成：</p><table><thead><tr><th>部分</th><th>作用</th></tr></thead><tbody><tr><td>Header</td><td>说明算法类型</td></tr><tr><td>Payload</td><td>存放用户数据（userId、角色、过期时间等）</td></tr><tr><td>Signature</td><td>防篡改签名</td></tr></tbody></table><p><strong>Sa-Token 和 JWT 的关系</strong></p><table><thead><tr><th>对比</th><th>JWT</th><th>Sa-Token</th></tr></thead><tbody><tr><td>类型</td><td>Token <strong>规范</strong></td><td>Token <strong>框架</strong></td></tr><tr><td>是否是标准</td><td>✅ 是国际标准</td><td>❌ 不是标准</td></tr><tr><td>是否直接用</td><td>✅ 可直接用</td><td>✅ 可直接用</td></tr><tr><td>是否包含权限体系</td><td>❌ 不包含</td><td>✅ 包含</td></tr><tr><td>是否支持踢人</td><td>❌ 天然不支持</td><td>✅ 支持</td></tr><tr><td>是否支持 Redis</td><td>❌ 只能自己写</td><td>✅ 原生支持</td></tr></tbody></table><h1 id="6-应用场景"><a href="#6-应用场景" class="headerlink" title="6. 应用场景"></a>6. 应用场景</h1><table><thead><tr><th>项目类型</th><th>推荐方案</th></tr></thead><tbody><tr><td>传统 JSP &#x2F; Thymeleaf 项目</td><td>✅ Cookie + Session</td></tr><tr><td>企业后台管理系统（低并发）</td><td>✅ Session</td></tr><tr><td>前后端分离 Web 项目</td><td>✅ JWT</td></tr><tr><td>SpringCloud 微服务</td><td>✅ JWT</td></tr><tr><td>App &#x2F; 小程序</td><td>✅ JWT</td></tr><tr><td>单点登录 SSO</td><td>✅ JWT</td></tr><tr><td>高并发系统</td><td>✅ JWT</td></tr><tr><td>电商、秒杀系统</td><td>✅ JWT</td></tr></tbody></table><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>八股</category>
+      
+      <category>JAVA基础</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>八股</tag>
+      
+      <tag>Cookie</tag>
+      
+      <tag>Session</tag>
+      
+      <tag>Token</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>注解@Autowired和@Resource和private final注入三者有什么区别</title>
+    <link href="/2025/11/28/JAVA/JAVA%E5%85%AB%E8%82%A1/JAVA%E6%A1%86%E6%9E%B6/@Autowired%E5%92%8C@Resource%E5%92%8Cprivate%20final%E6%B3%A8%E5%85%A5%E4%B8%89%E8%80%85%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <url>/2025/11/28/JAVA/JAVA%E5%85%AB%E8%82%A1/JAVA%E6%A1%86%E6%9E%B6/@Autowired%E5%92%8C@Resource%E5%92%8Cprivate%20final%E6%B3%A8%E5%85%A5%E4%B8%89%E8%80%85%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">@Autowired和@Resource和private final注入三者有什么区别</h1><ul><li><strong>@Autowired：按“类型”注入（Spring 专属）</strong></li><li><strong>@Resource：按“名称优先”注入（Java 标准）</strong></li><li><strong>private final + 构造器：最安全、最推荐的方式（强类型 + 不可变）</strong></li></ul><h2 id="1-三者的使用方式"><a href="#1-三者的使用方式" class="headerlink" title="1. 三者的使用方式"></a>1. 三者的使用方式</h2><h3 id="1-1-Autowired（Spring-自己的）"><a href="#1-1-Autowired（Spring-自己的）" class="headerlink" title="1.1 @Autowired（Spring 自己的）"></a>1.1 @Autowired（Spring 自己的）</h3><p><strong>注入规则：默认按类型注入</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Autowired</span><br><span class="hljs-keyword">private</span> UserService userService;<br></code></pre></td></tr></table></figure><p>Spring 会去容器中找：</p><ul><li>类型是 <code>UserService</code> 的 Bean</li><li>如果只有 1 个 ✅ 成功</li><li>如果有多个 ❌ 报错：<code>NoUniqueBeanDefinitionException</code></li></ul><h4 id="1-1-1-可以配合-Qualifier-指定名称"><a href="#1-1-1-可以配合-Qualifier-指定名称" class="headerlink" title="1.1.1 可以配合 @Qualifier 指定名称"></a>1.1.1 可以配合 <code>@Qualifier</code> 指定名称</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Autowired</span><br><span class="hljs-meta">@Qualifier(&quot;userServiceImpl&quot;)</span><br><span class="hljs-keyword">private</span> UserService userService;<br></code></pre></td></tr></table></figure><p>先按类型，再按名称 <strong>精确匹配</strong></p><h4 id="1-1-2-Spring-实际注入顺序规则（底层逻辑）"><a href="#1-1-2-Spring-实际注入顺序规则（底层逻辑）" class="headerlink" title="1.1.2 Spring 实际注入顺序规则（底层逻辑）"></a>1.1.2 Spring 实际注入顺序规则（底层逻辑）</h4><p>以 <code>@Autowired</code> 为例，真实匹配流程是：</p><ol><li>按 <strong>类型</strong> 找 Bean</li><li>多个 Bean → 看是否有 <code>@Primary</code></li><li>仍然多个 → 看 <code>@Qualifier</code></li><li>还不唯一 → 报错</li></ol><h3 id="1-2-Resource（Java-标准注解）"><a href="#1-2-Resource（Java-标准注解）" class="headerlink" title="1.2 @Resource（Java 标准注解）"></a>1.2 <code>@Resource</code>（Java 标准注解）</h3><p>来自：<code>javax.annotation</code> &#x2F; <code>jakarta.annotation</code><br>✅ <strong>不依赖 Spring，属于 Java 官方规范</strong></p><h4 id="1-2-1-注入规则：先按名称，再按类型"><a href="#1-2-1-注入规则：先按名称，再按类型" class="headerlink" title="1.2.1 注入规则：先按名称，再按类型"></a>1.2.1 注入规则：<strong>先按名称，再按类型</strong></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Resource</span><br><span class="hljs-keyword">private</span> UserService userService;<br></code></pre></td></tr></table></figure><p>查找顺序：</p><ol><li>先按 <strong>属性名 <code>userService</code> 去找 Bean</strong></li><li>找不到 → 再按 <strong>类型 UserService 查找</strong></li></ol><h4 id="1-2-2-可以显式指定名称"><a href="#1-2-2-可以显式指定名称" class="headerlink" title="1.2.2 可以显式指定名称"></a>1.2.2 可以显式指定名称</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Resource(name = &quot;userServiceImpl&quot;)</span><br><span class="hljs-keyword">private</span> UserService userService;<br></code></pre></td></tr></table></figure><p><strong>直接按Bean名称匹配</strong></p><h3 id="1-3-private-final-构造器注入（✅当前最推荐）"><a href="#1-3-private-final-构造器注入（✅当前最推荐）" class="headerlink" title="1.3 private final + 构造器注入（✅当前最推荐）"></a>1.3 <code>private final + 构造器注入</code>（✅当前最推荐）</h3><p>这是 <strong>Spring 官方文档 + 阿里开发规范 + 大厂项目的标准做法</strong>。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderService</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> UserService userService;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">OrderService</span><span class="hljs-params">(UserService userService)</span> &#123;<br>        <span class="hljs-built_in">this</span>.userService = userService;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>或者配合 Lombok的<code>@RequiredArgsConstructor</code>：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RequiredArgsConstructor</span><br><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderService</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> UserService userService;<br>&#125;<br></code></pre></td></tr></table></figure><h4 id="本质还是-Autowired"><a href="#本质还是-Autowired" class="headerlink" title="本质还是 @Autowired"></a>本质还是 <code>@Autowired</code></h4><p>Spring 在：</p><ul><li>只有一个构造器时</li><li><strong>即使你不写 @Autowired，也会自动注入</strong></li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-title function_">OrderService</span><span class="hljs-params">(UserService userService)</span> &#123;&#125; <span class="hljs-comment">// 自动注入</span><br></code></pre></td></tr></table></figure><h2 id="2-三者核心区别一张表"><a href="#2-三者核心区别一张表" class="headerlink" title="2. 三者核心区别一张表"></a>2. 三者核心区别一张表</h2><table><thead><tr><th>对比项</th><th><code>@Autowired</code></th><th><code>@Resource</code></th><th><code>private final + 构造器</code></th></tr></thead><tbody><tr><td>来源</td><td>Spring</td><td>Java 标准</td><td>Java + Spring</td></tr><tr><td>注入方式</td><td>默认按 <strong>类型</strong></td><td>默认按 <strong>名称</strong></td><td>按 <strong>类型</strong></td></tr><tr><td>是否必须</td><td>支持 <code>required=false</code></td><td>不支持</td><td>构造器强制</td></tr><tr><td>依赖是否显式</td><td>❌</td><td>❌</td><td>✅</td></tr><tr><td>是否推荐</td><td>一般</td><td>一般</td><td>✅✅✅</td></tr><tr><td>适合生产项目</td><td>⚠️</td><td>⚠️</td><td>✅ 默认首选</td></tr></tbody></table><h2 id="3-项目中应该怎么选？（实战建议）"><a href="#3-项目中应该怎么选？（实战建议）" class="headerlink" title="3. 项目中应该怎么选？（实战建议）"></a>3. 项目中应该怎么选？（实战建议）</h2><p><strong>企业级项目统一规范：只用“构造器注入 + private final”</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-meta">@RequiredArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DrugService</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> DrugRepository drugRepository;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> RedisTemplate redisTemplate;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>八股</category>
+      
+      <category>Spring/SpringBoot八股</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>八股</tag>
+      
+      <tag>Spring</tag>
+      
+      <tag>DI</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>依赖注入DI的三种注入方式</title>
+    <link href="/2025/11/28/JAVA/JAVA%E5%85%AB%E8%82%A1/JAVA%E6%A1%86%E6%9E%B6/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F/"/>
+    <url>/2025/11/28/JAVA/JAVA%E5%85%AB%E8%82%A1/JAVA%E6%A1%86%E6%9E%B6/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">依赖注入DI的三种注入方式</h1><h2 id="1-什么是依赖注入，DI的作用是什么？"><a href="#1-什么是依赖注入，DI的作用是什么？" class="headerlink" title="1. 什么是依赖注入，DI的作用是什么？"></a>1. 什么是依赖注入，DI的作用是什么？</h2><p>依赖注入DI的作用是<strong>将对象之间的依赖关系从代码中解耦出来</strong>，由<strong>容器统一负责对象的创建、装配和生命周期管理</strong>。你可以通过构造函数或字段注入的方式来告诉Spring需要哪些对象，Spring会负责为你提供。</p><p><strong>DI的本质</strong>：把依赖对象的创建和管理交给 Spring 容器，类只需要专注于自己的业务逻辑，不需要操心依赖从哪里来。</p><h2 id="2-DI的三种注入方式"><a href="#2-DI的三种注入方式" class="headerlink" title="2. DI的三种注入方式"></a>2. DI的三种注入方式</h2><ol><li><strong>构造方法注入【最推荐】</strong></li><li><strong>Setter 注入</strong></li><li><strong>字段注入【最不推荐】</strong></li></ol><h3 id="2-1-构造方法注入（Constructor-Injection）【★★★★★-推荐】"><a href="#2-1-构造方法注入（Constructor-Injection）【★★★★★-推荐】" class="headerlink" title="2.1 构造方法注入（Constructor Injection）【★★★★★ 推荐】"></a>2.1 构造方法注入（Constructor Injection）【★★★★★ 推荐】</h3><p><strong>写法示例</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderService</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> UserService userService;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">OrderService</span><span class="hljs-params">(UserService userService)</span> &#123;<br>        <span class="hljs-built_in">this</span>.userService = userService;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>使用Lombok的<code>@RequiredArgsConstructor</code>注解可以简化成：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-meta">@RequiredArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderService</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> UserService userService;<br>&#125;<br></code></pre></td></tr></table></figure><h3 id="2-2-Setter方法注入（Setter-Injection）"><a href="#2-2-Setter方法注入（Setter-Injection）" class="headerlink" title="2.2 Setter方法注入（Setter Injection）"></a>2.2 Setter方法注入（Setter Injection）</h3><p><strong>写法示例</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderService</span> &#123;<br><br>    <span class="hljs-keyword">private</span> UserService userService;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setUserService</span><span class="hljs-params">(UserService userService)</span> &#123;<br>        <span class="hljs-built_in">this</span>.userService = userService;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>在Setter方法上添加<code>@Autowired</code>注解实现动态注入</p><h3 id="2-3-字段注入（Field-Injection）【★-最不推荐】"><a href="#2-3-字段注入（Field-Injection）【★-最不推荐】" class="headerlink" title="2.3 字段注入（Field Injection）【★ 最不推荐】"></a>2.3 字段注入（Field Injection）【★ 最不推荐】</h3><p><strong>写法示例</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderService</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> UserService userService;<br><br>    <span class="hljs-comment">// 或者：</span><br>    <span class="hljs-meta">@Resource</span><br>    <span class="hljs-keyword">private</span> UserService userService;<br>&#125;<br></code></pre></td></tr></table></figure><p>直接在字段上注入</p><h2 id="3-三种注入方式的对比"><a href="#3-三种注入方式的对比" class="headerlink" title="3. 三种注入方式的对比"></a>3. 三种注入方式的对比</h2><p><strong>更推荐使用：</strong><br><strong>构造器注入 &gt; Setter 注入 &gt; 字段注入</strong></p><h3 id="3-1-原因1：依赖是否“强制完整”"><a href="#3-1-原因1：依赖是否“强制完整”" class="headerlink" title="3.1 原因1：依赖是否“强制完整”"></a>3.1 原因1：依赖是否“强制完整”</h3><p><strong>依赖是否在对象创建时就完整</strong>是第一优先级 → 构造器 &gt; Setter &gt; 字段</p><ul><li><strong>构造器注入</strong>在对象创建时<strong>必须传入所有依赖</strong>，否则对象无法被实例化</li><li><strong>Setter注入</strong>的<strong>对象可以先被创建，再通过Setter方法注入依赖</strong>，可能存在“<strong>对象已被使用但依赖尚未注入</strong>”的风险</li><li><strong>字段注入</strong>：<strong>对象创建时依赖并不明确</strong>，完全依赖 Spring 容器通过<strong>反射在运行期赋值</strong>，一旦容器注入失败，容易在运行期产生<strong>NullPointerException</strong></li></ul><h3 id="3-2-是否支持“不可变对象-线程安全”"><a href="#3-2-是否支持“不可变对象-线程安全”" class="headerlink" title="3.2 是否支持“不可变对象 &amp; 线程安全”"></a>3.2 是否支持“不可变对象 &amp; 线程安全”</h3><ul><li><strong>构造器注入（支持 final，天然线程安全）</strong>，是<strong>不可变对象</strong></li><li>Setter 注入（❌ 运行期可被修改）</li><li>字段注入（❌ 无法使用 final）（Spring 通过反射注入）</li></ul><h3 id="3-3-是否有利于“单元测试-Mock”"><a href="#3-3-是否有利于“单元测试-Mock”" class="headerlink" title="3.3 是否有利于“单元测试 &amp; Mock”"></a>3.3 是否有利于“单元测试 &amp; Mock”</h3><p><strong>测试友好度：构造器 &gt;&gt; Setter &gt; 字段</strong></p><ul><li>构造器注入（✅ 最有利于单测）</li><li>Setter 注入（⚠️ 勉强可测）</li><li>字段注入（❌ 几乎无法做“纯单测”）</li></ul><table><thead><tr><th>对比维度</th><th>构造器注入</th><th>Setter 注入</th><th>字段注入</th></tr></thead><tbody><tr><td>推荐级别</td><td>✅✅✅ 强烈推荐</td><td>⚠️ 一般推荐</td><td>❌ 明确不推荐</td></tr><tr><td>依赖是否强制</td><td>✅ 强制</td><td>❌ 可选</td><td>❌ 不可控</td></tr><tr><td>依赖是否显式</td><td>✅ 构造器参数可见</td><td>⚠️ 部分可见</td><td>❌ 完全隐藏</td></tr><tr><td>是否支持 <code>final</code></td><td>✅ 支持</td><td>❌ 不支持</td><td>❌ 不支持</td></tr><tr><td>单元测试友好性</td><td>✅ 最好</td><td>⚠️ 一般</td><td>❌ 最差</td></tr><tr><td>线程安全</td><td>✅ 高</td><td>❌ 低</td><td>❌ 最低</td></tr><tr><td>是否依赖反射</td><td>❌ 不依赖</td><td>❌ 不依赖</td><td>✅ 强依赖</td></tr><tr><td>企业级项目适用性</td><td>✅ 默认标准</td><td>⚠️ 仅限可选依赖</td><td>❌ 禁用</td></tr></tbody></table><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>八股</category>
+      
+      <category>Spring/SpringBoot八股</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>八股</tag>
+      
+      <tag>Spring</tag>
+      
+      <tag>DI</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>理解Transformer和注意力机制基本原理</title>
     <link href="/2025/11/26/AI/AI%E5%AD%A6%E4%B9%A0/Transformer/"/>
     <url>/2025/11/26/AI/AI%E5%AD%A6%E4%B9%A0/Transformer/</url>
@@ -146,9 +241,9 @@
     
     <tags>
       
-      <tag>SpringCloud</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>SpringCloud</tag>
       
       <tag>Canal</tag>
       
@@ -210,9 +305,9 @@
     
     <tags>
       
-      <tag>SpringCloud</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>SpringCloud</tag>
       
       <tag>Redis</tag>
       
@@ -272,9 +367,9 @@
       
       <tag>SpringCloud</tag>
       
-      <tag>Gateway</tag>
-      
       <tag>Sa-Token</tag>
+      
+      <tag>Gateway</tag>
       
     </tags>
     
@@ -548,9 +643,9 @@
     
     <tags>
       
-      <tag>SpringCloud</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>SpringCloud</tag>
       
       <tag>SpringBoot</tag>
       
@@ -610,9 +705,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>MySQL</tag>
       
@@ -641,9 +736,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>JVM</tag>
       
@@ -672,9 +767,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>JUC</tag>
       
@@ -703,9 +798,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>Redis</tag>
       
@@ -732,11 +827,11 @@
     
     <tags>
       
+      <tag>JAVA</tag>
+      
       <tag>学习</tag>
       
       <tag>SpringCloud</tag>
-      
-      <tag>JAVA</tag>
       
     </tags>
     
@@ -970,9 +1065,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javaweb</tag>
       
@@ -999,9 +1094,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javase</tag>
       
@@ -1028,9 +1123,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javase</tag>
       
@@ -1198,13 +1293,13 @@
     
     <tags>
       
-      <tag>论文</tag>
-      
       <tag>AI</tag>
       
       <tag>信息与通信</tag>
       
       <tag>强化学习</tag>
+      
+      <tag>论文</tag>
       
     </tags>
     
