@@ -4,6 +4,64 @@
   
   
   <entry>
+    <title>常见集合类ArrayList、HashMap的底层原理</title>
+    <link href="/2025/12/01/JAVA/JAVA%E5%85%AB%E8%82%A1/JAVA%E5%9F%BA%E7%A1%80/%E5%B8%B8%E8%A7%81%E9%9B%86%E5%90%88%E7%B1%BB%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/"/>
+    <url>/2025/12/01/JAVA/JAVA%E5%85%AB%E8%82%A1/JAVA%E5%9F%BA%E7%A1%80/%E5%B8%B8%E8%A7%81%E9%9B%86%E5%90%88%E7%B1%BB%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">常见集合类ArrayList、HashMap等类的底层原理</h1><p>当你的简历上写：<code>熟悉 ArrayList、HashMap 等常用类的底层实现原理</code><br>那面试官可能就会问你以下这些底层原理了哦</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>八股</category>
+      
+      <category>JAVA基础</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>八股</tag>
+      
+      <tag>ArrayList</tag>
+      
+      <tag>HashMap</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>理解JAVA三大特性：封装继承多态</title>
+    <link href="/2025/12/01/JAVA/JAVA%E5%85%AB%E8%82%A1/JAVA%E5%9F%BA%E7%A1%80/%E7%90%86%E8%A7%A3%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7/"/>
+    <url>/2025/12/01/JAVA/JAVA%E5%85%AB%E8%82%A1/JAVA%E5%9F%BA%E7%A1%80/%E7%90%86%E8%A7%A3%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">理解JAVA三大特性：封装继承多态</h1><p>面试官问：“JAVA的三大特性是哪些？”</p><p>我们肯定都能回答出来：<strong>封装、继承和多态</strong></p><p>那这三大特性到底都有什么作用呢？</p><h2 id="1-封装"><a href="#1-封装" class="headerlink" title="1. 封装"></a>1. 封装</h2><p><strong>定义</strong>：把数据和操作数据的方法捆在一起，控制访问权限（通常通过 <strong>private字段</strong> + <strong>public getter&#x2F;setter方法</strong>），以<strong>隐藏内部实现并保证状态的一致性</strong>。</p><ul><li>也就是把一个对象应该有的哪些字段（成员变量）和应该有的属性（setter&#x2F;getter方法）封装成一个类</li></ul><p>在我们的项目中，最典型的例子就是我们的<strong>entity类</strong>和<strong>DTO&#x2F;VO这些类</strong>（当然所有的类都包含封装特性）</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DrugImgVO</span> &#123;<br>    <span class="hljs-keyword">private</span> Integer id;<br>    <span class="hljs-keyword">private</span> Integer drugId;<br>    <span class="hljs-keyword">private</span> String path;<br>    <span class="hljs-keyword">private</span> String currentName;<br>    <span class="hljs-keyword">private</span> String originalName;<br>    <span class="hljs-keyword">private</span> Boolean isMain;<br>    <span class="hljs-keyword">private</span> Integer sort;<br>    <span class="hljs-keyword">private</span> String externalPath;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="2-继承"><a href="#2-继承" class="headerlink" title="2. 继承"></a>2. 继承</h2><p><strong>定义</strong>：<strong>子类继承父类</strong>的字段和方法，能够<strong>复用、扩展或重写</strong>父类行为。常用于抽象公共逻辑 &#x2F; 模板方法 &#x2F; 基类工具。</p><ul><li>可以把多个<strong>子类中重复的代码抽取到父类中</strong>，提高代码的复用性</li><li>子类可以在父类的基础上<strong>增加其他功能</strong>，使子类更强大</li></ul><p>另外：<strong>Java只支持单继承，不支持多继承，但支持多层继承</strong></p><p><strong>例如</strong>，在MyBatis-Plus中常见的继承场景：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">UserMapper</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">BaseMapper</span>&lt;User&gt; &#123;<br>&#125;<br></code></pre></td></tr></table></figure><p>继承后你自动拥有以下这些方法可以直接调用：</p><ul><li>selectById</li><li>selectList</li><li>insert</li><li>updateById</li><li>deleteById</li></ul><p>对比一下<strong>extends继承和implements实现</strong>：</p><table><thead><tr><th>对比点</th><th><code>extends</code></th><th><code>implements</code></th></tr></thead><tbody><tr><td>是否可以多继承</td><td>❌ 类只能 extends 1 个类</td><td>✅ 可以 implements 多个接口</td></tr><tr><td>是否必须实现方法</td><td>❌ 不必须（可直接用父类方法）</td><td>✅ 必须实现接口的所有抽象方法</td></tr><tr><td>能否继承属性</td><td>✅ 可以</td><td>❌ 不可以</td></tr><tr><td>能否继承构造方法</td><td>❌ 不可以</td><td>❌ 不存在构造方法</td></tr><tr><td>是否属于继承体系</td><td>✅ 是</td><td>✅ 是（接口继承体系）</td></tr></tbody></table><h2 id="3-多态"><a href="#3-多态" class="headerlink" title="3. 多态"></a>3. 多态</h2><p><strong>定义</strong>：同一个接口或父类引用，在<strong>运行时可以指向不同的具体实现</strong>；调用方法时，执行具体实现的代码（运行时绑定）</p><p><strong>多态的本质</strong>：</p><ul><li>同一个父类型引用，在运行时指向不同的子类对象，并调用子类的方法实现</li><li><strong>编译期看左边，运行期用右边</strong></li></ul><p>例如：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; list = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br></code></pre></td></tr></table></figure><p><strong>编译期看左边 List，运行期用右边 ArrayList</strong></p><p>最大的作用就是可以“<strong>无痛切换实现类</strong>”</p><ul><li>如果此时你发现使用<code>LinkedList</code>更好，可以直接更改右边的子类类型</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 改为：</span><br>List&lt;Integer&gt; list = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedList</span>&lt;&gt;();<br></code></pre></td></tr></table></figure><p>就只需要该这个类型即可，<strong>后面的所有代码都不需要改</strong>，这就是多态的好处</p><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>八股</category>
+      
+      <category>JAVA基础</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>八股</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Cookie、Session和Token的详解</title>
     <link href="/2025/11/28/JAVA/JAVA%E5%85%AB%E8%82%A1/JAVA%E5%9F%BA%E7%A1%80/%E4%BB%80%E4%B9%88%E6%98%AFcookie%EF%BC%8Csession%E5%92%8Ctoken/"/>
     <url>/2025/11/28/JAVA/JAVA%E5%85%AB%E8%82%A1/JAVA%E5%9F%BA%E7%A1%80/%E4%BB%80%E4%B9%88%E6%98%AFcookie%EF%BC%8Csession%E5%92%8Ctoken/</url>
@@ -119,11 +177,11 @@
       
       <tag>AI</tag>
       
-      <tag>LLM</tag>
-      
       <tag>Transformer</tag>
       
       <tag>Attention</tag>
+      
+      <tag>LLM</tag>
       
     </tags>
     
@@ -309,11 +367,11 @@
       
       <tag>SpringCloud</tag>
       
-      <tag>Redis</tag>
-      
       <tag>多级缓存</tag>
       
       <tag>Caffeine</tag>
+      
+      <tag>Redis</tag>
       
     </tags>
     
@@ -705,9 +763,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>MySQL</tag>
       
@@ -736,9 +794,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>JVM</tag>
       
@@ -767,9 +825,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>JUC</tag>
       
@@ -798,9 +856,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>Redis</tag>
       
@@ -827,9 +885,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>SpringCloud</tag>
       
@@ -1065,9 +1123,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>javaweb</tag>
       
@@ -1094,9 +1152,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>javase</tag>
       
@@ -1123,9 +1181,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>javase</tag>
       
