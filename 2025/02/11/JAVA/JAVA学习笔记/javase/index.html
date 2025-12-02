@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/bg/23.jpg">
 <meta property="article:published_time" content="2025-02-11T05:35:46.000Z">
-<meta property="article:modified_time" content="2025-10-13T13:25:30.458Z">
+<meta property="article:modified_time" content="2025-12-02T02:24:13.922Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="JAVA">
 <meta property="article:tag" content="javase">
@@ -2434,7 +2434,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//获取InetAddress的对象</span><br><span class="hljs-type">InetAddress</span> <span class="hljs-variable">address</span> <span class="hljs-operator">=</span> InetAddress.getByName(<span class="hljs-string">&quot;DESKTOP-50JJSAM&quot;</span>);<br>System.out.println(address);<br><br><span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> address.getHostName();<br>System.out.println(name);<span class="hljs-comment">//DESKTOP-50JJSAM</span><br><br><span class="hljs-type">String</span> <span class="hljs-variable">ip</span> <span class="hljs-operator">=</span> address.getHostAddress();<br>System.out.println(ip);<span class="hljs-comment">//192.168.1.100</span><br></code></pre></td></tr></table></figure>
 
 <h4 id="D-端口号"><a href="#D-端口号" class="headerlink" title="D. 端口号"></a>D. 端口号</h4><ul>
-<li>取值范围0<del>65535<br>  其中0</del>1023用于知名应用或网络服务，自己只能用1024以上的端口号</li>
+<li>取值范围<code>0~65535</code><br>  其中<code>0~1023</code>用于知名应用或网络服务，自己只能用1024以上的端口号</li>
 <li>一个端口号只能被一个应用程序使用</li>
 </ul>
 <h4 id="E-协议"><a href="#E-协议" class="headerlink" title="E. 协议"></a>E. 协议</h4><p>计算机网络中，连接和通信的规则称为网络通信协议<br><img src="/img/blogs/java/javase/3.5.1.png" srcset="/img/loading.gif" lazyload></p>
