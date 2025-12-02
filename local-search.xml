@@ -200,13 +200,13 @@
     
     <tags>
       
-      <tag>AI</tag>
-      
-      <tag>LLM</tag>
-      
       <tag>Transformer</tag>
       
       <tag>Attention</tag>
+      
+      <tag>LLM</tag>
+      
+      <tag>AI</tag>
       
     </tags>
     
@@ -324,9 +324,9 @@
     
     <tags>
       
-      <tag>SpringCloud</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>SpringCloud</tag>
       
       <tag>Canal</tag>
       
@@ -388,9 +388,9 @@
     
     <tags>
       
-      <tag>SpringCloud</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>SpringCloud</tag>
       
       <tag>Redis</tag>
       
@@ -699,9 +699,9 @@
     
     <tags>
       
-      <tag>AI</tag>
-      
       <tag>LLM</tag>
+      
+      <tag>AI</tag>
       
     </tags>
     
@@ -726,9 +726,9 @@
     
     <tags>
       
-      <tag>SpringCloud</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>SpringCloud</tag>
       
       <tag>SpringBoot</tag>
       
@@ -912,9 +912,9 @@
       
       <tag>学习</tag>
       
-      <tag>SpringCloud</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>SpringCloud</tag>
       
     </tags>
     
@@ -1376,9 +1376,9 @@
     
     <tags>
       
-      <tag>论文</tag>
-      
       <tag>AI</tag>
+      
+      <tag>论文</tag>
       
       <tag>信息与通信</tag>
       
