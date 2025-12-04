@@ -21,29 +21,28 @@
   <meta name="author" content="ranzier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="原文：IRS-Aided Energy-Efficient Secure WBAN Transmission Based on Deep Reinforcement Learning 〇 简要综述本文分别使用强化学习和深度强化学习的方法通过改变系统模型的参数(传感器的密钥、传输功率和IRS的相位偏移)防御窃听者的窃听攻击从而保证WBAN的安全传输，同时提高传输性能(降低能耗，提高传输效率)。 Ⅰ">
+    <meta name="description" content="深入解析 JVM StringTable：原理、本质与性能调优    1. StringTable 是什么？定义StringTable（字符串常量池）在 JVM 内部是一个 HashTable 结构（在 HotSpot VM 中由 C++ 实现）。它的主要作用是存储字符串常量的引用，以实现字符串的去重。 核心作用 节省内存：相同的字符串字面量（如 &quot;hello&quot;）在内存中只保留">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基于深度强化学习的 IRS 辅助节能安全 WBAN 传输">
-<meta property="og:url" content="http://example.com/2024/06/08/Paper/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84%20IRS%20%E8%BE%85%E5%8A%A9%E8%8A%82%E8%83%BD%E5%AE%89%E5%85%A8%20WBAN%20%E4%BC%A0%E8%BE%93/index.html">
+<meta property="og:title" content="详解JVM中StringTable原理">
+<meta property="og:url" content="http://example.com/2025/12/04/JAVA/JAVA%E5%85%AB%E8%82%A1/JVM%E5%8E%9F%E7%90%86/%E8%AF%A6%E8%A7%A3StringTable/index.html">
 <meta property="og:site_name" content="RANZIER">
-<meta property="og:description" content="原文：IRS-Aided Energy-Efficient Secure WBAN Transmission Based on Deep Reinforcement Learning 〇 简要综述本文分别使用强化学习和深度强化学习的方法通过改变系统模型的参数(传感器的密钥、传输功率和IRS的相位偏移)防御窃听者的窃听攻击从而保证WBAN的安全传输，同时提高传输性能(降低能耗，提高传输效率)。 Ⅰ">
+<meta property="og:description" content="深入解析 JVM StringTable：原理、本质与性能调优    1. StringTable 是什么？定义StringTable（字符串常量池）在 JVM 内部是一个 HashTable 结构（在 HotSpot VM 中由 C++ 实现）。它的主要作用是存储字符串常量的引用，以实现字符串的去重。 核心作用 节省内存：相同的字符串字面量（如 &quot;hello&quot;）在内存中只保留">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/bg/16.jpg">
-<meta property="article:published_time" content="2024-06-08T02:14:39.000Z">
-<meta property="article:modified_time" content="2025-10-13T13:13:37.851Z">
+<meta property="og:image" content="http://example.com/img/bg/62.jpg">
+<meta property="article:published_time" content="2025-12-04T13:58:35.000Z">
+<meta property="article:modified_time" content="2025-12-04T14:12:27.201Z">
 <meta property="article:author" content="ranzier">
-<meta property="article:tag" content="AI">
-<meta property="article:tag" content="信息与通信">
-<meta property="article:tag" content="强化学习">
-<meta property="article:tag" content="论文">
+<meta property="article:tag" content="JVM">
+<meta property="article:tag" content="StringTable">
+<meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/bg/16.jpg">
+<meta name="twitter:image" content="http://example.com/img/bg/62.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>基于深度强化学习的 IRS 辅助节能安全 WBAN 传输 - RANZIER</title>
+  <title>详解JVM中StringTable原理 - RANZIER</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="基于深度强化学习的 IRS 辅助节能安全 WBAN 传输"></span>
+            <span id="subtitle" data-typed-text="详解JVM中StringTable原理"></span>
           
         </div>
 
@@ -239,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-06-08 10:14" pubdate>
-          2024年6月8日 上午
+        <time datetime="2025-12-04 21:58" pubdate>
+          2025年12月4日 晚上
         </time>
       </span>
     
@@ -251,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          1.1k 字
         
       </span>
     
@@ -262,7 +261,7 @@
         
         
         
-          13 分钟
+          6 分钟
         
       </span>
     
@@ -312,113 +311,84 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">基于深度强化学习的 IRS 辅助节能安全 WBAN 传输</h1>
+            <h1 id="seo-header">详解JVM中StringTable原理</h1>
             
             
               <div class="markdown-body">
                 
-                <p>原文：<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/9762319">IRS-Aided Energy-Efficient Secure WBAN Transmission Based on Deep Reinforcement Learning</a></p>
-<h3 id="〇-简要综述"><a href="#〇-简要综述" class="headerlink" title="〇 简要综述"></a>〇 简要综述</h3><p>本文分别使用强化学习和深度强化学习的方法通过改变系统模型的参数(传感器的密钥、传输功率和IRS的相位偏移)防御窃听者的窃听攻击从而保证WBAN的安全传输，同时提高传输性能(降低能耗，提高传输效率)。</p>
-<h3 id="Ⅰ-引言和相关工作"><a href="#Ⅰ-引言和相关工作" class="headerlink" title="Ⅰ 引言和相关工作"></a>Ⅰ 引言和相关工作</h3><ol>
-<li>无线体域网(WBAN)</li>
-</ol>
-<p>WBAN是一种专门用于在人体周围进行无线通信的网络技术。主要用于医疗健康领域，通过在人体内或体表放置的多个传感器来采集和传输生理数据，以便进行实时监测、诊断和治疗。</p>
-<ol start="2">
-<li>智能反射面(IRS)</li>
-</ol>
-<p>智能反射面由智能反射单元阵列组成，每个智能反射单元能够独立地对入射信号进行某些改变。大量的研究基本考虑到入射信号的相位偏移，所以IRS不消耗传输功率。IRS的主要作用是通过反射信号传输的角度和方向，增强特定区域的信号强度。</p>
-<ol start="3">
-<li><p>强化学习(RL)</p>
-</li>
-<li><p>状态（State）：状态就是在某个时刻环境的具体描述，系统所处情景的完整表述，包含所有观测到的信息。</p>
-</li>
-<li><p>动作（Action）：动作是在特定状态下可以采取的行为或选择。每个动作会使智能体从一个状态转移到另一个状态。在本文中动作是改变加密密钥、传感器的发射功率级别以及IRS的相移。</p>
-</li>
-<li><p>策略（Policy）：策略是在当前状态下应该采取的动作是什么，通过制定策略长期内获得最大化累计奖励。</p>
-</li>
-<li><p>奖励（Reward）：就是执行动作后得到的反馈信号,用于评估该动作的好坏,它指导如何调整策略以实现目标。</p>
-</li>
-</ol>
-<p>本文通过强化学习要改变的有以下这三个动作：</p>
-<ul>
-<li>密钥长度：由于WBAN主要用AES加密，如果密钥过长虽然安全性有所保障，但容易消耗过多的通信带宽，传输延迟过高。</li>
-<li>传感器的发射功率：功率分配方案应用了值迭代动态规划，可以根据窃听者的干扰策略做出相应调整。</li>
-<li>IRS的相位偏移：IRS反射信号通过增加协调器接收到的信号功率，减少窃听者接收到的信号功率，从而对抗窃听。</li>
-</ul>
-<h3 id="Ⅱ-系统模型和问题表述"><a href="#Ⅱ-系统模型和问题表述" class="headerlink" title="Ⅱ 系统模型和问题表述"></a>Ⅱ 系统模型和问题表述</h3><h5 id="A．无线体域网模型的工作原理"><a href="#A．无线体域网模型的工作原理" class="headerlink" title="A．无线体域网模型的工作原理"></a>A．无线体域网模型的工作原理</h5><ol>
-<li>首先传感器从人体采集健康数据，通过A&#x2F;D转化器以速率R进行采样。</li>
-<li>采集的数据用AES加密，密钥是由椭圆曲线DH算法生成的。</li>
-<li>加密后的数据再进行信道编码(channel coding)（例如BCH编码）</li>
-<li>编码后的数据使用例如DBPSK进行调制，用于无线信道的传输</li>
-<li>传感器根据协调器的指令调整发送功率，然后将调制后的数据发送到协调器。</li>
-<li>协调器接收到传感器的数据后，进行解调和信道解码。</li>
-<li>解码后的数据经过AES解密恢复原始数据。</li>
-<li>IRS由M个反射元件组成，协调器的指令通过设置PIN二极管的偏置电压可以调整IRS的相位偏移。</li>
-<li>控制信道(control channel)：协调器通过控制信道向传感器和IRS发送加密密钥、相位偏移和发射功率等控制信息</li>
-</ol>
-<h5 id="B-WBAN-信道模型"><a href="#B-WBAN-信道模型" class="headerlink" title="B. WBAN 信道模型"></a>B. WBAN 信道模型</h5><p>主要介绍了信道估计的过程，信道估计的主要作用是得到信道当前状态信息</p>
-<ol>
-<li>协调器评估接收到的传感器导频信号从而获得传感器与协调器之间的信道状态信息（CSI）</li>
-<li>IRS使用半被动元件辅助的信道估计方法来估计传感器-IRS和IRS-协调器的信道状态信息</li>
-</ol>
-<h5 id="C-攻击模型"><a href="#C-攻击模型" class="headerlink" title="C. 攻击模型"></a>C. 攻击模型</h5><p>主动窃听者选择合适的干扰功率发送干扰信号，诱导传感器提高发射功率，从而获取更多的数据。获得数据之后再解密数据。</p>
-<p>主要展示了从传感器到协调器的传输过程，以及如何应对主动窃听者的窃听攻击。在每个时间段中动态调整传感器和IRS的操作参数，从而实现数据传输的安全性以及防御窃听攻击。</p>
-<ol>
-<li>信道估计和干扰测量：a窃听者发送干扰信号；b进行信道估计测量接收到的干扰功率(power)</li>
-<li>协调器向IRS和传感器发送信标，通知其开始传输过程</li>
-<li>传感器发送RTS(数据的优先级)，IRS发送RTS(IRS信道状态)。</li>
-<li>安全传输策略选择：协调器基于接收的(数据优先级、IRS信道状态、前一个time slot的SINR)选择传感器的CTR_S(加密密钥、发射功率)和IRS的CTR_R(相位偏移)。</li>
-<li>调整IRS反射元件的相位偏移从而优化信号传输。</li>
-<li>传感器对数据进行加密和channel coding并且发送消息(MSG)</li>
-<li>协调器对数据解码和解密，并且协调器估计信噪比（SINR），发送确认消息（ACK）给传感器和IRS，表示数据已成功接收。</li>
-</ol>
-<h3 id="Ⅲ-基于-IRS-辅助-RL-的节能安全-WBAN-传输"><a href="#Ⅲ-基于-IRS-辅助-RL-的节能安全-WBAN-传输" class="headerlink" title="Ⅲ 基于 IRS 辅助 RL 的节能安全 WBAN 传输"></a>Ⅲ 基于 IRS 辅助 RL 的节能安全 WBAN 传输</h3><p>因为协调器很难知道窃听信道状态和窃听策略，所以很难保证WBAN传输的安全，提出了强化学习的WBAN传输方案实现最优策略，包括选择传感器加密密钥、发射功率以及IRS相位调整。同时使用传感器信号的信噪比（SINR）作为安全性标准。</p>
-<h5 id="A．state"><a href="#A．state" class="headerlink" title="A．state"></a>A．state</h5><p>某个时刻环境的具体描述：</p>
-<p>输入的信息有干扰功率(jamming power)、基于导频的信道估计(pilot-based channel estimation)、数据优先级(data priority)、IRS信道状态(IRS channel states)、前一个时间段的传感器能耗和传输延迟(previous sensor energy consumption &amp; transmission latency)、传感器到IRS的信道状态和IRS到协调器的信道状态。</p>
-<p>总之，传感器的状态向量。包含数据优先级、接收到的干扰功率、传感器和IRS的信道状态、传感器能量消耗和传输延迟。</p>
-<h5 id="B-Action"><a href="#B-Action" class="headerlink" title="B. Action"></a>B. Action</h5><p>当下可以做出的改变，动作集(所有的传输策略的集合)：组成要素包括加密密钥、传感器的发射功率级别以及IRS的相移。</p>
-<p>动作集是一个具有三维的有限集合，包含以下部分：</p>
-<ol>
-<li>传感器加密密钥的取值（1到Z）。</li>
-<li>传感器发射功率级别的取值（1到D）。</li>
-<li>IRS相移的取值（每个相移从0到N-1）</li>
-</ol>
-<h5 id="C-Policy"><a href="#C-Policy" class="headerlink" title="C. Policy"></a>C. Policy</h5><p>通过计算和评估策略分布以选择合适的传输策略。</p>
-<p>协调器根据传感器信号的SINR 设置一个安全标准。如果在状态-动作对下的SINR低于安全标准，则认为该状态-动作对的风险水平为1，否则为0。</p>
-<h5 id="D-Reward"><a href="#D-Reward" class="headerlink" title="D. Reward"></a>D. Reward</h5><p>1.效用函数u的计算</p>
-<p>效用函数 u 结合了数据保护等级、窃听率、SINR、传感器能耗和传输延迟</p>
-<p>协调器的目标是最大化期望的长期效用</p>
-<p>其中γ是折扣因子，表示未来效用的重要性。</p>
-<p>2.强化学习和经验回放：</p>
-<p>状态转移概率由状态-动作对和下一状态计数器和出现次数向量得到</p>
-<p>建模效用 ω 定义为所有真实反窃听传输经验的平均效用</p>
-<p>生成 J 个模拟经验，根据这些经验更新长期风险水平和预期长期效用，最终通过迭代Bellman方程进行优化。</p>
-<h3 id="IV-基于DRL的安全WBAN传输"><a href="#IV-基于DRL的安全WBAN传输" class="headerlink" title="IV 基于DRL的安全WBAN传输"></a>IV 基于DRL的安全WBAN传输</h3><p>主要是为了提高WBAN的传输性能，使用了深度RL。</p>
-<ol>
-<li>actor-critic模型：</li>
-</ol>
-<p>Critic 是评判网络：当输入为环境状态时，它可以评估当前状态的价值；当输入为环境状态和采取的动作时，它可以评估当前状态下采取该动作的价值。</p>
-<p>Critic 网络的输入一般有两种形式：（1）如果输入为状态，则该评价网络的作用为评价当前状态价值；（2）如果输入为状态和动作，则该评价网络的作用为评价当前状态的动作价值。</p>
-<p>Actor 为策略网络，以当前的状态作为输入，输出为动作的概率分布或者连续动作值，再由 Critic 网络来评价该动作的好坏从而调整策略。</p>
-<ol start="2">
-<li>本文中的深度强化学习模型</li>
-</ol>
-<p>actor网络根据当前状态生成传输策略，critic网络评估状态值。</p>
-<p>Actor：用于生成策略，即决定在当前状态下采取哪种动作（如选择传感器的加密密钥、传感器发射功率和IRS相移）。</p>
-<p>Critic：用于评估当前策略的表现，即计算在当前状态和动作下的价值函数（Q值）。</p>
-<h3 id="Ⅴ-性能分析和仿真结果"><a href="#Ⅴ-性能分析和仿真结果" class="headerlink" title="Ⅴ 性能分析和仿真结果"></a>Ⅴ 性能分析和仿真结果</h3><p>在模型中协调器选择传输策略（包括加密密钥长度、传输功率和IRS相位移），而窃听者选择干扰功率。</p>
-<p>随着时间的推移，窃听率ITDL比ITRL收敛的更快，ITDL的窃听率始终比ITRL低。</p>
-<p>同样的：在能耗方面、传输延迟方面，ITDL也始终比ITRL低</p>
-<p>在传输的安全容量上，ITDL也始终比ITRL传输的安全容量更高。</p>
-<p>ITDL的效用(综合指标)也一直比ITRL更高，更快的逼近理想状态。</p>
-<p>结论：</p>
-<ol>
-<li>随着时间的推移，ITDL和ITRL的效用(utility)相比于BDL(基线策略)都提高了很多。</li>
-<li>窃听者距离传感器从6米增加到10米，而ITRL的效用提高了38.6%。主要因为窃听者信道条件的恶化。</li>
-<li>增加IRS的反射元件的数量可以提高效用。</li>
-</ol>
-<p>总之，通过强化学习改变协调器的选择(传感器的密钥、传输功率和IRS的相位偏移)降低窃听者的窃听率和拦截概率。</p>
+                <h1 align="center">深入解析 JVM StringTable：原理、本质与性能调优</h1>
 
+
+
+<h2 id="1-StringTable-是什么？"><a href="#1-StringTable-是什么？" class="headerlink" title="1. StringTable 是什么？"></a>1. StringTable 是什么？</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p><strong>StringTable</strong>（字符串常量池）在 JVM 内部是一个 <strong>HashTable</strong> 结构（在 HotSpot VM 中由 C++ 实现）。它的主要作用是<strong>存储字符串常量的引用</strong>，以实现字符串的<strong>去重</strong>。</p>
+<h3 id="核心作用"><a href="#核心作用" class="headerlink" title="核心作用"></a>核心作用</h3><ol>
+<li><strong>节省内存</strong>：相同的字符串字面量（如 <code>&quot;hello&quot;</code>）在内存中只保留一份。</li>
+<li><strong>提升性能</strong>：通过缓存字符串引用，减少重复创建对象的开销。</li>
+</ol>
+<h3 id="关键特性"><a href="#关键特性" class="headerlink" title="关键特性"></a>关键特性</h3><ul>
+<li><strong>唯一性</strong>：StringTable 类似于一个 <code>HashSet</code>，它保证存入的字符串内容是唯一的。</li>
+<li><strong>固定大小（Bucket Size）</strong>：作为一个 HashTable（<strong>哈希表+链表</strong>），它有固定数量的 Bucket（桶）。如果放入的字符串非常多，会导致 Hash 冲突，进而退化为链表，影响查询性能。</li>
+<li><strong>不存储内容本身</strong>：这是很多人的误区。StringTable <strong>不直接存储</strong> 字符数据（char[] 或 byte[]），它存储的是<strong>指向堆中 String 对象的引用</strong>。</li>
+</ul>
+<h2 id="2-StringTable-存储内容的本质"><a href="#2-StringTable-存储内容的本质" class="headerlink" title="2. StringTable 存储内容的本质"></a>2. StringTable 存储内容的本质</h2><p>StringTable中存的是：<strong>字符串对象的引用</strong>（<strong>即指向堆中 String 对象的指针</strong>）</p>
+<p>当我们代码中出现 <code>String s = &quot;abc&quot;;</code> 时，发生了什么？</p>
+<ol>
+<li><strong>底层数据</strong>：字符 <code>&#39;a&#39;</code>, <code>&#39;b&#39;</code>, <code>&#39;c&#39;</code> 实际上存储在一个 <code>byte[]</code>  或 <code>char[]</code> 数组中。</li>
+<li><strong>堆对象</strong>：JVM 会在 <strong>Java Heap（堆）</strong> 上创建一个 <code>String</code> 对象，该对象内部持有上述数组的引用。</li>
+<li><strong>StringTable 条目</strong>：StringTable 本身是一个 C++ 的 HashTable。它的 Key 是字符串的 HashCode，<strong>Value 是指向 Java 堆中那个 String 对象的内存地址（引用）</strong>。</li>
+</ol>
+<h2 id="3-StringTable-的位置"><a href="#3-StringTable-的位置" class="headerlink" title="3. StringTable 的位置"></a>3. StringTable 的位置</h2><h3 id="JDK-1-6-及之前：永久代-PermGen"><a href="#JDK-1-6-及之前：永久代-PermGen" class="headerlink" title="JDK 1.6 及之前：永久代 (PermGen)"></a>JDK 1.6 及之前：永久代 (PermGen)</h3><ul>
+<li><strong>位置</strong>：StringTable 存放在 <strong>PermGen</strong> 区。</li>
+<li><strong>问题</strong>：PermGen 空间非常有限且默认较小。如果大量使用 <code>intern()</code> 方法，很容易导致 <code>java.lang.OutOfMemoryError: PermGen space</code>。</li>
+</ul>
+<h3 id="JDK-1-8-及之后：移动到堆-Heap"><a href="#JDK-1-8-及之后：移动到堆-Heap" class="headerlink" title="JDK 1.8 及之后：移动到堆 (Heap)"></a>JDK 1.8 及之后：移动到堆 (Heap)</h3><ul>
+<li><strong>位置</strong>：<strong>Java Heap</strong></li>
+<li><strong>注意</strong>：JDK 1.8 去除了 PermGen，引入了元空间 (Metaspace)。<strong>StringTable保留在 Heap 中</strong>。这是为了保证字符串能被高效回收。</li>
+</ul>
+<h2 id="4-intern-方法"><a href="#4-intern-方法" class="headerlink" title="4. intern() 方法"></a>4. intern() 方法</h2><p><code>intern()</code> 是 StringTable 的核心交互接口。它的逻辑如下：</p>
+<p>调用 <code>s.intern()</code> 时，JVM 会去 StringTable 中查找是否有内容等于 <code>s</code> 的字符串。</p>
+<ol>
+<li><strong>如果存在</strong>：直接返回 StringTable 中保存的那个对象的<strong>引用</strong>。</li>
+<li><strong>如果不存在</strong>：将当前字符串放入 StringTable，并返回引用。</li>
+</ol>
+<h2 id="5-StringTable-的垃圾回收"><a href="#5-StringTable-的垃圾回收" class="headerlink" title="5. StringTable 的垃圾回收"></a>5. StringTable 的垃圾回收</h2><p>StringTable 虽然叫“常量池”，但它并不是永久存在的。它参与 <strong>垃圾回收(GC)</strong>。</p>
+<ul>
+<li><strong>回收机制</strong>：StringTable 中的引用属于 <strong>Weak Roots</strong>（弱根）。如果 Heap 中的某个 String 对象没有任何强引用指向它（除了 StringTable 自身持有的那个引用），那么在下一次 GC 时，JVM 就会将这个 Entry 从 StringTable 中移除，并回收 Heap 中的 String 对象。</li>
+<li><strong>观察 GC</strong>：可以通过 <code>-XX:+PrintStringTableStatistics</code> 在 JVM 退出时打印统计信息，或者使用 <code>-XX:+PrintGCDetails</code> 观察 GC 日志。</li>
+</ul>
+<h2 id="6-StringTable-性能调优"><a href="#6-StringTable-性能调优" class="headerlink" title="6. StringTable 性能调优"></a>6. StringTable 性能调优</h2><p>在处理海量字符串（如解析大型 XML&#x2F;JSON、分析日志、RPC 传输）时，StringTable 的性能至关重要。</p>
+<h3 id="6-1-StringTable-Size-调优"><a href="#6-1-StringTable-Size-调优" class="headerlink" title="6.1 StringTable Size 调优"></a>6.1 StringTable Size 调优</h3><p>StringTable 是一个 HashTable。如果<strong>桶</strong>（Bucket）太少，而字符串太多，就会发生严重的 Hash 冲突，导致链表过长，查找性能从 O(1) 退化为 O(n)。</p>
+<ul>
+<li><strong>参数</strong>：<code>-XX:StringTableSize=N</code></li>
+<li><strong>默认值</strong>：<ul>
+<li>JDK 1.6: 1009 (非常小)</li>
+<li>JDK 7&#x2F;8: 60013</li>
+<li>JDK 11+: 65536</li>
+</ul>
+</li>
+<li><strong>调优建议</strong>：<strong>如果应用中有数百万个不同的字符串需要 <code>intern()</code>，建议将该值调大</strong>（例如 200,000 甚至更大），以减少 Hash 冲突。</li>
+<li><strong>查看统计</strong>：JVM 运行时可以通过 <code>jmap -heap &lt;pid&gt;</code> 查看 StringTable 配置，或者启动时加 <code>-XX:+PrintStringTableStatistics</code> 查看由 bucket size 导致的冲突情况。</li>
+</ul>
+<h3 id="6-2-适用场景：什么时候用-intern"><a href="#6-2-适用场景：什么时候用-intern" class="headerlink" title="6.2 适用场景：什么时候用 intern()?"></a>6.2 适用场景：什么时候用 intern()?</h3><p>并不是所有字符串都需要 <code>intern()</code>。</p>
+<ul>
+<li><strong>适合场景</strong>：<ul>
+<li><strong>大量重复</strong> 的字符串对象。例如：社交应用中的“省份”、“城市”，电商系统中的“商品类目”，JSON 解析中的 Key 字段。</li>
+<li><strong>案例</strong>：<strong>Twitter 曾分享过通过使用 <code>intern()</code> 优化 JSON 解析，节省了大量堆内存</strong>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><ol>
+<li><strong>本质</strong>：StringTable 是一个存储 String 对象引用的 HashTable，位于 Heap 中。</li>
+<li><strong>内存</strong>：它是缓解内存压力的利器，但滥用会导致性能下降。</li>
+<li><strong>调优</strong>：<ul>
+<li>使用 <code>-XX:StringTableSize</code> 优化哈希桶大小。</li>
+<li>对于高重复率数据，主动使用 <code>intern()</code>。</li>
+<li>使用 G1 GC 时，考虑开启 <code>-XX:+UseStringDeduplication</code>。</li>
+</ul>
+</li>
+</ol>
+<p><em><strong>此博客由<code>Gemini 3 Pro Preview</code>生成（有删减）</strong></em></p>
+<h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>
                 
               </div>
             
@@ -436,8 +406,15 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AE%BA%E6%96%87/" class="category-chain-item">论文</a>
+  <a href="/categories/%E5%85%AB%E8%82%A1/" class="category-chain-item">八股</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%85%AB%E8%82%A1/JVM%E5%85%AB%E8%82%A1/" class="category-chain-item">JVM八股</a>
+  
+  
+
   
 
       </span>
@@ -451,13 +428,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%AE%BA%E6%96%87/" class="print-no-link">#论文</a>
+        <a href="/tags/%E5%85%AB%E8%82%A1/" class="print-no-link">#八股</a>
       
-        <a href="/tags/AI/" class="print-no-link">#AI</a>
+        <a href="/tags/JVM/" class="print-no-link">#JVM</a>
       
-        <a href="/tags/%E4%BF%A1%E6%81%AF%E4%B8%8E%E9%80%9A%E4%BF%A1/" class="print-no-link">#信息与通信</a>
-      
-        <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" class="print-no-link">#强化学习</a>
+        <a href="/tags/StringTable/" class="print-no-link">#StringTable</a>
       
     </div>
   
@@ -471,18 +446,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/06/15/CyberSec/%E5%A6%82%E4%BD%95%E5%9C%A8VS2019%E5%AE%89%E8%A3%85crypto%E5%8C%85/" title="如何在VS2019安装crypto包">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">如何在VS2019安装crypto包</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/04/28/CyberSec/CVE-2020-13821%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" title="CVE-2020-13821漏洞复现">
-                        <span class="hidden-mobile">CVE-2020-13821漏洞复现</span>
+                      <a href="/2025/12/02/JAVA/JAVA%E5%85%AB%E8%82%A1/JAVA%E5%9F%BA%E7%A1%80/%E8%AF%A6%E8%A7%A3%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" title="详解反射机制和动态代理原理">
+                        <span class="hidden-mobile">详解反射机制和动态代理原理</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
