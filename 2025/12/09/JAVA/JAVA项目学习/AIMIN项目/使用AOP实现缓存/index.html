@@ -21,16 +21,16 @@
   <meta name="author" content="ranzier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="通过自定义AOP实现二级缓存注解功能  面试官问：你的项目中用到AOP了吗？ 1. AOP是什么AOP是面向切面编程  AOP将通用的代码逻辑从业务代码中抽离出来，然后在运行时自动放到指定位置进行运行 让你不用手写重复代码，也能在某些方法执行前后自动加上这些通用逻辑  常用于：  日志 权限校验 事务处理 缓存  2.">
+    <meta name="description" content="通过自定义AOP实现二级缓存注解功能  面试官问：你的项目中用到AOP了吗？ 1 AOP是什么AOP是面向切面编程  AOP将通用的代码逻辑从业务代码中抽离出来，然后在运行时自动放到指定位置进行运行 让你不用手写重复代码，也能在某些方法执行前后自动加上这些通用逻辑  常用于：  日志 权限校验 事务处理 缓存  2 项目中如何使用AOP实现二级缓存的2.1 概述核心机制基于自定义注解@L2Cach">
 <meta property="og:type" content="article">
 <meta property="og:title" content="通过自定义AOP实现二级缓存注解功能">
 <meta property="og:url" content="http://example.com/2025/12/09/JAVA/JAVA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/AIMIN%E9%A1%B9%E7%9B%AE/%E4%BD%BF%E7%94%A8AOP%E5%AE%9E%E7%8E%B0%E7%BC%93%E5%AD%98/index.html">
 <meta property="og:site_name" content="RANZIER">
-<meta property="og:description" content="通过自定义AOP实现二级缓存注解功能  面试官问：你的项目中用到AOP了吗？ 1. AOP是什么AOP是面向切面编程  AOP将通用的代码逻辑从业务代码中抽离出来，然后在运行时自动放到指定位置进行运行 让你不用手写重复代码，也能在某些方法执行前后自动加上这些通用逻辑  常用于：  日志 权限校验 事务处理 缓存  2.">
+<meta property="og:description" content="通过自定义AOP实现二级缓存注解功能  面试官问：你的项目中用到AOP了吗？ 1 AOP是什么AOP是面向切面编程  AOP将通用的代码逻辑从业务代码中抽离出来，然后在运行时自动放到指定位置进行运行 让你不用手写重复代码，也能在某些方法执行前后自动加上这些通用逻辑  常用于：  日志 权限校验 事务处理 缓存  2 项目中如何使用AOP实现二级缓存的2.1 概述核心机制基于自定义注解@L2Cach">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/bg/64.jpg">
 <meta property="article:published_time" content="2025-12-09T13:47:35.000Z">
-<meta property="article:modified_time" content="2025-12-09T13:17:50.860Z">
+<meta property="article:modified_time" content="2025-12-09T14:04:19.270Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="AOP">
 <meta property="article:tag" content="JAVA">
@@ -249,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          125 字
+          1.2k 字
         
       </span>
     
@@ -260,7 +260,7 @@
         
         
         
-          1 分钟
+          7 分钟
         
       </span>
     
@@ -318,7 +318,7 @@
                 <h1 align="center">通过自定义AOP实现二级缓存注解功能</h1>
 
 <p><strong>面试官问：你的项目中用到AOP了吗？</strong></p>
-<h2 id="1-AOP是什么"><a href="#1-AOP是什么" class="headerlink" title="1. AOP是什么"></a>1. AOP是什么</h2><p>AOP是<strong>面向切面编程</strong></p>
+<h2 id="1-AOP是什么"><a href="#1-AOP是什么" class="headerlink" title="1 AOP是什么"></a>1 AOP是什么</h2><p>AOP是<strong>面向切面编程</strong></p>
 <ul>
 <li>AOP<strong>将通用的代码逻辑从业务代码中抽离出来</strong>，然后在运行时自动放到指定位置进行运行</li>
 <li>让你不用手写重复代码，<strong>也能在某些方法执行前后自动加上这些通用逻辑</strong></li>
@@ -330,7 +330,102 @@
 <li><strong>事务</strong>处理</li>
 <li><strong>缓存</strong></li>
 </ul>
-<h2 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h2>
+<h2 id="2-项目中如何使用AOP实现二级缓存的"><a href="#2-项目中如何使用AOP实现二级缓存的" class="headerlink" title="2 项目中如何使用AOP实现二级缓存的"></a>2 项目中如何使用AOP实现二级缓存的</h2><h3 id="2-1-概述"><a href="#2-1-概述" class="headerlink" title="2.1 概述"></a>2.1 概述</h3><p>核心机制基于自定义注解<code>@L2Cache</code>，通过AOP切面<code>L2CacheAspect</code>拦截标注该注解的方法，实现缓存逻辑。该实现不依赖Spring Cache抽象，而是手动管理Caffeine和Redis实例，支持三种操作模式（FULL、PUT、DELETE）</p>
+<h3 id="2-2-配置与依赖注入"><a href="#2-2-配置与依赖注入" class="headerlink" title="2.2 配置与依赖注入"></a>2.2 配置与依赖注入</h3><p>二级缓存的配置主要在<code>SimpleCacheProperties</code>和<code>L2CacheConfig</code>中定义，确保Caffeine缓存实例被正确初始化，并注入到切面中。</p>
+<ul>
+<li><strong>SimpleCacheProperties</strong>：这是一个@ConfigurationProperties类，从application.properties或YAML配置文件中读取以”l2cache”前缀的属性</li>
+<li><strong>L2CacheConfig</strong>：这是一个配置类，使用@EnableCaching启用Spring缓存（虽未直接使用Spring CacheManager，但为兼容性考虑）。它注入SimpleCacheProperties，并创建Caffeine缓存实例</li>
+</ul>
+<h3 id="2-3-自定义注解-L2Cache"><a href="#2-3-自定义注解-L2Cache" class="headerlink" title="2.3 自定义注解 @L2Cache"></a>2.3 自定义注解 @L2Cache</h3><p>注解定义在L2Cache.java中，用于<strong>标记目标方法</strong>：</p>
+<ul>
+<li><p><code>@Target(ElementType.METHOD)</code>：仅适用于方法。</p>
+</li>
+<li><p><code>@Retention(RetentionPolicy.RUNTIME)</code>：运行时保留，便于AOP反射读取。</p>
+</li>
+<li><p>参数：</p>
+<ul>
+<li><code>cacheName()</code>：缓存命名空间，默认”aimin-cache”，用于前缀键（如”aimin-cache::user:1”）。</li>
+<li><code>key()</code>：必填，SpEL表达式，用于动态生成键（如”#user.id”，基于方法参数）。</li>
+<li><code>l2TimeOut()</code>：Redis过期时间（秒），默认120。</li>
+<li><code>type()</code>：操作类型，默认FULL（详见CacheType枚举）。</li>
+</ul>
+</li>
+</ul>
+<p>示例使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@L2Cache(key = &quot;#user.id&quot;, type = CacheType.FULL)</span><br><span class="hljs-keyword">public</span> User <span class="hljs-title function_">getUser</span><span class="hljs-params">(User user)</span> &#123;<br>    <span class="hljs-comment">// 查询数据库逻辑</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-4-AOP切面实现-L2CacheAspect"><a href="#2-4-AOP切面实现-L2CacheAspect" class="headerlink" title="2.4 AOP切面实现 (L2CacheAspect)"></a>2.4 AOP切面实现 (L2CacheAspect)</h3><p>切面类使用@Aspect和@Component标记，是Spring管理的Bean。核心是@Around环绕通知，拦截所有标注@L2Cache的方法。实现缓存的逻辑。</p>
+<h4 id="2-4-1-切点定义"><a href="#2-4-1-切点定义" class="headerlink" title="2.4.1 切点定义"></a>2.4.1 切点定义</h4>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Pointcut(&quot;@annotation(com.oimc.aimin.cache.simple.annotation.L2Cache)&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">cacheAspect</span><span class="hljs-params">()</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+<p>  这<strong>匹配任何带有<code>@L2Cache</code>的方法</strong>。</p>
+<h4 id="2-4-2-环绕通知-doAround-："><a href="#2-4-2-环绕通知-doAround-：" class="headerlink" title="2.4.2 环绕通知 doAround()："></a>2.4.2 <strong>环绕通知 doAround()</strong>：</h4><p>  这是一个完整的AOP拦截逻辑，包围目标方法执行（point.proceed()）。步骤如下：</p>
+<ol>
+<li><p><strong>获取方法信息和参数</strong>：</p>
+<ul>
+<li>通过MethodSignature获取方法和注解。</li>
+<li>构建TreeMap&lt;String, Object&gt;映射参数名和值。</li>
+</ul>
+</li>
+<li><p><strong>根据type执行不同逻辑</strong>：</p>
+<ul>
+<li><p><strong>CacheType.PUT</strong>（强制更新）：</p>
+<ul>
+<li>执行目标方法（point.proceed()，通常是数据库更新&#x2F;插入）。</li>
+<li>将结果写入Redis（set with timeout）。</li>
+<li>将结果写入Caffeine（put）。</li>
+<li>返回结果。</li>
+<li>用途：确保缓存同步，常用于更新操作。</li>
+</ul>
+</li>
+<li><p><strong>CacheType.DELETE</strong>（删除）：</p>
+<ul>
+<li>从Redis删除键。</li>
+<li>从Caffeine invalidate键。</li>
+<li>执行目标方法（可能清理数据库）。</li>
+<li>返回结果。</li>
+<li>用途：清除失效缓存。</li>
+</ul>
+</li>
+<li><p><strong>CacheType.FULL</strong>（默认，查询+缓存）：</p>
+<ul>
+<li><strong>查询流程</strong>：<ul>
+<li>先查Caffeine（getIfPresent）：若命中，日志”get data from caffeine”并返回。</li>
+<li>若未命中，查Redis（opsForValue().get）：若命中，日志”get data from redis”，回写到Caffeine，返回。</li>
+<li>若均未命中，执行目标方法（point.proceed()，日志”get data from database”）。</li>
+</ul>
+</li>
+<li><strong>回写流程</strong>（若结果非null）：<ul>
+<li>写入Redis（set with l2TimeOut）。</li>
+<li>写入Caffeine（put）。</li>
+</ul>
+</li>
+<li>返回结果。</li>
+<li>空结果（null）不缓存，避免缓存穿透（但代码中未显式处理null，可能需业务层处理）。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-5-整体工作流程示例"><a href="#2-5-整体工作流程示例" class="headerlink" title="2.5 整体工作流程示例"></a>2.5 整体工作流程示例</h3><p>假设一个标注<code>@L2Cache(key=&quot;#id&quot;, type=FULL)</code>的方法<code>getUserById(Long id)</code>：</p>
+<ol>
+<li>调用getUserById(123)。</li>
+<li>AOP拦截，解析键为”aimin-cache::123”。</li>
+<li>查Caffeine：若命中，返回。</li>
+<li>查Redis：若命中，回写Caffeine，返回。</li>
+<li>执行方法：查DB得到User，回写Redis（过期120s）和Caffeine，返回User。</li>
+</ol>
+<p>对于更新：使用PUT类型，执行DB更新后强制回写两级缓存。</p>
+<h2 id="3-AOP起到的作用"><a href="#3-AOP起到的作用" class="headerlink" title="3. AOP起到的作用"></a>3. AOP起到的作用</h2><p><strong>所有缓存相关的重复操作（查缓存、写缓存、删缓存）全部由AOP自动完成</strong></p>
+<ol>
+<li><p><strong>自动拦截方法</strong><br>你只要在方法上加一个 <code>@L2Cache</code> 注解，AOP就会自动“抓住”这个方法，不需要你在每个业务方法里手写任何缓存代码。</p>
+</li>
+<li><p><strong>在不改业务代码的情况下，自动加上缓存逻辑</strong><br>业务方法本来只负责查数据库：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@L2Cache(key = &quot;#id&quot;, type = CacheType.FULL)</span><br><span class="hljs-keyword">public</span> User <span class="hljs-title function_">getUserById</span><span class="hljs-params">(Long id)</span> &#123;<br>    <span class="hljs-keyword">return</span> userMapper.selectById(id);  <span class="hljs-comment">// 只写这一句就够了！</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>AOP会自动在执行这句代码<strong>之前</strong>先查 Caffeine → 查 Redis<br>如果都没命中，才执行上面的数据库查询<br>查询完后又自动把结果写回 Redis 和 Caffeine<br>你完全不用管这些，代码看起来超级干净！</p>
+</li>
+<li><p><strong>统一处理所有缓存操作</strong><br>同样的缓存逻辑（查两级、写两级、删除、强制更新）在项目里可能有几十上百个地方。<br>用了AOP之后，所有逻辑都集中在 <code>L2CacheAspect</code> 这一个类里：<br>→ 以后改缓存策略（比如换Redis过期时间、加布隆过滤器）只需要改一个文件<br>→ 不会出现“这个方法写了缓存、那个方法忘记写”的低级bug</p>
+</li>
+</ol>
+<h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>
                 
               </div>
             

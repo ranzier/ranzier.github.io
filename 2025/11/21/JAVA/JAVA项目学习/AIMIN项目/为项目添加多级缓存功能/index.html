@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/bg/49.jpg">
 <meta property="article:published_time" content="2025-11-21T07:35:35.000Z">
-<meta property="article:modified_time" content="2025-12-09T13:01:23.381Z">
+<meta property="article:modified_time" content="2025-12-09T13:39:41.421Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="Caffeine">
 <meta property="article:tag" content="JAVA">
@@ -479,7 +479,7 @@
 <td>完整企业级二级缓存体系（CacheManager + Caffeine + Redis + 消息同步）</td>
 </tr>
 </tbody></table>
-<h3 id="2-4-1-simple-版（注解式）二级缓存-—-适合业务层快速使用"><a href="#2-4-1-simple-版（注解式）二级缓存-—-适合业务层快速使用" class="headerlink" title="2.4.1 simple 版（注解式）二级缓存 — 适合业务层快速使用"></a>2.4.1 simple 版（注解式）二级缓存 — 适合业务层快速使用</h3><p>simple 版由以下核心类组成：</p>
+<h3 id="2-4-1-simple-版（注解式）二级缓存（项目中没有使用）-—-适合业务层快速使用"><a href="#2-4-1-simple-版（注解式）二级缓存（项目中没有使用）-—-适合业务层快速使用" class="headerlink" title="2.4.1 simple 版（注解式）二级缓存（项目中没有使用） — 适合业务层快速使用"></a>2.4.1 simple 版（注解式）二级缓存（项目中没有使用） — 适合业务层快速使用</h3><p>simple 版由以下核心类组成：</p>
 <ul>
 <li>L2Cache 注解（定义缓存规则）</li>
 <li>L2CacheAspect AOP 切面（实现二级缓存逻辑）</li>
@@ -488,7 +488,7 @@
 <li>ElParser（解析 SpEL，生成缓存 key）</li>
 </ul>
 <p>这套是 “AOP 自动织入 + Caffeine + RedisTemplate” 形式。</p>
-<h3 id="2-4-2-formal版二级缓存-—-Spring-Cache-CacheManager-消息同步"><a href="#2-4-2-formal版二级缓存-—-Spring-Cache-CacheManager-消息同步" class="headerlink" title="2.4.2 formal版二级缓存 — Spring Cache + CacheManager + 消息同步"></a>2.4.2 formal版二级缓存 — Spring Cache + CacheManager + 消息同步</h3><p>包括：</p>
+<h3 id="2-4-2-formal版二级缓存（项目中使用的）-—-Spring-Cache-CacheManager-消息同步"><a href="#2-4-2-formal版二级缓存（项目中使用的）-—-Spring-Cache-CacheManager-消息同步" class="headerlink" title="2.4.2 formal版二级缓存（项目中使用的） — Spring Cache + CacheManager + 消息同步"></a>2.4.2 formal版二级缓存（项目中使用的） — Spring Cache + CacheManager + 消息同步</h3><p>包括：</p>
 <ul>
 <li><strong>AiminCacheAutoConfiguration自动配置类</strong>（装配整个缓存体系）</li>
 <li><strong>AiminCacheManager</strong>（创建缓存实例）</li>
@@ -497,7 +497,7 @@
 <li><strong>CacheMessageListener</strong>（Redis pub&#x2F;sub 清除本地缓存）</li>
 <li><strong>BaseCacheService</strong>（业务使用封装）</li>
 </ul>
-<h2 id="2-5-详细分析aimin-cache-simple包中的各个类"><a href="#2-5-详细分析aimin-cache-simple包中的各个类" class="headerlink" title="2.5 详细分析aimin-cache-simple包中的各个类"></a>2.5 详细分析aimin-cache-simple包中的各个类</h2><h3 id="2-5-1-L2Cache-注解（定义二级缓存行为）"><a href="#2-5-1-L2Cache-注解（定义二级缓存行为）" class="headerlink" title="2.5.1 @L2Cache 注解（定义二级缓存行为）"></a>2.5.1 @L2Cache 注解（定义二级缓存行为）</h3><p>提供：</p>
+<h2 id="2-5-详细分析aimin-cache-simple包中的各个类（项目中没有使用）"><a href="#2-5-详细分析aimin-cache-simple包中的各个类（项目中没有使用）" class="headerlink" title="2.5 详细分析aimin-cache-simple包中的各个类（项目中没有使用）"></a>2.5 详细分析aimin-cache-simple包中的各个类（项目中没有使用）</h2><h3 id="2-5-1-L2Cache-注解（定义二级缓存行为）"><a href="#2-5-1-L2Cache-注解（定义二级缓存行为）" class="headerlink" title="2.5.1 @L2Cache 注解（定义二级缓存行为）"></a>2.5.1 @L2Cache 注解（定义二级缓存行为）</h3><p>提供：</p>
 <ul>
 <li>cacheName：缓存名称</li>
 <li>key：支持 SpEL 的动态 key</li>
@@ -625,7 +625,7 @@
 
 
 
-<h2 id="2-6-详细分析aimin-cache-formal包中的各个类"><a href="#2-6-详细分析aimin-cache-formal包中的各个类" class="headerlink" title="2.6 详细分析aimin-cache-formal包中的各个类"></a>2.6 详细分析aimin-cache-formal包中的各个类</h2><ul>
+<h2 id="2-6-详细分析aimin-cache-formal包中的各个类（项目中使用的）"><a href="#2-6-详细分析aimin-cache-formal包中的各个类（项目中使用的）" class="headerlink" title="2.6 详细分析aimin-cache-formal包中的各个类（项目中使用的）"></a>2.6 详细分析aimin-cache-formal包中的各个类（项目中使用的）</h2><ul>
 <li><strong>AiminCacheAutoConfiguration自动配置类</strong>（装配整个缓存体系）</li>
 <li><strong>AiminCacheManager</strong>（创建缓存实例）</li>
 <li><strong>AiminCache</strong>（整合 Caffeine + Redis 的实际缓存实现）</li>
@@ -798,11 +798,11 @@
       
         <a href="/tags/SpringCloud/" class="print-no-link">#SpringCloud</a>
       
+        <a href="/tags/Redis/" class="print-no-link">#Redis</a>
+      
         <a href="/tags/%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98/" class="print-no-link">#多级缓存</a>
       
         <a href="/tags/Caffeine/" class="print-no-link">#Caffeine</a>
-      
-        <a href="/tags/Redis/" class="print-no-link">#Redis</a>
       
     </div>
   
