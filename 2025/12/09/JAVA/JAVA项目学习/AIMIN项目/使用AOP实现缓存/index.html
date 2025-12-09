@@ -21,23 +21,37 @@
   <meta name="author" content="ranzier">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="http://example.com/archives/page/3/index.html">
+    <meta name="description" content="通过自定义AOP实现二级缓存注解功能  面试官问：你的项目中用到AOP了吗？ 1. AOP是什么AOP是面向切面编程  AOP将通用的代码逻辑从业务代码中抽离出来，然后在运行时自动放到指定位置进行运行 让你不用手写重复代码，也能在某些方法执行前后自动加上这些通用逻辑  常用于：  日志 权限校验 事务处理 缓存  2.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过自定义AOP实现二级缓存注解功能">
+<meta property="og:url" content="http://example.com/2025/12/09/JAVA/JAVA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/AIMIN%E9%A1%B9%E7%9B%AE/%E4%BD%BF%E7%94%A8AOP%E5%AE%9E%E7%8E%B0%E7%BC%93%E5%AD%98/index.html">
 <meta property="og:site_name" content="RANZIER">
+<meta property="og:description" content="通过自定义AOP实现二级缓存注解功能  面试官问：你的项目中用到AOP了吗？ 1. AOP是什么AOP是面向切面编程  AOP将通用的代码逻辑从业务代码中抽离出来，然后在运行时自动放到指定位置进行运行 让你不用手写重复代码，也能在某些方法执行前后自动加上这些通用逻辑  常用于：  日志 权限校验 事务处理 缓存  2.">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/bg/64.jpg">
+<meta property="article:published_time" content="2025-12-09T13:47:35.000Z">
+<meta property="article:modified_time" content="2025-12-09T13:17:50.860Z">
 <meta property="article:author" content="ranzier">
+<meta property="article:tag" content="AOP">
+<meta property="article:tag" content="JAVA">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/bg/64.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>归档 - RANZIER</title>
+  <title>通过自定义AOP实现二级缓存注解功能 - RANZIER</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
@@ -94,7 +108,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 75vh;">
+<div class="header-inner" style="height: 80vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -206,19 +220,72 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/bg/2.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/bg/3.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.35)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="这世界充满假象，唯有痛苦不会说谎"></span>
+            <span id="subtitle" data-typed-text="通过自定义AOP实现二级缓存注解功能"></span>
           
         </div>
 
         
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-12-09 21:47" pubdate>
+          2025年12月9日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          125 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          1 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          本文阅读次数：<span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
       </div>
 
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
       
     </div>
   </div>
@@ -230,100 +297,198 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 55 篇文章</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2025</p>
-    
-    <a href="/2025/11/17/JAVA/JAVA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/AIMIN%E9%A1%B9%E7%9B%AE/SpringCloud%20Gateway%E7%BD%91%E5%85%B3%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E7%8E%B0%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8A%9F%E8%83%BD/" class="list-group-item list-group-item-action">
-      <time>11-17</time>
-      <div class="list-group-item-title">SpringCloud Gateway网关微服务实现动态路由功能</div>
-    </a>
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">通过自定义AOP实现二级缓存注解功能</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 align="center">通过自定义AOP实现二级缓存注解功能</h1>
+
+<p><strong>面试官问：你的项目中用到AOP了吗？</strong></p>
+<h2 id="1-AOP是什么"><a href="#1-AOP是什么" class="headerlink" title="1. AOP是什么"></a>1. AOP是什么</h2><p>AOP是<strong>面向切面编程</strong></p>
+<ul>
+<li>AOP<strong>将通用的代码逻辑从业务代码中抽离出来</strong>，然后在运行时自动放到指定位置进行运行</li>
+<li>让你不用手写重复代码，<strong>也能在某些方法执行前后自动加上这些通用逻辑</strong></li>
+</ul>
+<p>常用于：</p>
+<ul>
+<li><strong>日志</strong></li>
+<li>权限校验</li>
+<li><strong>事务</strong>处理</li>
+<li><strong>缓存</strong></li>
+</ul>
+<h2 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h2>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
   
     
-    <a href="/2025/11/16/JAVA/JAVA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/AIMIN%E9%A1%B9%E7%9B%AE/%E8%A7%A3%E5%86%B3springai%E4%BE%9D%E8%B5%96%E5%AF%BC%E5%85%A5%E9%94%99%E8%AF%AF%E9%97%AE%E9%A2%98/" class="list-group-item list-group-item-action">
-      <time>11-16</time>
-      <div class="list-group-item-title">解决在父级pom文件中使用spring-ai-bom统一管理版本下导入spring-ai-openai-spring-boot-starter依赖出现报错的问题</div>
-    </a>
+      <span class="category-chain">
+        
+  <a href="/categories/JAVA/" class="category-chain-item">JAVA</a>
+  
+  
+
+      </span>
+    
   
     
-    <a href="/2025/11/14/JAVA/JAVA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/AIMIN%E9%A1%B9%E7%9B%AE/%E5%A6%82%E4%BD%95%E4%B8%BA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0swagger%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/" class="list-group-item list-group-item-action">
-      <time>11-14</time>
-      <div class="list-group-item-title">如何为项目添加swagger接口文档</div>
-    </a>
+      <span class="category-chain">
+        
+  <a href="/categories/AI%E9%A1%B9%E7%9B%AE/" class="category-chain-item">AI项目</a>
   
-    
-    <a href="/2025/11/11/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/" class="list-group-item list-group-item-action">
-      <time>11-11</time>
-      <div class="list-group-item-title">JAVA中的常用注解</div>
-    </a>
   
+
+      </span>
     
-    <a href="/2025/11/10/DeveloperTools/%E5%A6%82%E4%BD%95%E5%B0%86idea%E9%A1%B9%E7%9B%AEgit%E5%88%B0github/" class="list-group-item list-group-item-action">
-      <time>11-10</time>
-      <div class="list-group-item-title">如何将IDEA中的项目推送到Github上</div>
-    </a>
   
-    
-    <a href="/2025/10/18/Suibi/%E7%A7%9F%E6%88%BF%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" class="list-group-item list-group-item-action">
-      <time>10-18</time>
-      <div class="list-group-item-title">租房注意事项</div>
-    </a>
+</span>
+
+    </div>
   
-    
-    <a href="/2025/10/16/AI/AI%E5%AD%A6%E4%B9%A0/%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/" class="list-group-item list-group-item-action">
-      <time>10-16</time>
-      <div class="list-group-item-title">智能体搭建-智能医疗问诊</div>
-    </a>
   
-    
-    <a href="/2025/06/11/JAVA/JAVA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/GoodsKill/" class="list-group-item list-group-item-action">
-      <time>06-11</time>
-      <div class="list-group-item-title">GoodsKill项目分析及亮点解析</div>
-    </a>
-  
-    
-    <a href="/2025/05/09/Algorithm/Hot100/" class="list-group-item list-group-item-action">
-      <time>05-09</time>
-      <div class="list-group-item-title">LeetcodeHOT100刷题笔记</div>
-    </a>
-  
-    
-    <a href="/2025/04/18/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/mysql/" class="list-group-item list-group-item-action">
-      <time>04-18</time>
-      <div class="list-group-item-title">MySQL原理学习笔记</div>
-    </a>
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/JAVA/" class="print-no-link">#JAVA</a>
+      
+        <a href="/tags/AOP/" class="print-no-link">#AOP</a>
+      
+    </div>
   
 </div>
 
 
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/archives/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/#board">4</a><a class="page-number" href="/archives/page/5/#board">5</a><a class="page-number" href="/archives/page/6/#board">6</a><a class="extend next" rel="next" href="/archives/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
+              
 
-
-
-
-              </div>
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/12/09/Algorithm/%E5%88%B7%E9%A2%98-%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95/" title="代码随想录算法刷题记录">
+                        <span class="hidden-mobile">代码随想录算法刷题记录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
             </div>
-          </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"sj2tGuxMGSDhkN5hNuOIVta1-gzGzoHsz","appKey":"ysR5OTuTzoby2oNvNyGOtXFQ","path":"window.location.pathname","placeholder":"如有问题，欢迎指正~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
         </div>
       </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
     
 
     
@@ -442,6 +607,99 @@
 
 
 
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
 
