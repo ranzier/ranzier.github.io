@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/bg/24.jpg">
 <meta property="article:published_time" content="2025-02-22T06:44:58.000Z">
-<meta property="article:modified_time" content="2025-10-14T02:04:05.731Z">
+<meta property="article:modified_time" content="2025-12-05T05:52:26.176Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="JAVA">
 <meta property="article:tag" content="javaweb">
@@ -602,7 +602,7 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>@Componert</td>
+<td>@Component</td>
 <td>声明bean的基础注解</td>
 <td>不属于以下三类时,用此注解</td>
 </tr>
@@ -1522,15 +1522,15 @@
 </ol>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;com.itheima.pojo.Emp&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">include</span> <span class="hljs-attr">refid</span>=<span class="hljs-string">&quot;commonSelect&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">where</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;name != null&quot;</span>&gt;</span><br>            name like concat(&#x27;%&#x27;,#&#123;name&#125;,&#x27;%&#x27;)<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;gender != null&quot;</span>&gt;</span><br>            and gender = #&#123;gender&#125;<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;begin != null and end != null&quot;</span>&gt;</span><br>            and entrydate between #&#123;begin&#125; and #&#123;end&#125;<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">where</span>&gt;</span><br>    order by update_time desc<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<h1 id="六-事务管理"><a href="#六-事务管理" class="headerlink" title="六. 事务管理"></a>六. 事务管理</h1><h2 id="1-事务回顾"><a href="#1-事务回顾" class="headerlink" title="1. 事务回顾"></a>1. 事务回顾</h2><p>事务是一组操作的集合，它是一个不可分割的工作单位。事务会把所有的操作作为一个整体，一起向数据库提交或者是撤销操作请求。所以这组操作要么<code>同时成功，要么同时失败</code>。</p>
+<h1 id="六-事务管理"><a href="#六-事务管理" class="headerlink" title="六. 事务管理"></a>六. 事务管理</h1><h2 id="1-事务回顾"><a href="#1-事务回顾" class="headerlink" title="1. 事务回顾"></a>1. 事务回顾</h2><p>事务是一组操作的集合，它是一个不可分割的工作单位。事务会把所有的操作作为一个整体，一起向数据库提交或者是撤销操作请求。所以这组操作<strong>要么同时成功，要么同时失败</strong>。</p>
 <p>事务的操作主要有三步：</p>
 <ol>
 <li>开启事务（一组操作开始前，开启事务）：start transaction &#x2F; begin;</li>
 <li>提交事务（这组操作全部成功后，提交事务）：commit ;</li>
 <li>回滚事务（中间任何一个操作出现异常，回滚事务）：rollback ;</li>
 </ol>
-<h2 id="2-Spring事务管理"><a href="#2-Spring事务管理" class="headerlink" title="2. Spring事务管理"></a>2. Spring事务管理</h2><p>Transactional注解<br>@Transactional作用：就是在当前这个方法执行开始之前来开启事务，<code>方法执行完毕之后提交事务</code>。如果在这个方法执行的过程当中<code>出现了异常，就会进行事务的回滚操作</code></p>
-<p>@Transactional注解：我们一般会<code>在业务层当中来控制事务</code>，因为在业务层当中，一个业务功能可能会包含多个数据访问的操作。在业务层来控制事务，我们就可以将多个数据访问操作控制在一个事务范围内。</p>
+<h2 id="2-Spring事务管理"><a href="#2-Spring事务管理" class="headerlink" title="2. Spring事务管理"></a>2. Spring事务管理</h2><p>Transactional注解<br>@Transactional作用：就是在当前这个方法执行开始之前来开启事务，<strong>方法执行完毕之后提交事务</strong>。如果在这个方法执行的过程当中出现了<strong>异常，就会进行事务的回滚操作</strong></p>
+<p>@Transactional注解：我们一般会<strong>在业务层当中来控制事务</strong>，因为在业务层当中，一个业务功能可能会包含多个数据访问的操作。在业务层来控制事务，我们就可以将多个数据访问操作控制在一个事务范围内。</p>
 <p>@Transactional注解书写位置：</p>
 <ul>
 <li>方法:当前方法交给spring进行事务管理</li>
@@ -1541,7 +1541,7 @@
 <p>可以在application.yml配置文件中开启事务管理日志，这样就可以在控制看到和事务相关的日志信息了</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment">#spring事务管理日志</span><br><span class="hljs-attr">logging:</span><br>  <span class="hljs-attr">level:</span><br>    <span class="hljs-attr">org.springframework.jdbc.support.JdbcTransactionManager:</span> <span class="hljs-string">debug</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="3-rollbackFor-异常回滚"><a href="#3-rollbackFor-异常回滚" class="headerlink" title="3. rollbackFor(异常回滚)"></a>3. rollbackFor(异常回滚)</h2><p>在Spring的事务管理中，默认只有<code>运行时异常 RuntimeException</code>才会回滚。如果还需要回滚指定类型的异常，可以通过<code>rollbackFor</code>属性来指定。</p>
+<h2 id="3-rollbackFor-异常回滚"><a href="#3-rollbackFor-异常回滚" class="headerlink" title="3. rollbackFor(异常回滚)"></a>3. rollbackFor(异常回滚)</h2><p>在Spring的事务管理中，默认只有<strong>运行时异常</strong> <code>RuntimeException</code>才会回滚。如果还需要回滚指定类型的异常，可以通过<code>rollbackFor</code>属性来指定。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DeptServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">DeptService</span> &#123;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> DeptMapper deptMapper;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> EmpMapper empMapper;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-meta">@Transactional(rollbackFor=Exception.class)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">delete</span><span class="hljs-params">(Integer id)</span>&#123;<br>        <span class="hljs-comment">//根据部门id删除部门信息</span><br>        deptMapper.deleteById(id);<br>        <span class="hljs-comment">//模拟：异常发生</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">num</span> <span class="hljs-operator">=</span> id/<span class="hljs-number">0</span>;<br>        <span class="hljs-comment">//删除部门下的所有员工信息</span><br>        empMapper.deleteByDeptId(id);   <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="4-propagation"><a href="#4-propagation" class="headerlink" title="4. propagation"></a>4. propagation</h2><h4 id="A-事务传播行为"><a href="#A-事务传播行为" class="headerlink" title="A. 事务传播行为"></a>A. 事务传播行为</h4><p>就是当一个事务方法被另一个事务方法调用时，这个事务方法应该如何进行事务控制。<br>例如：两个事务方法，一个A方法，一个B方法。在这两个方法上都添加了@Transactional注解，就代表这两个方法都具有事务，而在A方法当中又去调用了B方法。<br><img src="/img/blogs/java/javaweb/6.4.1.png" srcset="/img/loading.gif" lazyload></p>
@@ -1564,7 +1564,7 @@
 </tr>
 </tbody></table>
 <ul>
-<li>REQUIRED ：大部分情况下都是用该传播行为即</li>
+<li>REQUIRED ：大部分情况下都是用该传播行为</li>
 <li>REQUIRES_NEW ：当我们不希望事务之间相互影响时，可以使用该传播行为。比如：下订单前需要记录日志，不论订单保存成功与否，都需要保证日志记录能够记录成功。</li>
 </ul>
 <h1 id="七-AOP"><a href="#七-AOP" class="headerlink" title="七. AOP"></a>七. AOP</h1><h2 id="1-AOP基础"><a href="#1-AOP基础" class="headerlink" title="1. AOP基础"></a>1. AOP基础</h2><h4 id="A-AOP介绍"><a href="#A-AOP介绍" class="headerlink" title="A. AOP介绍"></a>A. AOP介绍</h4><p>面向特定方法编程</p>
@@ -1801,9 +1801,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%AD%A6%E4%B9%A0/" class="print-no-link">#学习</a>
-      
         <a href="/tags/JAVA/" class="print-no-link">#JAVA</a>
+      
+        <a href="/tags/%E5%AD%A6%E4%B9%A0/" class="print-no-link">#学习</a>
       
         <a href="/tags/javaweb/" class="print-no-link">#javaweb</a>
       
