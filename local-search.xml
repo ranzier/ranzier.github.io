@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>RAG检索结果不准如何解决？</title>
+    <link href="/2026/03/01/AI/AI%E9%A1%B9%E7%9B%AE/RAG%E9%9A%BE%E7%82%B9/"/>
+    <url>/2026/03/01/AI/AI%E9%A1%B9%E7%9B%AE/RAG%E9%9A%BE%E7%82%B9/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">RAG检索结果不准如何解决？</h1><p><a href="https://developer.aliyun.com/article/1680493">高级RAG优化手册：3招解决检索不准和查询模糊</a></p><h2 id="1-实际案例"><a href="#1-实际案例" class="headerlink" title="1. 实际案例"></a>1. 实际案例</h2><p>用户问“布洛芬能不能和感冒药一起吃？”但回答不相关</p><p>最初系统返回的检索内容是：</p><ul><li>布洛芬的退烧作用</li><li>感冒的症状介绍</li><li>药品剂量说明</li></ul><p><strong>检索不准</strong><br><strong>没有召回“药物相互作用”相关内容</strong>，导致大模型回答很泛，甚至出现模糊建议。</p><h2 id="2-排查过程"><a href="#2-排查过程" class="headerlink" title="2. 排查过程"></a>2. 排查过程</h2><h4 id="①-文档切分方式"><a href="#①-文档切分方式" class="headerlink" title="① 文档切分方式"></a>① 文档切分方式</h4><p>发现说明书被<strong>固定长度切分</strong>，导致：</p><ul><li>“<strong>药物相互作用”段落被拆散</strong></li><li>语义完整性丢失</li><li>向量表达不准确</li></ul><h4 id="②-查询语义问题"><a href="#②-查询语义问题" class="headerlink" title="② 查询语义问题"></a>② 查询语义问题</h4><p>用户说“感冒药”，但知识库中是：</p><ul><li>复方氨酚烷胺</li><li>对乙酰氨基酚</li><li>抗组胺类</li></ul><p><strong>口语表达与医学术语不一致</strong></p><h4 id="③-检索排序问题"><a href="#③-检索排序问题" class="headerlink" title="③ 检索排序问题"></a>③ 检索排序问题</h4><p>只做了向量相似度排序，没有：</p><ul><li>关键词过滤</li><li>领域优先级控制</li></ul><p>导致高频“药品介绍”被优先召回。</p><h2 id="3-解决方案"><a href="#3-解决方案" class="headerlink" title="3. 解决方案"></a>3. 解决方案</h2><h4 id="1️⃣-语义切分优化"><a href="#1️⃣-语义切分优化" class="headerlink" title="1️⃣ 语义切分优化"></a>1️⃣ 语义切分优化</h4><ul><li>按<strong>说明书结构切分</strong>（适应症 &#x2F; 用法 &#x2F; 相互作用）</li><li><strong>保证每个 chunk 语义完整</strong></li></ul><p>提高向量表达质量</p><h4 id="2️⃣-查询增强（Query-Rewrite）"><a href="#2️⃣-查询增强（Query-Rewrite）" class="headerlink" title="2️⃣ 查询增强（Query Rewrite）"></a>2️⃣ 查询增强（Query Rewrite）</h4><p>对用户问题进行结构化增强，例如：</p><p>原问题：</p><blockquote><p>布洛芬能不能和感冒药一起吃</p></blockquote><p>增强后检索 query：</p><blockquote><p>布洛芬 药物相互作用 联合用药 禁忌</p></blockquote><p>👉 让检索更偏医学语义</p><h4 id="3️⃣-检索结果过滤与重排"><a href="#3️⃣-检索结果过滤与重排" class="headerlink" title="3️⃣ 检索结果过滤与重排"></a>3️⃣ 检索结果过滤与重排</h4><ul><li>设定领域优先级：相互作用 &gt; 功效介绍</li><li><strong>向量召回 + 关键词匹配</strong>双重筛选</li><li>限制 topK 并设置相关度阈值</li></ul><p>👉 降低无关内容进入上下文</p><h2 id="4-优化后："><a href="#4-优化后：" class="headerlink" title="4. 优化后："></a>4. 优化后：</h2><ul><li>能稳定召回“联合用药风险”相关内容</li><li>医疗问答准确性明显提升</li><li><strong>幻觉回答明显减少</strong></li></ul><h2 id="5-具体解决方案"><a href="#5-具体解决方案" class="headerlink" title="5. 具体解决方案"></a>5. 具体解决方案</h2><h3 id="医疗说明书结构切分"><a href="#医疗说明书结构切分" class="headerlink" title="医疗说明书结构切分"></a>医疗说明书结构切分</h3><p>正确切分方式应该是：</p><table><thead><tr><th>chunk</th><th>内容</th><th>metadata</th></tr></thead><tbody><tr><td>1</td><td>适应症段落</td><td>type&#x3D;indication</td></tr><tr><td>2</td><td>用法用量</td><td>type&#x3D;dose</td></tr><tr><td>3</td><td>不良反应</td><td>type&#x3D;adverse</td></tr><tr><td>4</td><td>相互作用</td><td>type&#x3D;interaction</td></tr></tbody></table><h4 id="自定义结构切分器"><a href="#自定义结构切分器" class="headerlink" title="自定义结构切分器"></a>自定义结构切分器</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MedicalDocumentSplitter</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">TextSplitter</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> List&lt;Document&gt; <span class="hljs-title function_">split</span><span class="hljs-params">(Document document)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">content</span> <span class="hljs-operator">=</span> document.getContent();<br>        List&lt;Document&gt; result = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br><br>        <span class="hljs-comment">// 按结构标题切分</span><br>        Map&lt;String, String&gt; sections = parseMedicalSections(content);<br><br>        <span class="hljs-keyword">for</span> (Map.Entry&lt;String, String&gt; entry : sections.entrySet()) &#123;<br>            Map&lt;String, Object&gt; metadata = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>            metadata.put(<span class="hljs-string">&quot;sectionType&quot;</span>, entry.getKey());<br><br>            result.add(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Document</span>(entry.getValue(), metadata));<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> Map&lt;String, String&gt; <span class="hljs-title function_">parseMedicalSections</span><span class="hljs-params">(String text)</span> &#123;<br>        Map&lt;String, String&gt; map = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br><br>        map.put(<span class="hljs-string">&quot;indication&quot;</span>, extract(text, <span class="hljs-string">&quot;适应症&quot;</span>));<br>        map.put(<span class="hljs-string">&quot;dose&quot;</span>, extract(text, <span class="hljs-string">&quot;用法用量&quot;</span>));<br>        map.put(<span class="hljs-string">&quot;interaction&quot;</span>, extract(text, <span class="hljs-string">&quot;药物相互作用&quot;</span>));<br><br>        <span class="hljs-keyword">return</span> map;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>👉 把一整篇医疗文档<strong>按医学结构拆开</strong><br>👉 给<strong>每一块打上语义标签</strong>（metadata）<br>👉 输出适合做向量化的知识块</p><h4 id="结合-TokenTextSplitter-做二次切分"><a href="#结合-TokenTextSplitter-做二次切分" class="headerlink" title="结合 TokenTextSplitter 做二次切分"></a>结合 TokenTextSplitter 做二次切分</h4><p>有些段落仍然很长，可以：</p><p>1️⃣ 先结构切分<br>2️⃣ 再限制 token 长度</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">TokenTextSplitter</span> <span class="hljs-variable">tokenSplitter</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TokenTextSplitter</span>(<span class="hljs-number">300</span>, <span class="hljs-number">50</span>);<br><br>List&lt;Document&gt; finalDocs = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br><br><span class="hljs-keyword">for</span> (Document doc : structuredDocs) &#123;<br>    finalDocs.addAll(tokenSplitter.split(doc));<br>&#125;<br></code></pre></td></tr></table></figure><h4 id="利用metadata-参与检索"><a href="#利用metadata-参与检索" class="headerlink" title="利用metadata 参与检索"></a>利用metadata 参与检索</h4><p>例如存储：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;...避免与抗凝药同时使用...&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;metadata&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;drug&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;布洛芬&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;sectionType&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;interaction&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure><p>查询时可以：</p><p>✔ <strong>只检索 interaction 类别</strong><br>✔ 提高联合用药问题召回率</p><p>Spring AI 查询示例思路：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">SearchRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> SearchRequest.query(queryText)<br>        .withFilterExpression(<span class="hljs-string">&quot;sectionType == &#x27;interaction&#x27;&quot;</span>)<br>        .withTopK(<span class="hljs-number">5</span>);<br></code></pre></td></tr></table></figure><p>在 RAG 入库阶段，我没有采用默认的固定长度切分，而是根据医疗说明书的结构进行语义切分，比如适应症、用法用量和药物相互作用分别作为独立知识块，并为每个 chunk 添加结构化 metadata。<br>这样在向量检索时可以结合语义相似度和结构过滤，提高特定问题场景下的召回准确率。对于较长段落，我会再结合 token 切分控制上下文长度，然后统一写入 Milvus 向量库。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>AI</category>
+      
+      <category>AI项目</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>AI</tag>
+      
+      <tag>RAG</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>详解MySQL的MVCC原理</title>
     <link href="/2026/02/26/JAVA/JAVA%E5%85%AB%E8%82%A1/%E6%95%B0%E6%8D%AE%E5%BA%93/mvcc/"/>
     <url>/2026/02/26/JAVA/JAVA%E5%85%AB%E8%82%A1/%E6%95%B0%E6%8D%AE%E5%BA%93/mvcc/</url>
@@ -445,9 +474,40 @@
       
       <tag>AI</tag>
       
+      <tag>RAG</tag>
+      
       <tag>Spring AI</tag>
       
-      <tag>RAG</tag>
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Canal实现数据同步的工作原理</title>
+    <link href="/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"/>
+    <url>/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">Canal实现数据同步的工作原理</h1><h1 id="1-Canal的核心原理和整体流程"><a href="#1-Canal的核心原理和整体流程" class="headerlink" title="1. Canal的核心原理和整体流程"></a>1. Canal的核心原理和整体流程</h1><p><strong>Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。</strong></p><p>Canal 数据流动的整体链路：</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">MySQL 写入（<span class="hljs-keyword">INSERT</span>/<span class="hljs-keyword">UPDATE</span>/<span class="hljs-keyword">DELETE</span>）<br>          ↓（生成binlog）<br>Canal <span class="hljs-keyword">Server</span> 订阅 binlog（伪装成 slave）<br>          ↓<br>Canal Client（你的 aimin-drug 微服务）<br>          ↓<br>你写的 CanalReceiver 对数据进行处理<br>          ↓<br>同步到 ES / Redis / MQ / 其他地方<br></code></pre></td></tr></table></figure><p><img src="/img/blogs/canal/1.png"></p><h1 id="2-MySQL-产生-binlog（变更日志）"><a href="#2-MySQL-产生-binlog（变更日志）" class="headerlink" title="2. MySQL 产生 binlog（变更日志）"></a>2. MySQL 产生 binlog（变更日志）</h1><p>只要执行：</p><ul><li>INSERT</li><li>UPDATE</li><li>DELETE</li></ul><p>MySQL都会把变化记录到 binlog（Binary log）中。</p><p>binlog 里面存的是<strong>数据变更事件</strong>，例如：</p><table><thead><tr><th>操作</th><th>binlog中记录</th></tr></thead><tbody><tr><td>Insert</td><td>row 新增的数据</td></tr><tr><td>Update</td><td>修改前 &amp; 修改后的值</td></tr><tr><td>Delete</td><td>删除前的值</td></tr></tbody></table><h1 id="3-Canal的具体工作流程"><a href="#3-Canal的具体工作流程" class="headerlink" title="3. Canal的具体工作流程"></a>3. Canal的具体工作流程</h1><ol><li>Canal Server 会去连接 MySQL：<ul><li>以 <code>slave</code> 的身份注册</li><li>发送 <code>show master status</code></li><li>读取 binlog 的位置点（binlog filename + position）</li><li>持续向 MySQL 发送 dump 请求 —— 和从库一样</li></ul></li><li>MySQL 不断把 binlog 推给 Canal Server<ul><li>当 Canal Server 模拟从库连接后，MySQL 会不断把 binlog 内容“推送”给 Canal。</li></ul></li><li>Canal Server 把 binlog 解析并封装成 Java 对象，执行后续逻辑</li></ol><p><img src="/img/blogs/canal/2.png"></p><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>JAVA</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JAVA</tag>
+      
+      <tag>Canal</tag>
+      
+      <tag>ES</tag>
+      
+      <tag>MQ</tag>
       
     </tags>
     
@@ -481,37 +541,6 @@
       <tag>Canal</tag>
       
       <tag>ES</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>Canal实现数据同步的工作原理</title>
-    <link href="/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"/>
-    <url>/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</url>
-    
-    <content type="html"><![CDATA[<h1 align="center">Canal实现数据同步的工作原理</h1><h1 id="1-Canal的核心原理和整体流程"><a href="#1-Canal的核心原理和整体流程" class="headerlink" title="1. Canal的核心原理和整体流程"></a>1. Canal的核心原理和整体流程</h1><p><strong>Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。</strong></p><p>Canal 数据流动的整体链路：</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">MySQL 写入（<span class="hljs-keyword">INSERT</span>/<span class="hljs-keyword">UPDATE</span>/<span class="hljs-keyword">DELETE</span>）<br>          ↓（生成binlog）<br>Canal <span class="hljs-keyword">Server</span> 订阅 binlog（伪装成 slave）<br>          ↓<br>Canal Client（你的 aimin-drug 微服务）<br>          ↓<br>你写的 CanalReceiver 对数据进行处理<br>          ↓<br>同步到 ES / Redis / MQ / 其他地方<br></code></pre></td></tr></table></figure><p><img src="/img/blogs/canal/1.png"></p><h1 id="2-MySQL-产生-binlog（变更日志）"><a href="#2-MySQL-产生-binlog（变更日志）" class="headerlink" title="2. MySQL 产生 binlog（变更日志）"></a>2. MySQL 产生 binlog（变更日志）</h1><p>只要执行：</p><ul><li>INSERT</li><li>UPDATE</li><li>DELETE</li></ul><p>MySQL都会把变化记录到 binlog（Binary log）中。</p><p>binlog 里面存的是<strong>数据变更事件</strong>，例如：</p><table><thead><tr><th>操作</th><th>binlog中记录</th></tr></thead><tbody><tr><td>Insert</td><td>row 新增的数据</td></tr><tr><td>Update</td><td>修改前 &amp; 修改后的值</td></tr><tr><td>Delete</td><td>删除前的值</td></tr></tbody></table><h1 id="3-Canal的具体工作流程"><a href="#3-Canal的具体工作流程" class="headerlink" title="3. Canal的具体工作流程"></a>3. Canal的具体工作流程</h1><ol><li>Canal Server 会去连接 MySQL：<ul><li>以 <code>slave</code> 的身份注册</li><li>发送 <code>show master status</code></li><li>读取 binlog 的位置点（binlog filename + position）</li><li>持续向 MySQL 发送 dump 请求 —— 和从库一样</li></ul></li><li>MySQL 不断把 binlog 推给 Canal Server<ul><li>当 Canal Server 模拟从库连接后，MySQL 会不断把 binlog 内容“推送”给 Canal。</li></ul></li><li>Canal Server 把 binlog 解析并封装成 Java 对象，执行后续逻辑</li></ol><p><img src="/img/blogs/canal/2.png"></p><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
-    
-    
-    <categories>
-      
-      <category>JAVA</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>JAVA</tag>
-      
-      <tag>Canal</tag>
-      
-      <tag>ES</tag>
-      
-      <tag>MQ</tag>
       
     </tags>
     
@@ -639,9 +668,9 @@
       
       <tag>SpringCloud</tag>
       
-      <tag>Gateway</tag>
-      
       <tag>Sa-Token</tag>
+      
+      <tag>Gateway</tag>
       
     </tags>
     
@@ -954,9 +983,9 @@
       
       <tag>LeetCode</tag>
       
-      <tag>JAVA</tag>
-      
       <tag>hot100</tag>
+      
+      <tag>JAVA</tag>
       
     </tags>
     
@@ -983,9 +1012,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>MySQL</tag>
       
@@ -1014,9 +1043,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>JVM</tag>
       
@@ -1045,9 +1074,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>JUC</tag>
       
@@ -1076,9 +1105,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>Redis</tag>
       
@@ -1105,9 +1134,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>SpringCloud</tag>
       
@@ -1343,9 +1372,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>javaweb</tag>
       
@@ -1372,9 +1401,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>javase</tag>
       
@@ -1401,9 +1430,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>javase</tag>
       
@@ -1571,13 +1600,13 @@
     
     <tags>
       
+      <tag>论文</tag>
+      
       <tag>AI</tag>
       
       <tag>信息与通信</tag>
       
       <tag>强化学习</tag>
-      
-      <tag>论文</tag>
       
     </tags>
     
