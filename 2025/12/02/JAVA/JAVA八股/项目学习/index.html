@@ -1,0 +1,2438 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/about/dogs.jpg">
+  <link rel="icon" href="/img/about/dogs.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ranzier">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="项目学习笔记    1. AI医疗服务平台1.0 整体说说RAG、MCP的技术流程和技术交互栈分别是怎样的？ RAG：解决 大模型知识更新与外部知识接入问题 MCP：解决 大模型如何标准化调用工具&#x2F;数据源的问题  RAG技术流程：  数据准备：将知识库文档进行解析、文本切分。 向量化：通过 Embedding 模型将文本转为向量。 向量存储：存入向量数据库（如 Milvus）。 检索阶段">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目学习">
+<meta property="og:url" content="http://example.com/2025/12/02/JAVA/JAVA%E5%85%AB%E8%82%A1/%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="RANZIER">
+<meta property="og:description" content="项目学习笔记    1. AI医疗服务平台1.0 整体说说RAG、MCP的技术流程和技术交互栈分别是怎样的？ RAG：解决 大模型知识更新与外部知识接入问题 MCP：解决 大模型如何标准化调用工具&#x2F;数据源的问题  RAG技术流程：  数据准备：将知识库文档进行解析、文本切分。 向量化：通过 Embedding 模型将文本转为向量。 向量存储：存入向量数据库（如 Milvus）。 检索阶段">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/bg/68.jpg">
+<meta property="article:published_time" content="2025-12-02T10:51:35.000Z">
+<meta property="article:modified_time" content="2026-03-22T09:10:50.454Z">
+<meta property="article:author" content="ranzier">
+<meta property="article:tag" content="学习">
+<meta property="article:tag" content="项目">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/bg/68.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>项目学习 - RANZIER</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3846514_kabxni94auf.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/gundongtiao.css">
+<link rel="stylesheet" href="/css/bubble.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"🌟","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 80vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>RANZIER</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/suibi/" target="_self">
+                <i class="iconfont icon-pen"></i>
+                <span>随笔</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/3.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.35)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="项目学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-12-02 18:51" pubdate>
+          2025年12月2日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          18k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          91 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          本文阅读次数：<span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">项目学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 align="center">项目学习笔记</h1>
+
+
+
+<h1 id="1-AI医疗服务平台"><a href="#1-AI医疗服务平台" class="headerlink" title="1. AI医疗服务平台"></a>1. AI医疗服务平台</h1><h2 id="1-0-整体"><a href="#1-0-整体" class="headerlink" title="1.0 整体"></a>1.0 整体</h2><h3 id="说说RAG、MCP的技术流程和技术交互栈分别是怎样的？"><a href="#说说RAG、MCP的技术流程和技术交互栈分别是怎样的？" class="headerlink" title="说说RAG、MCP的技术流程和技术交互栈分别是怎样的？"></a>说说RAG、MCP的技术流程和技术交互栈分别是怎样的？</h3><ul>
+<li>RAG：解决 <strong>大模型知识更新与外部知识接入问题</strong></li>
+<li>MCP：解决 <strong>大模型如何标准化调用工具&#x2F;数据源的问题</strong></li>
+</ul>
+<p><strong>RAG技术流程</strong>：</p>
+<ol>
+<li>数据准备：将知识库文档进行解析、文本切分。</li>
+<li>向量化：通过 Embedding 模型将文本转为向量。</li>
+<li>向量存储：存入向量数据库（如 Milvus）。</li>
+<li>检索阶段：用户问题向量化后进行相似度搜索。</li>
+<li>上下文构建：取 TopK 文档作为上下文。</li>
+<li>生成阶段：将问题 + 检索内容一起发送给大模型生成答案。</li>
+</ol>
+<p><strong>MCP技术流程</strong>：</p>
+<ol>
+<li>LLM生成 Tool Call请求</li>
+<li>MCP Server解析请求</li>
+<li>调用对应工具（数据库&#x2F;API&#x2F;函数）</li>
+<li>返回结果给LLM</li>
+<li>LLM整合结果生成最终回答</li>
+</ol>
+<h3 id="MCP和Fuction-call的区别"><a href="#MCP和Fuction-call的区别" class="headerlink" title="MCP和Fuction call的区别"></a>MCP和Fuction call的区别</h3><table>
+<thead>
+<tr>
+<th>对比</th>
+<th>MCP</th>
+<th>Function Calling</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>本质</td>
+<td>工具调用协议</td>
+<td>模型能力</td>
+</tr>
+<tr>
+<td>作用范围</td>
+<td>跨系统</td>
+<td>单模型</td>
+</tr>
+<tr>
+<td>标准</td>
+<td>统一协议</td>
+<td>各家不同</td>
+</tr>
+<tr>
+<td>资源来源</td>
+<td>远程MCP Server</td>
+<td>本地代码</td>
+</tr>
+<tr>
+<td>扩展性</td>
+<td>极高</td>
+<td>有限</td>
+</tr>
+</tbody></table>
+<p><strong>Function Calling</strong></p>
+<p>是大模型生成函数调用意图，由应用程序执行函数。</p>
+<p><strong>MCP</strong></p>
+<p>是一个标准化协议，让大模型可以通过统一接口调用外部工具和资源。</p>
+<h3 id="什么是向量化？"><a href="#什么是向量化？" class="headerlink" title="什么是向量化？"></a>什么是向量化？</h3><p>向量化是指将文本、图片等数据通过 Embedding模型 转换成高维向量表示。</p>
+<p>这样语义相近的文本在向量空间中的距离会更近，从而可以通过向量相似度计算实现语义检索。</p>
+<p><strong>Embedding模型</strong></p>
+<ul>
+<li>text-embedding-3-large （1024维）</li>
+</ul>
+<h3 id="为什么向量维度越高，语义表达能力越强？"><a href="#为什么向量维度越高，语义表达能力越强？" class="headerlink" title="为什么向量维度越高，语义表达能力越强？"></a>为什么向量维度越高，语义表达能力越强？</h3><ol>
+<li>信息容量：<strong>维度越多，可编码的信息越多</strong></li>
+<li>维度越多 → 能表达的语义特征越多。</li>
+<li>特征空间：维度越高，<strong>语义区分能力越强</strong></li>
+</ol>
+<h3 id="做向量化匹配时的主要标准是什么？"><a href="#做向量化匹配时的主要标准是什么？" class="headerlink" title="做向量化匹配时的主要标准是什么？"></a>做向量化匹配时的主要标准是什么？</h3><p>主要是 <strong>向量相似度计算</strong>：</p>
+<ul>
+<li>余弦相似度（Cosine Similarity）（最常用）</li>
+<li>欧氏距离</li>
+<li>内积（Inner Product）</li>
+</ul>
+<p>向量越接近，相似度越高。</p>
+<h3 id="MCP协议的本质构成是什么？"><a href="#MCP协议的本质构成是什么？" class="headerlink" title="MCP协议的本质构成是什么？"></a>MCP协议的本质构成是什么？</h3><p>MCP本质是一个 <strong>标准化工具调用协议</strong>，主要包含：</p>
+<ol>
+<li><p><strong>Tool Schema</strong><br>描述工具的<strong>功能和参数</strong></p>
+</li>
+<li><p><strong>Tool Call</strong></p>
+</li>
+</ol>
+<p>LLM发起工具<strong>调用请求</strong></p>
+<ol start="3">
+<li><strong>Tool Response</strong></li>
+</ol>
+<p>返回<strong>调用结果</strong></p>
+<p>本质是 <strong>LLM + Tool 的标准接口协议</strong>。</p>
+<h3 id="尝试过在本地部署AI服务吗？"><a href="#尝试过在本地部署AI服务吗？" class="headerlink" title="尝试过在本地部署AI服务吗？"></a>尝试过在本地部署AI服务吗？</h3><p>尝试过，比如：</p>
+<ul>
+<li>使用 <strong>Ollama</strong></li>
+<li>部署开源模型（如 Llama &#x2F; Qwen）</li>
+</ul>
+<p>通过 HTTP API 调用模型服务。</p>
+<p>一般会结合：</p>
+<ul>
+<li>GPU</li>
+<li>Docker</li>
+<li>向量数据库</li>
+</ul>
+<p>搭建本地 AI 服务。</p>
+<h3 id="部署本地大模型服务时需要注意哪些问题？"><a href="#部署本地大模型服务时需要注意哪些问题？" class="headerlink" title="部署本地大模型服务时需要注意哪些问题？"></a>部署本地大模型服务时需要注意哪些问题？</h3><ol>
+<li>硬件资源：GPU显存&#x2F;CPU&#x2F;内存</li>
+<li>模型大小：7B&#x2F;13B&#x2F;70B</li>
+<li>推理性能：QPS&#x2F;延迟</li>
+</ol>
+<h3 id="简单谈谈Transfomer和注意力机制？"><a href="#简单谈谈Transfomer和注意力机制？" class="headerlink" title="简单谈谈Transfomer和注意力机制？"></a>简单谈谈Transfomer和注意力机制？</h3><p><strong>注意力机制</strong>是一种让<strong>模型在处理序列数据时关注更重要信息</strong>的机制</p>
+<p>Transformer 是一种 <strong>基于注意力机制的深度学习模型架构</strong></p>
+<p>完全用<strong>注意力机制</strong>替代 RNN 和 CNN 来处理序列数据</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs scss">输入文本<br>   ↓<br>Embedding<br>   ↓<br>Encoder (多层)<br>   ↓<br>Decoder (多层)<br>   ↓<br>输出文本<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="该医疗系统能承受的QPS是多少，如何测试？"><a href="#该医疗系统能承受的QPS是多少，如何测试？" class="headerlink" title="该医疗系统能承受的QPS是多少，如何测试？"></a>该医疗系统能承受的QPS是多少，如何测试？</h3><p>可以通过 <strong>压测工具</strong>测试：JMeter</p>
+<ol>
+<li>构造并发请求</li>
+<li>模拟真实用户访问</li>
+<li>监控系统指标</li>
+</ol>
+<p>指标包括：</p>
+<ul>
+<li>QPS</li>
+<li>RT（响应时间）</li>
+<li>CPU</li>
+</ul>
+<p>系统QPS取决于接口复杂度和<strong>硬件资源</strong>（CPU&#x2F;GPU&#x2F;内存）</p>
+<p>我主要压测了药品搜索的接口，应为是用到了二级缓存，所以大概能承受上万的QPS。<br>其次还压测了基于ES的分页查询的接口，能承受1000的QPS</p>
+<p>我们一般通过压测工具进行测试，例如JMeter。压测流程通常是：</p>
+<ol>
+<li>编写接口压测脚本</li>
+<li>设置并发线程数和持续时间</li>
+<li>逐步提高并发量进行压测</li>
+<li>观察QPS、响应时间、错误率以及CPU和内存指标</li>
+<li>找到系统稳定QPS和极限QPS，并分析系统瓶颈。</li>
+</ol>
+<h3 id="你认为当前这个医疗平台存在哪些优化点、做得不好的地方？"><a href="#你认为当前这个医疗平台存在哪些优化点、做得不好的地方？" class="headerlink" title="你认为当前这个医疗平台存在哪些优化点、做得不好的地方？"></a>你认为当前这个医疗平台存在哪些优化点、做得不好的地方？</h3><p>1️⃣ 性能与并发优化</p>
+<p><strong>潜在问题：</strong></p>
+<ul>
+<li>AI 模型调用是瓶颈，高并发下容易出现响应延迟甚至服务拒绝（你提到过 1000 用户同时问诊）。</li>
+<li>ChatMemory、MongoDB 写入压力大，如果没有做好分库分表或缓存优化，可能导致系统阻塞。</li>
+<li>秒杀&#x2F;高并发场景下，如果 AI 触发下单直接调用业务链路，可能绕过原有的并发保护。</li>
+</ul>
+<p><strong>优化点：</strong></p>
+<ul>
+<li><strong>请求削峰</strong>：使用消息队列、异步处理、令牌桶等策略，避免瞬时流量打满 AI 服务。</li>
+<li><strong>模型负载均衡</strong>：多实例部署 AI 服务，并结合 GPU 资源调度。</li>
+<li><strong>缓存热点数据</strong>：RAG 的 embedding、FAQ、药品说明等可以放在 Redis 或 Caffeine，减少重复计算。</li>
+<li><strong>分布式数据库优化</strong>：MongoDB 可以考虑分片，MySQL 可使用读写分离和索引优化。</li>
+</ul>
+<p>2️⃣ 数据一致性与可靠性</p>
+<p><strong>潜在问题：</strong></p>
+<ul>
+<li>MySQL 与 Elasticsearch 的同步是最终一致，存在短时间数据延迟，可能影响搜索结果。</li>
+<li>高并发更新可能导致 Elasticsearch 写入乱序或数据丢失。</li>
+<li>缓存雪崩、穿透、击穿风险，如果没有二级缓存或预加载策略。</li>
+</ul>
+<p><strong>优化点：</strong></p>
+<ul>
+<li><strong>保证顺序性</strong>：按主键分区，binlog 顺序消费，单分区单线程写入 ES。</li>
+<li><strong>错误重试和幂等</strong>：同步 ES 写入操作增加幂等逻辑。</li>
+<li><strong>缓存策略</strong>：热点药品、用户信息使用 Caffeine + Redis 二级缓存，结合 TTL + 预加载。</li>
+<li><strong>降级兜底</strong>：缓存失效或 DB 宕机时返回默认值或历史数据。</li>
+</ul>
+<h3 id="什么是大模型幻觉问题，你的项目中是如何尝试解决的？"><a href="#什么是大模型幻觉问题，你的项目中是如何尝试解决的？" class="headerlink" title="什么是大模型幻觉问题，你的项目中是如何尝试解决的？"></a>什么是大模型幻觉问题，你的项目中是如何尝试解决的？</h3><p>好的，我们来认真梳理这个问题。你的问题涉及 <strong>大模型的“幻觉”问题（hallucination）</strong>，以及在你的医疗问诊项目中具体的解决方案。</p>
+<p>1️⃣ 什么是大模型幻觉（Hallucination）？</p>
+<ul>
+<li><p><strong>定义</strong>：大语言模型在生成回答时，可能给出 <strong>与事实不符、没有依据、甚至完全虚构的内容</strong>。</p>
+</li>
+<li><p><strong>特点</strong>：</p>
+<ol>
+<li>内容看起来合理、流畅、符合语法，但实际上是错误的。</li>
+<li>在医疗或金融等领域风险更高，可能导致误导用户。</li>
+<li>幻觉常发生在模型缺乏明确事实支撑或训练数据中信息不足时。</li>
+</ol>
+</li>
+</ul>
+<p><strong>举例（概念性，不是实际患者数据）</strong>：</p>
+<blockquote>
+<p>用户问：“某药物的标准剂量是多少？”<br>模型回答：“推荐剂量是 1000mg，每天三次。”<br>—— 但实际药典显示标准剂量是 500mg。这个就是幻觉。</p>
+</blockquote>
+<p>2️⃣ 为什么会发生？</p>
+<ul>
+<li>模型 <strong>基于概率生成</strong>，并不真正“理解”事实。</li>
+<li>模型的训练数据可能 <strong>不完整、过时或含噪声</strong>。</li>
+<li>问题涉及 <strong>冷门或专业领域信息</strong>，模型容易自由发挥。</li>
+<li>Prompt 或上下文提供的信息不足，模型需要“填空”，容易出错。</li>
+</ul>
+<p>3️⃣ 项目中解决幻觉问题的方法</p>
+<p>在你的医疗问诊平台中，你已经做了一些技术尝试来 <strong>减少幻觉的发生</strong>：</p>
+<p>（1）RAG（Retrieval-Augmented Generation）检索增强</p>
+<ul>
+<li><p><strong>思路</strong>：模型回答之前先 <strong>从可信知识库（药典、指南、问诊 FAQ）检索相关文档</strong>。</p>
+</li>
+<li><p><strong>效果</strong>：模型生成的回答可以引用具体文档，减少凭空生成内容。</p>
+</li>
+<li><p><strong>实现细节</strong>：</p>
+<ul>
+<li>将药品说明、医疗指南向量化（embedding）并存入向量数据库。</li>
+<li>用户问诊时先召回最相关文档，然后将文档内容和问题一起作为 prompt 输入模型。</li>
+<li>这样模型生成回答就有事实支撑。</li>
+</ul>
+</li>
+</ul>
+<p>（2）多路检索 + reranker</p>
+<ul>
+<li><strong>思路</strong>：不同检索器（关键词、embedding）召回候选文档，再用 cross-encoder 模型排序，选最可信的文档提供给大模型。</li>
+<li><strong>效果</strong>：进一步保证输入信息的质量，减少模型使用无关信息“编故事”。</li>
+</ul>
+<p>（3）上下文与提示优化（Prompt Engineering）</p>
+<ul>
+<li><p>明确告诉模型：</p>
+<blockquote>
+<p>“请基于提供的医疗文档回答，不允许凭空生成剂量或疗程信息。”</p>
+</blockquote>
+</li>
+<li><p><strong>效果</strong>：减少自由发挥的可能性，但不能完全消除幻觉。</p>
+</li>
+</ul>
+<p>（4）二次校验 &#x2F; 规则过滤</p>
+<ul>
+<li><p>对敏感信息（药品剂量、检查标准）增加规则：</p>
+<ul>
+<li>回答中关键数据必须 <strong>在知识库中找到匹配值</strong>。</li>
+<li>如果模型回答未匹配到事实，返回提示“请参考官方药典”。</li>
+</ul>
+</li>
+<li><p><strong>效果</strong>：保证不会直接输出错误医疗建议。</p>
+</li>
+</ul>
+<p>（5）用户可视化引用</p>
+<ul>
+<li>对模型回答中引用的知识文档进行 <strong>高亮或标注来源</strong>。</li>
+<li>用户可以直接点击查看原始文档，增加透明度和可信度。</li>
+</ul>
+<p>4️⃣ 整体总结</p>
+<ul>
+<li><p><strong>大模型幻觉</strong>是生成式 AI 的本质问题，尤其在专业领域高风险。</p>
+</li>
+<li><p><strong>解决策略</strong>：</p>
+<ol>
+<li><strong>RAG 检索增强</strong> → 提供事实依据</li>
+<li><strong>多路检索 + reranker</strong> → 提高文档质量</li>
+<li><strong>Prompt 指令约束</strong> → 限制自由发挥</li>
+<li><strong>二次校验 &#x2F; 规则过滤</strong> → 数据安全兜底</li>
+<li><strong>引用透明化</strong> → 用户可验证信息</li>
+</ol>
+</li>
+</ul>
+<h3 id="该医疗平台在医疗问诊场景下对用户的核心价值是什么？"><a href="#该医疗平台在医疗问诊场景下对用户的核心价值是什么？" class="headerlink" title="该医疗平台在医疗问诊场景下对用户的核心价值是什么？"></a>该医疗平台在医疗问诊场景下对用户的核心价值是什么？</h3><p>1️⃣ 便捷的医疗咨询</p>
+<ul>
+<li><p><strong>价值</strong>：用户可以随时在线获取问诊服务，无需排队、预约医院。</p>
+</li>
+<li><p><strong>体现方式</strong>：</p>
+<ul>
+<li>高并发 AI 问诊支持多用户同时咨询。</li>
+<li>智能问答可以快速理解用户症状，提供初步分析。</li>
+<li>对于轻微病症或常见问题，用户无需等待医生即可得到参考建议。</li>
+</ul>
+</li>
+</ul>
+<p><strong>用户收益</strong>：节省时间、提升体验，尤其是在夜间或偏远地区。</p>
+<p> 2️⃣ 准确可靠的医疗信息</p>
+<ul>
+<li><p><strong>价值</strong>：减少错误或不准确信息的风险。</p>
+</li>
+<li><p><strong>体现方式</strong>：</p>
+<ul>
+<li>使用 <strong>RAG + 知识库检索</strong>，确保 AI 回答基于权威文档（药典、指南、FAQ）。</li>
+<li>高亮引用源，用户可以直接验证信息来源。</li>
+<li>规则校验和数据过滤保障关键医疗数据（如剂量、疗程）可靠。</li>
+</ul>
+</li>
+</ul>
+<p><strong>用户收益</strong>：获取可信、可验证的医疗信息，降低因误诊或错误信息产生的风险。</p>
+<h3 id="CoT-ReAct了解过吗？"><a href="#CoT-ReAct了解过吗？" class="headerlink" title="CoT&#x2F;ReAct了解过吗？"></a>CoT&#x2F;ReAct了解过吗？</h3><p>一、<strong>CoT</strong>（思维链）<br>核心定义：2022 年谷歌提出的基础推理范式，引导大模型把复杂问题拆解为线性、连续的中间推理步骤，先输出 “思考过程” 再给答案，替代 “问题→答案” 的直接输出。<br>工作流程<br>输入复杂问题（数学、逻辑、推理题）<br>模型按 “第一步→第二步→…→最后一步” 输出推理链<br>汇总步骤，给出最终答案</p>
+<p>二、<strong>ReAct</strong>（Reason + Act）<br>核心定义：融合推理（Reason）与行动（Act）的高级范式，让模型形成Thought → Action → Observation → Thought闭环，可主动调用搜索、API、计算器等外部工具。<br>工作流程<br>Thought：分析问题、规划下一步（如 “我需要查南京今天天气”）<br>Action：执行工具调用（如search(“南京天气 2026-03-21”)）<br>Observation：接收工具返回结果（如 “晴，12–22℃”）<br>循环直至得出最终答案</p>
+<h2 id="1-1-大模型对话-Prompt-上下文记忆"><a href="#1-1-大模型对话-Prompt-上下文记忆" class="headerlink" title="1.1 大模型对话 &#x2F; Prompt &#x2F; 上下文记忆"></a>1.1 大模型对话 &#x2F; Prompt &#x2F; 上下文记忆</h2><h3 id="如何对大模型的回答和行为进行约束？"><a href="#如何对大模型的回答和行为进行约束？" class="headerlink" title="如何对大模型的回答和行为进行约束？"></a>如何对大模型的回答和行为进行约束？</h3><p>可以通过：输入&#x2F;输出&#x2F;模型本身&#x2F;RAG&#x2F;Fuction call</p>
+<ol>
+<li><strong>Prompt约束：System Prompt（系统提示词）</strong></li>
+</ol>
+<p>定义模型角色，例如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">你是一名专业医生助手，只能提供医学参考建议。<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>输出格式约束</strong></li>
+</ol>
+<p>通过 Prompt 强制结构化输出：例如 JSON 输出。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css">请严格按照以下格式输出：<br>&#123;<br>  &quot;<span class="hljs-selector-tag">summary</span>&quot;: <span class="hljs-string">&quot;&quot;</span>,<br>  <span class="hljs-string">&quot;keywords&quot;</span>: []<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><strong>内容过滤</strong></li>
+</ol>
+<p>对模型输出进行安全检测。</p>
+<ol start="4">
+<li><strong>模型层约束:指令微调</strong></li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs">用户问题<br>→<br>理想回答<br></code></pre></td></tr></table></figure>
+
+<p>模型会学习：</p>
+<ul>
+<li>如何回答问题</li>
+<li>什么内容应该拒绝</li>
+</ul>
+<ol start="5">
+<li><strong>系统层约束</strong><br>在 模型外部增加控制逻辑</li>
+<li>RAG知识范围限制: 只能基于知识库回答</li>
+<li>如果模型可以调用工具(Tool&#x2F;Fuction call)，需要限制权限。</li>
+</ol>
+<hr>
+<h3 id="使用提示词（Prompt）时需要注意哪些要点？"><a href="#使用提示词（Prompt）时需要注意哪些要点？" class="headerlink" title="使用提示词（Prompt）时需要注意哪些要点？"></a>使用提示词（Prompt）时需要注意哪些要点？</h3><p>主要有几点：</p>
+<ol>
+<li><strong>角色设定</strong></li>
+</ol>
+<p>通过 <strong>角色设定</strong>可以显著提升回答质量。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">你是一名医学专家，请解释糖尿病的主要症状。<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>任务描述</strong></li>
+</ol>
+<p>Prompt 必须 <strong>明确告诉模型要做什么任务</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs">介绍一下机器学习<br><br>请用200字介绍机器学习的基本概念，并列举三个典型应用场景。<br></code></pre></td></tr></table></figure>
+
+
+<ol start="3">
+<li><strong>提供足够的上下文</strong></li>
+</ol>
+<p>大模型本身 <strong>没有长期记忆</strong>，如果上下文不足容易产生 <strong>幻觉</strong></p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs lasso">解释这个算法<br><br>请解释 Transformer 模型中的 <span class="hljs-built_in">Self</span><span class="hljs-params">-Attention</span> 机制，并说明它与传统 RNN 的区别。<br></code></pre></td></tr></table></figure>
+
+
+
+<ol start="4">
+<li><strong>明确输出格式</strong></li>
+</ol>
+<p>约束返回结构。</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript">请按照以下 <span class="hljs-built_in">JSON</span> 格式回答：<br>&#123;<br>  <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>  <span class="hljs-string">&quot;summary&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>  <span class="hljs-string">&quot;keywords&quot;</span>: []<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">System</span> Prompt<br>↓<br>用户问题<br>↓<br>RAG检索内容<br>↓<br>输出格式约束<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">你是一名AI助手，请根据以下知识回答问题。<br><br>知识库：<br>&#123;<span class="hljs-built_in">context</span>&#125;<br><br>问题：<br>&#123;question&#125;<br><br>请使用以下<span class="hljs-keyword">JSON格式回答：</span><br><span class="hljs-keyword"></span>&#123;<br>  <span class="hljs-string">&quot;answer&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>  <span class="hljs-string">&quot;confidence&quot;</span>: <span class="hljs-string">&quot;&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="若大模型给出错误医疗建议，如何从系统层面发现-拦截？"><a href="#若大模型给出错误医疗建议，如何从系统层面发现-拦截？" class="headerlink" title="若大模型给出错误医疗建议，如何从系统层面发现&#x2F;拦截？"></a>若大模型给出错误医疗建议，如何从系统层面发现&#x2F;拦截？</h3><p>一、<strong>输入层</strong>拦截（问题识别）</p>
+<p>首先识别用户问题是否属于 <strong>医疗高风险问题</strong>。</p>
+<p>二、<strong>RAG知识约束</strong>（防止胡编）</p>
+<p>医疗场景必须限制模型 <strong>只能基于权威知识回答</strong>。</p>
+<p>三、<strong>输出层安全检测</strong>（关键）</p>
+<p>在 LLM 输出之后，需要进行 <strong>自动安全检测</strong>。<br>如果回答不合规，就终止回答。</p>
+<hr>
+<h3 id="如何解决大模型对话的上下文超限问题？"><a href="#如何解决大模型对话的上下文超限问题？" class="headerlink" title="如何解决大模型对话的上下文超限问题？"></a>如何解决大模型对话的上下文超限问题？</h3><p>常见方法：</p>
+<ol>
+<li><strong>对话摘要（Conversation Summary）</strong></li>
+</ol>
+<p>当对话变长时，可以 <strong>对历史对话进行总结压缩</strong>。</p>
+<ol start="2">
+<li><strong>滑动窗口：只保留最近N轮对话</strong></li>
+</ol>
+<p>例如最近10轮。</p>
+<ol start="3">
+<li><strong>向量记忆</strong></li>
+</ol>
+<p>将历史对话 <strong>向量化存储</strong>，只在需要时检索。<br><strong>只加载相关记忆</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs">历史对话<br>↓<br>Embedding<br>↓<br>向量数据库<br>↓<br>语义检索<br>↓<br>加入上下文<br></code></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h3 id="为什么使用Mongodb存储大模型对话上下文，而不是Mysql"><a href="#为什么使用Mongodb存储大模型对话上下文，而不是Mysql" class="headerlink" title="为什么使用Mongodb存储大模型对话上下文，而不是Mysql"></a>为什么使用Mongodb存储大模型对话上下文，而不是Mysql</h3><p>在 <strong>大模型对话系统（ChatGPT 类似应用）</strong> 中，很多系统会选择用 <strong>MongoDB</strong> 存储对话上下文，而不是 <strong>MySQL</strong>。核心原因主要是：<strong>数据结构、写入模式、扩展能力、查询方式</strong>更适合 MongoDB。我们从工程角度详细分析。</p>
+<hr>
+<h5 id="一、对话上下文的数据结构特点"><a href="#一、对话上下文的数据结构特点" class="headerlink" title="一、对话上下文的数据结构特点"></a>一、对话上下文的数据结构特点</h5><p>大模型对话通常是这种结构：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;conversationId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;123&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;messages&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;role&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;user&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;我最近咳嗽怎么办？&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;time&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2026-03-16 10:00&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;role&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;assistant&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;建议先判断是否有发烧...&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;time&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2026-03-16 10:00&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;role&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;user&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;没有发烧&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;time&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2026-03-16 10:01&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>特点：</p>
+<ul>
+<li><strong>嵌套结构</strong></li>
+<li><strong>数组结构</strong></li>
+<li><strong>字段不固定</strong></li>
+</ul>
+<p>这种结构在 <strong>MongoDB</strong> 中非常自然，因为 MongoDB 本身就是 <strong>Document（JSON）数据库</strong>。</p>
+<hr>
+<h5 id="二、MongoDB-vs-MySQL-结构对比"><a href="#二、MongoDB-vs-MySQL-结构对比" class="headerlink" title="二、MongoDB vs MySQL 结构对比"></a>二、MongoDB vs MySQL 结构对比</h5><h3 id="1-MongoDB存储方式"><a href="#1-MongoDB存储方式" class="headerlink" title="1 MongoDB存储方式"></a>1 MongoDB存储方式</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;_id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;conversationId&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;messages&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span> <span class="hljs-attr">&quot;role&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;user&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;...&quot;</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span> <span class="hljs-attr">&quot;role&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;assistant&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;...&quot;</span><span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>优点：</p>
+<ul>
+<li>JSON天然支持</li>
+<li>一条记录就是一个会话</li>
+<li>读取非常快</li>
+</ul>
+<hr>
+<h3 id="2-MySQL存储方式"><a href="#2-MySQL存储方式" class="headerlink" title="2 MySQL存储方式"></a>2 MySQL存储方式</h3><p>通常需要拆表：</p>
+<h4 id="会话表"><a href="#会话表" class="headerlink" title="会话表"></a>会话表</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql">conversation<br><span class="hljs-comment">-------------</span><br>id<br>user_id<br>create_time<br></code></pre></td></tr></table></figure>
+
+<h4 id="消息表"><a href="#消息表" class="headerlink" title="消息表"></a>消息表</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql">message<br><span class="hljs-comment">-------------</span><br>id<br>conversation_id<br>role<br>content<br><span class="hljs-type">time</span><br></code></pre></td></tr></table></figure>
+
+<p>查询最近对话：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <br><span class="hljs-keyword">FROM</span> message <br><span class="hljs-keyword">WHERE</span> conversation_id <span class="hljs-operator">=</span> ?<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-type">time</span> <span class="hljs-keyword">DESC</span> <br>LIMIT <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
+
+<p>缺点：</p>
+<ul>
+<li>表结构复杂</li>
+<li>需要 join 或排序</li>
+<li>SQL操作较重</li>
+</ul>
+<hr>
+<h5 id="三、写入模式差异（非常关键）"><a href="#三、写入模式差异（非常关键）" class="headerlink" title="三、写入模式差异（非常关键）"></a>三、写入模式差异（非常关键）</h5><p>大模型对话有一个特点：</p>
+<p><strong>写多读少</strong></p>
+<p>每一句对话都会写入：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-keyword">user</span> <span class="hljs-title">message</span><br>assistant message<br></code></pre></td></tr></table></figure>
+
+<p>一轮对话：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">2次写操作<br></code></pre></td></tr></table></figure>
+
+<p>MongoDB：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript">db.<span class="hljs-property">chat</span>.<span class="hljs-title function_">update</span>(<br>  &#123;<span class="hljs-attr">conversationId</span>:<span class="hljs-string">&quot;123&quot;</span>&#125;,<br>  &#123;<span class="hljs-attr">$push</span>:&#123;<span class="hljs-attr">messages</span>:newMessage&#125;&#125;<br>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>只需要追加数组</strong></p>
+<p>而 MySQL：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">INSERT INTO</span> message (...)<br></code></pre></td></tr></table></figure>
+
+<p>虽然也可以，但：</p>
+<ul>
+<li>高并发写入下 MongoDB 更轻量</li>
+<li>JSON append 更方便</li>
+</ul>
+<hr>
+<h5 id="四、读取方式差异"><a href="#四、读取方式差异" class="headerlink" title="四、读取方式差异"></a>四、读取方式差异</h5><p>大模型推理时需要：</p>
+<p><strong>读取最近N条对话</strong></p>
+<p>例如：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">最近<span class="hljs-number">10</span>条 <span class="hljs-keyword">message</span><br></code></pre></td></tr></table></figure>
+
+<p>MongoDB：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">db.<span class="hljs-property">chat</span>.<span class="hljs-title function_">find</span>(&#123;<span class="hljs-attr">_id</span>:<span class="hljs-string">&quot;123&quot;</span>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>直接返回：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">整个会话<br></code></pre></td></tr></table></figure>
+
+<p>或者：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">messages</span>[-<span class="hljs-number">10</span>:]<br></code></pre></td></tr></table></figure>
+
+<p>一次查询完成。</p>
+<hr>
+<p>MySQL：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <br><span class="hljs-keyword">FROM</span> message<br><span class="hljs-keyword">WHERE</span> conversation_id <span class="hljs-operator">=</span> ?<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-type">time</span> <span class="hljs-keyword">DESC</span><br>LIMIT <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
+
+<p>需要：</p>
+<ul>
+<li>排序</li>
+<li>limit</li>
+</ul>
+<p>性能相对差一点。</p>
+<hr>
+<h5 id="五、扩展性（分布式能力）"><a href="#五、扩展性（分布式能力）" class="headerlink" title="五、扩展性（分布式能力）"></a>五、扩展性（分布式能力）</h5><p>聊天数据有一个特点：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">数据量非常大<br></code></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">100万用户<br>每人1000条消息<br></code></pre></td></tr></table></figure>
+
+<p>就是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">10亿条记录<br></code></pre></td></tr></table></figure>
+
+<p>MongoDB：</p>
+<p>天然支持：</p>
+<ul>
+<li><strong>Sharding 分片</strong></li>
+<li>水平扩展</li>
+</ul>
+<p>可以：</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade">conversationId <span class="hljs-built_in">hash</span>分片<br></code></pre></td></tr></table></figure>
+
+<p>MySQL：</p>
+<p>虽然也可以：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">分库分表<br></code></pre></td></tr></table></figure>
+
+<p>但实现复杂度更高。</p>
+<hr>
+<h5 id="六、数据结构灵活性"><a href="#六、数据结构灵活性" class="headerlink" title="六、数据结构灵活性"></a>六、数据结构灵活性</h5><p>对话数据可能不断扩展字段：</p>
+<p>例如：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">token<span class="hljs-emphasis">_count</span><br><span class="hljs-emphasis">model_name</span><br><span class="hljs-emphasis">embedding</span><br><span class="hljs-emphasis">temperature</span><br><span class="hljs-emphasis">tool_</span>call<br></code></pre></td></tr></table></figure>
+
+<p>MongoDB：</p>
+<p>不需要修改表结构：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;role&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;assistant&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;...&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;tokens&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">300</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>MySQL：</p>
+<p>需要：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span><br></code></pre></td></tr></table></figure>
+
+<p>扩展性较差。</p>
+<p>使用 MongoDB 存储大模型对话上下文的原因：</p>
+<table>
+<thead>
+<tr>
+<th>原因</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JSON结构天然匹配</td>
+<td>对话数据是嵌套JSON</td>
+</tr>
+<tr>
+<td>写入效率高</td>
+<td>append数组</td>
+</tr>
+<tr>
+<td>读取简单</td>
+<td>一次查询整个会话</td>
+</tr>
+<tr>
+<td>扩展性强</td>
+<td>支持分片</td>
+</tr>
+<tr>
+<td>结构灵活</td>
+<td>不需要改表</td>
+</tr>
+</tbody></table>
+<p>所以：</p>
+<blockquote>
+<p><strong>MongoDB 更适合存储聊天记录这种半结构化、写多读少、结构灵活的数据。</strong></p>
+</blockquote>
+<h3 id="MongoDB和MySQL的核心区别是什么？"><a href="#MongoDB和MySQL的核心区别是什么？" class="headerlink" title="MongoDB和MySQL的核心区别是什么？"></a>MongoDB和MySQL的核心区别是什么？</h3><p>主要区别：</p>
+<p><strong>数据模型</strong></p>
+<p>MySQL：</p>
+<ul>
+<li><strong>关系型数据库</strong></li>
+<li><strong>表结构固定</strong></li>
+</ul>
+<p>MongoDB：</p>
+<ul>
+<li><strong>文档数据库</strong></li>
+<li><strong>JSON&#x2F;BSON存储</strong></li>
+<li>Schema灵活</li>
+</ul>
+<hr>
+<p><strong>查询方式</strong></p>
+<p>MySQL：</p>
+<ul>
+<li>SQL</li>
+</ul>
+<p>MongoDB：</p>
+<ul>
+<li>JSON查询</li>
+</ul>
+<hr>
+<p><strong>使用场景</strong></p>
+<p>MongoDB更适合：</p>
+<ul>
+<li>日志</li>
+<li><strong>对话记录</strong></li>
+<li><strong>非结构化数据</strong></li>
+</ul>
+<hr>
+<h1 id="1-2-RAG"><a href="#1-2-RAG" class="headerlink" title="1.2 RAG"></a>1.2 RAG</h1><h3 id="RAG检索增强的好处是什么？"><a href="#RAG检索增强的好处是什么？" class="headerlink" title="RAG检索增强的好处是什么？"></a>RAG检索增强的好处是什么？</h3><p>RAG可以：</p>
+<ol>
+<li><strong>解决大模型知识过期问题</strong></li>
+<li><strong>引入私有知识库</strong></li>
+<li><strong>减少幻觉</strong></li>
+</ol>
+<hr>
+<h3 id="没有RAG直接调用大模型会存在什么问题？"><a href="#没有RAG直接调用大模型会存在什么问题？" class="headerlink" title="没有RAG直接调用大模型会存在什么问题？"></a>没有RAG直接调用大模型会存在什么问题？</h3><p>主要问题：</p>
+<ol>
+<li><strong>知识过期</strong></li>
+<li><strong>无法访问私有数据</strong></li>
+<li><strong>幻觉问题严重</strong></li>
+</ol>
+<p>**RAG（Retrieval-Augmented Generation，检索增强生成）**的核心思想是：在大模型生成回答之前，<strong>先从外部知识库检索相关信息，再结合这些信息进行回答</strong>。它的主要好处可以简要概括为以下几点：</p>
+<p>1️⃣ <strong>减少大模型“幻觉”</strong><br>大模型直接生成答案时可能会编造内容，而 RAG 通过先检索真实知识（如文档、数据库等），再生成回答，可以显著降低错误信息。</p>
+<p>2️⃣ <strong>支持私有知识接入</strong><br>可以将企业内部文档、数据库、知识库等接入检索系统，使模型能够回答<strong>训练数据中没有的领域问题</strong>。</p>
+<p>3️⃣ <strong>知识更新成本低</strong><br>不需要重新训练模型，只需更新知识库或向量数据库（如 <strong>Milvus</strong>、<strong>Elasticsearch</strong>）即可让模型获得最新知识。</p>
+<p>4️⃣ <strong>提高回答准确性和可控性</strong><br>模型回答会基于检索到的上下文内容，更容易做到<strong>有依据、可溯源</strong>。</p>
+<p>5️⃣ <strong>降低模型训练成本</strong><br>无需频繁微调大模型，只通过外部检索即可扩展知识能力，节省算力和时间。</p>
+<hr>
+<h3 id="除了RAG，还有哪些方式能为大模型提供领域上下文？"><a href="#除了RAG，还有哪些方式能为大模型提供领域上下文？" class="headerlink" title="除了RAG，还有哪些方式能为大模型提供领域上下文？"></a>除了RAG，还有哪些方式能为大模型提供领域上下文？</h3><p>常见方法：</p>
+<ol>
+<li><strong>Prompt Engineering</strong></li>
+<li><strong>Fine-tuning（微调）</strong></li>
+<li><strong>知识图谱</strong></li>
+<li><strong>Tool调用</strong></li>
+</ol>
+<p>1️⃣ <strong>Prompt Engineering（提示词工程）</strong><br>通过在提示词中加入领域背景、规则或示例（Few-shot），让模型在生成时参考这些上下文。</p>
+<p>2️⃣ <strong>Fine-tuning（模型微调）</strong><br>使用领域数据对大模型进行微调，使模型内部参数学习到专业知识。</p>
+<p>3️⃣ <strong>System Prompt &#x2F; 角色设定</strong><br>在系统提示词中固定模型的身份和知识范围，例如设定为“医疗专家助手”。</p>
+<p>5️⃣ <strong>工具调用（Tool &#x2F; Function Calling）</strong><br>通过调用外部系统（数据库、搜索引擎、API）实时获取信息，再由模型整合生成答案。</p>
+<p>6️⃣ <strong>长期记忆（Memory）机制</strong><br>将用户历史对话或长期知识存储到数据库（如 <strong>MongoDB</strong>），在后续对话中作为上下文使用。</p>
+<hr>
+<h3 id="微调有哪些技术手段？"><a href="#微调有哪些技术手段？" class="headerlink" title="微调有哪些技术手段？"></a>微调有哪些技术手段？</h3><ol>
+<li><strong>全参数微调</strong>（Full Fine-tuning）<br>对模型的<strong>全部参数进行训练更新</strong>，效果最好，但计算成本高、显存需求大。</li>
+<li><strong>部分参数微调</strong><br>只更新模型的一小部分参数，其余参数保持冻结。<br>适合在单机或少量GPU环境下训练</li>
+</ol>
+<p>可以从<strong>训练阶段的角度</strong>来这样划分</p>
+<h3 id="1️⃣-继续预训练（Continued-Pre-training-Domain-Pre-training）"><a href="#1️⃣-继续预训练（Continued-Pre-training-Domain-Pre-training）" class="headerlink" title="1️⃣ 继续预训练（Continued Pre-training &#x2F; Domain Pre-training）"></a>1️⃣ 继续预训练（Continued Pre-training &#x2F; Domain Pre-training）</h3><p>在模型<strong>预训练阶段之后继续使用领域数据训练</strong>，但仍然保持原来的训练目标（如语言建模）。<br>作用是让模型学习<strong>领域知识分布</strong>。</p>
+<p>例如：</p>
+<ul>
+<li>用大量<strong>医疗文献、法律文本、金融数据</strong>继续训练模型</li>
+<li>让模型更理解专业术语和语境</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>数据量通常很大</li>
+<li>不改变模型任务，只增强领域知识</li>
+</ul>
+<h3 id="2️⃣-指令微调（Instruction-Tuning-SFT）"><a href="#2️⃣-指令微调（Instruction-Tuning-SFT）" class="headerlink" title="2️⃣ 指令微调（Instruction Tuning &#x2F; SFT）"></a>2️⃣ 指令微调（Instruction Tuning &#x2F; SFT）</h3><p>使用<strong>指令-回答数据</strong>对模型进行监督微调，使模型学会<strong>按照指令回答问题</strong>。</p>
+<p>例如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">指令：解释什么是高血压<br>回答：高血压是指……<br></code></pre></td></tr></table></figure>
+
+<p>特点：</p>
+<ul>
+<li>数据量相对较小</li>
+<li>目标是让模型<strong>更会对话、更会执行任务</strong></li>
+</ul>
+<hr>
+<h1 id="1-3-多模态-文件上传"><a href="#1-3-多模态-文件上传" class="headerlink" title="1.3 多模态 &#x2F; 文件上传"></a>1.3 多模态 &#x2F; 文件上传</h1><h3 id="图片上传时若出现图片过大、超时问题，该如何解决？"><a href="#图片上传时若出现图片过大、超时问题，该如何解决？" class="headerlink" title="图片上传时若出现图片过大、超时问题，该如何解决？"></a>图片上传时若出现图片过大、超时问题，该如何解决？</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">前端压缩<br>    ↓<br>分片上传<br>    ↓<br>直传对象存储（OSS）<br>    ↓<br>返回<span class="hljs-built_in">URL</span><br>    ↓<br>业务服务器存储<span class="hljs-built_in">URL</span><br></code></pre></td></tr></table></figure>
+
+<p>可以从 <strong>客户端、上传方式、服务端配置</strong> 三个方面解决：</p>
+<ol>
+<li><p><strong>客户端压缩图片</strong><br>在上传前对图片进行压缩或降低分辨率，例如通过 Canvas 或压缩库减少图片体积，降低上传时间。</p>
+</li>
+<li><p><strong>分片上传 &#x2F; 断点续传</strong><br>对大图片采用 <strong>分片上传</strong>，将文件拆分成多个 chunk 上传，服务端再合并，可以避免单次上传过大导致的超时问题。</p>
+</li>
+<li><p><strong>直传 OSS</strong><br>采用 <strong>客户端直传 OSS（预签名 URL &#x2F; STS）</strong>，避免图片先经过业务服务器，减少服务器带宽压力，提高上传速度。</p>
+</li>
+<li><p><strong>调整服务端限制</strong><br>在 <strong>Spring Boot &#x2F; Nginx</strong> 中适当增加 <code>max-file-size</code>、<code>max-request-size</code> 或请求超时时间。</p>
+</li>
+</ol>
+<hr>
+<h3 id="设计C端多张大图同时上传的方案？"><a href="#设计C端多张大图同时上传的方案？" class="headerlink" title="设计C端多张大图同时上传的方案？"></a>设计C端多张大图同时上传的方案？</h3><ol>
+<li><strong>客户端图片压缩</strong></li>
+</ol>
+<p>在上传前对图片进行压缩或降低分辨率，例如通过 <strong>Canvas 或图片压缩库</strong>将图片质量压缩到 70%～80%，减少上传体积，提高上传速度。</p>
+<ol start="2">
+<li><strong>并发上传控制</strong></li>
+</ol>
+<p>多张图片不要一次性全部并发上传，而是采用 <strong>并发队列控制</strong>：</p>
+<ul>
+<li>将图片放入上传队列</li>
+<li>控制最大并发数（如 3～5 个）</li>
+</ul>
+<p>示例流程：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs">图片列表<br>   ↓<br>上传队列<br>   ↓<br>并发控制（最大3个）<br>   ↓<br>依次上传<br></code></pre></td></tr></table></figure>
+
+<p>优点：</p>
+<ul>
+<li>避免网络拥塞</li>
+<li>防止浏览器或服务器压力过大</li>
+</ul>
+<ol start="3">
+<li><strong>分片上传（大图）</strong></li>
+</ol>
+<p>如果单张图片较大（如 &gt;5MB），采用 <strong>分片上传</strong>：</p>
+<p>流程：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs">图片<br> ↓<br>切分为多个 chunk<br> ↓<br>并行上传 chunk<br> ↓<br>服务端合并<br></code></pre></td></tr></table></figure>
+
+<p>优点：</p>
+<ul>
+<li>避免单次上传超时</li>
+<li>支持断点续传</li>
+</ul>
+<ol start="4">
+<li><strong>直传对象存储（OSS）</strong></li>
+</ol>
+<p>推荐采用 <strong>客户端直传 OSS</strong>：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">客户端<br>  ↓<br>获取上传凭证（STS / 预签名<span class="hljs-built_in">URL</span>）<br>  ↓<br>直接上传 OSS<br>  ↓<br>返回图片<span class="hljs-built_in">URL</span><br>  ↓<br>业务服务器只保存<span class="hljs-built_in">URL</span><br></code></pre></td></tr></table></figure>
+
+<p>优点：</p>
+<ul>
+<li>减少业务服务器带宽压力</li>
+<li>上传速度更快</li>
+<li>支持 CDN 加速</li>
+</ul>
+<ol start="5">
+<li><strong>上传进度与用户体验</strong></li>
+</ol>
+<p>前端需要展示：</p>
+<ul>
+<li>单图上传进度</li>
+<li>总体上传进度</li>
+<li>失败重试提示</li>
+</ul>
+<p>提升用户体验。</p>
+<hr>
+<h1 id="1-4-Nacos-微服务"><a href="#1-4-Nacos-微服务" class="headerlink" title="1.4 Nacos &#x2F; 微服务"></a>1.4 Nacos &#x2F; 微服务</h1><h3 id="Nacos作为注册中心的作用是什么？"><a href="#Nacos作为注册中心的作用是什么？" class="headerlink" title="Nacos作为注册中心的作用是什么？"></a>Nacos作为注册中心的作用是什么？</h3><p>主要作用：</p>
+<ol>
+<li><strong>服务注册</strong></li>
+<li><strong>服务发现</strong></li>
+<li><strong>配置中心</strong></li>
+</ol>
+<p>Nacos 作为注册中心的主要作用是 <strong>实现微服务的服务注册与服务发现</strong>。</p>
+<p><strong>具体作用：</strong></p>
+<ol>
+<li><p><strong>服务注册</strong><br>微服务启动时会将自己的 <strong>IP、端口、服务名等信息注册到 Nacos</strong>。</p>
+</li>
+<li><p><strong>服务发现</strong><br>其他服务调用时可以 <strong>从 Nacos 获取目标服务实例列表</strong>，而不需要写死地址。</p>
+</li>
+<li><p><strong>负载均衡支持</strong><br>客户端（如 Spring Cloud LoadBalancer、OpenFeign）从 Nacos 获取多个实例后，可以进行 <strong>负载均衡调用</strong>。</p>
+</li>
+<li><p><strong>健康检查</strong><br>Nacos 会通过 <strong>心跳机制</strong>检测服务实例是否存活，自动剔除异常实例。</p>
+</li>
+</ol>
+<hr>
+<h3 id="服务调用时是否需要实时从Nacos拉取服务信息？"><a href="#服务调用时是否需要实时从Nacos拉取服务信息？" class="headerlink" title="服务调用时是否需要实时从Nacos拉取服务信息？"></a>服务调用时是否需要实时从Nacos拉取服务信息？</h3><p>不需要。</p>
+<p>一般会 <strong>缓存服务实例列表</strong>。</p>
+<p>客户端通过 <strong>本地缓存 + 心跳机制</strong>更新。</p>
+<p>服务启动时会 <strong>从 Nacos 拉取服务实例列表并缓存到本地</strong>，之后服务调用一般是 <strong>从本地缓存中获取实例信息并进行负载均衡</strong>，而不是每次都实时访问 Nacos。</p>
+<p>当服务实例发生变化（如实例上下线）时，Nacos 会通过 <strong>推送机制或客户端定时拉取</strong> 更新本地缓存。</p>
+<p><strong>总结：</strong><br>服务调用通常使用 <strong>本地缓存的服务列表</strong>，只有在实例变化时才会与 Nacos 同步更新，而不是每次调用都实时拉取。</p>
+<hr>
+<h3 id="注册中心存在什么坏处？"><a href="#注册中心存在什么坏处？" class="headerlink" title="注册中心存在什么坏处？"></a>注册中心存在什么坏处？</h3><p>主要问题：</p>
+<ol>
+<li><p><strong>系统复杂度增加</strong></p>
+</li>
+<li><p><strong>网络依赖增强</strong></p>
+</li>
+<li><p><strong>注册中心可能成为单点故障</strong></p>
+</li>
+<li><p><strong>引入系统复杂度</strong><br>需要额外部署和维护注册中心（如 Nacos、Eureka），增加系统架构复杂度。</p>
+</li>
+<li><p><strong>可能成为单点故障</strong><br>如果注册中心集群不可用，新的服务实例可能无法注册，服务治理能力下降。</p>
+</li>
+<li><p><strong>一致性与延迟问题</strong><br>服务实例上下线后，客户端缓存更新可能存在 <strong>短暂延迟</strong>，导致调用到失效实例。</p>
+</li>
+<li><p><strong>运维成本增加</strong><br>需要维护注册中心集群、监控其健康状态和数据同步。</p>
+</li>
+</ol>
+<hr>
+<h3 id="注册中心挂了服务会不可用吗？"><a href="#注册中心挂了服务会不可用吗？" class="headerlink" title="注册中心挂了服务会不可用吗？"></a>注册中心挂了服务会不可用吗？</h3><p>不一定。</p>
+<p>如果 <strong>注册中心挂了</strong>：</p>
+<ol>
+<li><p><strong>已有服务通常仍然可以调用</strong><br>因为服务消费者会 <strong>缓存本地的服务实例列表</strong>，调用时使用本地缓存进行负载均衡。</p>
+</li>
+<li><p><strong>新的服务实例无法注册</strong><br>新启动的服务无法注册到注册中心，其他服务也无法发现它。</p>
+</li>
+<li><p><strong>服务实例变化无法同步</strong><br>如果有服务下线或扩容，客户端缓存无法及时更新，可能会调用到失效实例。</p>
+</li>
+</ol>
+<p><strong>总结：</strong><br>注册中心挂掉后，<strong>已有服务短时间内仍然可以正常调用，但服务治理能力会下降，新服务注册和实例更新会受到影响。</strong></p>
+<hr>
+<h3 id="注册中心的注册表该如何设计？"><a href="#注册中心的注册表该如何设计？" class="headerlink" title="注册中心的注册表该如何设计？"></a>注册中心的注册表该如何设计？</h3><p>注册中心的 <strong>注册表（Service Registry）</strong> 主要用于存储所有服务实例信息，一般采用 <strong>服务维度 → 实例维度</strong> 的结构设计。</p>
+<ol>
+<li><strong>核心数据结构</strong></li>
+</ol>
+<p>通常设计为 <strong>Map + 实例列表</strong>：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml">ServiceName  →  List<span class="hljs-tag">&lt;<span class="hljs-name">ServiceInstance</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">UserService</span><br>   ├── <span class="hljs-number">192.168.1.10:8080</span><br>   ├── <span class="hljs-number">192.168.1.11:8080</span><br><br>OrderService<br>   ├── <span class="hljs-number">192.168.1.20:8080</span><br>   ├── <span class="hljs-number">192.168.1.21:8080</span><br></code></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li><strong>实例信息设计</strong></li>
+</ol>
+<p>每个 <strong>ServiceInstance</strong> 一般包含：</p>
+<ul>
+<li><code>serviceName</code>：服务名</li>
+<li><code>ip</code>：服务IP</li>
+<li><code>port</code>：端口</li>
+<li><code>instanceId</code>：实例唯一ID</li>
+<li><code>metadata</code>：元数据（版本、环境等）</li>
+<li><code>status</code>：健康状态</li>
+<li><code>lastHeartbeatTime</code>：最后心跳时间</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;serviceName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;user-service&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;ip&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;192.168.1.10&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;port&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">8080</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;instanceId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;user-service-1&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;UP&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;metadata&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;v1&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+<hr>
+<h3 id="能否用Caffeine做本地注册表？"><a href="#能否用Caffeine做本地注册表？" class="headerlink" title="能否用Caffeine做本地注册表？"></a>能否用Caffeine做本地注册表？</h3><p>可以，但不推荐。</p>
+<p>因为：</p>
+<ul>
+<li>本地缓存无法保证多节点一致性</li>
+<li>更新不及时</li>
+</ul>
+<hr>
+<h3 id="Caffeine作为本地注册表的好处坏处？"><a href="#Caffeine作为本地注册表的好处坏处？" class="headerlink" title="Caffeine作为本地注册表的好处坏处？"></a>Caffeine作为本地注册表的好处坏处？</h3><p>优点：</p>
+<ul>
+<li>访问速度快</li>
+<li>减少网络调用</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>数据一致性问题</li>
+<li>更新延迟</li>
+</ul>
+<hr>
+<h3 id="注册中心和本地注册表之间的更新机制？"><a href="#注册中心和本地注册表之间的更新机制？" class="headerlink" title="注册中心和本地注册表之间的更新机制？"></a>注册中心和本地注册表之间的更新机制？</h3><p>注册中心和本地注册表之间通常通过 <strong>订阅 + 推送 &#x2F; 定时拉取</strong> 的方式进行更新。</p>
+<p><strong>基本机制：</strong></p>
+<ol>
+<li><p><strong>服务启动时拉取</strong><br>服务启动后从注册中心（如 Nacos）<strong>拉取服务实例列表</strong>，并缓存到本地注册表。</p>
+</li>
+<li><p><strong>订阅服务变更</strong><br>客户端会向注册中心 <strong>订阅服务实例变化事件</strong>。</p>
+</li>
+<li><p><strong>变更推送更新</strong><br>当有服务实例 <strong>上线、下线或健康状态变化</strong>时，注册中心会 <strong>推送变更通知</strong>给客户端。</p>
+</li>
+<li><p><strong>更新本地注册表</strong><br>客户端收到通知后 <strong>更新本地缓存的服务实例列表</strong>。</p>
+</li>
+<li><p><strong>兜底定时同步</strong><br>同时客户端还会 <strong>定时拉取注册表</strong>作为兜底机制，防止推送丢失。</p>
+</li>
+</ol>
+<hr>
+<h1 id="1-5-OpenFeign-Sentinel"><a href="#1-5-OpenFeign-Sentinel" class="headerlink" title="1.5 OpenFeign &#x2F; Sentinel"></a>1.5 OpenFeign &#x2F; Sentinel</h1><hr>
+<h1 id="1-6-Elasticsearch"><a href="#1-6-Elasticsearch" class="headerlink" title="1.6 Elasticsearch"></a>1.6 Elasticsearch</h1><h3 id="项目中如何构建ES搜索服务？"><a href="#项目中如何构建ES搜索服务？" class="headerlink" title="项目中如何构建ES搜索服务？"></a>项目中如何构建ES搜索服务？</h3><p>可以按 <strong>“数据同步 → 索引设计 → 查询实现 → 功能增强”</strong> 的流程回答：</p>
+<p><strong>1. 构建索引结构</strong><br>根据药品信息设计 Elasticsearch 索引，例如字段包括：</p>
+<ul>
+<li><code>drugName</code>（药品名称，text 类型，用于全文检索）</li>
+<li><code>spec</code>（规格）</li>
+<li><code>manufacturer</code>（生产厂家）</li>
+<li><code>description</code>（药品说明）</li>
+<li><code>createTime</code>（时间字段）</li>
+</ul>
+<p>对需要搜索的字段使用 <strong>分词器（如 IK 分词器）</strong>。</p>
+<p><strong>2. 数据同步到 ES</strong><br>将数据库中的药品数据同步到 ES：</p>
+<ul>
+<li>项目启动时进行 <strong>全量同步</strong></li>
+<li>新增或修改药品信息时，通过 <strong>异步消息或业务逻辑同步更新 ES 索引</strong></li>
+</ul>
+<p><strong>3. 构建搜索接口</strong><br>在后端实现搜索服务，例如：</p>
+<ul>
+<li>使用 <code>multi_match</code> 或 <code>match</code> 实现 <strong>关键词全文检索</strong></li>
+<li>使用 <code>fuzzy</code> 或 <code>wildcard</code> 实现 <strong>模糊匹配</strong></li>
+</ul>
+<p><strong>4. 支持高亮与分页</strong></p>
+<ul>
+<li><strong>高亮</strong>：使用 ES <code>highlight</code> 功能对命中的关键词进行高亮显示</li>
+<li><strong>分页</strong>：通过 <code>from + size</code> 实现分页查询</li>
+</ul>
+<p><strong>5. 返回搜索结果</strong><br>将 ES 返回的结果解析为 DTO，返回给前端展示。</p>
+<p>在项目中我主要做了三步：</p>
+<ol>
+<li><strong>设计 ES 索引结构</strong>，对药品名称和说明等字段使用 IK 分词实现全文检索</li>
+<li><strong>将 MySQL 中的药品数据同步到 ES</strong>，启动时全量同步，新增或修改时增量更新</li>
+<li><strong>实现搜索接口</strong>，使用 <code>match/multi_match</code> 做关键词检索，并结合 <strong>highlight 实现关键词高亮、from+size 实现分页查询</strong></li>
+</ol>
+<p>这样就实现了药品信息的 <strong>全文检索、模糊匹配、高亮展示和分页查询</strong>。</p>
+<hr>
+<h3 id="深度分页如何优化？"><a href="#深度分页如何优化？" class="headerlink" title="深度分页如何优化？"></a>深度分页如何优化？</h3><p>在 Elasticsearch 中，深度分页（如 <code>from + size</code> 很大）会导致 <strong>性能下降和内存占用增加</strong>，因为 ES 需要先排序并丢弃大量数据。常见优化方式有：</p>
+<ol>
+<li>使用 <code>search_after</code>（推荐）</li>
+</ol>
+<p>基于上一页最后一条数据的 <strong>排序值</strong>继续查询，而不是使用 <code>from</code>。</p>
+<p>特点：</p>
+<ul>
+<li>不需要跳过大量数据</li>
+<li>适合 <strong>无限滚动或翻页场景</strong><br><strong>只适合顺序翻页，不支持随机跳页</strong>，但可以避免深度分页性能问题。</li>
+</ul>
+<ol start="2">
+<li>限制最大分页深度</li>
+</ol>
+<p>通过 <code>index.max_result_window</code> 限制最大分页，例如默认 <strong>10000 条</strong>，防止用户请求过深分页。</p>
+<hr>
+<h1 id="1-7-Canal"><a href="#1-7-Canal" class="headerlink" title="1.7 Canal"></a>1.7 Canal</h1><h3 id="MySQL中binlog的作用是什么？"><a href="#MySQL中binlog的作用是什么？" class="headerlink" title="MySQL中binlog的作用是什么？"></a>MySQL中binlog的作用是什么？</h3><p>MySQL 中 **binlog（二进制日志）**主要用于记录数据库的 <strong>数据变更操作</strong>（如 <code>INSERT</code>、<code>UPDATE</code>、<code>DELETE</code>）。</p>
+<p><strong>主要作用：</strong></p>
+<ol>
+<li><p><strong>主从复制</strong><br>从库通过读取主库的 binlog，同步数据，实现 <strong>数据复制</strong>。</p>
+</li>
+<li><p><strong>数据恢复</strong><br>结合全量备份，可以通过 <strong>重放 binlog</strong> 实现数据恢复（Point In Time Recovery）。</p>
+</li>
+<li><p><strong>数据同步 &#x2F; 数据订阅</strong><br>一些系统（如 Canal、Debezium）可以解析 binlog，实现 <strong>数据同步到 ES、MQ 等系统</strong>。</p>
+</li>
+</ol>
+<hr>
+<h3 id="binlog模式"><a href="#binlog模式" class="headerlink" title="binlog模式"></a>binlog模式</h3><p>MySQL 的 <strong>binlog 有三种模式</strong>：</p>
+<ol>
+<li><p><strong>STATEMENT（语句模式）</strong><br>记录执行的 <strong>SQL 语句</strong>，例如 <code>UPDATE user SET age=20 WHERE id=1</code>。</p>
+<ul>
+<li>优点：日志体积小</li>
+<li>缺点：某些函数或非确定性语句可能导致 <strong>主从数据不一致</strong></li>
+</ul>
+</li>
+<li><p><strong>ROW（行模式）</strong><br>记录 <strong>每一行数据的变化</strong>（修改前和修改后）。</p>
+<ul>
+<li>优点：数据一致性好</li>
+<li>缺点：日志体积较大</li>
+</ul>
+</li>
+<li><p><strong>MIXED（混合模式）</strong><br>MySQL 会 <strong>自动选择</strong>使用 STATEMENT 或 ROW。</p>
+<ul>
+<li>一般情况使用 STATEMENT</li>
+<li>不安全语句使用 ROW</li>
+</ul>
+</li>
+</ol>
+<p>✅ <strong>面试简答版：</strong><br>MySQL 的 binlog 有 <strong>STATEMENT、ROW、MIXED</strong> 三种模式，分别记录 <strong>SQL 语句、行数据变化、或两者混合</strong>。生产环境通常推荐使用 <strong>ROW 模式</strong>以保证主从数据一致性。</p>
+<hr>
+<h1 id="1-8-二级缓存"><a href="#1-8-二级缓存" class="headerlink" title="1.8 二级缓存"></a>1.8 二级缓存</h1><h3 id="Redis更新后多节点Caffeine数据不一致如何解决？"><a href="#Redis更新后多节点Caffeine数据不一致如何解决？" class="headerlink" title="Redis更新后多节点Caffeine数据不一致如何解决？"></a>Redis更新后多节点Caffeine数据不一致如何解决？</h3><p>如果 <strong>Redis 更新后，多节点的 Caffeine 本地缓存出现数据不一致</strong>，常见解决方案有：</p>
+<ol>
+<li>使<strong>用消息通知（推荐）</strong></li>
+</ol>
+<p>当 Redis 数据更新时，通过 <strong>MQ 或 Redis Pub&#x2F;Sub</strong> 发送缓存失效通知，各节点收到消息后 <strong>删除或更新本地 Caffeine 缓存</strong>。</p>
+<p>流程：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs">数据更新<br>   ↓<br>更新 Redis<br>   ↓<br>发布缓存失效消息<br>   ↓<br>各服务节点接收消息<br>   ↓<br>删除本地 Caffeine 缓存<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>设置本地缓存过期时间</strong></li>
+</ol>
+<p>给 Caffeine 设置 <strong>TTL（过期时间）</strong>，即使未及时同步，也会在一定时间后自动失效，作为兜底方案。</p>
+<ol start="3">
+<li><strong>定时刷新缓存</strong></li>
+</ol>
+<p>通过 <strong>定时任务</strong>定期刷新本地缓存，保证最终一致性。</p>
+<p>✅ <strong>面试简答版：</strong></p>
+<p>通常通过 <strong>发布订阅或消息队列实现缓存失效通知</strong>：当 Redis 更新时发送消息，各服务节点收到通知后删除本地 Caffeine 缓存，同时配合 <strong>TTL 过期机制</strong>作为兜底，保证缓存最终一致。</p>
+<hr>
+<h1 id="2-智能高并发秒杀系统"><a href="#2-智能高并发秒杀系统" class="headerlink" title="2 智能高并发秒杀系统"></a>2 智能高并发秒杀系统</h1><h2 id="2-0-整体"><a href="#2-0-整体" class="headerlink" title="2.0 整体"></a>2.0 整体</h2><h3 id="高并发秒杀系统的整体设计流程是什么？"><a href="#高并发秒杀系统的整体设计流程是什么？" class="headerlink" title="高并发秒杀系统的整体设计流程是什么？"></a>高并发秒杀系统的整体设计流程是什么？</h3><p>1️⃣ <strong>活动准备阶段</strong><br>在秒杀开始前，将秒杀商品和库存信息初始化到 <strong>MySQL</strong>，并提前预热到 <strong>Redis</strong> 中，减少活动开始后的数据库压力。</p>
+<p>2️⃣ <strong>活动开启</strong><br>系统开启秒杀活动，用户开始发送秒杀请求。</p>
+<p>3️⃣ <strong>用户抢购请求处理</strong><br>用户请求到达后，系统在 <strong>Redis</strong> 中进行库存扣减和资格校验，通过原子操作快速判断是否还有库存。</p>
+<p>4️⃣ <strong>库存抢购阶段</strong><br>多个用户并发抢夺库存，当 Redis 中的库存被扣减到 <strong>0</strong> 时，说明商品已经售罄。</p>
+<p>5️⃣ <strong>最终计算阶段</strong><br>系统统计成功抢购的用户请求，并生成对应的订单数据。</p>
+<p>6️⃣ <strong>异步落库阶段</strong><br>通过 <strong>消息队列（MQ）</strong> 将成功订单异步写入 <strong>MySQL</strong>，完成订单持久化，同时更新相关状态。</p>
+<p>7️⃣ <strong>流程结束</strong><br>库存售罄后秒杀结束，系统返回用户秒杀结果。</p>
+<hr>
+<h1 id="2-1-高并发秒杀策略"><a href="#2-1-高并发秒杀策略" class="headerlink" title="2.1 高并发秒杀策略"></a>2.1 高并发秒杀策略</h1><h3 id="展开讲秒杀系统中多种高并发策略的实现、区别、优缺点，以及不同场景的选型依据"><a href="#展开讲秒杀系统中多种高并发策略的实现、区别、优缺点，以及不同场景的选型依据" class="headerlink" title="展开讲秒杀系统中多种高并发策略的实现、区别、优缺点，以及不同场景的选型依据?"></a>展开讲秒杀系统中多种高并发策略的实现、区别、优缺点，以及不同场景的选型依据?</h3><h5 id="1-synchronized-同步锁"><a href="#1-synchronized-同步锁" class="headerlink" title="1. synchronized 同步锁"></a>1. synchronized 同步锁</h5><p><strong>实现方式：</strong><br>在应用层对秒杀逻辑加 <code>synchronized</code> 锁，同一时间只允许一个线程对同一个商品执行库存扣减和订单创建。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>实现简单</li>
+<li>能保证线程安全，<strong>强一致性</strong></li>
+<li>逻辑清晰</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>只能在 <strong>单机环境生效</strong></li>
+<li>锁竞争严重，并发能力差</li>
+<li>不适合高并发场景</li>
+</ul>
+<p><strong>适用场景：</strong></p>
+<ul>
+<li>低并发秒杀</li>
+<li>单体应用或功能演示场景</li>
+</ul>
+<h5 id="2-数据库乐观锁"><a href="#2-数据库乐观锁" class="headerlink" title="2. 数据库乐观锁"></a>2. 数据库乐观锁</h5><p><strong>实现方式：</strong><br>在数据库表中增加 <code>version</code> 字段或通过 <code>update stock where stock &gt; 0</code> 的方式进行 <strong>CAS 更新库存</strong>，更新成功才算抢购成功。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li><strong>依赖数据库保证一致性</strong></li>
+<li><strong>强一致性</strong></li>
+<li>不需要应用层加锁</li>
+<li>实现相对简单</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>高并发时 <strong>大量请求会更新失败</strong></li>
+<li><strong>数据库压力较大</strong></li>
+<li>吞吐量有限</li>
+</ul>
+<p><strong>适用场景：</strong></p>
+<ul>
+<li><strong>中等并发场景</strong></li>
+<li>对数据一致性要求较高</li>
+</ul>
+<h3 id="3-线程池-Redis原子计数-MQ异步落库"><a href="#3-线程池-Redis原子计数-MQ异步落库" class="headerlink" title="3. 线程池 + Redis原子计数 + MQ异步落库"></a>3. 线程池 + Redis原子计数 + MQ异步落库</h3><p><strong>实现方式：</strong></p>
+<ol>
+<li>将库存预热到 <strong>Redis</strong></li>
+<li>用户请求进入 <strong>线程池</strong> 进行并发控制</li>
+<li>使用 <strong>Redis原子计数（如 INCR ）</strong> 增加库存</li>
+<li>抢购成功后将订单消息发送到 <strong>MQ</strong></li>
+<li>消费者 <strong>异步创建订单并落库 MySQL</strong></li>
+</ol>
+<p><strong>优点：</strong></p>
+<ul>
+<li>Redis保证 <strong>高并发库存扣减性能</strong></li>
+<li>MQ实现 <strong>削峰填谷</strong></li>
+<li>大幅降低数据库压力</li>
+<li>支撑高并发秒杀</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>系统复杂度较高</li>
+<li>需要处理 <strong>消息重复、幂等、缓存一致性问题</strong></li>
+</ul>
+<p><strong>适用场景：</strong></p>
+<ul>
+<li><strong>高并发秒杀系统</strong></li>
+<li>电商大促等高流量场景</li>
+</ul>
+<hr>
+<h3 id="仅判断库存大于零能否解决CAS的ABA问题？"><a href="#仅判断库存大于零能否解决CAS的ABA问题？" class="headerlink" title="仅判断库存大于零能否解决CAS的ABA问题？"></a>仅判断库存大于零能否解决CAS的ABA问题？</h3><p><strong>不能解决。</strong></p>
+<p><strong>原因：</strong><br>CAS 的 <strong>ABA 问题</strong>指的是：一个值从 <strong>A → B → A</strong> 发生变化，但 CAS 只比较当前值是否等于 <strong>A</strong>，无法感知中间是否被修改过。</p>
+<p>如果只判断 <strong>库存是否大于 0</strong>，只能保证库存不会变成负数，但无法判断库存是否在中间被其他线程修改过，因此 <strong>仍然可能存在 ABA 问题</strong>。</p>
+<p><strong>常见解决方案：</strong></p>
+<ul>
+<li>使用 <strong>版本号（version）或时间戳</strong></li>
+<li>通过 <strong>AtomicStampedReference</strong> 等带版本的 CAS 机制</li>
+</ul>
+<hr>
+<h3 id="不用原子类仅用Integer能否解决ABA问题？"><a href="#不用原子类仅用Integer能否解决ABA问题？" class="headerlink" title="不用原子类仅用Integer能否解决ABA问题？"></a>不用原子类仅用Integer能否解决ABA问题？</h3><p><strong>不能解决。</strong></p>
+<ol>
+<li><strong>ABA问题本质</strong></li>
+</ol>
+<ul>
+<li>ABA 问题发生在 CAS（Compare-And-Swap）操作中：某个变量值从 <strong>A → B → A</strong>，CAS 比较时只看当前值是否等于 <strong>A</strong>，无法感知中间是否被其他线程修改过。</li>
+<li>如果你仅用 <code>Integer</code>（普通对象）进行比较或判断，比如 <code>if (stock &gt; 0)</code>，这只是一个 <strong>值检查</strong>，而不是原子操作。</li>
+</ul>
+<ol start="2">
+<li><strong>Integer 的局限性</strong></li>
+</ol>
+<ul>
+<li>普通 <code>Integer</code> 操作不是原子性的，多线程同时读写会出现 <strong>竞态条件</strong>。</li>
+<li>即使用 <code>Integer</code> 对象包装，也无法记录“中间是否被修改过”的版本信息。</li>
+</ul>
+<ol start="3">
+<li><strong>正确做法</strong></li>
+</ol>
+<ul>
+<li><p>解决 ABA 问题需要 <strong>带版本号的 CAS</strong> 或 <strong>原子类</strong>，例如：</p>
+<ul>
+<li><code>AtomicInteger</code> + 版本号&#x2F;时间戳</li>
+<li><code>AtomicStampedReference</code></li>
+</ul>
+</li>
+<li><p>仅靠普通 <code>Integer</code> 判断库存大于零 <strong>无法感知中间变化</strong>，ABA 问题依然存在。</p>
+</li>
+</ul>
+<hr>
+<h3 id="分布式场景下如何解决ABA问题？"><a href="#分布式场景下如何解决ABA问题？" class="headerlink" title="分布式场景下如何解决ABA问题？"></a>分布式场景下如何解决ABA问题？</h3><p>在 MySQL 分布式环境下，单机的乐观锁（基于 <code>version</code> 或 <code>stock &gt; 0</code> 的 CAS 更新）本身 <strong>无法保证全局一致性</strong>，也容易出现 ABA 问题，因为多个节点可能同时读到同一个库存值或版本号，然后都尝试更新，导致冲突无法感知。解决方法通常有以下几种：</p>
+<p>1️⃣ <strong>全局版本号或时间戳</strong></p>
+<p><strong>做法：</strong></p>
+<ul>
+<li>在库存表增加 <strong>全局唯一版本号</strong>（version 或 timestamp）字段</li>
+<li>更新时使用：</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">UPDATE</span> stock_table<br><span class="hljs-keyword">SET</span> stock <span class="hljs-operator">=</span> stock <span class="hljs-operator">-</span> <span class="hljs-number">1</span>, version <span class="hljs-operator">=</span> version <span class="hljs-operator">+</span> <span class="hljs-number">1</span><br><span class="hljs-keyword">WHERE</span> product_id <span class="hljs-operator">=</span> ? <span class="hljs-keyword">AND</span> version <span class="hljs-operator">=</span> ?<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>每次更新前读取最新版本号，确保<strong>并发节点看到的版本号不同</strong></li>
+<li>若版本号不匹配，则更新失败，需要重试</li>
+</ul>
+<p><strong>优点：</strong></p>
+<ul>
+<li>保留乐观锁思路</li>
+<li>保证节点之间不会因为 ABA 问题重复扣减</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>高并发下可能导致大量更新失败重试</li>
+<li>数据库压力增加</li>
+</ul>
+<p>2️⃣ <strong>分布式锁 + 乐观锁</strong></p>
+<p><strong>做法：</strong></p>
+<ul>
+<li>使用 <strong>Redis &#x2F; ZooKeeper &#x2F; etcd</strong> 等分布式锁，对库存修改操作加锁</li>
+<li>在锁保护下执行 <strong>乐观锁 CAS 更新</strong></li>
+</ul>
+<p><strong>优点：</strong></p>
+<ul>
+<li>分布式环境下可以保证全局唯一性</li>
+<li>ABA 问题消失</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>分布式锁管理复杂，需要考虑锁超时、节点宕机、锁续期等</li>
+</ul>
+<hr>
+<h3 id="用线程池削峰填谷的好处、坏处分别是什么？"><a href="#用线程池削峰填谷的好处、坏处分别是什么？" class="headerlink" title="用线程池削峰填谷的好处、坏处分别是什么？"></a>用线程池削峰填谷的好处、坏处分别是什么？</h3><p>用 <strong>线程池削峰填谷</strong> 是秒杀系统中常见的手段，主要是对瞬时高并发请求进行平滑处理。可以这样简要说明：</p>
+<h5 id="✅-好处"><a href="#✅-好处" class="headerlink" title="✅ 好处"></a>✅ 好处</h5><ol>
+<li><strong>削峰平滑请求</strong></li>
+</ol>
+<ul>
+<li>将瞬时高并发的请求排队到线程池中，避免直接冲击后端资源（数据库、缓存等）。</li>
+</ul>
+<ol start="2">
+<li><strong>控制并发数量</strong></li>
+</ol>
+<ul>
+<li>通过线程池大小限制同时处理的请求数，避免系统过载。</li>
+</ul>
+<ol start="3">
+<li><strong>提高系统稳定性</strong></li>
+</ol>
+<ul>
+<li>避免高并发导致应用线程过多、CPU&#x2F;内存消耗过大或崩溃。</li>
+</ul>
+<ol start="4">
+<li><strong>资源复用</strong></li>
+</ol>
+<ul>
+<li>线程池复用线程，减少线程频繁创建和销毁的开销，提高性能。</li>
+</ul>
+<h5 id="❌-坏处-局限性"><a href="#❌-坏处-局限性" class="headerlink" title="❌ 坏处 &#x2F; 局限性"></a>❌ 坏处 &#x2F; 局限性</h5><ol>
+<li><strong>不能保证全局顺序</strong></li>
+</ol>
+<ul>
+<li>多节点分布式场景下，每个节点独立线程池，无法统一全局顺序。</li>
+</ul>
+<ol start="2">
+<li><strong>不能解决库存一致性问题</strong></li>
+</ol>
+<ul>
+<li>仅控制并发数量，库存仍需要 Redis 原子操作或数据库乐观锁保障。</li>
+</ul>
+<ol start="3">
+<li><strong>线程池满时请求被拒绝或阻塞</strong></li>
+</ol>
+<ul>
+<li>如果瞬时请求过大，线程池队列满，会出现请求丢失或等待超时，需要额外限流策略。</li>
+</ul>
+<ol start="4">
+<li><strong>复杂度增加</strong></li>
+</ol>
+<ul>
+<li>需要合理设置线程池大小、队列长度、拒绝策略，否则可能成为系统瓶颈。</li>
+</ul>
+<hr>
+<h3 id="线程池队列满了会发生什么？"><a href="#线程池队列满了会发生什么？" class="headerlink" title="线程池队列满了会发生什么？"></a>线程池队列满了会发生什么？</h3><p>线程池会触发 <strong>拒绝策略</strong>。</p>
+<p>常见策略：</p>
+<ol>
+<li><p>AbortPolicy（默认）</p>
+<ul>
+<li>直接抛异常</li>
+</ul>
+</li>
+<li><p>CallerRunsPolicy</p>
+<ul>
+<li>由调用线程执行</li>
+</ul>
+</li>
+<li><p>DiscardPolicy</p>
+<ul>
+<li>丢弃任务</li>
+</ul>
+</li>
+<li><p>DiscardOldestPolicy</p>
+<ul>
+<li>丢弃最旧任务</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="服务器扩容后，单机线程池在分布式场景下会导致什么问题？"><a href="#服务器扩容后，单机线程池在分布式场景下会导致什么问题？" class="headerlink" title="服务器扩容后，单机线程池在分布式场景下会导致什么问题？"></a>服务器扩容后，单机线程池在分布式场景下会导致什么问题？</h3><p>问题是：</p>
+<p><strong>线程池隔离</strong></p>
+<p>每个实例的线程池是独立的。</p>
+<p>可能导致：</p>
+<ol>
+<li>流量不均衡</li>
+<li>某些实例线程池满</li>
+<li>某些实例空闲</li>
+</ol>
+<p>在分布式场景下，如果服务器扩容了新节点，但每台服务器仍使用单机线程池，可能会导致以下问题：</p>
+<ol>
+<li><strong>请求分布不均</strong>：单机线程池只能控制本机并发，无法感知集群整体负载，可能导致部分节点过载，而其他节点空闲。</li>
+<li><strong>削峰失效</strong>：线程池的“削峰填谷”效果仅在单机生效，整个集群仍可能出现瞬时请求高峰，无法全局平滑流量。</li>
+<li><strong>资源利用不均</strong>：新节点可能闲置，而老节点线程池满载，整体资源利用率低。</li>
+<li><strong>延迟不稳定</strong>：部分节点排队等待线程执行，可能出现响应延迟差异，影响用户体验。</li>
+</ol>
+<p>核心问题是：<strong>单机线程池只能做本地并发控制，无法协调分布式系统的整体负载。</strong></p>
+<hr>
+<h3 id="单机场景下对比三种秒杀方案优劣"><a href="#单机场景下对比三种秒杀方案优劣" class="headerlink" title="单机场景下对比三种秒杀方案优劣"></a>单机场景下对比三种秒杀方案优劣</h3><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>synchronized</td>
+<td>实现简单</td>
+<td>并发能力差</td>
+</tr>
+<tr>
+<td>数据库乐观锁</td>
+<td>数据一致性好</td>
+<td>数据库压力大</td>
+</tr>
+<tr>
+<td>Redis+MQ</td>
+<td>并发能力强</td>
+<td>系统复杂</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="秒杀场景中选择MongoDB而非MySQL的原因？"><a href="#秒杀场景中选择MongoDB而非MySQL的原因？" class="headerlink" title="秒杀场景中选择MongoDB而非MySQL的原因？"></a>秒杀场景中选择MongoDB而非MySQL的原因？</h3><p>主要原因：</p>
+<ol>
+<li><strong>写入性能高</strong></li>
+</ol>
+<p>MongoDB适合高并发写入。</p>
+<ol start="2">
+<li><strong>文档结构灵活</strong></li>
+</ol>
+<p>订单结构变化时无需修改表结构。</p>
+<ol start="3">
+<li><strong>水平扩展能力强</strong></li>
+</ol>
+<p>支持分片。</p>
+<hr>
+<h3 id="MongoDB和MySQL核心区别"><a href="#MongoDB和MySQL核心区别" class="headerlink" title="MongoDB和MySQL核心区别"></a>MongoDB和MySQL核心区别</h3><p>MySQL：</p>
+<ul>
+<li>关系型数据库</li>
+<li>强事务</li>
+<li>表结构固定</li>
+</ul>
+<p>MongoDB：</p>
+<ul>
+<li>文档数据库</li>
+<li>JSON结构</li>
+<li>灵活 schema</li>
+</ul>
+<hr>
+<h3 id="MongoDB的集群部署机制有哪些？"><a href="#MongoDB的集群部署机制有哪些？" class="headerlink" title="MongoDB的集群部署机制有哪些？"></a>MongoDB的集群部署机制有哪些？</h3><p>主要有三种：</p>
+<ol>
+<li><strong>Replica Set（副本集）</strong></li>
+</ol>
+<p>主从复制。</p>
+<ol start="2">
+<li><strong>Sharding（分片集群）</strong></li>
+</ol>
+<p>水平扩展。</p>
+<ol start="3">
+<li><strong>Standalone</strong></li>
+</ol>
+<p>单节点。</p>
+<hr>
+<h3 id="MongoDB数据分片策略有哪些？"><a href="#MongoDB数据分片策略有哪些？" class="headerlink" title="MongoDB数据分片策略有哪些？"></a>MongoDB数据分片策略有哪些？</h3><p>MongoDB主要有三种：</p>
+<ol>
+<li><strong>Range Sharding</strong></li>
+</ol>
+<p>范围分片。</p>
+<ol start="2">
+<li><strong>Hash Sharding</strong></li>
+</ol>
+<p>哈希分片。</p>
+<ol start="3">
+<li><strong>Zone Sharding</strong></li>
+</ol>
+<p>区域分片。</p>
+<p>MongoDB 的分片（Sharding）策略主要用于水平扩展，将数据分布到多个分片（Shard）上，提高读写吞吐量和存储能力。MongoDB 提供了几种主要的 <strong>分片键策略</strong>，决定了数据如何分布：</p>
+<ol>
+<li><strong>基于哈希的分片（Hashed Sharding）</strong></li>
+</ol>
+<ul>
+<li><p><strong>原理</strong>：对分片键的值进行哈希计算，然后根据哈希值把数据均匀分布到各个分片。</p>
+</li>
+<li><p><strong>优点</strong>：</p>
+<ul>
+<li>自动均衡数据，避免热点分片。</li>
+<li>写入均匀，不容易集中到某个节点。</li>
+</ul>
+</li>
+<li><p><strong>缺点</strong>：</p>
+<ul>
+<li>范围查询效率低，因为连续的值被打散。</li>
+<li>不适合需要大量范围扫描的场景。</li>
+</ul>
+</li>
+<li><p><strong>适用场景</strong>：高并发写入、均匀分布的键值。</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>基于范围的分片（Range Sharding）</strong></li>
+</ol>
+<ul>
+<li><p><strong>原理</strong>：根据分片键的范围把数据划分到不同分片，例如用户ID 0–9999 在分片A，10000–19999 在分片B。</p>
+</li>
+<li><p><strong>优点</strong>：</p>
+<ul>
+<li>范围查询高效，连续数据落在同一个分片。</li>
+<li>易于进行有序扫描。</li>
+</ul>
+</li>
+<li><p><strong>缺点</strong>：</p>
+<ul>
+<li>写入可能集中在部分分片（热点问题），导致负载不均衡。</li>
+</ul>
+</li>
+<li><p><strong>适用场景</strong>：范围查询频繁、读操作多的业务场景。</p>
+</li>
+</ul>
+<hr>
+<h3 id="如何保证MQ中的消息不丢失？"><a href="#如何保证MQ中的消息不丢失？" class="headerlink" title="如何保证MQ中的消息不丢失？"></a>如何保证MQ中的消息不丢失？</h3><p>在消息队列（MQ）中保证消息不丢失，可以从 <strong>生产端、消息中间件和消费端</strong> 三个环节控制：</p>
+<ol>
+<li><p><strong>生产端</strong></p>
+<ul>
+<li>开启 <strong>消息持久化</strong>（Persistent），确保消息写入磁盘。</li>
+<li>使用 <strong>同步发送</strong>（Sync Send）而非异步发送，保证发送成功确认。</li>
+</ul>
+</li>
+<li><p><strong>消息中间件</strong></p>
+<ul>
+<li><strong>持久化存储</strong>：将消息写入磁盘或可靠存储。</li>
+<li><strong>主从复制&#x2F;集群模式</strong>：当节点宕机时，从节点可以接管。</li>
+<li><strong>幂等机制</strong>：保证重复消息不会影响业务。</li>
+</ul>
+</li>
+<li><p><strong>消费端</strong></p>
+<ul>
+<li><strong>手动确认（ACK）</strong>：消费者处理完消息后再确认，避免处理失败导致消息丢失。</li>
+<li><strong>重试机制</strong>：消费失败时可重试或入死信队列（DLQ）。</li>
+</ul>
+</li>
+</ol>
+<p><strong>核心原则</strong>：消息在任意环节失败时，都能依赖持久化、确认和重试机制确保消息最终不丢失。</p>
+<hr>
+<h1 id="2-2-责任链模式"><a href="#2-2-责任链模式" class="headerlink" title="2.2 责任链模式"></a>2.2 责任链模式</h1><h3 id="基于责任链模式做的预处理器机制有什么好处？"><a href="#基于责任链模式做的预处理器机制有什么好处？" class="headerlink" title="基于责任链模式做的预处理器机制有什么好处？"></a>基于责任链模式做的预处理器机制有什么好处？</h3><ol>
+<li><p><strong>职责单一、解耦清晰</strong></p>
+<ul>
+<li>每个预处理器只负责自己的一类初始化任务（如数据库、缓存、状态机），彼此独立。</li>
+<li><strong>新增或修改</strong>某一环节时，不会影响其他环节，便于维护。</li>
+</ul>
+</li>
+<li><p><strong>灵活可扩展</strong></p>
+<ul>
+<li>可以动态调整责任链的顺序或增加新的预处理器，例如增加日志、限流、验证等步骤。</li>
+<li>无需修改核心流程逻辑，只需新增节点即可。</li>
+</ul>
+</li>
+<li><p><strong>统一处理流程</strong></p>
+<ul>
+<li>责任链模式统一管理各个初始化步骤，保证秒杀前所有必要资源都被正确准备，减少遗漏。</li>
+</ul>
+</li>
+<li><p><strong>增强容错与可控性</strong></p>
+<ul>
+<li>可以在某个节点失败时中断责任链，或做重试、补偿处理，提高系统稳定性。</li>
+</ul>
+</li>
+<li><p><strong>代码复用性高</strong></p>
+<ul>
+<li>各个预处理器可以在不同业务场景复用，例如秒杀、团购、预约活动都可共享同一套链式初始化逻辑。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="为什么选择责任链而非状态机模式？"><a href="#为什么选择责任链而非状态机模式？" class="headerlink" title="为什么选择责任链而非状态机模式？"></a>为什么选择责任链而非状态机模式？</h3><p>原因：</p>
+<p>责任链适合 <strong>流程型处理</strong>。</p>
+<ol>
+<li><strong>责任链模式的用途</strong></li>
+</ol>
+<ul>
+<li><p><strong>关注点</strong>：顺序执行、模块化处理、解耦初始化逻辑。</p>
+</li>
+<li><p><strong>适用场景</strong>：秒杀前的 <strong>预处理</strong>，比如：</p>
+<ul>
+<li>数据库初始化</li>
+<li>缓存加载</li>
+<li>状态机状态设置</li>
+</ul>
+</li>
+<li><p><strong>特点</strong>：每个节点只做自己的事情，按顺序执行，链条可以动态扩展或插入节点。</p>
+</li>
+<li><p><strong>核心价值</strong>：保证<strong>初始化步骤按正确顺序依次完成</strong>，且每个步骤独立、可复用、易维护。</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>状态机模式的用途</strong></li>
+</ol>
+<ul>
+<li><p><strong>关注点</strong>：状态管理 + 事件驱动，处理流程的合法性。</p>
+</li>
+<li><p><strong>适用场景</strong>：秒杀活动的 <strong>运行时流程</strong>，比如：</p>
+<ul>
+<li>秒杀开始、抢购中、秒杀结束</li>
+<li>用户下单、支付、发货等状态流转</li>
+</ul>
+</li>
+<li><p><strong>特点</strong>：用状态和事件驱动流程转换，保证流程合法性和可追踪。</p>
+</li>
+<li><p><strong>核心价值</strong>：控制<strong>整个秒杀活动的状态变化</strong>，防止非法操作或状态异常。</p>
+</li>
+</ul>
+<ol>
+<li><p><strong>预处理逻辑本质是“顺序任务执行”</strong>，而不是“状态流转”</p>
+<ul>
+<li>数据库、缓存、状态机初始化只要按顺序执行即可，不需要复杂的状态和事件控制。</li>
+</ul>
+</li>
+<li><p><strong>责任链更灵活</strong></p>
+<ul>
+<li>可以动态增加、删除或重排初始化步骤，状态机实现起来复杂且不必要。</li>
+</ul>
+</li>
+<li><p><strong>关注点分离</strong></p>
+<ul>
+<li>责任链关注<strong>初始化任务</strong></li>
+<li>状态机关注<strong>运行时流程和状态合法性</strong></li>
+<li>两者结合使用，既保证初始化正确，又保证活动执行安全。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="还了解哪些设计模式？"><a href="#还了解哪些设计模式？" class="headerlink" title="还了解哪些设计模式？"></a>还了解哪些设计模式？</h3><p>好的，我给你把你列的这几个设计模式做一个 <strong>简明扼要的总结</strong>，包括核心概念和典型应用场景（适合秒杀&#x2F;分布式系统理解）：</p>
+<h5 id="1-策略模式（Strategy）"><a href="#1-策略模式（Strategy）" class="headerlink" title="1. 策略模式（Strategy）"></a>1. <strong>策略模式（Strategy）</strong></h5><ul>
+<li><strong>核心思想</strong>：定义一系列算法（策略），将每个算法封装起来，使它们可以互相替换。</li>
+<li><strong>特点</strong>：算法独立、可动态切换、符合开闭原则。</li>
+<li><strong>应用</strong>：秒杀库存扣减策略（Redis Lua 脚本、乐观锁、CAS），根据不同活动动态选择策略。</li>
+</ul>
+<h5 id="2-责任链模式（Chain-of-Responsibility）"><a href="#2-责任链模式（Chain-of-Responsibility）" class="headerlink" title="2. 责任链模式（Chain of Responsibility）"></a>2. <strong>责任链模式（Chain of Responsibility）</strong></h5><ul>
+<li><strong>核心思想</strong>：将请求沿链传递，每个处理节点决定处理或交给下一个节点。</li>
+<li><strong>特点</strong>：解耦发送者与接收者，灵活可扩展、顺序执行。</li>
+<li><strong>应用</strong>：秒杀预处理器（数据库初始化 → 缓存加载 → 状态机设置），请求验证、订单处理链条。</li>
+</ul>
+<h5 id="3-状态机模式（State）"><a href="#3-状态机模式（State）" class="headerlink" title="3. 状态机模式（State）"></a>3. <strong>状态机模式（State）</strong></h5><ul>
+<li><strong>核心思想</strong>：允许对象在内部状态改变时改变行为，把状态封装成独立对象。</li>
+<li><strong>特点</strong>：状态清晰、流程可控、避免大量 if&#x2F;else。</li>
+<li><strong>应用</strong>：秒杀活动状态管理（未开始、进行中、已结束）、订单状态流转（待支付 → 已支付 → 已完成）。</li>
+</ul>
+<h5 id="4-单例模式（Singleton）"><a href="#4-单例模式（Singleton）" class="headerlink" title="4. 单例模式（Singleton）"></a>4. <strong>单例模式（Singleton）</strong></h5><ul>
+<li><strong>核心思想</strong>：确保类只有一个实例，并提供全局访问点。</li>
+<li><strong>特点</strong>：全局唯一、节约资源、控制访问。</li>
+<li><strong>应用</strong>：全局配置管理、Redis 客户端、MQ 连接池、日志管理。</li>
+</ul>
+<h5 id="5-代理模式（Proxy）"><a href="#5-代理模式（Proxy）" class="headerlink" title="5. 代理模式（Proxy）"></a>5. <strong>代理模式（Proxy）</strong></h5><ul>
+<li><strong>核心思想</strong>：为对象提供代理，控制访问或增强功能，而不修改原对象。</li>
+<li><strong>特点</strong>：可做权限控制、懒加载、接口增强。</li>
+<li><strong>应用</strong>：接口限流、权限校验、RPC 远程调用代理。</li>
+</ul>
+<h5 id="6-模板方法模式（Template-Method）"><a href="#6-模板方法模式（Template-Method）" class="headerlink" title="6. 模板方法模式（Template Method）"></a>6. <strong>模板方法模式（Template Method）</strong></h5><ul>
+<li><strong>核心思想</strong>：定义算法骨架，将具体步骤延迟到子类实现。</li>
+<li><strong>特点</strong>：复用算法框架、子类定制实现细节。</li>
+<li><strong>应用</strong>：秒杀流程框架（统一执行流程：校验库存 → 扣减库存 → 下单 → 通知），不同活动逻辑由子类实现。</li>
+</ul>
+<p>✅ <strong>总结表格</strong></p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>核心</th>
+<th>特点</th>
+<th>秒杀&#x2F;分布式应用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>策略模式</td>
+<td>封装可替换算法</td>
+<td>动态切换算法</td>
+<td>库存扣减策略</td>
+</tr>
+<tr>
+<td>责任链模式</td>
+<td>顺序处理请求</td>
+<td>解耦、可扩展</td>
+<td>预处理器初始化</td>
+</tr>
+<tr>
+<td>状态机模式</td>
+<td>根据状态改变行为</td>
+<td>流程可控</td>
+<td>活动&#x2F;订单状态管理</td>
+</tr>
+<tr>
+<td>单例模式</td>
+<td>全局唯一实例</td>
+<td>节约资源、全局访问</td>
+<td>配置、连接池、日志</td>
+</tr>
+<tr>
+<td>代理模式</td>
+<td>代理控制访问</td>
+<td>权限&#x2F;增强&#x2F;懒加载</td>
+<td>接口限流、RPC代理</td>
+</tr>
+<tr>
+<td>模板方法模式</td>
+<td>算法骨架 + 子类实现</td>
+<td>复用框架</td>
+<td>秒杀流程统一框架</td>
+</tr>
+</tbody></table>
+<h3 id="实现两个经典的线程安全的单例模式"><a href="#实现两个经典的线程安全的单例模式" class="headerlink" title="实现两个经典的线程安全的单例模式?"></a>实现两个经典的线程安全的单例模式?</h3><p><strong>饿汉式单例</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MySingleton</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">MySingleton</span> <span class="hljs-variable">instance</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MySingleton</span>(); <span class="hljs-comment">// 类加载时创建</span><br><br>    <span class="hljs-keyword">private</span> <span class="hljs-title function_">MySingleton</span><span class="hljs-params">()</span>&#123;&#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> MySingleton <span class="hljs-title function_">getInstance</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> instance;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>懒汉式单例</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MySingleton</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">MySingleton</span> <span class="hljs-variable">instance</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>; <span class="hljs-comment">// 懒加载</span><br><br>    <span class="hljs-keyword">private</span> <span class="hljs-title function_">MySingleton</span><span class="hljs-params">()</span>&#123;&#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> MySingleton <span class="hljs-title function_">getInstance</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">if</span>(instance == <span class="hljs-literal">null</span>)&#123;<br>          <span class="hljs-keyword">synchronized</span>(MySingleton.class)&#123;<br>                <span class="hljs-keyword">if</span>(instance == <span class="hljs-literal">null</span>)&#123;<br>                 instance = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MySingleton</span>();<br>              &#125;<br>         &#125;<br>     &#125;<br>    <span class="hljs-keyword">return</span> instance;<br>&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<hr>
+<h1 id="2-3-状态机"><a href="#2-3-状态机" class="headerlink" title="2.3 状态机"></a>2.3 状态机</h1><h3 id="为什么选择Spring-StateMachine？"><a href="#为什么选择Spring-StateMachine？" class="headerlink" title="为什么选择Spring StateMachine？"></a>为什么选择Spring StateMachine？</h3><p>原因：</p>
+<ol>
+<li><p><strong>Spring生态集成好</strong></p>
+</li>
+<li><p>支持状态与事件驱动</p>
+</li>
+<li><p><strong>支持持久化</strong></p>
+</li>
+<li><p>状态流转逻辑清晰</p>
+</li>
+<li><p><strong>与 Spring 框架无缝集成</strong></p>
+</li>
+</ol>
+<ul>
+<li><strong>依赖注入</strong>：可以直接注入 Bean 到状态机的动作（Action）中，方便访问服务、DAO、缓存等。</li>
+<li><strong>配置统一</strong>：可使用 <code>@Configuration</code> + Java DSL 或 XML 配置状态机，和 Spring 其它组件风格一致。</li>
+<li><strong>事务支持</strong>：Action 执行可以参与 Spring 事务管理，保证状态变更与业务操作一致。</li>
+</ul>
+<ol start="2">
+<li><strong>支持持久化</strong><br><strong>基于 Redis 持久化</strong><br>将状态机上下文序列化存入 Redis</li>
+</ol>
+<p>目标：状态机的当前状态、上下文变量等信息可以存储到外部存储中（数据库、Redis等）。</p>
+<p>作用：系统宕机或重启后，可以恢复状态机到上次的状态，避免流程丢失或错误。</p>
+<h3 id="秒杀系统中状态机的状态有哪些？"><a href="#秒杀系统中状态机的状态有哪些？" class="headerlink" title="秒杀系统中状态机的状态有哪些？"></a>秒杀系统中状态机的状态有哪些？</h3><p>常见状态：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs">活动开始创建<br>活动进行中<br>活动结算中<br>活动结束<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="依靠什么事件流转？"><a href="#依靠什么事件流转？" class="headerlink" title="依靠什么事件流转？"></a>依靠什么事件流转？</h3><p>事件驱动：</p>
+<p>例如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs">开始活动<br>计算<br>结束<br></code></pre></td></tr></table></figure>
+
+<p>事件触发后状态发生转换。</p>
+<hr>
+<h3 id="为什么采用状态机模式？"><a href="#为什么采用状态机模式？" class="headerlink" title="为什么采用状态机模式？"></a>为什么采用状态机模式？</h3><p>传统写法：</p>
+<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">if</span>(<span class="hljs-variable">status</span> == <span class="hljs-number">1</span>)</span><br><span class="hljs-variable"><span class="hljs-keyword">else</span></span> <span class="hljs-function"><span class="hljs-title">if</span>(<span class="hljs-variable">status</span> == <span class="hljs-number">2</span>)</span><br></code></pre></td></tr></table></figure>
+
+<p>问题：</p>
+<ul>
+<li>状态逻辑混乱</li>
+<li>可维护性差</li>
+</ul>
+<p>状态机好处：</p>
+<ol>
+<li>状态清晰</li>
+<li>状态转换明确</li>
+<li>扩展方便</li>
+</ol>
+<p>采用 <strong>状态机模式（State Pattern）</strong> 的核心原因是 <strong>将复杂流程和状态管理明确化、可控化，并解耦业务逻辑</strong>，尤其适合秒杀、订单或活动管理这类有明确状态和状态流转的业务场景。具体原因如下：</p>
+<h3 id="1️⃣-明确状态和事件"><a href="#1️⃣-明确状态和事件" class="headerlink" title="1️⃣ 明确状态和事件"></a>1️⃣ <strong>明确状态和事件</strong></h3><ul>
+<li><p>秒杀系统或订单系统通常有多种状态：</p>
+<ul>
+<li>秒杀活动：<code>未开始 → 进行中 → 已结束</code></li>
+<li>订单：<code>待支付 → 已支付 → 已完成/已取消</code></li>
+</ul>
+</li>
+<li><p>状态机模式把 <strong>状态和事件分离出来</strong>，每个状态只关心自己允许的事件和转换规则，避免用大量 if&#x2F;else 判断。</p>
+</li>
+</ul>
+<h3 id="2️⃣-状态和行为绑定"><a href="#2️⃣-状态和行为绑定" class="headerlink" title="2️⃣ 状态和行为绑定"></a>2️⃣ <strong>状态和行为绑定</strong></h3><ul>
+<li><p>每个状态可以绑定进入&#x2F;离开动作（Action），事件触发动作（Action），保证业务逻辑和状态切换一致：</p>
+<ul>
+<li>例如：活动进入“进行中”状态 → 初始化库存、通知前端</li>
+<li>用户下单 → 库存扣减、生成订单</li>
+</ul>
+</li>
+</ul>
+<h3 id="3️⃣-避免状态错误"><a href="#3️⃣-避免状态错误" class="headerlink" title="3️⃣ 避免状态错误"></a>3️⃣ <strong>避免状态错误</strong></h3><ul>
+<li><p>状态机模式强制定义状态转换图（State + Event）：</p>
+<ul>
+<li>防止非法操作或非法状态切换</li>
+<li>易于在高并发下保证流程正确性</li>
+</ul>
+</li>
+</ul>
+<h3 id="5️⃣-可维护性和扩展性高"><a href="#5️⃣-可维护性和扩展性高" class="headerlink" title="5️⃣ 可维护性和扩展性高"></a>5️⃣ <strong>可维护性和扩展性高</strong></h3><ul>
+<li>新增状态或事件只需修改状态机配置或新增状态类</li>
+<li>不需要修改核心业务逻辑，符合 <strong>开闭原则</strong></li>
+</ul>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<h1 id="1-AI医疗服务平台-1"><a href="#1-AI医疗服务平台-1" class="headerlink" title="1. AI医疗服务平台"></a>1. AI医疗服务平台</h1><h2 id="1-0-整体-1"><a href="#1-0-整体-1" class="headerlink" title="1.0 整体"></a>1.0 整体</h2><h4 id="说说RAG、MCP的技术流程和技术交互栈分别是怎样的？-1"><a href="#说说RAG、MCP的技术流程和技术交互栈分别是怎样的？-1" class="headerlink" title="说说RAG、MCP的技术流程和技术交互栈分别是怎样的？"></a>说说RAG、MCP的技术流程和技术交互栈分别是怎样的？</h4><h4 id="什么是向量化？-1"><a href="#什么是向量化？-1" class="headerlink" title="什么是向量化？"></a>什么是向量化？</h4><h4 id="做向量化匹配时的主要标准是什么？-1"><a href="#做向量化匹配时的主要标准是什么？-1" class="headerlink" title="做向量化匹配时的主要标准是什么？"></a>做向量化匹配时的主要标准是什么？</h4><h4 id="MCP协议的本质构成是什么？-1"><a href="#MCP协议的本质构成是什么？-1" class="headerlink" title="MCP协议的本质构成是什么？"></a>MCP协议的本质构成是什么？</h4><h4 id="尝试过在本地部署AI服务吗？-1"><a href="#尝试过在本地部署AI服务吗？-1" class="headerlink" title="尝试过在本地部署AI服务吗？"></a>尝试过在本地部署AI服务吗？</h4><h4 id="部署本地大模型服务时需要注意哪些问题？-1"><a href="#部署本地大模型服务时需要注意哪些问题？-1" class="headerlink" title="部署本地大模型服务时需要注意哪些问题？"></a>部署本地大模型服务时需要注意哪些问题？</h4><h4 id="该医疗系统能承受的QPS是多少，如何测试？-1"><a href="#该医疗系统能承受的QPS是多少，如何测试？-1" class="headerlink" title="该医疗系统能承受的QPS是多少，如何测试？"></a>该医疗系统能承受的QPS是多少，如何测试？</h4><h4 id="你认为当前这个医疗平台存在哪些优化点、做得不好的地方？-1"><a href="#你认为当前这个医疗平台存在哪些优化点、做得不好的地方？-1" class="headerlink" title="你认为当前这个医疗平台存在哪些优化点、做得不好的地方？"></a>你认为当前这个医疗平台存在哪些优化点、做得不好的地方？</h4><h4 id="什么是大模型幻觉问题，你的项目中是如何尝试解决的？-1"><a href="#什么是大模型幻觉问题，你的项目中是如何尝试解决的？-1" class="headerlink" title="什么是大模型幻觉问题，你的项目中是如何尝试解决的？"></a>什么是大模型幻觉问题，你的项目中是如何尝试解决的？</h4><h4 id="该医疗平台在医疗问诊场景下对用户的核心价值是什么？-1"><a href="#该医疗平台在医疗问诊场景下对用户的核心价值是什么？-1" class="headerlink" title="该医疗平台在医疗问诊场景下对用户的核心价值是什么？"></a>该医疗平台在医疗问诊场景下对用户的核心价值是什么？</h4><h2 id="1-1-大模型对话-Prompt工程-对话上下文记忆-MongoDB"><a href="#1-1-大模型对话-Prompt工程-对话上下文记忆-MongoDB" class="headerlink" title="1.1  大模型对话&#x2F;Prompt工程&#x2F;对话上下文记忆&#x2F;MongoDB"></a>1.1  大模型对话&#x2F;Prompt工程&#x2F;对话上下文记忆&#x2F;MongoDB</h2><h4 id="如何对大模型的回答和行为进行约束？-1"><a href="#如何对大模型的回答和行为进行约束？-1" class="headerlink" title="如何对大模型的回答和行为进行约束？"></a>如何对大模型的回答和行为进行约束？</h4><h4 id="使用提示词（Prompt）时需要注意哪些要点？-1"><a href="#使用提示词（Prompt）时需要注意哪些要点？-1" class="headerlink" title="使用提示词（Prompt）时需要注意哪些要点？"></a>使用提示词（Prompt）时需要注意哪些要点？</h4><h4 id="若大模型给出错误医疗建议，如何从系统层面发现-拦截？-1"><a href="#若大模型给出错误医疗建议，如何从系统层面发现-拦截？-1" class="headerlink" title="若大模型给出错误医疗建议，如何从系统层面发现&#x2F;拦截？"></a>若大模型给出错误医疗建议，如何从系统层面发现&#x2F;拦截？</h4><h4 id="如何解决大模型对话的上下文超限（无法回话）问题？"><a href="#如何解决大模型对话的上下文超限（无法回话）问题？" class="headerlink" title="如何解决大模型对话的上下文超限（无法回话）问题？"></a>如何解决大模型对话的上下文超限（无法回话）问题？</h4><h4 id="MongoDB和MySQL的核心区别是什么？-1"><a href="#MongoDB和MySQL的核心区别是什么？-1" class="headerlink" title="MongoDB和MySQL的核心区别是什么？"></a>MongoDB和MySQL的核心区别是什么？</h4><h4 id="自定义Memory组件的作用是什么，为何选用MongoDB存储对话上下文而非MySQL？"><a href="#自定义Memory组件的作用是什么，为何选用MongoDB存储对话上下文而非MySQL？" class="headerlink" title="自定义Memory组件的作用是什么，为何选用MongoDB存储对话上下文而非MySQL？"></a>自定义Memory组件的作用是什么，为何选用MongoDB存储对话上下文而非MySQL？</h4><h4 id="医疗问诊场景下的提示词工程体系是如何构建的？"><a href="#医疗问诊场景下的提示词工程体系是如何构建的？" class="headerlink" title="医疗问诊场景下的提示词工程体系是如何构建的？"></a>医疗问诊场景下的提示词工程体系是如何构建的？</h4><h4 id="除了角色定义、结构化输出约束，提示词工程还有哪些优化方法？"><a href="#除了角色定义、结构化输出约束，提示词工程还有哪些优化方法？" class="headerlink" title="除了角色定义、结构化输出约束，提示词工程还有哪些优化方法？"></a>除了角色定义、结构化输出约束，提示词工程还有哪些优化方法？</h4><h2 id="1-2-RAG-1"><a href="#1-2-RAG-1" class="headerlink" title="1.2 RAG"></a>1.2 RAG</h2><h4 id="RAG检索增强的好处是什么？没有RAG直接调用大模型会存在什么问题？"><a href="#RAG检索增强的好处是什么？没有RAG直接调用大模型会存在什么问题？" class="headerlink" title="RAG检索增强的好处是什么？没有RAG直接调用大模型会存在什么问题？"></a>RAG检索增强的好处是什么？没有RAG直接调用大模型会存在什么问题？</h4><h4 id="除了RAG，还有哪些方式能为大模型提供领域上下文？-1"><a href="#除了RAG，还有哪些方式能为大模型提供领域上下文？-1" class="headerlink" title="除了RAG，还有哪些方式能为大模型提供领域上下文？"></a>除了RAG，还有哪些方式能为大模型提供领域上下文？</h4><h4 id="微调有哪些技术手段？-1"><a href="#微调有哪些技术手段？-1" class="headerlink" title="微调有哪些技术手段？"></a>微调有哪些技术手段？</h4><h4 id="详细介绍AI医疗微服务平台的核心功能，重点讲RAG的落地实现？"><a href="#详细介绍AI医疗微服务平台的核心功能，重点讲RAG的落地实现？" class="headerlink" title="详细介绍AI医疗微服务平台的核心功能，重点讲RAG的落地实现？"></a>详细介绍AI医疗微服务平台的核心功能，重点讲RAG的落地实现？</h4><h4 id="RAG知识库的数据源来自哪里？"><a href="#RAG知识库的数据源来自哪里？" class="headerlink" title="RAG知识库的数据源来自哪里？"></a>RAG知识库的数据源来自哪里？</h4><h4 id="各类医疗文档（PDF-Word-TXT）如何转化为RAG的知识库，核心步骤是什么？"><a href="#各类医疗文档（PDF-Word-TXT）如何转化为RAG的知识库，核心步骤是什么？" class="headerlink" title="各类医疗文档（PDF&#x2F;Word&#x2F;TXT）如何转化为RAG的知识库，核心步骤是什么？"></a>各类医疗文档（PDF&#x2F;Word&#x2F;TXT）如何转化为RAG的知识库，核心步骤是什么？</h4><h2 id="1-3-多模态-OSS-文件上传"><a href="#1-3-多模态-OSS-文件上传" class="headerlink" title="1.3 多模态&#x2F;OSS&#x2F;文件上传"></a>1.3 多模态&#x2F;OSS&#x2F;文件上传</h2><h4 id="图片上传时若出现图片过大、超时问题，该如何解决？-1"><a href="#图片上传时若出现图片过大、超时问题，该如何解决？-1" class="headerlink" title="图片上传时若出现图片过大、超时问题，该如何解决？"></a>图片上传时若出现图片过大、超时问题，该如何解决？</h4><h4 id="设计C端多张大图同时上传的方案，该如何设计？"><a href="#设计C端多张大图同时上传的方案，该如何设计？" class="headerlink" title="设计C端多张大图同时上传的方案，该如何设计？"></a>设计C端多张大图同时上传的方案，该如何设计？</h4><h4 id="项目中图像识别功能的识别对象、核心目的是什么？"><a href="#项目中图像识别功能的识别对象、核心目的是什么？" class="headerlink" title="项目中图像识别功能的识别对象、核心目的是什么？"></a>项目中图像识别功能的识别对象、核心目的是什么？</h4><h2 id="1-4-Nacos-微服务-网关-Sa-token"><a href="#1-4-Nacos-微服务-网关-Sa-token" class="headerlink" title="1.4 Nacos&#x2F;微服务&#x2F;网关&#x2F;Sa-token"></a>1.4 Nacos&#x2F;微服务&#x2F;网关&#x2F;Sa-token</h2><h4 id="Nacos作为注册中心的作用是什么？为什么需要注册中心？"><a href="#Nacos作为注册中心的作用是什么？为什么需要注册中心？" class="headerlink" title="Nacos作为注册中心的作用是什么？为什么需要注册中心？"></a>Nacos作为注册中心的作用是什么？为什么需要注册中心？</h4><h4 id="服务调用时是否需要实时从Nacos拉取服务信息？有什么机制减少对Nacos的请求？"><a href="#服务调用时是否需要实时从Nacos拉取服务信息？有什么机制减少对Nacos的请求？" class="headerlink" title="服务调用时是否需要实时从Nacos拉取服务信息？有什么机制减少对Nacos的请求？"></a>服务调用时是否需要实时从Nacos拉取服务信息？有什么机制减少对Nacos的请求？</h4><h4 id="注册中心存在什么坏处？如果注册中心挂了，所有服务会不可用吗？"><a href="#注册中心存在什么坏处？如果注册中心挂了，所有服务会不可用吗？" class="headerlink" title="注册中心存在什么坏处？如果注册中心挂了，所有服务会不可用吗？"></a>注册中心存在什么坏处？如果注册中心挂了，所有服务会不可用吗？</h4><h4 id="注册中心的注册表该如何设计？用什么存储类型-数据结构实现？"><a href="#注册中心的注册表该如何设计？用什么存储类型-数据结构实现？" class="headerlink" title="注册中心的注册表该如何设计？用什么存储类型&#x2F;数据结构实现？"></a>注册中心的注册表该如何设计？用什么存储类型&#x2F;数据结构实现？</h4><h4 id="Redis挂了该如何处理？能否用Caffeine做本地注册表？"><a href="#Redis挂了该如何处理？能否用Caffeine做本地注册表？" class="headerlink" title="Redis挂了该如何处理？能否用Caffeine做本地注册表？"></a>Redis挂了该如何处理？能否用Caffeine做本地注册表？</h4><h4 id="Caffeine作为本地注册表的好处、坏处分别是什么？"><a href="#Caffeine作为本地注册表的好处、坏处分别是什么？" class="headerlink" title="Caffeine作为本地注册表的好处、坏处分别是什么？"></a>Caffeine作为本地注册表的好处、坏处分别是什么？</h4><h4 id="注册中心和本地注册表之间的更新机制是什么？"><a href="#注册中心和本地注册表之间的更新机制是什么？" class="headerlink" title="注册中心和本地注册表之间的更新机制是什么？"></a>注册中心和本地注册表之间的更新机制是什么？</h4><h2 id="1-5-OpenFeign-Sentinel-1"><a href="#1-5-OpenFeign-Sentinel-1" class="headerlink" title="1.5 OpenFeign&#x2F;Sentinel"></a>1.5 OpenFeign&#x2F;Sentinel</h2><h2 id="1-6-ES"><a href="#1-6-ES" class="headerlink" title="1.6 ES"></a>1.6 ES</h2><h4 id="项目中是如何构建一个ES搜索服务的？"><a href="#项目中是如何构建一个ES搜索服务的？" class="headerlink" title="项目中是如何构建一个ES搜索服务的？"></a>项目中是如何构建一个ES搜索服务的？</h4><h4 id="数据量特别大时，分页查询该如何优化（深度分页问题）？"><a href="#数据量特别大时，分页查询该如何优化（深度分页问题）？" class="headerlink" title="数据量特别大时，分页查询该如何优化（深度分页问题）？"></a>数据量特别大时，分页查询该如何优化（深度分页问题）？</h4><h2 id="1-7-Canal-1"><a href="#1-7-Canal-1" class="headerlink" title="1.7 Canal"></a>1.7 Canal</h2><h4 id="MySQL中binlog的作用是什么？有几种模式，分别是什么？"><a href="#MySQL中binlog的作用是什么？有几种模式，分别是什么？" class="headerlink" title="MySQL中binlog的作用是什么？有几种模式，分别是什么？"></a>MySQL中binlog的作用是什么？有几种模式，分别是什么？</h4><h2 id="1-8-二级缓存-1"><a href="#1-8-二级缓存-1" class="headerlink" title="1.8 二级缓存"></a>1.8 二级缓存</h2><h4 id="二级缓存（Caffeine-Redis）中，如何解决Redis更新后多节点Caffeine数据不一致的问题？"><a href="#二级缓存（Caffeine-Redis）中，如何解决Redis更新后多节点Caffeine数据不一致的问题？" class="headerlink" title="二级缓存（Caffeine+Redis）中，如何解决Redis更新后多节点Caffeine数据不一致的问题？"></a>二级缓存（Caffeine+Redis）中，如何解决Redis更新后多节点Caffeine数据不一致的问题？</h4><h1 id="2-智能高并发秒杀系统-1"><a href="#2-智能高并发秒杀系统-1" class="headerlink" title="2. 智能高并发秒杀系统"></a>2. 智能高并发秒杀系统</h1><h2 id="2-0-整体-1"><a href="#2-0-整体-1" class="headerlink" title="2.0 整体"></a>2.0 整体</h2><h4 id="高并发秒杀系统的整体设计流程是什么？-1"><a href="#高并发秒杀系统的整体设计流程是什么？-1" class="headerlink" title="高并发秒杀系统的整体设计流程是什么？"></a>高并发秒杀系统的整体设计流程是什么？</h4><h2 id="2-1-高并发秒杀策略-1"><a href="#2-1-高并发秒杀策略-1" class="headerlink" title="2.1 高并发秒杀策略"></a>2.1 高并发秒杀策略</h2><h4 id="展开讲秒杀系统中多种高并发策略的实现、区别、优缺点，以及不同场景的选型依据；"><a href="#展开讲秒杀系统中多种高并发策略的实现、区别、优缺点，以及不同场景的选型依据；" class="headerlink" title="展开讲秒杀系统中多种高并发策略的实现、区别、优缺点，以及不同场景的选型依据；"></a>展开讲秒杀系统中多种高并发策略的实现、区别、优缺点，以及不同场景的选型依据；</h4><h4 id="仅判断库存大于零能否解决CAS的ABA问题？不用原子类仅用Integer能否解决ABA问题？分布式场景下如何解决ABA问题？"><a href="#仅判断库存大于零能否解决CAS的ABA问题？不用原子类仅用Integer能否解决ABA问题？分布式场景下如何解决ABA问题？" class="headerlink" title="仅判断库存大于零能否解决CAS的ABA问题？不用原子类仅用Integer能否解决ABA问题？分布式场景下如何解决ABA问题？"></a>仅判断库存大于零能否解决CAS的ABA问题？不用原子类仅用Integer能否解决ABA问题？分布式场景下如何解决ABA问题？</h4><h4 id="用线程池削峰填谷的好处、坏处分别是什么？线程池队列满了会发生什么？"><a href="#用线程池削峰填谷的好处、坏处分别是什么？线程池队列满了会发生什么？" class="headerlink" title="用线程池削峰填谷的好处、坏处分别是什么？线程池队列满了会发生什么？"></a>用线程池削峰填谷的好处、坏处分别是什么？线程池队列满了会发生什么？</h4><h4 id="服务器扩容后，单机线程池在分布式场景下会导致什么问题？-1"><a href="#服务器扩容后，单机线程池在分布式场景下会导致什么问题？-1" class="headerlink" title="服务器扩容后，单机线程池在分布式场景下会导致什么问题？"></a>服务器扩容后，单机线程池在分布式场景下会导致什么问题？</h4><h4 id="单机场景下对比synchronized锁、数据库乐观锁、Redis-MQ异步落库三种秒杀方案的优劣；"><a href="#单机场景下对比synchronized锁、数据库乐观锁、Redis-MQ异步落库三种秒杀方案的优劣；" class="headerlink" title="单机场景下对比synchronized锁、数据库乐观锁、Redis+MQ异步落库三种秒杀方案的优劣；"></a>单机场景下对比synchronized锁、数据库乐观锁、Redis+MQ异步落库三种秒杀方案的优劣；</h4><h4 id="秒杀场景中选择MongoDB而非MySQL的原因？二者核心区别是什么？"><a href="#秒杀场景中选择MongoDB而非MySQL的原因？二者核心区别是什么？" class="headerlink" title="秒杀场景中选择MongoDB而非MySQL的原因？二者核心区别是什么？"></a>秒杀场景中选择MongoDB而非MySQL的原因？二者核心区别是什么？</h4><h4 id="MongoDB的集群部署机制有哪些？数据分片的策略有哪些，该策略的专业名称是什么？"><a href="#MongoDB的集群部署机制有哪些？数据分片的策略有哪些，该策略的专业名称是什么？" class="headerlink" title="MongoDB的集群部署机制有哪些？数据分片的策略有哪些，该策略的专业名称是什么？"></a>MongoDB的集群部署机制有哪些？数据分片的策略有哪些，该策略的专业名称是什么？</h4><h4 id="如何保证MQ中的消息不丢失？-1"><a href="#如何保证MQ中的消息不丢失？-1" class="headerlink" title="如何保证MQ中的消息不丢失？"></a>如何保证MQ中的消息不丢失？</h4><h2 id="2-2-责任链模式-1"><a href="#2-2-责任链模式-1" class="headerlink" title="2.2 责任链模式"></a>2.2 责任链模式</h2><h4 id="基于责任链模式做的预处理器机制有什么好处？没有该模式会有什么问题？"><a href="#基于责任链模式做的预处理器机制有什么好处？没有该模式会有什么问题？" class="headerlink" title="基于责任链模式做的预处理器机制有什么好处？没有该模式会有什么问题？"></a>基于责任链模式做的预处理器机制有什么好处？没有该模式会有什么问题？</h4><h4 id="除了责任链模式，还有哪些更好的设计模式解决if-else嵌套问题？为什么选择责任链而非状态机模式？"><a href="#除了责任链模式，还有哪些更好的设计模式解决if-else嵌套问题？为什么选择责任链而非状态机模式？" class="headerlink" title="除了责任链模式，还有哪些更好的设计模式解决if-else嵌套问题？为什么选择责任链而非状态机模式？"></a>除了责任链模式，还有哪些更好的设计模式解决if-else嵌套问题？为什么选择责任链而非状态机模式？</h4><h4 id="除了责任链、状态机模式，还了解哪些设计模式？"><a href="#除了责任链、状态机模式，还了解哪些设计模式？" class="headerlink" title="除了责任链、状态机模式，还了解哪些设计模式？"></a>除了责任链、状态机模式，还了解哪些设计模式？</h4><h2 id="2-3-状态机-1"><a href="#2-3-状态机-1" class="headerlink" title="2.3 状态机"></a>2.3 状态机</h2><h4 id="选择Spring-StateMachine做状态机管理的原因？调研过其他状态机框架吗？该框架的优势是什么？"><a href="#选择Spring-StateMachine做状态机管理的原因？调研过其他状态机框架吗？该框架的优势是什么？" class="headerlink" title="选择Spring StateMachine做状态机管理的原因？调研过其他状态机框架吗？该框架的优势是什么？"></a>选择Spring StateMachine做状态机管理的原因？调研过其他状态机框架吗？该框架的优势是什么？</h4><h4 id="秒杀系统中状态机的具体状态有哪些，依靠什么事件流转？"><a href="#秒杀系统中状态机的具体状态有哪些，依靠什么事件流转？" class="headerlink" title="秒杀系统中状态机的具体状态有哪些，依靠什么事件流转？"></a>秒杀系统中状态机的具体状态有哪些，依靠什么事件流转？</h4><h4 id="为什么采用状态机模式处理秒杀业务，与传统写法相比的好处是什么？"><a href="#为什么采用状态机模式处理秒杀业务，与传统写法相比的好处是什么？" class="headerlink" title="为什么采用状态机模式处理秒杀业务，与传统写法相比的好处是什么？"></a>为什么采用状态机模式处理秒杀业务，与传统写法相比的好处是什么？</h4><h2 id="2-4-AI对话"><a href="#2-4-AI对话" class="headerlink" title="2.4 AI对话"></a>2.4 AI对话</h2><h1 id="3-八股"><a href="#3-八股" class="headerlink" title="3. 八股"></a>3. 八股</h1><h2 id="3-1-JAVA基础"><a href="#3-1-JAVA基础" class="headerlink" title="3.1 JAVA基础"></a>3.1 JAVA基础</h2><h4 id="讲一下Java对象的生命周期？"><a href="#讲一下Java对象的生命周期？" class="headerlink" title="讲一下Java对象的生命周期？"></a>讲一下Java对象的生命周期？</h4><h4 id="用过HashMap吗？讲一下HashMap中哈希的原理？"><a href="#用过HashMap吗？讲一下HashMap中哈希的原理？" class="headerlink" title="用过HashMap吗？讲一下HashMap中哈希的原理？"></a>用过HashMap吗？讲一下HashMap中哈希的原理？</h4><h4 id="equals和-的区别是什么？"><a href="#equals和-的区别是什么？" class="headerlink" title="equals和&#x3D;&#x3D;的区别是什么？"></a>equals和&#x3D;&#x3D;的区别是什么？</h4><h4 id="哈希冲突的解决办法有哪些？HashMap是如何解决哈希冲突的？"><a href="#哈希冲突的解决办法有哪些？HashMap是如何解决哈希冲突的？" class="headerlink" title="哈希冲突的解决办法有哪些？HashMap是如何解决哈希冲突的？"></a>哈希冲突的解决办法有哪些？HashMap是如何解决哈希冲突的？</h4><h4 id="HashMap的初始容量、负载因子分别是什么？为什么初始容量是2的幂次方？为什么负载因子是0-75？"><a href="#HashMap的初始容量、负载因子分别是什么？为什么初始容量是2的幂次方？为什么负载因子是0-75？" class="headerlink" title="HashMap的初始容量、负载因子分别是什么？为什么初始容量是2的幂次方？为什么负载因子是0.75？"></a>HashMap的初始容量、负载因子分别是什么？为什么初始容量是2的幂次方？为什么负载因子是0.75？</h4><h4 id="HashMap是线程安全的吗？"><a href="#HashMap是线程安全的吗？" class="headerlink" title="HashMap是线程安全的吗？"></a>HashMap是线程安全的吗？</h4><h4 id="Hashtable相较于ConcurrentHashMap解决线程安全问题有什么不好的地方？"><a href="#Hashtable相较于ConcurrentHashMap解决线程安全问题有什么不好的地方？" class="headerlink" title="Hashtable相较于ConcurrentHashMap解决线程安全问题有什么不好的地方？"></a>Hashtable相较于ConcurrentHashMap解决线程安全问题有什么不好的地方？</h4><h2 id="3-2-JUC"><a href="#3-2-JUC" class="headerlink" title="3.2 JUC"></a>3.2 JUC</h2><h4 id="线程池的参数有哪些，你都是怎么设置的？"><a href="#线程池的参数有哪些，你都是怎么设置的？" class="headerlink" title="线程池的参数有哪些，你都是怎么设置的？"></a>线程池的参数有哪些，你都是怎么设置的？</h4><h4 id="讲一下你对synchronized的了解？"><a href="#讲一下你对synchronized的了解？" class="headerlink" title="讲一下你对synchronized的了解？"></a>讲一下你对synchronized的了解？</h4><h4 id="你理解的线程安全是什么？线程安全的三要素是什么？"><a href="#你理解的线程安全是什么？线程安全的三要素是什么？" class="headerlink" title="你理解的线程安全是什么？线程安全的三要素是什么？"></a>你理解的线程安全是什么？线程安全的三要素是什么？</h4><h4 id="synchronized保证了线程安全的哪些特性？它是怎么保证可见性的？"><a href="#synchronized保证了线程安全的哪些特性？它是怎么保证可见性的？" class="headerlink" title="synchronized保证了线程安全的哪些特性？它是怎么保证可见性的？"></a>synchronized保证了线程安全的哪些特性？它是怎么保证可见性的？</h4><h4 id="synchronized可以修饰什么东西？修饰静态方法时锁的是什么？修饰非静态方法时锁的是什么？"><a href="#synchronized可以修饰什么东西？修饰静态方法时锁的是什么？修饰非静态方法时锁的是什么？" class="headerlink" title="synchronized可以修饰什么东西？修饰静态方法时锁的是什么？修饰非静态方法时锁的是什么？"></a>synchronized可以修饰什么东西？修饰静态方法时锁的是什么？修饰非静态方法时锁的是什么？</h4><h4 id="synchronized有哪些特点（可重入、公平性等）？"><a href="#synchronized有哪些特点（可重入、公平性等）？" class="headerlink" title="synchronized有哪些特点（可重入、公平性等）？"></a>synchronized有哪些特点（可重入、公平性等）？</h4><h4 id="synchronized的锁膨胀优化过程是什么？"><a href="#synchronized的锁膨胀优化过程是什么？" class="headerlink" title="synchronized的锁膨胀优化过程是什么？"></a>synchronized的锁膨胀优化过程是什么？</h4><h4 id="什么是CAS操作？"><a href="#什么是CAS操作？" class="headerlink" title="什么是CAS操作？"></a>什么是CAS操作？</h4><h4 id="synchronized锁和Redis分布式锁的区别及各自原理？"><a href="#synchronized锁和Redis分布式锁的区别及各自原理？" class="headerlink" title="synchronized锁和Redis分布式锁的区别及各自原理？"></a>synchronized锁和Redis分布式锁的区别及各自原理？</h4><h4 id="使用线程池的注意事项有哪些，核心参数该如何设置？"><a href="#使用线程池的注意事项有哪些，核心参数该如何设置？" class="headerlink" title="使用线程池的注意事项有哪些，核心参数该如何设置？"></a>使用线程池的注意事项有哪些，核心参数该如何设置？</h4><h4 id="Java为何会出现并发问题，需要用锁来处理？"><a href="#Java为何会出现并发问题，需要用锁来处理？" class="headerlink" title="Java为何会出现并发问题，需要用锁来处理？"></a>Java为何会出现并发问题，需要用锁来处理？</h4><h4 id="若在Controller中定义int字段，每次请求对其-1会出现什么问题？"><a href="#若在Controller中定义int字段，每次请求对其-1会出现什么问题？" class="headerlink" title="若在Controller中定义int字段，每次请求对其+1会出现什么问题？"></a>若在Controller中定义int字段，每次请求对其+1会出现什么问题？</h4><h2 id="3-3-JVM"><a href="#3-3-JVM" class="headerlink" title="3.3 JVM"></a>3.3 JVM</h2><h4 id="介绍一下JVM内存结构？"><a href="#介绍一下JVM内存结构？" class="headerlink" title="介绍一下JVM内存结构？"></a>介绍一下JVM内存结构？</h4><h4 id="谈一下你对垃圾回收的理解？"><a href="#谈一下你对垃圾回收的理解？" class="headerlink" title="谈一下你对垃圾回收的理解？"></a>谈一下你对垃圾回收的理解？</h4><h4 id="垃圾的定义有两种方法，除了可达性分析还有一种是什么？分别详细讲解这两个方法。"><a href="#垃圾的定义有两种方法，除了可达性分析还有一种是什么？分别详细讲解这两个方法。" class="headerlink" title="垃圾的定义有两种方法，除了可达性分析还有一种是什么？分别详细讲解这两个方法。"></a>垃圾的定义有两种方法，除了可达性分析还有一种是什么？分别详细讲解这两个方法。</h4><h4 id="垃圾回收算法的种类（新生代、老年代相关GC）有哪些，分别讲讲？"><a href="#垃圾回收算法的种类（新生代、老年代相关GC）有哪些，分别讲讲？" class="headerlink" title="垃圾回收算法的种类（新生代、老年代相关GC）有哪些，分别讲讲？"></a>垃圾回收算法的种类（新生代、老年代相关GC）有哪些，分别讲讲？</h4><h4 id="详细说说标记清除、标记整理、复制这三种垃圾回收算法？"><a href="#详细说说标记清除、标记整理、复制这三种垃圾回收算法？" class="headerlink" title="详细说说标记清除、标记整理、复制这三种垃圾回收算法？"></a>详细说说标记清除、标记整理、复制这三种垃圾回收算法？</h4><h4 id="Minor-GC、Full-GC一般分别用哪种垃圾回收算法，结合存活对象-垃圾对象的数量分析？"><a href="#Minor-GC、Full-GC一般分别用哪种垃圾回收算法，结合存活对象-垃圾对象的数量分析？" class="headerlink" title="Minor GC、Full GC一般分别用哪种垃圾回收算法，结合存活对象&#x2F;垃圾对象的数量分析？"></a>Minor GC、Full GC一般分别用哪种垃圾回收算法，结合存活对象&#x2F;垃圾对象的数量分析？</h4><h4 id="对于Java的内存优化有什么理解和想法？有没有用过内存友好的数据结构？如何避免内存泄漏的经验？"><a href="#对于Java的内存优化有什么理解和想法？有没有用过内存友好的数据结构？如何避免内存泄漏的经验？" class="headerlink" title="对于Java的内存优化有什么理解和想法？有没有用过内存友好的数据结构？如何避免内存泄漏的经验？"></a>对于Java的内存优化有什么理解和想法？有没有用过内存友好的数据结构？如何避免内存泄漏的经验？</h4><h4 id="Java对象头的作用是什么，与锁有什么关联？"><a href="#Java对象头的作用是什么，与锁有什么关联？" class="headerlink" title="Java对象头的作用是什么，与锁有什么关联？"></a>Java对象头的作用是什么，与锁有什么关联？</h4><h4 id="JVM中工作内存和主内存的区别是什么？"><a href="#JVM中工作内存和主内存的区别是什么？" class="headerlink" title="JVM中工作内存和主内存的区别是什么？"></a>JVM中工作内存和主内存的区别是什么？</h4><h4 id="哪些对象会进入JVM的老年代？"><a href="#哪些对象会进入JVM的老年代？" class="headerlink" title="哪些对象会进入JVM的老年代？"></a>哪些对象会进入JVM的老年代？</h4><h4 id="若新生代内存不足，会如何处理？"><a href="#若新生代内存不足，会如何处理？" class="headerlink" title="若新生代内存不足，会如何处理？"></a>若新生代内存不足，会如何处理？</h4><h4 id="介绍Java的类加载机制，核心步骤有哪些？"><a href="#介绍Java的类加载机制，核心步骤有哪些？" class="headerlink" title="介绍Java的类加载机制，核心步骤有哪些？"></a>介绍Java的类加载机制，核心步骤有哪些？</h4><h4 id="讲解Java的双亲委派机制，包含哪些类加载器、核心原理及设计好处？"><a href="#讲解Java的双亲委派机制，包含哪些类加载器、核心原理及设计好处？" class="headerlink" title="讲解Java的双亲委派机制，包含哪些类加载器、核心原理及设计好处？"></a>讲解Java的双亲委派机制，包含哪些类加载器、核心原理及设计好处？</h4><h2 id="3-4-JAVA框架"><a href="#3-4-JAVA框架" class="headerlink" title="3.4 JAVA框架"></a>3.4 JAVA框架</h2><h4 id="介绍一下IOC和AOP？"><a href="#介绍一下IOC和AOP？" class="headerlink" title="介绍一下IOC和AOP？"></a>介绍一下IOC和AOP？</h4><h2 id="3-5-数据库"><a href="#3-5-数据库" class="headerlink" title="3.5 数据库"></a>3.5 数据库</h2><h4 id="MySQL的索引有哪些类型，分别有什么特点？"><a href="#MySQL的索引有哪些类型，分别有什么特点？" class="headerlink" title="MySQL的索引有哪些类型，分别有什么特点？"></a>MySQL的索引有哪些类型，分别有什么特点？</h4><h4 id="聚簇索引和非聚簇索引的区别是什么？"><a href="#聚簇索引和非聚簇索引的区别是什么？" class="headerlink" title="聚簇索引和非聚簇索引的区别是什么？"></a>聚簇索引和非聚簇索引的区别是什么？</h4><h4 id="B-树作为索引结构的核心特点是什么，与哈希表、B树的区别？"><a href="#B-树作为索引结构的核心特点是什么，与哈希表、B树的区别？" class="headerlink" title="B+树作为索引结构的核心特点是什么，与哈希表、B树的区别？"></a>B+树作为索引结构的核心特点是什么，与哈希表、B树的区别？</h4><h2 id="3-6-Redis"><a href="#3-6-Redis" class="headerlink" title="3.6 Redis"></a>3.6 Redis</h2><h4 id="介绍一下redis持久化的机制？"><a href="#介绍一下redis持久化的机制？" class="headerlink" title="介绍一下redis持久化的机制？"></a>介绍一下redis持久化的机制？</h4><h4 id="讲解Redis跳表的底层数据结构，以及Redis为何选用跳表而非B-树、红黑树等数据结构？"><a href="#讲解Redis跳表的底层数据结构，以及Redis为何选用跳表而非B-树、红黑树等数据结构？" class="headerlink" title="讲解Redis跳表的底层数据结构，以及Redis为何选用跳表而非B+树、红黑树等数据结构？"></a>讲解Redis跳表的底层数据结构，以及Redis为何选用跳表而非B+树、红黑树等数据结构？</h4><h4 id="简述红黑树的核心规则和特性？"><a href="#简述红黑树的核心规则和特性？" class="headerlink" title="简述红黑树的核心规则和特性？"></a>简述红黑树的核心规则和特性？</h4><h2 id="3-7-微服务"><a href="#3-7-微服务" class="headerlink" title="3.7 微服务"></a>3.7 微服务</h2><h1 id="4-算法"><a href="#4-算法" class="headerlink" title="4. 算法"></a>4. 算法</h1><ol>
+<li>反转链表</li>
+<li>二叉树的层序遍历</li>
+<li>实现线程安全的单例模式</li>
+<li>将一个从小到大的数组，和一个从大到小的数组，合并成一个从小到大的数组</li>
+</ol>
+<hr>
+<h1 id="5-面经"><a href="#5-面经" class="headerlink" title="5. 面经"></a>5. 面经</h1><h2 id="5-1-快手JAVA一面-KPI面（30分钟-3-9）"><a href="#5-1-快手JAVA一面-KPI面（30分钟-3-9）" class="headerlink" title="5.1 快手JAVA一面 KPI面（30分钟&#x2F;3.9）"></a>5.1 快手JAVA一面 KPI面（30分钟&#x2F;3.9）</h2><ol>
+<li>问个人情况？</li>
+<li>问论文，介绍一下论文？</li>
+<li>讲一下你的项目流程？</li>
+<li>线程池的参数有哪些，你都是怎么设置的？</li>
+<li>写一个动态规划算法，一般要注意什么？</li>
+<li>介绍一下IOC和AOP？</li>
+<li>介绍一下redis持久化的机制？</li>
+<li>介绍一下你的项目中是如何构建一个ES搜索服务的？</li>
+<li>介绍一下JVM内存结构？</li>
+</ol>
+<p>算法：反转链表</p>
+<h2 id="5-2-B站客户端一面-（30分钟-3-11）"><a href="#5-2-B站客户端一面-（30分钟-3-11）" class="headerlink" title="5.2 B站客户端一面 （30分钟&#x2F;3.11）"></a>5.2 B站客户端一面 （30分钟&#x2F;3.11）</h2><h3 id="（一）背景与岗位匹配类"><a href="#（一）背景与岗位匹配类" class="headerlink" title="（一）背景与岗位匹配类"></a>（一）背景与岗位匹配类</h3><ol>
+<li>你做过客户端开发的工作吗？</li>
+<li>你是只用过Java，Kotlin这门语言你听过吗？</li>
+</ol>
+<h3 id="（二）Java基础-JVM与垃圾回收类"><a href="#（二）Java基础-JVM与垃圾回收类" class="headerlink" title="（二）Java基础 - JVM与垃圾回收类"></a>（二）Java基础 - JVM与垃圾回收类</h3><ol>
+<li>讲一下Java对象的生命周期？</li>
+<li>谈一下你对垃圾回收的理解？</li>
+<li>垃圾的定义有两种方法，除了可达性分析还有一种是什么？分别详细讲解这两个方法。</li>
+<li>垃圾回收算法的种类（新生代、老年代相关GC）有哪些，分别讲讲？</li>
+<li>详细说说标记清除、标记整理、复制这三种垃圾回收算法？</li>
+<li>Minor GC、Full GC一般分别用哪种垃圾回收算法，结合存活对象&#x2F;垃圾对象的数量分析？</li>
+<li>对于Java的内存优化有什么理解和想法？有没有用过内存友好的数据结构？如何避免内存泄漏的经验？</li>
+</ol>
+<h3 id="（三）Java基础-集合与哈希类"><a href="#（三）Java基础-集合与哈希类" class="headerlink" title="（三）Java基础 - 集合与哈希类"></a>（三）Java基础 - 集合与哈希类</h3><ol>
+<li>用过HashMap吗？讲一下HashMap中哈希的原理？</li>
+<li>equals和&#x3D;&#x3D;的区别是什么？</li>
+<li>哈希冲突的解决办法有哪些？HashMap是如何解决哈希冲突的？</li>
+<li>HashMap的初始容量、负载因子分别是什么？为什么初始容量是2的幂次方？为什么负载因子是0.75？</li>
+<li>HashMap是线程安全的吗？</li>
+<li>Hashtable相较于ConcurrentHashMap解决线程安全问题有什么不好的地方？</li>
+</ol>
+<h3 id="（四）Java基础-并发编程类"><a href="#（四）Java基础-并发编程类" class="headerlink" title="（四）Java基础 - 并发编程类"></a>（四）Java基础 - 并发编程类</h3><ol>
+<li>讲一下你对synchronized的了解？</li>
+<li>你理解的线程安全是什么？线程安全的三要素是什么？</li>
+<li>synchronized保证了线程安全的哪些特性？它是怎么保证可见性的？</li>
+<li>synchronized可以修饰什么东西？修饰静态方法时锁的是什么？修饰非静态方法时锁的是什么？</li>
+<li>synchronized有哪些特点（可重入、公平性等）？</li>
+<li>synchronized的锁膨胀优化过程是什么？</li>
+<li>什么是CAS操作？</li>
+</ol>
+<h3 id="（五）AI应用与认知类"><a href="#（五）AI应用与认知类" class="headerlink" title="（五）AI应用与认知类"></a>（五）AI应用与认知类</h3><ol>
+<li>你用过OpenAI、ChatGPT等AI工具吗？你是怎么看这些AI工具的？</li>
+<li>你具体是怎么用AI工具做项目、写代码的？AI生成的代码占比大概有多少？</li>
+<li>你觉得使用AI工具存在哪些风险和不顺手的地方？</li>
+</ol>
+<h2 id="5-3-美团JAVA一面（45分钟-3-12）"><a href="#5-3-美团JAVA一面（45分钟-3-12）" class="headerlink" title="5.3 美团JAVA一面（45分钟&#x2F;3.12）"></a>5.3 美团JAVA一面（45分钟&#x2F;3.12）</h2><h3 id="（一）高并发秒杀系统项目深挖"><a href="#（一）高并发秒杀系统项目深挖" class="headerlink" title="（一）高并发秒杀系统项目深挖"></a>（一）高并发秒杀系统项目深挖</h3><ol>
+<li>展开讲秒杀系统中多种高并发策略的实现、区别、优缺点，以及不同场景的选型依据；</li>
+<li>仅判断库存大于零能否解决CAS的ABA问题？不用原子类仅用Integer能否解决ABA问题？分布式场景下如何解决ABA问题？</li>
+<li>用线程池削峰填谷的好处、坏处分别是什么？线程池队列满了会发生什么？</li>
+<li>服务器扩容后，单机线程池在分布式场景下会导致什么问题？</li>
+<li>单机场景下对比synchronized锁、数据库乐观锁、Redis+MQ异步落库三种秒杀方案的优劣；</li>
+<li>秒杀场景中选择MongoDB而非MySQL的原因？二者核心区别是什么？</li>
+<li>MongoDB的集群部署机制有哪些？数据分片的策略有哪些，该策略的专业名称是什么？</li>
+</ol>
+<h3 id="（二）设计模式相关"><a href="#（二）设计模式相关" class="headerlink" title="（二）设计模式相关"></a>（二）设计模式相关</h3><ol>
+<li>基于责任链模式做的预处理器机制有什么好处？没有该模式会有什么问题？</li>
+<li>除了责任链模式，还有哪些更好的设计模式解决if-else嵌套问题？为什么选择责任链而非状态机模式？</li>
+<li>除了责任链、状态机模式，还了解哪些设计模式？</li>
+</ol>
+<h3 id="（三）Spring相关"><a href="#（三）Spring相关" class="headerlink" title="（三）Spring相关"></a>（三）Spring相关</h3><ol>
+<li>选择Spring StateMachine做状态机管理的原因？调研过其他状态机框架吗？该框架的优势是什么？</li>
+</ol>
+<h3 id="（四）AI医疗微服务平台项目深挖"><a href="#（四）AI医疗微服务平台项目深挖" class="headerlink" title="（四）AI医疗微服务平台项目深挖"></a>（四）AI医疗微服务平台项目深挖</h3><ol>
+<li>RAG检索增强的好处是什么？没有RAG直接调用大模型会存在什么问题？</li>
+<li>除了RAG，还有哪些方式能为大模型提供领域上下文？</li>
+<li>微调有哪些技术手段？</li>
+<li>Nacos作为注册中心的作用是什么？为什么需要注册中心？</li>
+<li>服务调用时是否需要实时从Nacos拉取服务信息？有什么机制减少对Nacos的请求？</li>
+<li>注册中心存在什么坏处？如果注册中心挂了，所有服务会不可用吗？</li>
+<li>注册中心的注册表该如何设计？用什么存储类型&#x2F;数据结构实现？</li>
+<li>Redis挂了该如何处理？能否用Caffeine做本地注册表？</li>
+<li>Caffeine作为本地注册表的好处、坏处分别是什么？</li>
+<li>注册中心和本地注册表之间的更新机制是什么？</li>
+</ol>
+<h3 id="（五）缓存相关"><a href="#（五）缓存相关" class="headerlink" title="（五）缓存相关"></a>（五）缓存相关</h3><ol>
+<li>二级缓存（Caffeine+Redis）中，如何解决Redis更新后多节点Caffeine数据不一致的问题？</li>
+</ol>
+<h3 id="（六）算法编程题"><a href="#（六）算法编程题" class="headerlink" title="（六）算法编程题"></a>（六）算法编程题</h3><ol>
+<li>实现二叉树的层序遍历，分析算法时间复杂度；</li>
+<li>手写线程安全的单例模式（后续因不会换题）。</li>
+</ol>
+<h2 id="5-4-B站客户端二面（20分钟-3-12）"><a href="#5-4-B站客户端二面（20分钟-3-12）" class="headerlink" title="5.4 B站客户端二面（20分钟&#x2F;3.12）"></a>5.4 B站客户端二面（20分钟&#x2F;3.12）</h2><h3 id="（一）岗位匹配与客户端基础类"><a href="#（一）岗位匹配与客户端基础类" class="headerlink" title="（一）岗位匹配与客户端基础类"></a>（一）岗位匹配与客户端基础类</h3><ol>
+<li>你有过端上应用级开发&#x2F;DEMO编写的经验吗？</li>
+<li>对端上的标准技术栈有了解吗？</li>
+<li>了解端上的消息通信方案是怎样的吗？</li>
+<li>安卓中比较常用的本地数据存储方式有哪些？</li>
+<li>了解端上的一些UI组件吗？</li>
+<li>对标准的视频播放协议流程有了解吗？</li>
+</ol>
+<h3 id="（二）AI核心技术类"><a href="#（二）AI核心技术类" class="headerlink" title="（二）AI核心技术类"></a>（二）AI核心技术类</h3><ol>
+<li>说说RAG、MCP的技术流程和技术交互栈分别是怎样的？</li>
+<li>什么是向量化？</li>
+<li>做向量化匹配时的主要标准是什么？</li>
+<li>MCP协议的本质构成是什么？</li>
+<li>尝试过在本地部署AI服务吗？</li>
+<li>部署本地大模型服务时需要注意哪些问题？</li>
+</ol>
+<h3 id="（三）服务端高并发与缓存类"><a href="#（三）服务端高并发与缓存类" class="headerlink" title="（三）服务端高并发与缓存类"></a>（三）服务端高并发与缓存类</h3><p>高并发业务场景下，设计服务端缓存架构需要注意哪些东西？</p>
+<h3 id="（四）方案设计类"><a href="#（四）方案设计类" class="headerlink" title="（四）方案设计类"></a>（四）方案设计类</h3><p>如果要做<strong>本地数据库的升级方案</strong>，过程中需要注意哪些问题？</p>
+<h3 id="（五）项目与技术分享类"><a href="#（五）项目与技术分享类" class="headerlink" title="（五）项目与技术分享类"></a>（五）项目与技术分享类</h3><p>有没有做过有趣&#x2F;有技术深度的东西，可以做基础分享？</p>
+<h2 id="5-5-高德JAVA一面（55分钟-3-13）"><a href="#5-5-高德JAVA一面（55分钟-3-13）" class="headerlink" title="5.5 高德JAVA一面（55分钟&#x2F;3.13）"></a>5.5 高德JAVA一面（55分钟&#x2F;3.13）</h2><h3 id="（一）AI医疗微服务平台项目深挖"><a href="#（一）AI医疗微服务平台项目深挖" class="headerlink" title="（一）AI医疗微服务平台项目深挖"></a>（一）AI医疗微服务平台项目深挖</h3><ol>
+<li>如何对大模型的回答和行为进行约束？</li>
+<li>使用提示词（Prompt）时需要注意哪些要点？</li>
+<li>若大模型给出错误医疗建议，如何从系统层面发现&#x2F;拦截？</li>
+<li>如何解决大模型对话的上下文超限（无法回话）问题？</li>
+<li>图片上传时若出现图片过大、超时问题，该如何解决？</li>
+<li>设计C端多张大图同时上传的方案，该如何设计？</li>
+<li>数据量特别大时，分页查询该如何优化（深度分页问题）？</li>
+<li>该医疗系统能承受的QPS是多少，如何测试？</li>
+</ol>
+<h3 id="（二）数据库核心知识"><a href="#（二）数据库核心知识" class="headerlink" title="（二）数据库核心知识"></a>（二）数据库核心知识</h3><ol>
+<li>MySQL中binlog的作用是什么？有几种模式，分别是什么？</li>
+<li>MongoDB和MySQL的核心区别是什么？</li>
+<li>MySQL的索引有哪些类型，分别有什么特点？</li>
+<li>聚簇索引和非聚簇索引的区别是什么？</li>
+<li>B+树作为索引结构的核心特点是什么，与哈希表、B树的区别？</li>
+</ol>
+<h3 id="（三）并发编程与锁"><a href="#（三）并发编程与锁" class="headerlink" title="（三）并发编程与锁"></a>（三）并发编程与锁</h3><ol>
+<li>synchronized锁和Redis分布式锁的区别及各自原理？</li>
+<li>使用线程池的注意事项有哪些，核心参数该如何设置？</li>
+<li>Java为何会出现并发问题，需要用锁来处理？</li>
+<li>JVM中工作内存和主内存的区别是什么？</li>
+<li>若在Controller中定义int字段，每次请求对其+1会出现什么问题？</li>
+<li>Java对象头的作用是什么，与锁有什么关联？</li>
+</ol>
+<h3 id="（四）MQ核心知识"><a href="#（四）MQ核心知识" class="headerlink" title="（四）MQ核心知识"></a>（四）MQ核心知识</h3><p>如何保证MQ中的消息不丢失？</p>
+<h3 id="（五）高并发秒杀系统项目深挖"><a href="#（五）高并发秒杀系统项目深挖" class="headerlink" title="（五）高并发秒杀系统项目深挖"></a>（五）高并发秒杀系统项目深挖</h3><ol>
+<li>高并发秒杀系统的整体设计流程是什么？</li>
+<li>秒杀系统中状态机的具体状态有哪些，依靠什么事件流转？</li>
+<li>为什么采用状态机模式处理秒杀业务，与传统写法相比的好处是什么？</li>
+</ol>
+<h3 id="（六）JVM核心知识"><a href="#（六）JVM核心知识" class="headerlink" title="（六）JVM核心知识"></a>（六）JVM核心知识</h3><ol>
+<li>哪些对象会进入JVM的老年代？</li>
+<li>若新生代内存不足，会如何处理？</li>
+</ol>
+<h3 id="（七）算法编程题"><a href="#（七）算法编程题" class="headerlink" title="（七）算法编程题"></a>（七）算法编程题</h3><p>将<strong>一个从小到大、一个从大到小</strong>的两个数组，合并成一个<strong>整体从小到大</strong>的新数组。</p>
+<h2 id="5-6-美团大模型应用开发一面（一个小时-3-20）"><a href="#5-6-美团大模型应用开发一面（一个小时-3-20）" class="headerlink" title="5.6 美团大模型应用开发一面（一个小时&#x2F;3.20）"></a>5.6 美团大模型应用开发一面（一个小时&#x2F;3.20）</h2><h3 id="（一）Java后端核心基础"><a href="#（一）Java后端核心基础" class="headerlink" title="（一）Java后端核心基础"></a>（一）Java后端核心基础</h3><ol>
+<li>讲解Redis跳表的底层数据结构，以及Redis为何选用跳表而非B+树、红黑树等数据结构？</li>
+<li>简述红黑树的核心规则和特性？</li>
+<li>介绍Java的类加载机制，核心步骤有哪些？</li>
+<li>讲解Java的双亲委派机制，包含哪些类加载器、核心原理及设计好处？</li>
+</ol>
+<h3 id="（二）AI医疗微服务平台项目深挖"><a href="#（二）AI医疗微服务平台项目深挖" class="headerlink" title="（二）AI医疗微服务平台项目深挖"></a>（二）AI医疗微服务平台项目深挖</h3><ol>
+<li>详细介绍AI医疗微服务平台的核心功能，重点讲RAG的落地实现？</li>
+<li>项目中图像识别功能的识别对象、核心目的是什么？</li>
+<li>自定义Memory组件的作用是什么，为何选用MongoDB存储对话上下文而非MySQL？</li>
+<li>医疗问诊场景下的提示词工程体系是如何构建的？</li>
+<li>除了角色定义、结构化输出约束，提示词工程还有哪些优化方法？</li>
+<li>RAG知识库的数据源来自哪里？</li>
+<li>各类医疗文档（PDF&#x2F;Word&#x2F;TXT）如何转化为RAG的知识库，核心步骤是什么？</li>
+<li>你认为当前这个医疗平台存在哪些优化点、做得不好的地方？</li>
+<li>什么是大模型幻觉问题，你的项目中是如何尝试解决的？</li>
+<li>该医疗平台在医疗问诊场景下对用户的核心价值是什么？</li>
+</ol>
+<h3 id="（三）高并发秒杀系统项目"><a href="#（三）高并发秒杀系统项目" class="headerlink" title="（三）高并发秒杀系统项目"></a>（三）高并发秒杀系统项目</h3><p>秒杀系统是否和AI做了结合，具体是如何结合的？</p>
+<h3 id="（四）AI工具使用与认知"><a href="#（四）AI工具使用与认知" class="headerlink" title="（四）AI工具使用与认知"></a>（四）AI工具使用与认知</h3><ol>
+<li>了解RAG、Agent吗？是否实际做过Agent相关开发？</li>
+<li>日常使用AI编程工具（如Coding）的频率和方式是什么？</li>
+<li>AI生成代码的质量如何，使用过程中遇到了哪些问题，如何解决？</li>
+</ol>
+<h3 id="（五）算法编程题"><a href="#（五）算法编程题" class="headerlink" title="（五）算法编程题"></a>（五）算法编程题</h3><ol>
+<li>根据指定字符串构建多叉树；</li>
+<li>手写算法题：给定整数数组，找出最大子数组和；</li>
+<li>要求阐述算法思路并完成代码实现。</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%85%AB%E8%82%A1/" class="category-chain-item">八股</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%AD%A6%E4%B9%A0/" class="print-no-link">#学习</a>
+      
+        <a href="/tags/%E9%A1%B9%E7%9B%AE/" class="print-no-link">#项目</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/12/04/JAVA/JAVA%E5%85%AB%E8%82%A1/JVM%E5%8E%9F%E7%90%86/%E8%AF%A6%E8%A7%A3StringTable/" title="详解JVM中StringTable原理">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">详解JVM中StringTable原理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/12/02/JAVA/JAVA%E5%85%AB%E8%82%A1/JAVA%E5%9F%BA%E7%A1%80/%E8%AF%A6%E8%A7%A3%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" title="详解反射机制和动态代理原理">
+                        <span class="hidden-mobile">详解反射机制和动态代理原理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"sj2tGuxMGSDhkN5hNuOIVta1-gzGzoHsz","appKey":"ysR5OTuTzoby2oNvNyGOtXFQ","path":"window.location.pathname","placeholder":"如有问题，欢迎指正~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>AI</span> <i class="iconfont icon-love"></i> <span>CPP</span> <i class="iconfont icon-love"></i> <span>JAVA</span> <i class="iconfont icon-love"></i> <span>CyberSec</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/love.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiaoxingxing.js"></script>
+<script src="/js/bubble.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>
