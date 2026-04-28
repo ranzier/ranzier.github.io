@@ -506,11 +506,11 @@
       
       <tag>AI</tag>
       
+      <tag>LLM</tag>
+      
       <tag>Transformer</tag>
       
       <tag>Attention</tag>
-      
-      <tag>LLM</tag>
       
     </tags>
     
@@ -975,11 +975,11 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>git</tag>
       
       <tag>开发工具</tag>
+      
+      <tag>学习</tag>
       
     </tags>
     
@@ -1325,9 +1325,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>开发工具</tag>
+      
+      <tag>学习</tag>
       
       <tag>Docker</tag>
       
@@ -1443,11 +1443,11 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>git</tag>
       
       <tag>开发工具</tag>
+      
+      <tag>学习</tag>
       
     </tags>
     
@@ -1559,9 +1559,9 @@
     
     <tags>
       
-      <tag>前端</tag>
-      
       <tag>学习</tag>
+      
+      <tag>前端</tag>
       
       <tag>JavaScript</tag>
       
@@ -1615,11 +1615,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>前端</tag>
       
       <tag>CSS</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -1644,9 +1644,9 @@
     
     <tags>
       
-      <tag>前端</tag>
-      
       <tag>学习</tag>
+      
+      <tag>前端</tag>
       
       <tag>HTML</tag>
       
