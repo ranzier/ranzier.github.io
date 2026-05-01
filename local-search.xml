@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>三维重建项目文档</title>
+    <link href="/2026/05/01/3d/%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3/"/>
+    <url>/2026/05/01/3d/%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">三维重建二维转三维担架部分项目文档</h1><h1 id="担架部分的二维转三维"><a href="#担架部分的二维转三维" class="headerlink" title="担架部分的二维转三维"></a>担架部分的二维转三维</h1><h2 id="1-整体输入输出效果"><a href="#1-整体输入输出效果" class="headerlink" title="1. 整体输入输出效果"></a>1. 整体输入输出效果</h2><h3 id="1-1-输入"><a href="#1-1-输入" class="headerlink" title="1.1 输入"></a>1.1 输入</h3><p>每个担架的三视图的杆件及对应的二维坐标</p><p><code>杆件ID</code>: <code>[左端点(x,y),右端点(x,y)]</code></p><ul><li>正视图：<code>coordinatesFront_data</code></li><li>底视图：<code>coordinatesBottom_data</code></li><li>顶视图：<code>coordinatesOverhead_data</code></li></ul><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs makefile">coordinatesFront_data=&#123;<br><span class="hljs-section">106:[(646.0281930611799,342.53768195250086),(660.2590727783954,613.9408879879702)],</span><br><span class="hljs-section">105:[(203.7373011800923,347.7106748399989),(620.4367599213521,639.6744403396317)],</span><br><span class="hljs-section">103:[(240.64789004321037,885.0975728601636),(1088.2557311595408,337.3654300449176)],</span><br><span class="hljs-section">101:[(203.7373011800923,347.7106748399989),(1088.2557311595408,337.3654300449176)],</span><br>&#125;<br>coordinatesBottom_data=&#123;<br><span class="hljs-section">119:[(630.1258693028335,518.7340651761596),(1278.9278879433205,620.6886681053786)],</span><br><span class="hljs-section">103:[(310.11096106234515,725.8634556230776),(983.3900198457354,290.0841295496858)],</span><br><span class="hljs-section">104:[(784.4021660422503,1254.0464061958883),(1278.9278879433205,620.6886681053786)],</span><br><span class="hljs-section">118:[(983.3900198457354,290.0841295496858),(1018.1405904800162,954.6887929303084)],</span><br><span class="hljs-section">116:[(626.3346511498411,521.1879280583553),(784.4021660422503,1254.0464061958883)],</span><br><span class="hljs-section">117:[(310.11096106234515,725.8634556230776),(1018.6215195146591,954.0728489822498)],</span><br>&#125;<br>coordinatesOverhead_data=&#123;<br><span class="hljs-section">102:[(96.6401359210612,475.9291642161667),(961.9289558665229,611.903121636168)],</span><br><span class="hljs-section">108:[(98.2077827818514,1150.819369486731),(552.7310243183496,547.6005895357405)],</span><br><span class="hljs-section">110:[(556.2979668323961,1077.868239473998),(961.9289558665229,611.903121636168)],</span><br><span class="hljs-section">101:[(98.2077827818514,1150.819369486731),(964.1463078156362,1012.9181523853322)],</span><br><span class="hljs-section">109:[(96.6401359210612,475.9291642161667),(551.1408795062896,1078.6895086500524)],</span><br><span class="hljs-section">111:[(560.3147685231477,548.7923207679231),(964.1463078156362,1012.9181523853322)],</span><br><span class="hljs-section">112:[(961.9289558665229,611.903121636168),(964.1463078156362,1012.9181523853322)],</span><br>&#125;<br></code></pre></td></tr></table></figure><h3 id="1-2-输出"><a href="#1-2-输出" class="headerlink" title="1.2 输出"></a>1.2 输出</h3><p>输出分两部分：</p><ul><li><strong>节点</strong>的三维信息：<code>(节点编号：X坐标，Y坐标，Z坐标，对称性)</code></li><li><strong>杆件</strong>的三维信息：<code>(杆件编号：起点节点，终点节点，对称性)</code></li></ul><h4 id="1-2-1-对称性"><a href="#1-2-1-对称性" class="headerlink" title="1.2.1 对称性"></a>1.2.1 对称性</h4><p><strong>节点和杆件的对称性</strong></p><ul><li>0：代表没有对称性，就这一个<strong>单独的节点&#x2F;杆件</strong></li><li>1：左右对称（对称性1）</li><li>2：前后对称（对称性2）</li><li>3：关于Z轴对称（对称性3）</li><li>4：以及四角对称（对称性4）</li></ul><h4 id="1-2-2-XYZ坐标的表示"><a href="#1-2-2-XYZ坐标的表示" class="headerlink" title="1.2.2 XYZ坐标的表示"></a>1.2.2 XYZ坐标的表示</h4><ul><li><strong>一类节点</strong>（一类杆件的两个端点）：真实的<code>(x,y,z)</code>三维坐标表示</li><li><strong>二类节点</strong>（非一类节点）：<code>x</code>坐标用<strong>真实值</strong>；<code>(y,z)</code>分别用一类杆件的两个端点节点编号表示(引用表示法)</li></ul><h4 id="1-2-3-XYZ坐标轴的方向"><a href="#1-2-3-XYZ坐标轴的方向" class="headerlink" title="1.2.3 XYZ坐标轴的方向"></a>1.2.3 XYZ坐标轴的方向</h4><ul><li><code>X轴</code>：从左往右</li><li><code>Y轴</code>：从前往后</li><li><code>Z轴</code>：从上到下</li></ul><p><img src="/image1.png" alt="图1"></p><p><img src="/image2.png" alt="图2"></p><hr><hr><h2 id="2-get-first-ganjian-id-py"><a href="#2-get-first-ganjian-id-py" class="headerlink" title="2. get_first_ganjian_id.py"></a>2. get_first_ganjian_id.py</h2><p>获取每个视图的两个一类杆件的ID：（杆件长度+杆件ID编号）判断</p><ol><li>选<strong>长度</strong>最长的 <code>top_k</code> 根作为候选；</li><li>再检查候选是否包含编号最小的那根或正好是最小两根；</li><li>不满足则回退为<strong>编号最小</strong>的两根，最后按编号升序返回。</li></ol><h2 id="3-xintrans-py的代码逻辑"><a href="#3-xintrans-py的代码逻辑" class="headerlink" title="3. xintrans.py的代码逻辑"></a>3. xintrans.py的代码逻辑</h2><h3 id="3-1-输入和输出"><a href="#3-1-输入和输出" class="headerlink" title="3.1 输入和输出"></a>3.1 输入和输出</h3><h4 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h4><table><thead><tr><th>字段名</th><th>含义说明</th></tr></thead><tbody><tr><td>file_path</td><td>文件的路径</td></tr><tr><td>drawing_id</td><td>担架图纸的序号</td></tr><tr><td>data1</td><td>担架和塔身<strong>连接点</strong>的<strong>真实三维坐标</strong></td></tr><tr><td>drawing_type</td><td>图纸类型</td></tr></tbody></table><h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><table><thead><tr><th>字段名</th><th>含义说明</th></tr></thead><tbody><tr><td>jiedian</td><td>节点的三维信息</td></tr><tr><td>ganjian</td><td>杆件的三维信息</td></tr></tbody></table><h3 id="3-2-预处理"><a href="#3-2-预处理" class="headerlink" title="3.2 预处理"></a>3.2 预处理</h3><h4 id="3-2-1-读取二维坐标数据"><a href="#3-2-1-读取二维坐标数据" class="headerlink" title="3.2.1 读取二维坐标数据"></a>3.2.1 读取二维坐标数据</h4><p><code>coordinatesFront_data</code>和<code>coordinatesBottom_data</code>和<code>coordinatesOverhead_data</code>分别代表前视图、底视图、顶视图传来的二维数据</p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs py">coordinatesFront_data = namespace.get(<span class="hljs-string">&#x27;coordinatesFront_data&#x27;</span>, &#123;&#125;)<br>coordinatesBottom_data = namespace.get(<span class="hljs-string">&#x27;coordinatesBottom_data&#x27;</span>, &#123;&#125;)<br>coordinatesOverhead_data = namespace.get(<span class="hljs-string">&#x27;coordinatesOverhead_data&#x27;</span>, &#123;&#125;)<br></code></pre></td></tr></table></figure><h4 id="3-2-2-转换data1连接点的数据存入pj-中"><a href="#3-2-2-转换data1连接点的数据存入pj-中" class="headerlink" title="3.2.2 转换data1连接点的数据存入pj[]中"></a>3.2.2 转换data1连接点的数据存入pj[]中</h4><p><img src="/image3.png" alt="图3"></p><p><code>pj</code> 是一个 <strong>四维数组（嵌套列表）</strong>，结构如下：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">pj<span class="hljs-selector-attr">[担架图纸ID]</span><span class="hljs-selector-attr">[担架上下端点(0/1)]</span><span class="hljs-selector-attr">[节点编号ID]</span><span class="hljs-selector-attr">[三维坐标XYZ真实值]</span><br></code></pre></td></tr></table></figure><table><thead><tr><th>表达式</th><th>含义</th></tr></thead><tbody><tr><td><code>pj[drawing_id][0][0]</code></td><td>第 drawing_id 号担架<strong>上连接点</strong>的节点编号</td></tr><tr><td><code>pj[drawing_id][1][0]</code></td><td>第 drawing_id 号担架<strong>下连接点</strong>的节点编号</td></tr><tr><td><code>pj[drawing_id][0][1]</code></td><td>第 drawing_id 号担架<strong>上连接点</strong>的三维坐标(x,y,z)</td></tr><tr><td><code>pj[drawing_id][1][1]</code></td><td>第 drawing_id 号担架<strong>下连接点</strong>的三维坐标(x,y,z)</td></tr><tr><td><code>pj[drawing_id][0][1][0]</code></td><td>第 drawing_id 号担架<strong>上连接点</strong>的 x 坐标</td></tr><tr><td><code>pj[drawing_id][0][1][1]</code></td><td>第 drawing_id 号担架<strong>上连接点</strong>的 y 坐标</td></tr><tr><td><code>pj[drawing_id][0][1][2]</code></td><td>第 drawing_id 号担架<strong>上连接点</strong>的 z 坐标</td></tr><tr><td><code>pj[drawing_id][1][1][0]</code></td><td>第 drawing_id 号担架<strong>下连接点</strong>的 x 坐标</td></tr><tr><td><code>pj[drawing_id][1][1][1]</code></td><td>第 drawing_id 号担架<strong>下连接点</strong>的 y 坐标</td></tr><tr><td><code>pj[drawing_id][1][1][2]</code></td><td>第 drawing_id 号担架<strong>下连接点</strong>的 z 坐标</td></tr></tbody></table><h3 id="3-3-if-else逻辑"><a href="#3-3-if-else逻辑" class="headerlink" title="3.3 if-else逻辑"></a>3.3 if-else逻辑</h3><ol><li><code>if(drawing_id * 100 + 1 in coordinatesBottom_data)</code>: 处理下面（<strong>非最上层</strong>）的担架（3，4，5，6，7，8）</li><li><code>else</code>: 处理<strong>最上层</strong>的担架（1，2）</li></ol><h2 id="4-每一个担架的处理逻辑"><a href="#4-每一个担架的处理逻辑" class="headerlink" title="4. 每一个担架的处理逻辑"></a>4. 每一个担架的处理逻辑</h2><ol><li>尖点的生成：完成一类节点的生成</li><li></li></ol><h3 id="4-1-尖点的生成（一类节点的生成）"><a href="#4-1-尖点的生成（一类节点的生成）" class="headerlink" title="4.1 尖点的生成（一类节点的生成）"></a>4.1 尖点的生成（一类节点的生成）</h3><p>基于<code>calc_jiandian_xyz()</code>函数生成尖点的三维坐标信息</p><p><strong>尖点</strong>（一类节点）：<strong>一类杆件的一端节点</strong>（非担架塔身连接点），是一类节点，用<strong>真实的三维坐标</strong>表示（x,y,z）</p><table><thead><tr><th>担架ID</th><th>尖点ID</th></tr></thead><tbody><tr><td>1</td><td>10120</td></tr><tr><td>2</td><td>20120</td></tr><tr><td>3</td><td>30120</td></tr><tr><td>4</td><td>40120</td></tr><tr><td>5</td><td>50120</td></tr><tr><td>6</td><td>60120</td></tr><tr><td>7</td><td>70120</td></tr><tr><td>8</td><td>80120</td></tr></tbody></table><h3 id="4-2-正视图-底视图-顶视图"><a href="#4-2-正视图-底视图-顶视图" class="headerlink" title="4.2 正视图&#x2F;底视图&#x2F;顶视图"></a>4.2 正视图&#x2F;底视图&#x2F;顶视图</h3><p><strong>输出</strong>：生成正视图&#x2F;底视图&#x2F;顶视图中的<strong>二类节点</strong>及其<strong>二类杆件</strong>的三维信息</p><h4 id="4-2-1-找到一类杆件上的交点及其对应的三维x值"><a href="#4-2-1-找到一类杆件上的交点及其对应的三维x值" class="headerlink" title="4.2.1 找到一类杆件上的交点及其对应的三维x值"></a>4.2.1 找到一类杆件上的交点及其对应的三维x值</h4><ol><li>获得两个一类杆件上的交点坐标（二维）：(x,y)</li><li>得到交点坐标的三维坐标的真实x值: {(x,y)-&gt;三维x}</li></ol><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-comment"># 得到两个一类杆件上的交点</span><br>jiaodian_101,jiaodian_103 = get_jiaodian_on_ganjian(coordinatesFront_data,drawing_id, pj, rod_101_id,rod_103_id, yuzhi)<br><br><span class="hljs-comment"># 得到这些交点的真实x的值</span><br>real_101 = get_real_x_of_jiaodian(coordinatesFront_data, drawing_id, jiaodian_101, newx, pj, rod_101_id, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br>real_103 = get_real_x_of_jiaodian(coordinatesFront_data, drawing_id, jiaodian_103, newx, pj, rod_103_id, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure><h4 id="4-2-2-标记交点中是否包含一类节点"><a href="#4-2-2-标记交点中是否包含一类节点" class="headerlink" title="4.2.2 标记交点中是否包含一类节点"></a>4.2.2 标记交点中是否包含一类节点</h4><ol><li>获取一类杆件左端点的节点编号<code>left_3d_id</code>和右端点的节点编号<code>right_3d_id</code></li><li>标记交点中是否包含一类节点</li></ol><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">if</span> (pj[drawing_id - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>][<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] &gt; <span class="hljs-number">0</span>): <span class="hljs-comment"># 第 drawing_id 号担架下连接点的 x 坐标</span><br>    left_3d_id = pj[drawing_id - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>][<span class="hljs-number">0</span>]  <span class="hljs-comment"># 301 与塔身相交端点的节点编号</span><br>    right_3d_id = <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;jiandian_id + <span class="hljs-number">20</span>&#125;</span>&quot;</span>  <span class="hljs-comment"># 尖点</span><br><span class="hljs-keyword">else</span>:<br>    left_3d_id = <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;jiandian_id + <span class="hljs-number">20</span>&#125;</span>&quot;</span><br>    right_3d_id = pj[drawing_id - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>][<span class="hljs-number">0</span>]  <span class="hljs-comment"># 301 与塔身相交端点</span><br><br><span class="hljs-comment"># 标记交点中的端点</span><br>real_101 = mark_endpoint_for_real_points(real_101,coordinatesFront_data,rod_101_id,left_3d_id,right_3d_id,yuzhi)<br></code></pre></td></tr></table></figure><h4 id="4-2-3-生成二类节点的三维信息"><a href="#4-2-3-生成二类节点的三维信息" class="headerlink" title="4.2.3 生成二类节点的三维信息"></a>4.2.3 生成二类节点的三维信息</h4><ol><li>二类节点的<strong>节点编号</strong>：<code>{drawing_id}191{new_node_cnt}0</code>或者<code>{drawing_id}291{new_node_cnt}0</code>或者<code>{drawing_id}391{new_node_cnt}0</code></li><li>二类节点的<strong>对称性</strong>：<code>2</code></li><li>二类节点的X: <code>真实的三维X坐标</code></li><li>二类节点的YZ: <code>1{pj[drawing_id - 1][1][0]}</code>和<code>1{jiandian_id + 20}</code></li></ol><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs py">new_node_cnt = <span class="hljs-number">0</span>  <span class="hljs-comment"># 只统计“真正新建的节点”</span><br><br><span class="hljs-comment"># 为101杆件上的交点创建节点</span><br><span class="hljs-keyword">for</span> i, item <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(real_101):<br>    <span class="hljs-keyword">if</span> item.get(<span class="hljs-string">&quot;endpoint_3d_id&quot;</span>, -<span class="hljs-number">1</span>) != -<span class="hljs-number">1</span>:<br>        <span class="hljs-comment"># 复用已有端点节点</span><br>        node_101_nodes.append(&#123;<br>            <span class="hljs-string">&quot;node_id&quot;</span>: item[<span class="hljs-string">&quot;endpoint_3d_id&quot;</span>],<br>            <span class="hljs-string">&quot;point_2d&quot;</span>: item[<span class="hljs-string">&quot;point_2d&quot;</span>]<br>        &#125;)<br>        <span class="hljs-keyword">continue</span><br><br>    new_node_cnt += <span class="hljs-number">1</span><br>    node_id = <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;drawing_id&#125;</span>191<span class="hljs-subst">&#123;new_node_cnt&#125;</span>0&quot;</span><br>    node_info = &#123;<br>        <span class="hljs-string">&quot;node_id&quot;</span>: node_id,<br>        <span class="hljs-string">&quot;point_2d&quot;</span>: item[<span class="hljs-string">&quot;point_2d&quot;</span>]<br>    &#125;<br>    node_101_nodes.append(node_info)<br>    jiedian.append(&#123;<br>        <span class="hljs-string">&quot;node_id&quot;</span>: node_id,<br>        <span class="hljs-string">&quot;node_type&quot;</span>: <span class="hljs-number">12</span>,<br>        <span class="hljs-string">&quot;symmetry_type&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-string">&quot;X&quot;</span>: item[<span class="hljs-string">&quot;x_3d&quot;</span>],<br>        <span class="hljs-string">&quot;Y&quot;</span>: <span class="hljs-string">f&quot;1<span class="hljs-subst">&#123;pj[drawing_id - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>][<span class="hljs-number">0</span>]&#125;</span>&quot;</span>,<br>        <span class="hljs-string">&quot;Z&quot;</span>: <span class="hljs-string">f&quot;1<span class="hljs-subst">&#123;jiandian_id + <span class="hljs-number">20</span>&#125;</span>&quot;</span><br>    &#125;)<br></code></pre></td></tr></table></figure><h4 id="4-2-4-生成二类杆件"><a href="#4-2-4-生成二类杆件" class="headerlink" title="4.2.4 生成二类杆件"></a>4.2.4 生成二类杆件</h4><ol><li>根据节点信息中包含的二维坐标-&gt;找到该节点对应哪些杆件编号：{key:(x,y)-&gt;value:{101,102}}</li><li>反过来找到杆件编号对应的节点编号</li></ol><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs py">member_to_nodes = generate_ganjian(coordinatesFront_data, node_101_nodes, node_103_nodes,yuzhi)<br><br> <span class="hljs-keyword">for</span> member_id, node_list <span class="hljs-keyword">in</span> member_to_nodes.items():<br>     <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(node_list) == <span class="hljs-number">2</span>:  <span class="hljs-comment"># 只有两个端点的杆件才是合法的</span><br>         ganjian.append(&#123;<br>             <span class="hljs-string">&quot;member_id&quot;</span>: <span class="hljs-built_in">str</span>(member_id),<br>             <span class="hljs-string">&quot;node1_id&quot;</span>: node_list[<span class="hljs-number">0</span>],<br>             <span class="hljs-string">&quot;node2_id&quot;</span>: node_list[<span class="hljs-number">1</span>],<br>             <span class="hljs-string">&quot;symmetry_type&quot;</span>: <span class="hljs-number">2</span><br>         &#125;)<br></code></pre></td></tr></table></figure><h3 id="4-3-添加一类杆件"><a href="#4-3-添加一类杆件" class="headerlink" title="4.3 添加一类杆件"></a>4.3 添加一类杆件</h3><ol><li>删除已有的一类杆件信息</li><li>手动添加一类杆件信息</li></ol><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-comment"># 删除已经生成的一类杆件信息</span><br> remove_ids = &#123;<br>     <span class="hljs-built_in">str</span>(rod_101_id),<br>     <span class="hljs-built_in">str</span>(rod_102_id),<br>     <span class="hljs-built_in">str</span>(rod_103_id),<br>     <span class="hljs-built_in">str</span>(rod_104_id)<br> &#125;<br><br> ganjian[:] = [<br>     g <span class="hljs-keyword">for</span> g <span class="hljs-keyword">in</span> ganjian<br>     <span class="hljs-keyword">if</span> g.get(<span class="hljs-string">&quot;member_id&quot;</span>) <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> remove_ids<br> ]<br><br> new_ganjian = &#123;<br>     <span class="hljs-string">&quot;member_id&quot;</span>: <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;rod_101_id&#125;</span>&quot;</span>,<br>     <span class="hljs-string">&quot;node1_id&quot;</span>: pj[drawing_id - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>][<span class="hljs-number">0</span>],<br>     <span class="hljs-string">&quot;node2_id&quot;</span>: <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;jiandian_id + <span class="hljs-number">20</span>&#125;</span>&quot;</span>,<br>     <span class="hljs-string">&quot;symmetry_type&quot;</span>: <span class="hljs-number">2</span><br> &#125;<br> ganjian.append(new_ganjian)<br><br> new_ganjian = &#123;<br>     <span class="hljs-string">&quot;member_id&quot;</span>: <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;rod_103_id&#125;</span>&quot;</span>,<br>     <span class="hljs-string">&quot;node1_id&quot;</span>: pj[drawing_id - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>][<span class="hljs-number">0</span>],<br>     <span class="hljs-string">&quot;node2_id&quot;</span>: <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;jiandian_id + <span class="hljs-number">20</span>&#125;</span>&quot;</span>,<br>     <span class="hljs-string">&quot;symmetry_type&quot;</span>: <span class="hljs-number">2</span><br> &#125;<br> ganjian.append(new_ganjian)<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>三维重建</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>三维重建</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>随笔5</title>
     <link href="/2026/04/28/Suibi/%E4%B8%A4%E4%B8%AA%E6%9C%88%E9%9D%A2%E8%AF%95%E6%84%9F%E6%83%B3/"/>
     <url>/2026/04/28/Suibi/%E4%B8%A4%E4%B8%AA%E6%9C%88%E9%9D%A2%E8%AF%95%E6%84%9F%E6%83%B3/</url>
@@ -201,9 +226,9 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>JAVA</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
@@ -506,11 +531,11 @@
       
       <tag>AI</tag>
       
-      <tag>LLM</tag>
-      
       <tag>Transformer</tag>
       
       <tag>Attention</tag>
+      
+      <tag>LLM</tag>
       
     </tags>
     
@@ -570,11 +595,11 @@
     
     <tags>
       
+      <tag>JAVA</tag>
+      
       <tag>AI</tag>
       
       <tag>RAG</tag>
-      
-      <tag>JAVA</tag>
       
       <tag>Spring AI</tag>
       
@@ -634,9 +659,9 @@
     
     <tags>
       
-      <tag>SpringCloud</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>SpringCloud</tag>
       
       <tag>Canal</tag>
       
@@ -667,9 +692,9 @@
     
     <tags>
       
-      <tag>AI</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>AI</tag>
       
       <tag>Spring AI</tag>
       
@@ -693,24 +718,24 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>JAVA</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
     
     <tags>
       
+      <tag>JAVA</tag>
+      
       <tag>SpringCloud</tag>
       
-      <tag>JAVA</tag>
+      <tag>Redis</tag>
       
       <tag>多级缓存</tag>
       
       <tag>Caffeine</tag>
-      
-      <tag>Redis</tag>
       
     </tags>
     
@@ -768,9 +793,9 @@
       
       <tag>SpringCloud</tag>
       
-      <tag>Gateway</tag>
-      
       <tag>Sa-Token</tag>
+      
+      <tag>Gateway</tag>
       
     </tags>
     
@@ -908,9 +933,9 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>JAVA</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
@@ -1050,9 +1075,9 @@
     
     <tags>
       
-      <tag>SpringCloud</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>SpringCloud</tag>
       
       <tag>SpringBoot</tag>
       
@@ -1236,9 +1261,9 @@
       
       <tag>学习</tag>
       
-      <tag>SpringCloud</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>SpringCloud</tag>
       
     </tags>
     
@@ -1617,9 +1642,9 @@
       
       <tag>前端</tag>
       
-      <tag>CSS</tag>
-      
       <tag>学习</tag>
+      
+      <tag>CSS</tag>
       
     </tags>
     
@@ -1646,9 +1671,9 @@
       
       <tag>前端</tag>
       
-      <tag>学习</tag>
-      
       <tag>HTML</tag>
+      
+      <tag>学习</tag>
       
     </tags>
     
