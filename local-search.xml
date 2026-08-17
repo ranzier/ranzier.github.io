@@ -397,9 +397,9 @@
     
     <tags>
       
-      <tag>JVM</tag>
-      
       <tag>八股</tag>
+      
+      <tag>JVM</tag>
       
       <tag>StringTable</tag>
       
@@ -699,9 +699,9 @@
     
     <tags>
       
-      <tag>AI</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>AI</tag>
       
       <tag>RAG</tag>
       
@@ -754,18 +754,18 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>SpringCloud</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>SpringCloud</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>SpringCloud</tag>
       
       <tag>Canal</tag>
       
@@ -796,9 +796,9 @@
     
     <tags>
       
-      <tag>AI</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>AI</tag>
       
       <tag>Spring AI</tag>
       
@@ -831,15 +831,15 @@
     
     <tags>
       
+      <tag>JAVA</tag>
+      
       <tag>SpringCloud</tag>
       
-      <tag>JAVA</tag>
+      <tag>Redis</tag>
       
       <tag>多级缓存</tag>
       
       <tag>Caffeine</tag>
-      
-      <tag>Redis</tag>
       
     </tags>
     
@@ -857,9 +857,9 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>SpringCloud</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
@@ -886,9 +886,9 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>SpringCloud</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
@@ -944,9 +944,9 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>SpringCloud</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
@@ -975,9 +975,9 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>SpringCloud</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
@@ -1104,11 +1104,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>git</tag>
       
       <tag>开发工具</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -1179,9 +1179,9 @@
     
     <tags>
       
-      <tag>SpringCloud</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>SpringCloud</tag>
       
       <tag>SpringBoot</tag>
       
@@ -1212,9 +1212,9 @@
       
       <tag>LeetCode</tag>
       
-      <tag>JAVA</tag>
-      
       <tag>hot100</tag>
+      
+      <tag>JAVA</tag>
       
     </tags>
     
@@ -1241,9 +1241,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>MySQL</tag>
       
@@ -1272,9 +1272,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>JVM</tag>
       
@@ -1303,9 +1303,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>JUC</tag>
       
@@ -1334,9 +1334,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>Redis</tag>
       
@@ -1363,11 +1363,11 @@
     
     <tags>
       
-      <tag>SpringCloud</tag>
+      <tag>JAVA</tag>
       
       <tag>学习</tag>
       
-      <tag>JAVA</tag>
+      <tag>SpringCloud</tag>
       
     </tags>
     
@@ -1394,9 +1394,9 @@
     
     <tags>
       
-      <tag>SpringCloud</tag>
-      
       <tag>学习</tag>
+      
+      <tag>SpringCloud</tag>
       
       <tag>Elasticsearch</tag>
       
@@ -1425,9 +1425,9 @@
     
     <tags>
       
-      <tag>SpringCloud</tag>
-      
       <tag>学习</tag>
+      
+      <tag>SpringCloud</tag>
       
       <tag>RabbitMQ</tag>
       
@@ -1454,9 +1454,9 @@
     
     <tags>
       
-      <tag>开发工具</tag>
-      
       <tag>学习</tag>
+      
+      <tag>开发工具</tag>
       
       <tag>Docker</tag>
       
@@ -1485,9 +1485,9 @@
     
     <tags>
       
-      <tag>SpringCloud</tag>
-      
       <tag>学习</tag>
+      
+      <tag>SpringCloud</tag>
       
       <tag>MybatisPlus</tag>
       
@@ -1572,11 +1572,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>git</tag>
       
       <tag>开发工具</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -1601,9 +1601,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javaweb</tag>
       
@@ -1630,9 +1630,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javase</tag>
       
@@ -1659,9 +1659,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javase</tag>
       
@@ -1688,9 +1688,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
+      
+      <tag>学习</tag>
       
       <tag>JavaScript</tag>
       
@@ -1744,9 +1744,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
+      
+      <tag>学习</tag>
       
       <tag>CSS</tag>
       
@@ -1773,11 +1773,11 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
       
       <tag>HTML</tag>
+      
+      <tag>学习</tag>
       
     </tags>
     
