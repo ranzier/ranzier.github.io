@@ -397,9 +397,9 @@
     
     <tags>
       
-      <tag>八股</tag>
-      
       <tag>JVM</tag>
+      
+      <tag>八股</tag>
       
       <tag>StringTable</tag>
       
@@ -714,6 +714,37 @@
   
   
   <entry>
+    <title>Canal实现数据同步的工作原理</title>
+    <link href="/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"/>
+    <url>/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">Canal实现数据同步的工作原理</h1><h1 id="1-Canal的核心原理和整体流程"><a href="#1-Canal的核心原理和整体流程" class="headerlink" title="1. Canal的核心原理和整体流程"></a>1. Canal的核心原理和整体流程</h1><p><strong>Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。</strong></p><p>Canal 数据流动的整体链路：</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">MySQL 写入（<span class="hljs-keyword">INSERT</span>/<span class="hljs-keyword">UPDATE</span>/<span class="hljs-keyword">DELETE</span>）<br>          ↓（生成binlog）<br>Canal <span class="hljs-keyword">Server</span> 订阅 binlog（伪装成 slave）<br>          ↓<br>Canal Client（你的 aimin-drug 微服务）<br>          ↓<br>你写的 CanalReceiver 对数据进行处理<br>          ↓<br>同步到 ES / Redis / MQ / 其他地方<br></code></pre></td></tr></table></figure><p><img src="/img/blogs/canal/1.png"></p><h1 id="2-MySQL-产生-binlog（变更日志）"><a href="#2-MySQL-产生-binlog（变更日志）" class="headerlink" title="2. MySQL 产生 binlog（变更日志）"></a>2. MySQL 产生 binlog（变更日志）</h1><p>只要执行：</p><ul><li>INSERT</li><li>UPDATE</li><li>DELETE</li></ul><p>MySQL都会把变化记录到 binlog（Binary log）中。</p><p>binlog 里面存的是<strong>数据变更事件</strong>，例如：</p><table><thead><tr><th>操作</th><th>binlog中记录</th></tr></thead><tbody><tr><td>Insert</td><td>row 新增的数据</td></tr><tr><td>Update</td><td>修改前 &amp; 修改后的值</td></tr><tr><td>Delete</td><td>删除前的值</td></tr></tbody></table><h1 id="3-Canal的具体工作流程"><a href="#3-Canal的具体工作流程" class="headerlink" title="3. Canal的具体工作流程"></a>3. Canal的具体工作流程</h1><ol><li>Canal Server 会去连接 MySQL：<ul><li>以 <code>slave</code> 的身份注册</li><li>发送 <code>show master status</code></li><li>读取 binlog 的位置点（binlog filename + position）</li><li>持续向 MySQL 发送 dump 请求 —— 和从库一样</li></ul></li><li>MySQL 不断把 binlog 推给 Canal Server<ul><li>当 Canal Server 模拟从库连接后，MySQL 会不断把 binlog 内容“推送”给 Canal。</li></ul></li><li>Canal Server 把 binlog 解析并封装成 Java 对象，执行后续逻辑</li></ol><p><img src="/img/blogs/canal/2.png"></p><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>JAVA</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JAVA</tag>
+      
+      <tag>Canal</tag>
+      
+      <tag>ES</tag>
+      
+      <tag>MQ</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>使用Canal将数据库中的变更同步到ES中，实现数据同步功能</title>
     <link href="/2025/11/24/JAVA/JAVA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/AIMIN%E9%A1%B9%E7%9B%AE/%E9%9B%86%E6%88%90Canal%E5%92%8CRabbitMQ%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/"/>
     <url>/2025/11/24/JAVA/JAVA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/AIMIN%E9%A1%B9%E7%9B%AE/%E9%9B%86%E6%88%90Canal%E5%92%8CRabbitMQ%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/</url>
@@ -739,37 +770,6 @@
       <tag>Canal</tag>
       
       <tag>ES</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>Canal实现数据同步的工作原理</title>
-    <link href="/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"/>
-    <url>/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</url>
-    
-    <content type="html"><![CDATA[<h1 align="center">Canal实现数据同步的工作原理</h1><h1 id="1-Canal的核心原理和整体流程"><a href="#1-Canal的核心原理和整体流程" class="headerlink" title="1. Canal的核心原理和整体流程"></a>1. Canal的核心原理和整体流程</h1><p><strong>Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。</strong></p><p>Canal 数据流动的整体链路：</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">MySQL 写入（<span class="hljs-keyword">INSERT</span>/<span class="hljs-keyword">UPDATE</span>/<span class="hljs-keyword">DELETE</span>）<br>          ↓（生成binlog）<br>Canal <span class="hljs-keyword">Server</span> 订阅 binlog（伪装成 slave）<br>          ↓<br>Canal Client（你的 aimin-drug 微服务）<br>          ↓<br>你写的 CanalReceiver 对数据进行处理<br>          ↓<br>同步到 ES / Redis / MQ / 其他地方<br></code></pre></td></tr></table></figure><p><img src="/img/blogs/canal/1.png"></p><h1 id="2-MySQL-产生-binlog（变更日志）"><a href="#2-MySQL-产生-binlog（变更日志）" class="headerlink" title="2. MySQL 产生 binlog（变更日志）"></a>2. MySQL 产生 binlog（变更日志）</h1><p>只要执行：</p><ul><li>INSERT</li><li>UPDATE</li><li>DELETE</li></ul><p>MySQL都会把变化记录到 binlog（Binary log）中。</p><p>binlog 里面存的是<strong>数据变更事件</strong>，例如：</p><table><thead><tr><th>操作</th><th>binlog中记录</th></tr></thead><tbody><tr><td>Insert</td><td>row 新增的数据</td></tr><tr><td>Update</td><td>修改前 &amp; 修改后的值</td></tr><tr><td>Delete</td><td>删除前的值</td></tr></tbody></table><h1 id="3-Canal的具体工作流程"><a href="#3-Canal的具体工作流程" class="headerlink" title="3. Canal的具体工作流程"></a>3. Canal的具体工作流程</h1><ol><li>Canal Server 会去连接 MySQL：<ul><li>以 <code>slave</code> 的身份注册</li><li>发送 <code>show master status</code></li><li>读取 binlog 的位置点（binlog filename + position）</li><li>持续向 MySQL 发送 dump 请求 —— 和从库一样</li></ul></li><li>MySQL 不断把 binlog 推给 Canal Server<ul><li>当 Canal Server 模拟从库连接后，MySQL 会不断把 binlog 内容“推送”给 Canal。</li></ul></li><li>Canal Server 把 binlog 解析并封装成 Java 对象，执行后续逻辑</li></ol><p><img src="/img/blogs/canal/2.png"></p><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
-    
-    
-    <categories>
-      
-      <category>JAVA</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>JAVA</tag>
-      
-      <tag>Canal</tag>
-      
-      <tag>ES</tag>
-      
-      <tag>MQ</tag>
       
     </tags>
     
@@ -1363,9 +1363,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>SpringCloud</tag>
+      
+      <tag>学习</tag>
       
       <tag>JAVA</tag>
       
@@ -1394,9 +1394,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>SpringCloud</tag>
+      
+      <tag>学习</tag>
       
       <tag>Elasticsearch</tag>
       
@@ -1425,9 +1425,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>SpringCloud</tag>
+      
+      <tag>学习</tag>
       
       <tag>RabbitMQ</tag>
       
@@ -1485,9 +1485,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>SpringCloud</tag>
+      
+      <tag>学习</tag>
       
       <tag>MybatisPlus</tag>
       
@@ -1831,11 +1831,11 @@
       
       <tag>AI</tag>
       
-      <tag>论文</tag>
-      
       <tag>信息与通信</tag>
       
       <tag>强化学习</tag>
+      
+      <tag>论文</tag>
       
     </tags>
     
