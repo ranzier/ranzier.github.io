@@ -21,23 +21,27 @@
   <meta name="author" content="ranzier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="2026下半年面经1. 虾皮一面 26.08.13（朋友面经）50min search部门 自我介绍 介绍一下vivo的实习agent是做什么的？ RAG架构怎么做的？为什么用BGE‑M3？效果怎么样？RRF选了多少个文档？为什么用RRF不用加权融合？ 你们的文档大小有多大？ 如果有一亿个文档存入你们这样的RAG架构，那最先顶不住的的是哪一个环节？ 如果要存一亿个文档的RAG怎么检索出来最想要的那">
+    <meta name="description" content="微调的基本步骤">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RANZIER">
-<meta property="og:url" content="http://example.com/2026/08/14/%E9%9D%A2%E7%BB%8F/2026%E4%B8%8B%E5%8D%8A%E5%B9%B4%E9%9D%A2%E7%BB%8F/index.html">
+<meta property="og:title" content="微调的基本步骤">
+<meta property="og:url" content="http://example.com/2026/08/18/FT/%E5%BE%AE%E8%B0%83%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/index.html">
 <meta property="og:site_name" content="RANZIER">
-<meta property="og:description" content="2026下半年面经1. 虾皮一面 26.08.13（朋友面经）50min search部门 自我介绍 介绍一下vivo的实习agent是做什么的？ RAG架构怎么做的？为什么用BGE‑M3？效果怎么样？RRF选了多少个文档？为什么用RRF不用加权融合？ 你们的文档大小有多大？ 如果有一亿个文档存入你们这样的RAG架构，那最先顶不住的的是哪一个环节？ 如果要存一亿个文档的RAG怎么检索出来最想要的那">
+<meta property="og:description" content="微调的基本步骤">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-08-14T03:06:22.967Z">
-<meta property="article:modified_time" content="2026-08-14T03:36:36.216Z">
+<meta property="og:image" content="http://example.com/img/bg/73.jpg">
+<meta property="article:published_time" content="2026-08-18T03:43:24.000Z">
+<meta property="article:modified_time" content="2026-08-17T03:43:44.209Z">
 <meta property="article:author" content="ranzier">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="微调">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/bg/73.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>RANZIER</title>
+  <title>微调的基本步骤 - RANZIER</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -222,7 +226,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="微调的基本步骤"></span>
           
         </div>
 
@@ -233,8 +237,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-08-14 11:06" pubdate>
-          2026年8月14日 上午
+        <time datetime="2026-08-18 11:43" pubdate>
+          2026年8月18日 中午
         </time>
       </span>
     
@@ -245,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          536 字
+          7 字
         
       </span>
     
@@ -256,7 +260,7 @@
         
         
         
-          3 分钟
+          1 分钟
         
       </span>
     
@@ -306,40 +310,27 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header"></h1>
+            <h1 id="seo-header">微调的基本步骤</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="2026下半年面经"><a href="#2026下半年面经" class="headerlink" title="2026下半年面经"></a>2026下半年面经</h1><h2 id="1-虾皮一面-26-08-13（朋友面经）50min-search部门"><a href="#1-虾皮一面-26-08-13（朋友面经）50min-search部门" class="headerlink" title="1. 虾皮一面 26.08.13（朋友面经）50min search部门"></a>1. 虾皮一面 26.08.13（朋友面经）50min search部门</h2><ol>
-<li>自我介绍</li>
-<li>介绍一下vivo的实习agent是做什么的？</li>
-<li>RAG架构怎么做的？为什么用BGE‑M3？效果怎么样？RRF选了多少个文档？为什么用RRF不用加权融合？</li>
-<li>你们的文档大小有多大？</li>
-<li>如果有一亿个文档存入你们这样的RAG架构，那最先顶不住的的是哪一个环节？</li>
-<li>如果要存一亿个文档的RAG怎么检索出来最想要的那1个？查询检索时间要控制在200ms左右</li>
-<li>如果要存一亿个文档的RAG怎么RRF检索出来最想要的那5000个？</li>
-<li>做目录的话可能只能做到500w个，距离5000个还有很大的距离，进一步怎么做？</li>
-<li>RAG的效果怎么测评？召回率的计算公式是什么？如何提高召回率？你们怎么做的召回率效果的评估？</li>
-<li>Reranker模型怎么做的？</li>
-<li>知道搜索引擎吗？ES的底层原理是什么？</li>
-<li>除了RAG还做了什么？</li>
-<li>什么是ReAct？ReAct怎么停止？到了最大步数了LLM还在执行怎么办？</li>
-<li>ReAct带来的上下文快速膨胀的问题怎么解决？</li>
-<li>除了ReAct还做了哪些Agent调优工作？</li>
-<li>介绍一下Go的实习项目</li>
-<li>用户量有多大？什么叫削峰填谷？</li>
-<li>怎么保证的高可用？什么叫不可用？</li>
-<li>为什么做成这样的架构？要Go去调Python服务？</li>
-<li>你们这个Go‑Redis‑Python服务，如果有一个节点挂了怎么监控？</li>
-<li>Python服务如何监控保证100%其挂了马上就能发现？</li>
-<li>只用心跳监控和多机部署可以保证马上发现吗？</li>
-<li>做支付的时候怎么保证零掉单？只有补单机制可以快速保证零掉单吗？补单定时任务的时间是多长？</li>
-<li>零差错如何定义？</li>
-<li>实习工作中还有哪些亮点我没有问到的吗？</li>
-<li>平时用AI做过什么创造性价值的工作？</li>
-<li>反问：业务和实习生的工作内容</li>
-</ol>
+                <h1 align="center">微调的基本步骤</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 
               </div>
@@ -348,6 +339,36 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BE%AE%E8%B0%83/" class="category-chain-item">微调</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/AI/" class="print-no-link">#AI</a>
+      
+        <a href="/tags/%E5%BE%AE%E8%B0%83/" class="print-no-link">#微调</a>
+      
+    </div>
   
 </div>
 
@@ -359,18 +380,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/08/14/DeveloperTools/%E5%A6%82%E4%BD%95%E5%B0%86deepseek%20api%E6%8E%A5%E5%85%A5claude%20code/" title="如何将deepseek api接入到claude code">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">如何将deepseek api接入到claude code</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/05/01/3d/%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3/" title="三维重建项目文档">
-                        <span class="hidden-mobile">三维重建项目文档</span>
+                      <a href="/2026/08/17/%E9%9D%A2%E7%BB%8F/2026%E4%B8%8B%E5%8D%8A%E5%B9%B4%E9%9D%A2%E7%BB%8F/" title="2026下半年面经">
+                        <span class="hidden-mobile">2026下半年面经</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

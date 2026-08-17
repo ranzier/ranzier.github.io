@@ -21,29 +21,26 @@
   <meta name="author" content="ranzier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Canal实现数据同步的工作原理   1. Canal的核心原理和整体流程Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。 Canal 数据流动的整体链路： 123456789MySQL 写入（INSER">
+    <meta name="description" content="2026下半年面经    1. 虾皮一面 26.08.13（朋友面经）50min search部门 自我介绍 介绍一下vivo的实习agent是做什么的？ RAG架构怎么做的？为什么用BGE‑M3？效果怎么样？RRF选了多少个文档？为什么用RRF不用加权融合？ 你们的文档大小有多大？ 如果有一亿个文档存入你们这样的RAG架构，那最先顶不住的的是哪一个环节？ 如果要存一亿个文档的RAG怎么检索出来最">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Canal实现数据同步的工作原理">
-<meta property="og:url" content="http://example.com/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:title" content="2026下半年面经">
+<meta property="og:url" content="http://example.com/2026/08/17/%E9%9D%A2%E7%BB%8F/2026%E4%B8%8B%E5%8D%8A%E5%B9%B4%E9%9D%A2%E7%BB%8F/index.html">
 <meta property="og:site_name" content="RANZIER">
-<meta property="og:description" content="Canal实现数据同步的工作原理   1. Canal的核心原理和整体流程Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。 Canal 数据流动的整体链路： 123456789MySQL 写入（INSER">
+<meta property="og:description" content="2026下半年面经    1. 虾皮一面 26.08.13（朋友面经）50min search部门 自我介绍 介绍一下vivo的实习agent是做什么的？ RAG架构怎么做的？为什么用BGE‑M3？效果怎么样？RRF选了多少个文档？为什么用RRF不用加权融合？ 你们的文档大小有多大？ 如果有一亿个文档存入你们这样的RAG架构，那最先顶不住的的是哪一个环节？ 如果要存一亿个文档的RAG怎么检索出来最">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/bg/51.jpg">
-<meta property="article:published_time" content="2025-11-24T14:35:35.000Z">
-<meta property="article:modified_time" content="2025-11-24T09:45:08.000Z">
+<meta property="og:image" content="http://example.com/img/bg/72.jpg">
+<meta property="article:published_time" content="2026-08-17T03:50:24.000Z">
+<meta property="article:modified_time" content="2026-08-17T03:43:47.539Z">
 <meta property="article:author" content="ranzier">
-<meta property="article:tag" content="Canal">
-<meta property="article:tag" content="ES">
-<meta property="article:tag" content="JAVA">
-<meta property="article:tag" content="MQ">
+<meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/bg/51.jpg">
+<meta name="twitter:image" content="http://example.com/img/bg/72.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Canal实现数据同步的工作原理 - RANZIER</title>
+  <title>2026下半年面经 - RANZIER</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +225,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Canal实现数据同步的工作原理"></span>
+            <span id="subtitle" data-typed-text="2026下半年面经"></span>
           
         </div>
 
@@ -239,8 +236,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-11-24 22:35" pubdate>
-          2025年11月24日 晚上
+        <time datetime="2026-08-17 11:50" pubdate>
+          2026年8月17日 中午
         </time>
       </span>
     
@@ -251,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          281 字
+          536 字
         
       </span>
     
@@ -262,7 +259,7 @@
         
         
         
-          2 分钟
+          3 分钟
         
       </span>
     
@@ -312,63 +309,45 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Canal实现数据同步的工作原理</h1>
+            <h1 id="seo-header">2026下半年面经</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 align="center">Canal实现数据同步的工作原理</h1>
+                <h1 align="center">2026下半年面经</h1>
 
 
-<h1 id="1-Canal的核心原理和整体流程"><a href="#1-Canal的核心原理和整体流程" class="headerlink" title="1. Canal的核心原理和整体流程"></a>1. Canal的核心原理和整体流程</h1><p><strong>Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。</strong></p>
-<p>Canal 数据流动的整体链路：</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">MySQL 写入（<span class="hljs-keyword">INSERT</span>/<span class="hljs-keyword">UPDATE</span>/<span class="hljs-keyword">DELETE</span>）<br>          ↓（生成binlog）<br>Canal <span class="hljs-keyword">Server</span> 订阅 binlog（伪装成 slave）<br>          ↓<br>Canal Client（你的 aimin-drug 微服务）<br>          ↓<br>你写的 CanalReceiver 对数据进行处理<br>          ↓<br>同步到 ES / Redis / MQ / 其他地方<br></code></pre></td></tr></table></figure>
 
-<p><img src="/img/blogs/canal/1.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="2-MySQL-产生-binlog（变更日志）"><a href="#2-MySQL-产生-binlog（变更日志）" class="headerlink" title="2. MySQL 产生 binlog（变更日志）"></a>2. MySQL 产生 binlog（变更日志）</h1><p>只要执行：</p>
-<ul>
-<li>INSERT</li>
-<li>UPDATE</li>
-<li>DELETE</li>
-</ul>
-<p>MySQL都会把变化记录到 binlog（Binary log）中。</p>
-<p>binlog 里面存的是<strong>数据变更事件</strong>，例如：</p>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>binlog中记录</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Insert</td>
-<td>row 新增的数据</td>
-</tr>
-<tr>
-<td>Update</td>
-<td>修改前 &amp; 修改后的值</td>
-</tr>
-<tr>
-<td>Delete</td>
-<td>删除前的值</td>
-</tr>
-</tbody></table>
-<h1 id="3-Canal的具体工作流程"><a href="#3-Canal的具体工作流程" class="headerlink" title="3. Canal的具体工作流程"></a>3. Canal的具体工作流程</h1><ol>
-<li>Canal Server 会去连接 MySQL：<ul>
-<li>以 <code>slave</code> 的身份注册</li>
-<li>发送 <code>show master status</code></li>
-<li>读取 binlog 的位置点（binlog filename + position）</li>
-<li>持续向 MySQL 发送 dump 请求 —— 和从库一样</li>
-</ul>
-</li>
-<li>MySQL 不断把 binlog 推给 Canal Server<ul>
-<li>当 Canal Server 模拟从库连接后，MySQL 会不断把 binlog 内容“推送”给 Canal。</li>
-</ul>
-</li>
-<li>Canal Server 把 binlog 解析并封装成 Java 对象，执行后续逻辑</li>
+<h2 id="1-虾皮一面-26-08-13（朋友面经）50min-search部门"><a href="#1-虾皮一面-26-08-13（朋友面经）50min-search部门" class="headerlink" title="1. 虾皮一面 26.08.13（朋友面经）50min search部门"></a>1. 虾皮一面 26.08.13（朋友面经）50min search部门</h2><ol>
+<li>自我介绍</li>
+<li>介绍一下vivo的实习agent是做什么的？</li>
+<li>RAG架构怎么做的？为什么用BGE‑M3？效果怎么样？RRF选了多少个文档？为什么用RRF不用加权融合？</li>
+<li>你们的文档大小有多大？</li>
+<li>如果有一亿个文档存入你们这样的RAG架构，那最先顶不住的的是哪一个环节？</li>
+<li>如果要存一亿个文档的RAG怎么检索出来最想要的那1个？查询检索时间要控制在200ms左右</li>
+<li>如果要存一亿个文档的RAG怎么RRF检索出来最想要的那5000个？</li>
+<li>做目录的话可能只能做到500w个，距离5000个还有很大的距离，进一步怎么做？</li>
+<li>RAG的效果怎么测评？召回率的计算公式是什么？如何提高召回率？你们怎么做的召回率效果的评估？</li>
+<li>Reranker模型怎么做的？</li>
+<li>知道搜索引擎吗？ES的底层原理是什么？</li>
+<li>除了RAG还做了什么？</li>
+<li>什么是ReAct？ReAct怎么停止？到了最大步数了LLM还在执行怎么办？</li>
+<li>ReAct带来的上下文快速膨胀的问题怎么解决？</li>
+<li>除了ReAct还做了哪些Agent调优工作？</li>
+<li>介绍一下Go的实习项目</li>
+<li>用户量有多大？什么叫削峰填谷？</li>
+<li>怎么保证的高可用？什么叫不可用？</li>
+<li>为什么做成这样的架构？要Go去调Python服务？</li>
+<li>你们这个Go‑Redis‑Python服务，如果有一个节点挂了怎么监控？</li>
+<li>Python服务如何监控保证100%其挂了马上就能发现？</li>
+<li>只用心跳监控和多机部署可以保证马上发现吗？</li>
+<li>做支付的时候怎么保证零掉单？只有补单机制可以快速保证零掉单吗？补单定时任务的时间是多长？</li>
+<li>零差错如何定义？</li>
+<li>实习工作中还有哪些亮点我没有问到的吗？</li>
+<li>平时用AI做过什么创造性价值的工作？</li>
+<li>反问：业务和实习生的工作内容</li>
 </ol>
-<p><img src="/img/blogs/canal/2.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>
+
                 
               </div>
             
@@ -386,7 +365,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/JAVA/" class="category-chain-item">JAVA</a>
+  <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="category-chain-item">面经</a>
   
   
 
@@ -401,13 +380,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/JAVA/" class="print-no-link">#JAVA</a>
-      
-        <a href="/tags/Canal/" class="print-no-link">#Canal</a>
-      
-        <a href="/tags/ES/" class="print-no-link">#ES</a>
-      
-        <a href="/tags/MQ/" class="print-no-link">#MQ</a>
+        <a href="/tags/%E9%9D%A2%E8%AF%95/" class="print-no-link">#面试</a>
       
     </div>
   
@@ -421,9 +394,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/11/24/JAVA/JAVA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/AIMIN%E9%A1%B9%E7%9B%AE/%E9%9B%86%E6%88%90Canal%E5%92%8CRabbitMQ%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/" title="使用Canal将数据库中的变更同步到ES中，实现数据同步功能">
+                      <a href="/2026/08/18/FT/%E5%BE%AE%E8%B0%83%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/" title="微调的基本步骤">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">使用Canal将数据库中的变更同步到ES中，实现数据同步功能</span>
+                        <span class="hidden-mobile">微调的基本步骤</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -431,8 +404,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/11/24/AI/AI%E9%A1%B9%E7%9B%AE/%E5%A6%82%E4%BD%95%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90AI%E5%AF%B9%E8%AF%9D%E5%8A%9F%E8%83%BD/" title="基于SpringAI实现会话记忆和对话内容持久化的AI对话服务">
-                        <span class="hidden-mobile">基于SpringAI实现会话记忆和对话内容持久化的AI对话服务</span>
+                      <a href="/2026/08/17/FT/%E5%BE%AE%E8%B0%83%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="微调的基础知识">
+                        <span class="hidden-mobile">微调的基础知识</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
