@@ -4,11 +4,36 @@
   
   
   <entry>
+    <title>三维重建项目文档2.0</title>
+    <link href="/2026/08/18/3d/%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3-%E4%BA%94%E7%B1%BB%E5%9B%BE%E7%BA%B8/"/>
+    <url>/2026/08/18/3d/%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3-%E4%BA%94%E7%B1%BB%E5%9B%BE%E7%BA%B8/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">三维重建二维转三维担架部分项目文档2.0</h1><h1 id="1-总体概览"><a href="#1-总体概览" class="headerlink" title="1. 总体概览"></a>1. 总体概览</h1><h3 id="1-1-输入"><a href="#1-1-输入" class="headerlink" title="1.1 输入"></a>1.1 输入</h3><p>每个担架的三视图的杆件及对应的二维坐标</p><p><code>杆件ID</code>: <code>[左端点(x,y),右端点(x,y)]</code></p><ul><li>正视图：<code>coordinatesFront_data</code></li><li>底视图：<code>coordinatesBottom_data</code></li><li>顶视图：<code>coordinatesOverhead_data</code></li></ul><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs makefile">coordinatesFront_data=&#123;<br><span class="hljs-section">106:[(646.0281930611799,342.53768195250086),(660.2590727783954,613.9408879879702)],</span><br><span class="hljs-section">105:[(203.7373011800923,347.7106748399989),(620.4367599213521,639.6744403396317)],</span><br><span class="hljs-section">103:[(240.64789004321037,885.0975728601636),(1088.2557311595408,337.3654300449176)],</span><br><span class="hljs-section">101:[(203.7373011800923,347.7106748399989),(1088.2557311595408,337.3654300449176)],</span><br>&#125;<br>coordinatesBottom_data=&#123;<br><span class="hljs-section">119:[(630.1258693028335,518.7340651761596),(1278.9278879433205,620.6886681053786)],</span><br><span class="hljs-section">103:[(310.11096106234515,725.8634556230776),(983.3900198457354,290.0841295496858)],</span><br><span class="hljs-section">104:[(784.4021660422503,1254.0464061958883),(1278.9278879433205,620.6886681053786)],</span><br><span class="hljs-section">118:[(983.3900198457354,290.0841295496858),(1018.1405904800162,954.6887929303084)],</span><br><span class="hljs-section">116:[(626.3346511498411,521.1879280583553),(784.4021660422503,1254.0464061958883)],</span><br><span class="hljs-section">117:[(310.11096106234515,725.8634556230776),(1018.6215195146591,954.0728489822498)],</span><br>&#125;<br>coordinatesOverhead_data=&#123;<br><span class="hljs-section">102:[(96.6401359210612,475.9291642161667),(961.9289558665229,611.903121636168)],</span><br><span class="hljs-section">108:[(98.2077827818514,1150.819369486731),(552.7310243183496,547.6005895357405)],</span><br><span class="hljs-section">110:[(556.2979668323961,1077.868239473998),(961.9289558665229,611.903121636168)],</span><br><span class="hljs-section">101:[(98.2077827818514,1150.819369486731),(964.1463078156362,1012.9181523853322)],</span><br><span class="hljs-section">109:[(96.6401359210612,475.9291642161667),(551.1408795062896,1078.6895086500524)],</span><br><span class="hljs-section">111:[(560.3147685231477,548.7923207679231),(964.1463078156362,1012.9181523853322)],</span><br><span class="hljs-section">112:[(961.9289558665229,611.903121636168),(964.1463078156362,1012.9181523853322)],</span><br>&#125;<br></code></pre></td></tr></table></figure><h3 id="1-2-输出"><a href="#1-2-输出" class="headerlink" title="1.2 输出"></a>1.2 输出</h3><p>输出分两部分：</p><ul><li><strong>节点</strong>的三维信息：<code>(节点编号：X坐标，Y坐标，Z坐标，对称性)</code></li><li><strong>杆件</strong>的三维信息：<code>(杆件编号：起点节点，终点节点，对称性)</code></li></ul><p><img src="/img/blogs/3d/sanwei2/1.png"></p><p><img src="/img/blogs/3d/sanwei2/2.png"></p><h4 id="1-2-1-对称性"><a href="#1-2-1-对称性" class="headerlink" title="1.2.1 对称性"></a>1.2.1 对称性</h4><p><strong>节点和杆件的对称性</strong></p><ul><li>0：代表没有对称性，就这一个<strong>单独的节点&#x2F;杆件</strong></li><li>1：左右对称（对称性1）</li><li>2：前后对称（对称性2）</li><li>3：关于Z轴对称（对称性3）</li><li>4：以及四角对称（对称性4）</li></ul><h4 id="1-2-2-XYZ坐标的表示"><a href="#1-2-2-XYZ坐标的表示" class="headerlink" title="1.2.2 XYZ坐标的表示"></a>1.2.2 XYZ坐标的表示</h4><ul><li><strong>一类节点</strong>（一类杆件的两个端点）：真实的<code>(x,y,z)</code>三维坐标表示</li><li><strong>二类节点</strong>（非一类节点）：<code>x</code>坐标用<strong>真实值</strong>；<code>(y,z)</code>分别用一类杆件的两个端点节点编号表示(引用表示法)</li></ul><h4 id="1-2-3-XYZ坐标轴的方向"><a href="#1-2-3-XYZ坐标轴的方向" class="headerlink" title="1.2.3 XYZ坐标轴的方向"></a>1.2.3 XYZ坐标轴的方向</h4><ul><li><code>X轴</code>：从左往右</li><li><code>Y轴</code>：从前往后</li><li><code>Z轴</code>：从上到下</li></ul><p><img src="/img/blogs/3d/image1.png"></p><p><img src="/img/blogs/3d/image2.png"></p><h1 id="2-构建步骤"><a href="#2-构建步骤" class="headerlink" title="2. 构建步骤"></a>2. 构建步骤</h1><p>整体分为两大部分：</p><ol><li>只有两根主杆的：以前图纸以及直流塔的 01、02 号担架：使用 <code>xintrans.py</code> 中的通用重建流程。</li><li>有不止两根主杆的：直流塔的 03、04、05、06 号复合担架：总调度仍在 <code>xintrans.py</code>，正视图的特殊骨架和二类结构由 <code>zhiliu_near_front_reconstruction.py</code> 处理，底视图、顶视图以及三类结构尽量复用通用流程。</li></ol><h2 id="2-0"><a href="#2-0" class="headerlink" title="2.0"></a>2.0</h2><h3 id="通用重建流程"><a href="#通用重建流程" class="headerlink" title="通用重建流程"></a>通用重建流程</h3><pre><code class=" mermaid">flowchart TD    A[&quot;输入三视图二维坐标&lt;br/&gt;及塔身连接点 pj&quot;] --&gt; B[&quot;各视图识别两根一类杆件&lt;br/&gt;长度优先 + 最小编号校验&quot;]    B --&gt; C[&quot;生成一类节点&lt;br/&gt;复用塔身连接点&lt;br/&gt;计算尖点真实 XYZ&quot;]    C --&gt; D[&quot;生成一类杆件&lt;br/&gt;连接点 → 尖点&quot;]    D --&gt; E[&quot;查找跨接两根一类杆件的杆件&quot;]    E --&gt; F[&quot;生成二类节点&lt;br/&gt;真实 X + Y/Z 端点引用&quot;]    F --&gt; G[&quot;生成二类杆件&lt;br/&gt;保留具有两个有效节点的杆件&quot;]    G --&gt; H[&quot;找出尚未生成的杆件&quot;]    H --&gt; I[&quot;生成三类节点&lt;br/&gt;与一类、二类杆件求交&quot;]    I --&gt; J[&quot;生成三类杆件&lt;br/&gt;保留具有两个有效节点的杆件&quot;]    J --&gt; K[&quot;底视图、顶视图&lt;br/&gt;执行相同重建流程&quot;]    K --&gt; L[&quot;合并全部节点和杆件&quot;]    L --&gt; M[&quot;归一化节点编号并输出&quot;]</code></pre><h3 id="直流塔复合担架重建流程"><a href="#直流塔复合担架重建流程" class="headerlink" title="直流塔复合担架重建流程"></a>直流塔复合担架重建流程</h3><pre><code class=" mermaid">flowchart TD    A[&quot;输入直流塔三视图坐标&lt;br/&gt;及塔身连接点 pj&quot;] --&gt; B[&quot;按固定顺序执行&lt;br/&gt;01 → 02 → 04 → 03 → 06 → 05&quot;]    B --&gt; C[&quot;先重建靠塔担架 04、06&quot;]    C --&gt; D[&quot;正视图识别三根一类杆件&lt;br/&gt;水平主杆 + 斜主杆 + 一类副杆&quot;]    D --&gt; E[&quot;生成一类节点真实 XYZ&lt;br/&gt;并生成一类杆件&quot;]    E --&gt; F[&quot;将正视图划分为两片框架&lt;br/&gt;水平杆—斜杆&lt;br/&gt;水平杆—副杆&quot;]    F --&gt; G[&quot;分别生成二类节点和二类杆件&lt;br/&gt;复用公共节点并按杆件编号去重&quot;]    G --&gt; H[&quot;复用通用流程&lt;br/&gt;生成正视图三类结构&quot;]    H --&gt; I[&quot;底视图复用通用流程&lt;br/&gt;采用水平主杆真实端点&quot;]    I --&gt; J[&quot;顶视图复用通用流程&lt;br/&gt;采用斜主杆真实端点&quot;]    J --&gt; K[&quot;传递复合担架连接点&lt;br/&gt;04 → 03，06 → 05&quot;]    K --&gt; L[&quot;重建外层担架 03、05&quot;]    L --&gt; M[&quot;接收 04、06 的内端连接点&lt;br/&gt;计算上、下主杆的外端 XYZ&quot;]    M --&gt; N[&quot;生成两根一类杆件&lt;br/&gt;及其四个真实端点&quot;]    N --&gt; O[&quot;生成上、下主杆之间的&lt;br/&gt;二类节点和二类杆件&quot;]    O --&gt; P[&quot;复用通用流程&lt;br/&gt;生成三类节点和三类杆件&quot;]    P --&gt; Q[&quot;底视图、顶视图&lt;br/&gt;继续复用通用流程&quot;]    Q --&gt; R[&quot;合并 03—06 的全部节点和杆件&quot;]    R --&gt; S[&quot;归一化节点编号并输出&quot;]</code></pre><h2 id="2-1-通用重建流程"><a href="#2-1-通用重建流程" class="headerlink" title="2.1 通用重建流程"></a>2.1 通用重建流程</h2><p>针对只有两根主杆（一类杆件）的担架</p><h3 id="2-1-1-一类杆件和一类节点的重建"><a href="#2-1-1-一类杆件和一类节点的重建" class="headerlink" title="2.1.1 一类杆件和一类节点的重建"></a>2.1.1 一类杆件和一类节点的重建</h3><h4 id="A-找到确定一类杆件"><a href="#A-找到确定一类杆件" class="headerlink" title="A. 找到确定一类杆件"></a>A. 找到确定一类杆件</h4><ul><li>找到两根<strong>最长</strong>的杆件并且这两根杆件的<strong>编号最小</strong>，则认为是两根主杆</li></ul><p><img src="/img/blogs/3d/sanwei2/3.png"></p><h4 id="B-生成一类节点"><a href="#B-生成一类节点" class="headerlink" title="B. 生成一类节点"></a>B. 生成一类节点</h4><p>也就是生成两根一类杆件的两个端点的三维节点坐标</p><ol><li>塔身连接点</li></ol><ul><li>两根正视图一类杆件的连接端直接复用 <code>pj</code> 中由塔身传入的节点编号和真实三维坐标，不重复创建新节点。</li></ul><ol start="2"><li>尖点<ul><li>两根一类杆件端点的相交点，得到真实的三维（x,y,z）</li></ul></li></ol><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs markdown">尖点由 <span class="hljs-code">`calc_jiandian_xyz()`</span> 计算，基本路线如下：<br><br><span class="hljs-bullet">1.</span> 在用于标定的底视图或顶视图中，分别计算两根一类杆件起点的中点和终点的中点。<br><span class="hljs-bullet">2.</span> 两个中点之间的像素距离表示担架从塔身连接端到尖端的轴向长度。<br><span class="hljs-bullet">3.</span> 一类杆件在塔身连接侧的像素半宽，与 <span class="hljs-code">`pj`</span> 中连接点的实际横向坐标绝对值共同确定“真实长度/像素长度”的比例。<br><span class="hljs-bullet">4.</span> 根据担架位于塔身左侧还是右侧，沿正或负方向计算尖点真实 X。<br><span class="hljs-bullet">5.</span> 尖端剩余半宽乘比例得到真实 Y；真实 Z 沿用对应上连接点或下连接点的 Z。<br></code></pre></td></tr></table></figure><p><img src="/img/blogs/3d/sanwei2/4.png"></p><h4 id="C-生成一类杆件信息"><a href="#C-生成一类杆件信息" class="headerlink" title="C. 生成一类杆件信息"></a>C. 生成一类杆件信息</h4><p>正视图的两根一类杆件分别连接：</p><ul><li>上连接点与尖点；</li><li>下连接点与尖点。</li></ul><p>底视图、顶视图识别出的两根杆主要作为同一空间骨架在不同视图中的投影基准，用来确定节点和其他杆件，不在通用分支中重复添加为新的实体主杆。</p><h3 id="2-1-2-二类杆件和二类节点的重建"><a href="#2-1-2-二类杆件和二类节点的重建" class="headerlink" title="2.1.2 二类杆件和二类节点的重建"></a>2.1.2 二类杆件和二类节点的重建</h3><h4 id="A-查找并计算二类节点"><a href="#A-查找并计算二类节点" class="headerlink" title="A. 查找并计算二类节点"></a>A. 查找并计算二类节点</h4><p>遍历当前视图中除两根一类杆件以外的所有杆件：</p><ol><li>两个端点都在一类杆件上的杆件为二类杆件</li><li>为这些端点生成三维节点信息</li></ol><p>二类节点保存（<strong>引用表示法</strong>）：</p><ul><li><code>X</code>：按二维比例计算得到的真实值；</li><li><code>Y、Z</code>：以字符串形式引用该节点所在一类杆件的两个真实端点。</li></ul><p><img src="/img/blogs/3d/sanwei2/5.png"></p><h4 id="B-生成二类杆件"><a href="#B-生成二类杆件" class="headerlink" title="B. 生成二类杆件"></a>B. 生成二类杆件</h4><p>将二类节点的二维位置重新与当前视图所有杆件端点匹配，建立“杆件编号 → 节点编号列表”的映射。只有恰好匹配到两个端点节点的杆件才写入输出。</p><p><img src="/img/blogs/3d/sanwei2/6.png"></p><h3 id="2-1-3-三类杆件和三类节点的重建"><a href="#2-1-3-三类杆件和三类节点的重建" class="headerlink" title="2.1.3 三类杆件和三类节点的重建"></a>2.1.3 三类杆件和三类节点的重建</h3><h4 id="A-找出尚未生成的杆件"><a href="#A-找出尚未生成的杆件" class="headerlink" title="A. 找出尚未生成的杆件"></a>A. 找出尚未生成的杆件</h4><p>比较当前视图二维杆件编号和本视图已经生成的二类杆件编号，并排除一类杆件。剩余杆件作为三类杆件候选。</p><h4 id="B-找到三类节点并计算三类节点"><a href="#B-找到三类节点并计算三类节点" class="headerlink" title="B. 找到三类节点并计算三类节点"></a>B. 找到三类节点并计算三类节点</h4><p>检查每根候选杆件的二维端点是否落在：</p><ul><li>已生成的二类杆件上；</li><li>当前视图的两根一类杆件上。</li></ul><p>对于真正的新交点，代码沿基准一类杆件的二维范围进行比例换算，得到真实 X，并用该交点所在已有杆件的两个端点编号表达另外两个坐标引用。</p><p><img src="/img/blogs/3d/sanwei2/7.png"></p><h4 id="C-生成三类杆件"><a href="#C-生成三类杆件" class="headerlink" title="C. 生成三类杆件"></a>C. 生成三类杆件</h4><p>新生成的三类节点再次与二维杆件端点匹配。仅当候选三类杆件最终拥有两个不同的有效节点时，才生成杆件记录。</p><p><img src="/img/blogs/3d/sanwei2/8.png"></p><h3 id="2-1-4-底视图和顶视图同理构建"><a href="#2-1-4-底视图和顶视图同理构建" class="headerlink" title="2.1.4 底视图和顶视图同理构建"></a>2.1.4 底视图和顶视图同理构建</h3><p><img src="/img/blogs/3d/sanwei2/9.png"></p><h2 id="2-2-直流塔复合担架重建流程"><a href="#2-2-直流塔复合担架重建流程" class="headerlink" title="2.2 直流塔复合担架重建流程"></a>2.2 直流塔复合担架重建流程</h2><p>直流塔由 03 和 04 组成一套复合担架，右侧由 05 和 06 组成一套复合担架</p><p><img src="/img/blogs/3d/sanwei2/10.png"></p><h3 id="正视图"><a href="#正视图" class="headerlink" title="正视图"></a>正视图</h3><ol><li>一类节点和一类杆件：确定三根主杆（分为两根一类主杆和一根一类副杆），生成真实三维xyz的一类节点，生成一类杆件信息</li></ol><p><img src="/img/blogs/3d/sanwei2/11.png"></p><ol start="2"><li>二类节点和二类杆件：划分为两片需要处理的框架，处理逻辑和以前一样<ul><li>水平主杆与斜主杆之间；</li><li>水平主杆与一类副杆之间。</li></ul></li></ol><p><img src="/img/blogs/3d/sanwei2/12.png"></p><p><img src="/img/blogs/3d/sanwei2/13.png"></p><h3 id="底视图和顶视图复用以前的代码逻辑"><a href="#底视图和顶视图复用以前的代码逻辑" class="headerlink" title="底视图和顶视图复用以前的代码逻辑"></a>底视图和顶视图复用以前的代码逻辑</h3><p><img src="/img/blogs/3d/sanwei2/14.png"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>三维重建</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>三维重建</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>微调的基本步骤</title>
     <link href="/2026/08/18/FT/%E5%BE%AE%E8%B0%83%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/"/>
     <url>/2026/08/18/FT/%E5%BE%AE%E8%B0%83%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/</url>
     
-    <content type="html"><![CDATA[<h1 align="center">微调的基本步骤</h1>]]></content>
+    <content type="html"><![CDATA[<h1 align="center">微调的基本步骤</h1><p>大模型微调的标准化流程，可以概括为：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">需求定义 → 基线评测 → 数据构建 → 训练方案设计<br>→ 微调训练 → 离线评测 → 人工验收 → 部署 → 在线监控与迭代<br></code></pre></td></tr></table></figure><h1 id="1-明确微调目标与验收标准"><a href="#1-明确微调目标与验收标准" class="headerlink" title="1. 明确微调目标与验收标准"></a>1. 明确微调目标与验收标准</h1>]]></content>
     
     
     <categories>
@@ -397,9 +422,9 @@
     
     <tags>
       
-      <tag>八股</tag>
-      
       <tag>JVM</tag>
+      
+      <tag>八股</tag>
       
       <tag>StringTable</tag>
       
@@ -714,6 +739,39 @@
   
   
   <entry>
+    <title>使用Canal将数据库中的变更同步到ES中，实现数据同步功能</title>
+    <link href="/2025/11/24/JAVA/JAVA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/AIMIN%E9%A1%B9%E7%9B%AE/%E9%9B%86%E6%88%90Canal%E5%92%8CRabbitMQ%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/"/>
+    <url>/2025/11/24/JAVA/JAVA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/AIMIN%E9%A1%B9%E7%9B%AE/%E9%9B%86%E6%88%90Canal%E5%92%8CRabbitMQ%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">使用Canal将数据库中的变更同步到ES中，实现数据同步功能</h1><h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h1><h2 id="1-1-什么是Canal？"><a href="#1-1-什么是Canal？" class="headerlink" title="1.1 什么是Canal？"></a>1.1 什么是Canal？</h2><p>Canal 组件是一个基于 MySQL 数据库增量日志解析，提供增量数据订阅和消费，支持将增量数据投递到下游消费者（如 Kafka、RocketMQ 等）或者存储（如 Elasticsearch、HBase 等）的组件。<br>  Canal 感知到MySQL数据变动，然后解析变动数据，将变动数据发送到MQ或者同步到其他数据库，等待进一步业务逻辑处理</p><h2 id="1-2-Canal的工作原理"><a href="#1-2-Canal的工作原理" class="headerlink" title="1.2 Canal的工作原理"></a>1.2 Canal的工作原理</h2><p><a href="https://ranzier.github.io/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">Canal的工作原理</a></p><h1 id="2-Canal在项目中的作用"><a href="#2-Canal在项目中的作用" class="headerlink" title="2. Canal在项目中的作用"></a>2. Canal在项目中的作用</h1><p><a href="https://zha-ge.cn/aimin/">项目地址</a></p><p><strong>Canal 的主要作用是实现 MySQL → Elasticsearch 的实时数据同步</strong></p><p>drug 微服务中的药品数据存储在 MySQL，而搜索功能（aimin-search 微服务）依赖的是 <strong>Elasticsearch 索引库 DrugIndex</strong>。</p><p>如果：</p><ul><li>后台管理员修改药品信息（MySQL 更新）</li><li>新增&#x2F;删除药品记录（MySQL 插入&#x2F;删除）</li></ul><p>如果 ES 不同步，就会出现：</p><ul><li>搜索不到新药品</li><li>搜索结果无变化</li><li>搜索字段是旧数据</li><li>药品名改了，但搜索结果不变</li></ul><p>所以项目使用 <strong>Canal 监听 MySQL binlog</strong>，实现<strong>数据库变化事件驱动的实时ES同步</strong>。</p><p>项目中 Canal 的完整链路：</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">管理员在 aimin-<span class="hljs-keyword">admin</span> 中修改药品 <br>        ↓  <br>MySQL drug 表执行 <span class="hljs-keyword">UPDATE</span>  <br>        ↓  <br>MySQL 写入 binlog  <br>        ↓  <br>Canal <span class="hljs-keyword">Server</span> 监听 binlog  <br>        ↓  <br>CanalReceiver（drug 微服务）接收到事件  <br>        ↓  <br>解析 rowData 转为 DrugIndex  <br>        ↓  <br>调用 ElasticsearchTemplate.save()  <br>        ↓  <br>ES 索引库实现实时更新  <br>        ↓  <br>aimin-<span class="hljs-keyword">search</span> 搜索接口返回最新结果<br></code></pre></td></tr></table></figure><h1 id="3-如何集成Canal实现ES的数据同步"><a href="#3-如何集成Canal实现ES的数据同步" class="headerlink" title="3. 如何集成Canal实现ES的数据同步"></a>3. 如何集成Canal实现ES的数据同步</h1><h2 id="3-1-引入-Canal-客户端依赖（POM）"><a href="#3-1-引入-Canal-客户端依赖（POM）" class="headerlink" title="3.1 引入 Canal 客户端依赖（POM）"></a>3.1 引入 Canal 客户端依赖（POM）</h2><p>在 <code>aimin-drug</code> 的 <code>pom.xml</code> 中引入 Canal 客户端：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.otter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>canal.client<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.1.8<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 必须手动补上协议依赖，否则 Message 类找不到 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.otter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>canal.protocol<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.1.8<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.otter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>canal.common<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.1.8<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure><p>这一步让 drug 微服务具备连接 Canal Server 并解析 binlog 的能力。</p><h2 id="3-2-在-bootstrap-yml-中配置-Canal-客户端"><a href="#3-2-在-bootstrap-yml-中配置-Canal-客户端" class="headerlink" title="3.2 在 bootstrap.yml 中配置 Canal 客户端"></a>3.2 在 <code>bootstrap.yml</code> 中配置 Canal 客户端</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">canal:</span><br>  <span class="hljs-attr">server:</span><br>    <span class="hljs-attr">ip:</span> <span class="hljs-string">localhost</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-number">11111</span><br>  <span class="hljs-attr">destination:</span> <span class="hljs-string">example</span><br>  <span class="hljs-attr">initialDelay:</span> <span class="hljs-number">5000</span><br>  <span class="hljs-attr">fixedDelay:</span> <span class="hljs-number">5000</span><br>  <span class="hljs-attr">subscribe:</span> <span class="hljs-string">.*\..*</span><br></code></pre></td></tr></table></figure><table><thead><tr><th>配置项</th><th>含义</th></tr></thead><tbody><tr><td><code>ip</code>、<code>port</code></td><td>Canal Server 地址</td></tr><tr><td><code>destination</code></td><td>默认 Canal 实例名 example</td></tr><tr><td><code>subscribe</code></td><td>订阅所有表</td></tr><tr><td><code>initialDelay</code></td><td>延迟 5 秒启动同步</td></tr><tr><td><code>fixedDelay</code></td><td>每 5 秒轮询一次 Canal</td></tr></tbody></table><h2 id="3-3-CanalProperties-将-YAML-配置绑定为-Java-对象"><a href="#3-3-CanalProperties-将-YAML-配置绑定为-Java-对象" class="headerlink" title="3.3 CanalProperties 将 YAML 配置绑定为 Java 对象"></a>3.3 CanalProperties 将 YAML 配置绑定为 Java 对象</h2><p>这里将 <code>YAML</code> 配置映射为 POJO，用于建立 CanalConnector:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@ConfigurationProperties(prefix = &quot;canal&quot;)</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CanalProperties</span> &#123;<br>    <span class="hljs-keyword">private</span> String destination;<br>    <span class="hljs-keyword">private</span> Server server;<br>    <span class="hljs-keyword">private</span> Long initialDelay;<br>    <span class="hljs-keyword">private</span> Long fixedDelay;<br>    <span class="hljs-keyword">private</span> String subscribe;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="3-4-用-CanalConfig-创建-CanalConnector（核心配置类）"><a href="#3-4-用-CanalConfig-创建-CanalConnector（核心配置类）" class="headerlink" title="3.4 用 CanalConfig 创建 CanalConnector（核心配置类）"></a>3.4 用 CanalConfig 创建 CanalConnector（核心配置类）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-keyword">public</span> CanalConnector <span class="hljs-title function_">newSingleConnector</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> CanalConnectors.newSingleConnector(<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">InetSocketAddress</span>(canalProperties.getServer().getIp(),<br>                                  canalProperties.getServer().getPort()),<br>            canalProperties.getDestination(),<br>            <span class="hljs-string">&quot;canal&quot;</span>, <span class="hljs-string">&quot;canal&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure><p>创建Canal客户端监听binlog</p><p><code>newSingleConnector()</code> 会创建一个直连 Canal Server 的客户端，用 canal&#x2F;canal 登录，并指定 destination&#x3D;example。<br>之后，所有 binlog 消息都通过此连接读取。</p><h2 id="3-5-CanalReceiver"><a href="#3-5-CanalReceiver" class="headerlink" title="3.5 CanalReceiver"></a>3.5 CanalReceiver</h2><p><strong>真正消费 MySQL binlog 的地方（核心类）</strong></p><h3 id="3-5-1-PostConstruct：项目启动后连接-Canal-Server"><a href="#3-5-1-PostConstruct：项目启动后连接-Canal-Server" class="headerlink" title="3.5.1 @PostConstruct：项目启动后连接 Canal Server"></a>3.5.1 @PostConstruct：项目启动后连接 Canal Server</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostConstruct</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">connect</span><span class="hljs-params">()</span> &#123;<br>    canalConnector.connect();<br>    canalConnector.subscribe(canalProperties.getSubscribe());<br>    canalConnector.rollback();<br>&#125;<br></code></pre></td></tr></table></figure><p>流程：</p><ul><li>connect()：连接 canal server</li><li>subscribe(“...”)：订阅所有 schema 下的所有表</li><li>rollback()：回滚到上次未 ack 的位置，保证不丢 binlog</li></ul><h3 id="3-5-2-Scheduled-Async-定时异步拉取-binlog"><a href="#3-5-2-Scheduled-Async-定时异步拉取-binlog" class="headerlink" title="3.5.2 @Scheduled + @Async 定时异步拉取 binlog"></a>3.5.2 @Scheduled + @Async 定时异步拉取 binlog</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Async</span><br><span class="hljs-meta">@Scheduled(initialDelayString = &quot;$&#123;canal.initialDelay&#125;&quot;, fixedDelayString = &quot;$&#123;canal.fixedDelay&#125;&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">processData</span><span class="hljs-params">()</span> &#123;&#125;<br></code></pre></td></tr></table></figure><table><thead><tr><th>功能</th><th>实现方式</th></tr></thead><tbody><tr><td>定时任务</td><td>@Scheduled 每 5 秒执行一次</td></tr><tr><td>异步执行</td><td>@Async 不阻塞主线程</td></tr><tr><td>自动重连</td><td>canalConnector.checkValid()</td></tr></tbody></table><h3 id="3-5-3-从-Canal-读取-binlog-数据"><a href="#3-5-3-从-Canal-读取-binlog-数据" class="headerlink" title="3.5.3 从 Canal 读取 binlog 数据"></a>3.5.3 从 Canal 读取 binlog 数据</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Message</span> <span class="hljs-variable">message</span> <span class="hljs-operator">=</span> canalConnector.getWithoutAck(<span class="hljs-number">100</span>, <span class="hljs-number">100L</span>, TimeUnit.MILLISECONDS);<br>batchId = message.getId();<br></code></pre></td></tr></table></figure><h3 id="3-5-4-解析-binlog-RowChange（真实业务处理）"><a href="#3-5-4-解析-binlog-RowChange（真实业务处理）" class="headerlink" title="3.5.4 解析 binlog RowChange（真实业务处理）"></a>3.5.4 解析 binlog RowChange（真实业务处理）</h3><p>得到事件类型：</p><ul><li>INSERT</li><li>UPDATE</li><li>DELETE</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">CanalEntry.<span class="hljs-type">RowChange</span> <span class="hljs-variable">rowChange</span> <span class="hljs-operator">=</span> CanalEntry.RowChange.parseFrom(entry.getStoreValue());<br>CanalEntry.<span class="hljs-type">EventType</span> <span class="hljs-variable">eventType</span> <span class="hljs-operator">=</span> rowChange.getEventType();<br></code></pre></td></tr></table></figure><h3 id="3-5-5-根据-eventType-对药品表进行处理"><a href="#3-5-5-根据-eventType-对药品表进行处理" class="headerlink" title="3.5.5 根据 eventType 对药品表进行处理"></a>3.5.5 根据 eventType 对药品表进行处理</h3><p>在 <code>handleData()</code> 中处理不同表：</p><ul><li>处理 t_drug 表（药品信息表）<ul><li><code>updateDrug(afterParam);</code></li></ul></li><li>处理 t_drug_img 表（药品图片表）</li></ul><h3 id="3-5-6-插入-更新-删除药品：同步到-Elasticsearch"><a href="#3-5-6-插入-更新-删除药品：同步到-Elasticsearch" class="headerlink" title="3.5.6 插入&#x2F;更新&#x2F;删除药品：同步到 Elasticsearch"></a>3.5.6 插入&#x2F;更新&#x2F;删除药品：同步到 Elasticsearch</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">insertDrug</span><span class="hljs-params">(Map&lt;String, Object&gt; afterParam)</span>&#123;<br>    <span class="hljs-type">DrugIndex</span> <span class="hljs-variable">bean</span> <span class="hljs-operator">=</span> BeanUtil.toBean(afterParam, DrugIndex.class);<br><br>    <span class="hljs-keyword">if</span>(bean.getCategoryId() != <span class="hljs-literal">null</span>)&#123;<br>        <span class="hljs-type">DrugCategory</span> <span class="hljs-variable">category</span> <span class="hljs-operator">=</span> categoryService.getByIdDeep(bean.getCategoryId());<br>        bean.setCategoryName(category.getName());<br>    &#125;<br><br>    elasticsearchTemplate.save(bean);<br>&#125;<br></code></pre></td></tr></table></figure><ul><li>MySQL 新增药品 → 立即写入 ES 索引库</li><li>自动补充分类名称（从 categoryService 查询）</li></ul><h3 id="3-5-7-最终-ack"><a href="#3-5-7-最终-ack" class="headerlink" title="3.5.7 最终 ack"></a>3.5.7 最终 ack</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">canalConnector.ack(batchId);<br></code></pre></td></tr></table></figure><ul><li>当前 binlog batch 已正确消费</li><li>下次采集从下一批开始</li></ul><h2 id="3-6-数据流动图"><a href="#3-6-数据流动图" class="headerlink" title="3.6 数据流动图:"></a>3.6 数据流动图:</h2><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">MySQL drug 表数据变化<br>         ↓  写入 binlog<br>Canal <span class="hljs-keyword">Server</span> 监听 binlog<br>         ↓ 发送给 Canal 客户端<br>aimin-drug 中的 CanalReceiver 拉取消息<br>         ↓ 解析表名 + 字段 + eventType<br>根据事件类型处理：<br>  <span class="hljs-keyword">INSERT</span> → ES 新增索引<br>  <span class="hljs-keyword">UPDATE</span> → ES 更新索引<br>  <span class="hljs-keyword">DELETE</span> → ES 删除索引<br>         ↓<br>Elasticsearch 保存最新药品索引信息<br>         ↓<br>aimin-<span class="hljs-keyword">search</span> 搜索服务即时返回最新数据<br></code></pre></td></tr></table></figure><p><strong>参考文献：</strong><br><a href="https://blog.csdn.net/langfeiyes/article/details/130711899">一篇文章让你上手Canal数据同步神技~</a></p><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>AI项目</category>
+      
+      <category>SpringCloud</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JAVA</tag>
+      
+      <tag>SpringCloud</tag>
+      
+      <tag>Canal</tag>
+      
+      <tag>ES</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Canal实现数据同步的工作原理</title>
     <link href="/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"/>
     <url>/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</url>
@@ -737,39 +795,6 @@
       <tag>ES</tag>
       
       <tag>MQ</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>使用Canal将数据库中的变更同步到ES中，实现数据同步功能</title>
-    <link href="/2025/11/24/JAVA/JAVA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/AIMIN%E9%A1%B9%E7%9B%AE/%E9%9B%86%E6%88%90Canal%E5%92%8CRabbitMQ%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/"/>
-    <url>/2025/11/24/JAVA/JAVA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/AIMIN%E9%A1%B9%E7%9B%AE/%E9%9B%86%E6%88%90Canal%E5%92%8CRabbitMQ%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/</url>
-    
-    <content type="html"><![CDATA[<h1 align="center">使用Canal将数据库中的变更同步到ES中，实现数据同步功能</h1><h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h1><h2 id="1-1-什么是Canal？"><a href="#1-1-什么是Canal？" class="headerlink" title="1.1 什么是Canal？"></a>1.1 什么是Canal？</h2><p>Canal 组件是一个基于 MySQL 数据库增量日志解析，提供增量数据订阅和消费，支持将增量数据投递到下游消费者（如 Kafka、RocketMQ 等）或者存储（如 Elasticsearch、HBase 等）的组件。<br>  Canal 感知到MySQL数据变动，然后解析变动数据，将变动数据发送到MQ或者同步到其他数据库，等待进一步业务逻辑处理</p><h2 id="1-2-Canal的工作原理"><a href="#1-2-Canal的工作原理" class="headerlink" title="1.2 Canal的工作原理"></a>1.2 Canal的工作原理</h2><p><a href="https://ranzier.github.io/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">Canal的工作原理</a></p><h1 id="2-Canal在项目中的作用"><a href="#2-Canal在项目中的作用" class="headerlink" title="2. Canal在项目中的作用"></a>2. Canal在项目中的作用</h1><p><a href="https://zha-ge.cn/aimin/">项目地址</a></p><p><strong>Canal 的主要作用是实现 MySQL → Elasticsearch 的实时数据同步</strong></p><p>drug 微服务中的药品数据存储在 MySQL，而搜索功能（aimin-search 微服务）依赖的是 <strong>Elasticsearch 索引库 DrugIndex</strong>。</p><p>如果：</p><ul><li>后台管理员修改药品信息（MySQL 更新）</li><li>新增&#x2F;删除药品记录（MySQL 插入&#x2F;删除）</li></ul><p>如果 ES 不同步，就会出现：</p><ul><li>搜索不到新药品</li><li>搜索结果无变化</li><li>搜索字段是旧数据</li><li>药品名改了，但搜索结果不变</li></ul><p>所以项目使用 <strong>Canal 监听 MySQL binlog</strong>，实现<strong>数据库变化事件驱动的实时ES同步</strong>。</p><p>项目中 Canal 的完整链路：</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">管理员在 aimin-<span class="hljs-keyword">admin</span> 中修改药品 <br>        ↓  <br>MySQL drug 表执行 <span class="hljs-keyword">UPDATE</span>  <br>        ↓  <br>MySQL 写入 binlog  <br>        ↓  <br>Canal <span class="hljs-keyword">Server</span> 监听 binlog  <br>        ↓  <br>CanalReceiver（drug 微服务）接收到事件  <br>        ↓  <br>解析 rowData 转为 DrugIndex  <br>        ↓  <br>调用 ElasticsearchTemplate.save()  <br>        ↓  <br>ES 索引库实现实时更新  <br>        ↓  <br>aimin-<span class="hljs-keyword">search</span> 搜索接口返回最新结果<br></code></pre></td></tr></table></figure><h1 id="3-如何集成Canal实现ES的数据同步"><a href="#3-如何集成Canal实现ES的数据同步" class="headerlink" title="3. 如何集成Canal实现ES的数据同步"></a>3. 如何集成Canal实现ES的数据同步</h1><h2 id="3-1-引入-Canal-客户端依赖（POM）"><a href="#3-1-引入-Canal-客户端依赖（POM）" class="headerlink" title="3.1 引入 Canal 客户端依赖（POM）"></a>3.1 引入 Canal 客户端依赖（POM）</h2><p>在 <code>aimin-drug</code> 的 <code>pom.xml</code> 中引入 Canal 客户端：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.otter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>canal.client<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.1.8<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 必须手动补上协议依赖，否则 Message 类找不到 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.otter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>canal.protocol<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.1.8<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.otter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>canal.common<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.1.8<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure><p>这一步让 drug 微服务具备连接 Canal Server 并解析 binlog 的能力。</p><h2 id="3-2-在-bootstrap-yml-中配置-Canal-客户端"><a href="#3-2-在-bootstrap-yml-中配置-Canal-客户端" class="headerlink" title="3.2 在 bootstrap.yml 中配置 Canal 客户端"></a>3.2 在 <code>bootstrap.yml</code> 中配置 Canal 客户端</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">canal:</span><br>  <span class="hljs-attr">server:</span><br>    <span class="hljs-attr">ip:</span> <span class="hljs-string">localhost</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-number">11111</span><br>  <span class="hljs-attr">destination:</span> <span class="hljs-string">example</span><br>  <span class="hljs-attr">initialDelay:</span> <span class="hljs-number">5000</span><br>  <span class="hljs-attr">fixedDelay:</span> <span class="hljs-number">5000</span><br>  <span class="hljs-attr">subscribe:</span> <span class="hljs-string">.*\..*</span><br></code></pre></td></tr></table></figure><table><thead><tr><th>配置项</th><th>含义</th></tr></thead><tbody><tr><td><code>ip</code>、<code>port</code></td><td>Canal Server 地址</td></tr><tr><td><code>destination</code></td><td>默认 Canal 实例名 example</td></tr><tr><td><code>subscribe</code></td><td>订阅所有表</td></tr><tr><td><code>initialDelay</code></td><td>延迟 5 秒启动同步</td></tr><tr><td><code>fixedDelay</code></td><td>每 5 秒轮询一次 Canal</td></tr></tbody></table><h2 id="3-3-CanalProperties-将-YAML-配置绑定为-Java-对象"><a href="#3-3-CanalProperties-将-YAML-配置绑定为-Java-对象" class="headerlink" title="3.3 CanalProperties 将 YAML 配置绑定为 Java 对象"></a>3.3 CanalProperties 将 YAML 配置绑定为 Java 对象</h2><p>这里将 <code>YAML</code> 配置映射为 POJO，用于建立 CanalConnector:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@ConfigurationProperties(prefix = &quot;canal&quot;)</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CanalProperties</span> &#123;<br>    <span class="hljs-keyword">private</span> String destination;<br>    <span class="hljs-keyword">private</span> Server server;<br>    <span class="hljs-keyword">private</span> Long initialDelay;<br>    <span class="hljs-keyword">private</span> Long fixedDelay;<br>    <span class="hljs-keyword">private</span> String subscribe;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="3-4-用-CanalConfig-创建-CanalConnector（核心配置类）"><a href="#3-4-用-CanalConfig-创建-CanalConnector（核心配置类）" class="headerlink" title="3.4 用 CanalConfig 创建 CanalConnector（核心配置类）"></a>3.4 用 CanalConfig 创建 CanalConnector（核心配置类）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-keyword">public</span> CanalConnector <span class="hljs-title function_">newSingleConnector</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> CanalConnectors.newSingleConnector(<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">InetSocketAddress</span>(canalProperties.getServer().getIp(),<br>                                  canalProperties.getServer().getPort()),<br>            canalProperties.getDestination(),<br>            <span class="hljs-string">&quot;canal&quot;</span>, <span class="hljs-string">&quot;canal&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure><p>创建Canal客户端监听binlog</p><p><code>newSingleConnector()</code> 会创建一个直连 Canal Server 的客户端，用 canal&#x2F;canal 登录，并指定 destination&#x3D;example。<br>之后，所有 binlog 消息都通过此连接读取。</p><h2 id="3-5-CanalReceiver"><a href="#3-5-CanalReceiver" class="headerlink" title="3.5 CanalReceiver"></a>3.5 CanalReceiver</h2><p><strong>真正消费 MySQL binlog 的地方（核心类）</strong></p><h3 id="3-5-1-PostConstruct：项目启动后连接-Canal-Server"><a href="#3-5-1-PostConstruct：项目启动后连接-Canal-Server" class="headerlink" title="3.5.1 @PostConstruct：项目启动后连接 Canal Server"></a>3.5.1 @PostConstruct：项目启动后连接 Canal Server</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostConstruct</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">connect</span><span class="hljs-params">()</span> &#123;<br>    canalConnector.connect();<br>    canalConnector.subscribe(canalProperties.getSubscribe());<br>    canalConnector.rollback();<br>&#125;<br></code></pre></td></tr></table></figure><p>流程：</p><ul><li>connect()：连接 canal server</li><li>subscribe(“...”)：订阅所有 schema 下的所有表</li><li>rollback()：回滚到上次未 ack 的位置，保证不丢 binlog</li></ul><h3 id="3-5-2-Scheduled-Async-定时异步拉取-binlog"><a href="#3-5-2-Scheduled-Async-定时异步拉取-binlog" class="headerlink" title="3.5.2 @Scheduled + @Async 定时异步拉取 binlog"></a>3.5.2 @Scheduled + @Async 定时异步拉取 binlog</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Async</span><br><span class="hljs-meta">@Scheduled(initialDelayString = &quot;$&#123;canal.initialDelay&#125;&quot;, fixedDelayString = &quot;$&#123;canal.fixedDelay&#125;&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">processData</span><span class="hljs-params">()</span> &#123;&#125;<br></code></pre></td></tr></table></figure><table><thead><tr><th>功能</th><th>实现方式</th></tr></thead><tbody><tr><td>定时任务</td><td>@Scheduled 每 5 秒执行一次</td></tr><tr><td>异步执行</td><td>@Async 不阻塞主线程</td></tr><tr><td>自动重连</td><td>canalConnector.checkValid()</td></tr></tbody></table><h3 id="3-5-3-从-Canal-读取-binlog-数据"><a href="#3-5-3-从-Canal-读取-binlog-数据" class="headerlink" title="3.5.3 从 Canal 读取 binlog 数据"></a>3.5.3 从 Canal 读取 binlog 数据</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Message</span> <span class="hljs-variable">message</span> <span class="hljs-operator">=</span> canalConnector.getWithoutAck(<span class="hljs-number">100</span>, <span class="hljs-number">100L</span>, TimeUnit.MILLISECONDS);<br>batchId = message.getId();<br></code></pre></td></tr></table></figure><h3 id="3-5-4-解析-binlog-RowChange（真实业务处理）"><a href="#3-5-4-解析-binlog-RowChange（真实业务处理）" class="headerlink" title="3.5.4 解析 binlog RowChange（真实业务处理）"></a>3.5.4 解析 binlog RowChange（真实业务处理）</h3><p>得到事件类型：</p><ul><li>INSERT</li><li>UPDATE</li><li>DELETE</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">CanalEntry.<span class="hljs-type">RowChange</span> <span class="hljs-variable">rowChange</span> <span class="hljs-operator">=</span> CanalEntry.RowChange.parseFrom(entry.getStoreValue());<br>CanalEntry.<span class="hljs-type">EventType</span> <span class="hljs-variable">eventType</span> <span class="hljs-operator">=</span> rowChange.getEventType();<br></code></pre></td></tr></table></figure><h3 id="3-5-5-根据-eventType-对药品表进行处理"><a href="#3-5-5-根据-eventType-对药品表进行处理" class="headerlink" title="3.5.5 根据 eventType 对药品表进行处理"></a>3.5.5 根据 eventType 对药品表进行处理</h3><p>在 <code>handleData()</code> 中处理不同表：</p><ul><li>处理 t_drug 表（药品信息表）<ul><li><code>updateDrug(afterParam);</code></li></ul></li><li>处理 t_drug_img 表（药品图片表）</li></ul><h3 id="3-5-6-插入-更新-删除药品：同步到-Elasticsearch"><a href="#3-5-6-插入-更新-删除药品：同步到-Elasticsearch" class="headerlink" title="3.5.6 插入&#x2F;更新&#x2F;删除药品：同步到 Elasticsearch"></a>3.5.6 插入&#x2F;更新&#x2F;删除药品：同步到 Elasticsearch</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">insertDrug</span><span class="hljs-params">(Map&lt;String, Object&gt; afterParam)</span>&#123;<br>    <span class="hljs-type">DrugIndex</span> <span class="hljs-variable">bean</span> <span class="hljs-operator">=</span> BeanUtil.toBean(afterParam, DrugIndex.class);<br><br>    <span class="hljs-keyword">if</span>(bean.getCategoryId() != <span class="hljs-literal">null</span>)&#123;<br>        <span class="hljs-type">DrugCategory</span> <span class="hljs-variable">category</span> <span class="hljs-operator">=</span> categoryService.getByIdDeep(bean.getCategoryId());<br>        bean.setCategoryName(category.getName());<br>    &#125;<br><br>    elasticsearchTemplate.save(bean);<br>&#125;<br></code></pre></td></tr></table></figure><ul><li>MySQL 新增药品 → 立即写入 ES 索引库</li><li>自动补充分类名称（从 categoryService 查询）</li></ul><h3 id="3-5-7-最终-ack"><a href="#3-5-7-最终-ack" class="headerlink" title="3.5.7 最终 ack"></a>3.5.7 最终 ack</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">canalConnector.ack(batchId);<br></code></pre></td></tr></table></figure><ul><li>当前 binlog batch 已正确消费</li><li>下次采集从下一批开始</li></ul><h2 id="3-6-数据流动图"><a href="#3-6-数据流动图" class="headerlink" title="3.6 数据流动图:"></a>3.6 数据流动图:</h2><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">MySQL drug 表数据变化<br>         ↓  写入 binlog<br>Canal <span class="hljs-keyword">Server</span> 监听 binlog<br>         ↓ 发送给 Canal 客户端<br>aimin-drug 中的 CanalReceiver 拉取消息<br>         ↓ 解析表名 + 字段 + eventType<br>根据事件类型处理：<br>  <span class="hljs-keyword">INSERT</span> → ES 新增索引<br>  <span class="hljs-keyword">UPDATE</span> → ES 更新索引<br>  <span class="hljs-keyword">DELETE</span> → ES 删除索引<br>         ↓<br>Elasticsearch 保存最新药品索引信息<br>         ↓<br>aimin-<span class="hljs-keyword">search</span> 搜索服务即时返回最新数据<br></code></pre></td></tr></table></figure><p><strong>参考文献：</strong><br><a href="https://blog.csdn.net/langfeiyes/article/details/130711899">一篇文章让你上手Canal数据同步神技~</a></p><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
-    
-    
-    <categories>
-      
-      <category>SpringCloud</category>
-      
-      <category>AI项目</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>JAVA</tag>
-      
-      <tag>SpringCloud</tag>
-      
-      <tag>Canal</tag>
-      
-      <tag>ES</tag>
       
     </tags>
     
@@ -835,11 +860,11 @@
       
       <tag>SpringCloud</tag>
       
-      <tag>Redis</tag>
-      
       <tag>多级缓存</tag>
       
       <tag>Caffeine</tag>
+      
+      <tag>Redis</tag>
       
     </tags>
     
@@ -857,9 +882,9 @@
     
     <categories>
       
-      <category>SpringCloud</category>
-      
       <category>AI项目</category>
+      
+      <category>SpringCloud</category>
       
     </categories>
     
@@ -886,9 +911,9 @@
     
     <categories>
       
-      <category>SpringCloud</category>
-      
       <category>AI项目</category>
+      
+      <category>SpringCloud</category>
       
     </categories>
     
@@ -944,9 +969,9 @@
     
     <categories>
       
-      <category>SpringCloud</category>
-      
       <category>AI项目</category>
+      
+      <category>SpringCloud</category>
       
     </categories>
     
@@ -975,9 +1000,9 @@
     
     <categories>
       
-      <category>SpringCloud</category>
-      
       <category>AI项目</category>
+      
+      <category>SpringCloud</category>
       
     </categories>
     
@@ -1104,11 +1129,11 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>git</tag>
       
       <tag>开发工具</tag>
+      
+      <tag>学习</tag>
       
     </tags>
     
@@ -1212,9 +1237,9 @@
       
       <tag>LeetCode</tag>
       
-      <tag>hot100</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>hot100</tag>
       
     </tags>
     
@@ -1454,9 +1479,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>开发工具</tag>
+      
+      <tag>学习</tag>
       
       <tag>Docker</tag>
       
@@ -1572,11 +1597,11 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>git</tag>
       
       <tag>开发工具</tag>
+      
+      <tag>学习</tag>
       
     </tags>
     
@@ -1688,9 +1713,9 @@
     
     <tags>
       
-      <tag>前端</tag>
-      
       <tag>学习</tag>
+      
+      <tag>前端</tag>
       
       <tag>JavaScript</tag>
       
@@ -1744,9 +1769,9 @@
     
     <tags>
       
-      <tag>前端</tag>
-      
       <tag>学习</tag>
+      
+      <tag>前端</tag>
       
       <tag>CSS</tag>
       
@@ -1773,11 +1798,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>前端</tag>
       
       <tag>HTML</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -1831,11 +1856,11 @@
       
       <tag>AI</tag>
       
+      <tag>论文</tag>
+      
       <tag>信息与通信</tag>
       
       <tag>强化学习</tag>
-      
-      <tag>论文</tag>
       
     </tags>
     

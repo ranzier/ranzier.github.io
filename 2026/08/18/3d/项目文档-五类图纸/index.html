@@ -1,0 +1,861 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/about/dogs.jpg">
+  <link rel="icon" href="/img/about/dogs.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ranzier">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="三维重建二维转三维担架部分项目文档2.0    1. 总体概览1.1 输入每个担架的三视图的杆件及对应的二维坐标 杆件ID: [左端点(x,y),右端点(x,y)]  正视图：coordinatesFront_data 底视图：coordinatesBottom_data 顶视图：coordinatesOverhead_data  123456789101112131415161718192021">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三维重建项目文档2.0">
+<meta property="og:url" content="http://example.com/2026/08/18/3d/%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3-%E4%BA%94%E7%B1%BB%E5%9B%BE%E7%BA%B8/index.html">
+<meta property="og:site_name" content="RANZIER">
+<meta property="og:description" content="三维重建二维转三维担架部分项目文档2.0    1. 总体概览1.1 输入每个担架的三视图的杆件及对应的二维坐标 杆件ID: [左端点(x,y),右端点(x,y)]  正视图：coordinatesFront_data 底视图：coordinatesBottom_data 顶视图：coordinatesOverhead_data  123456789101112131415161718192021">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/bg/74.jpg">
+<meta property="article:published_time" content="2026-08-18T06:23:24.000Z">
+<meta property="article:modified_time" content="2026-08-18T08:50:23.747Z">
+<meta property="article:author" content="ranzier">
+<meta property="article:tag" content="三维重建">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/bg/74.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>三维重建项目文档2.0 - RANZIER</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3846514_kabxni94auf.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/gundongtiao.css">
+<link rel="stylesheet" href="/css/bubble.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"🌟","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 80vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>RANZIER</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/suibi/" target="_self">
+                <i class="iconfont icon-pen"></i>
+                <span>随笔</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/3.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.35)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="三维重建项目文档2.0"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-08-18 14:23" pubdate>
+          2026年8月18日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          本文阅读次数：<span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">三维重建项目文档2.0</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 align="center">三维重建二维转三维担架部分项目文档2.0</h1>
+
+
+
+<h1 id="1-总体概览"><a href="#1-总体概览" class="headerlink" title="1. 总体概览"></a>1. 总体概览</h1><h3 id="1-1-输入"><a href="#1-1-输入" class="headerlink" title="1.1 输入"></a>1.1 输入</h3><p>每个担架的三视图的杆件及对应的二维坐标</p>
+<p><code>杆件ID</code>: <code>[左端点(x,y),右端点(x,y)]</code></p>
+<ul>
+<li>正视图：<code>coordinatesFront_data</code></li>
+<li>底视图：<code>coordinatesBottom_data</code></li>
+<li>顶视图：<code>coordinatesOverhead_data</code></li>
+</ul>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs makefile">coordinatesFront_data=&#123;<br><span class="hljs-section">106:[(646.0281930611799,342.53768195250086),(660.2590727783954,613.9408879879702)],</span><br><span class="hljs-section">105:[(203.7373011800923,347.7106748399989),(620.4367599213521,639.6744403396317)],</span><br><span class="hljs-section">103:[(240.64789004321037,885.0975728601636),(1088.2557311595408,337.3654300449176)],</span><br><span class="hljs-section">101:[(203.7373011800923,347.7106748399989),(1088.2557311595408,337.3654300449176)],</span><br>&#125;<br>coordinatesBottom_data=&#123;<br><span class="hljs-section">119:[(630.1258693028335,518.7340651761596),(1278.9278879433205,620.6886681053786)],</span><br><span class="hljs-section">103:[(310.11096106234515,725.8634556230776),(983.3900198457354,290.0841295496858)],</span><br><span class="hljs-section">104:[(784.4021660422503,1254.0464061958883),(1278.9278879433205,620.6886681053786)],</span><br><span class="hljs-section">118:[(983.3900198457354,290.0841295496858),(1018.1405904800162,954.6887929303084)],</span><br><span class="hljs-section">116:[(626.3346511498411,521.1879280583553),(784.4021660422503,1254.0464061958883)],</span><br><span class="hljs-section">117:[(310.11096106234515,725.8634556230776),(1018.6215195146591,954.0728489822498)],</span><br>&#125;<br>coordinatesOverhead_data=&#123;<br><span class="hljs-section">102:[(96.6401359210612,475.9291642161667),(961.9289558665229,611.903121636168)],</span><br><span class="hljs-section">108:[(98.2077827818514,1150.819369486731),(552.7310243183496,547.6005895357405)],</span><br><span class="hljs-section">110:[(556.2979668323961,1077.868239473998),(961.9289558665229,611.903121636168)],</span><br><span class="hljs-section">101:[(98.2077827818514,1150.819369486731),(964.1463078156362,1012.9181523853322)],</span><br><span class="hljs-section">109:[(96.6401359210612,475.9291642161667),(551.1408795062896,1078.6895086500524)],</span><br><span class="hljs-section">111:[(560.3147685231477,548.7923207679231),(964.1463078156362,1012.9181523853322)],</span><br><span class="hljs-section">112:[(961.9289558665229,611.903121636168),(964.1463078156362,1012.9181523853322)],</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-输出"><a href="#1-2-输出" class="headerlink" title="1.2 输出"></a>1.2 输出</h3><p>输出分两部分：</p>
+<ul>
+<li><strong>节点</strong>的三维信息：<code>(节点编号：X坐标，Y坐标，Z坐标，对称性)</code></li>
+<li><strong>杆件</strong>的三维信息：<code>(杆件编号：起点节点，终点节点，对称性)</code></li>
+</ul>
+<p><img src="/img/blogs/3d/sanwei2/1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/blogs/3d/sanwei2/2.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="1-2-1-对称性"><a href="#1-2-1-对称性" class="headerlink" title="1.2.1 对称性"></a>1.2.1 对称性</h4><p><strong>节点和杆件的对称性</strong></p>
+<ul>
+<li>0：代表没有对称性，就这一个<strong>单独的节点&#x2F;杆件</strong></li>
+<li>1：左右对称（对称性1）</li>
+<li>2：前后对称（对称性2）</li>
+<li>3：关于Z轴对称（对称性3）</li>
+<li>4：以及四角对称（对称性4）</li>
+</ul>
+<h4 id="1-2-2-XYZ坐标的表示"><a href="#1-2-2-XYZ坐标的表示" class="headerlink" title="1.2.2 XYZ坐标的表示"></a>1.2.2 XYZ坐标的表示</h4><ul>
+<li><strong>一类节点</strong>（一类杆件的两个端点）：真实的<code>(x,y,z)</code>三维坐标表示</li>
+<li><strong>二类节点</strong>（非一类节点）：<code>x</code>坐标用<strong>真实值</strong>；<code>(y,z)</code>分别用一类杆件的两个端点节点编号表示(引用表示法)</li>
+</ul>
+<h4 id="1-2-3-XYZ坐标轴的方向"><a href="#1-2-3-XYZ坐标轴的方向" class="headerlink" title="1.2.3 XYZ坐标轴的方向"></a>1.2.3 XYZ坐标轴的方向</h4><ul>
+<li><code>X轴</code>：从左往右</li>
+<li><code>Y轴</code>：从前往后</li>
+<li><code>Z轴</code>：从上到下</li>
+</ul>
+<p><img src="/img/blogs/3d/image1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/blogs/3d/image2.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="2-构建步骤"><a href="#2-构建步骤" class="headerlink" title="2. 构建步骤"></a>2. 构建步骤</h1><p>整体分为两大部分：</p>
+<ol>
+<li>只有两根主杆的：以前图纸以及直流塔的 01、02 号担架：使用 <code>xintrans.py</code> 中的通用重建流程。</li>
+<li>有不止两根主杆的：直流塔的 03、04、05、06 号复合担架：总调度仍在 <code>xintrans.py</code>，正视图的特殊骨架和二类结构由 <code>zhiliu_near_front_reconstruction.py</code> 处理，底视图、顶视图以及三类结构尽量复用通用流程。</li>
+</ol>
+<h2 id="2-0"><a href="#2-0" class="headerlink" title="2.0"></a>2.0</h2><h3 id="通用重建流程"><a href="#通用重建流程" class="headerlink" title="通用重建流程"></a>通用重建流程</h3><pre><code class=" mermaid">flowchart TD
+    A[&quot;输入三视图二维坐标&lt;br/&gt;及塔身连接点 pj&quot;] --&gt; B[&quot;各视图识别两根一类杆件&lt;br/&gt;长度优先 + 最小编号校验&quot;]
+
+    B --&gt; C[&quot;生成一类节点&lt;br/&gt;复用塔身连接点&lt;br/&gt;计算尖点真实 XYZ&quot;]
+    C --&gt; D[&quot;生成一类杆件&lt;br/&gt;连接点 → 尖点&quot;]
+
+    D --&gt; E[&quot;查找跨接两根一类杆件的杆件&quot;]
+    E --&gt; F[&quot;生成二类节点&lt;br/&gt;真实 X + Y/Z 端点引用&quot;]
+    F --&gt; G[&quot;生成二类杆件&lt;br/&gt;保留具有两个有效节点的杆件&quot;]
+
+    G --&gt; H[&quot;找出尚未生成的杆件&quot;]
+    H --&gt; I[&quot;生成三类节点&lt;br/&gt;与一类、二类杆件求交&quot;]
+    I --&gt; J[&quot;生成三类杆件&lt;br/&gt;保留具有两个有效节点的杆件&quot;]
+
+    J --&gt; K[&quot;底视图、顶视图&lt;br/&gt;执行相同重建流程&quot;]
+    K --&gt; L[&quot;合并全部节点和杆件&quot;]
+    L --&gt; M[&quot;归一化节点编号并输出&quot;]
+</code></pre>
+
+<h3 id="直流塔复合担架重建流程"><a href="#直流塔复合担架重建流程" class="headerlink" title="直流塔复合担架重建流程"></a>直流塔复合担架重建流程</h3><pre><code class=" mermaid">flowchart TD
+    A[&quot;输入直流塔三视图坐标&lt;br/&gt;及塔身连接点 pj&quot;] --&gt; B[&quot;按固定顺序执行&lt;br/&gt;01 → 02 → 04 → 03 → 06 → 05&quot;]
+
+    B --&gt; C[&quot;先重建靠塔担架 04、06&quot;]
+    C --&gt; D[&quot;正视图识别三根一类杆件&lt;br/&gt;水平主杆 + 斜主杆 + 一类副杆&quot;]
+    D --&gt; E[&quot;生成一类节点真实 XYZ&lt;br/&gt;并生成一类杆件&quot;]
+
+    E --&gt; F[&quot;将正视图划分为两片框架&lt;br/&gt;水平杆—斜杆&lt;br/&gt;水平杆—副杆&quot;]
+    F --&gt; G[&quot;分别生成二类节点和二类杆件&lt;br/&gt;复用公共节点并按杆件编号去重&quot;]
+    G --&gt; H[&quot;复用通用流程&lt;br/&gt;生成正视图三类结构&quot;]
+
+    H --&gt; I[&quot;底视图复用通用流程&lt;br/&gt;采用水平主杆真实端点&quot;]
+    I --&gt; J[&quot;顶视图复用通用流程&lt;br/&gt;采用斜主杆真实端点&quot;]
+
+    J --&gt; K[&quot;传递复合担架连接点&lt;br/&gt;04 → 03，06 → 05&quot;]
+
+    K --&gt; L[&quot;重建外层担架 03、05&quot;]
+    L --&gt; M[&quot;接收 04、06 的内端连接点&lt;br/&gt;计算上、下主杆的外端 XYZ&quot;]
+    M --&gt; N[&quot;生成两根一类杆件&lt;br/&gt;及其四个真实端点&quot;]
+
+    N --&gt; O[&quot;生成上、下主杆之间的&lt;br/&gt;二类节点和二类杆件&quot;]
+    O --&gt; P[&quot;复用通用流程&lt;br/&gt;生成三类节点和三类杆件&quot;]
+    P --&gt; Q[&quot;底视图、顶视图&lt;br/&gt;继续复用通用流程&quot;]
+
+    Q --&gt; R[&quot;合并 03—06 的全部节点和杆件&quot;]
+    R --&gt; S[&quot;归一化节点编号并输出&quot;]
+</code></pre>
+
+
+<h2 id="2-1-通用重建流程"><a href="#2-1-通用重建流程" class="headerlink" title="2.1 通用重建流程"></a>2.1 通用重建流程</h2><p>针对只有两根主杆（一类杆件）的担架</p>
+<h3 id="2-1-1-一类杆件和一类节点的重建"><a href="#2-1-1-一类杆件和一类节点的重建" class="headerlink" title="2.1.1 一类杆件和一类节点的重建"></a>2.1.1 一类杆件和一类节点的重建</h3><h4 id="A-找到确定一类杆件"><a href="#A-找到确定一类杆件" class="headerlink" title="A. 找到确定一类杆件"></a>A. 找到确定一类杆件</h4><ul>
+<li>找到两根<strong>最长</strong>的杆件并且这两根杆件的<strong>编号最小</strong>，则认为是两根主杆</li>
+</ul>
+<p><img src="/img/blogs/3d/sanwei2/3.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="B-生成一类节点"><a href="#B-生成一类节点" class="headerlink" title="B. 生成一类节点"></a>B. 生成一类节点</h4><p>也就是生成两根一类杆件的两个端点的三维节点坐标</p>
+<ol>
+<li>塔身连接点</li>
+</ol>
+<ul>
+<li>两根正视图一类杆件的连接端直接复用 <code>pj</code> 中由塔身传入的节点编号和真实三维坐标，不重复创建新节点。</li>
+</ul>
+<ol start="2">
+<li>尖点<ul>
+<li>两根一类杆件端点的相交点，得到真实的三维（x,y,z）</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs markdown">尖点由 <span class="hljs-code">`calc_jiandian_xyz()`</span> 计算，基本路线如下：<br><br><span class="hljs-bullet">1.</span> 在用于标定的底视图或顶视图中，分别计算两根一类杆件起点的中点和终点的中点。<br><span class="hljs-bullet">2.</span> 两个中点之间的像素距离表示担架从塔身连接端到尖端的轴向长度。<br><span class="hljs-bullet">3.</span> 一类杆件在塔身连接侧的像素半宽，与 <span class="hljs-code">`pj`</span> 中连接点的实际横向坐标绝对值共同确定“真实长度/像素长度”的比例。<br><span class="hljs-bullet">4.</span> 根据担架位于塔身左侧还是右侧，沿正或负方向计算尖点真实 X。<br><span class="hljs-bullet">5.</span> 尖端剩余半宽乘比例得到真实 Y；真实 Z 沿用对应上连接点或下连接点的 Z。<br></code></pre></td></tr></table></figure>
+
+
+<p><img src="/img/blogs/3d/sanwei2/4.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="C-生成一类杆件信息"><a href="#C-生成一类杆件信息" class="headerlink" title="C. 生成一类杆件信息"></a>C. 生成一类杆件信息</h4><p>正视图的两根一类杆件分别连接：</p>
+<ul>
+<li>上连接点与尖点；</li>
+<li>下连接点与尖点。</li>
+</ul>
+<p>底视图、顶视图识别出的两根杆主要作为同一空间骨架在不同视图中的投影基准，用来确定节点和其他杆件，不在通用分支中重复添加为新的实体主杆。</p>
+<h3 id="2-1-2-二类杆件和二类节点的重建"><a href="#2-1-2-二类杆件和二类节点的重建" class="headerlink" title="2.1.2 二类杆件和二类节点的重建"></a>2.1.2 二类杆件和二类节点的重建</h3><h4 id="A-查找并计算二类节点"><a href="#A-查找并计算二类节点" class="headerlink" title="A. 查找并计算二类节点"></a>A. 查找并计算二类节点</h4><p>遍历当前视图中除两根一类杆件以外的所有杆件：</p>
+<ol>
+<li>两个端点都在一类杆件上的杆件为二类杆件</li>
+<li>为这些端点生成三维节点信息</li>
+</ol>
+<p>二类节点保存（<strong>引用表示法</strong>）：</p>
+<ul>
+<li><code>X</code>：按二维比例计算得到的真实值；</li>
+<li><code>Y、Z</code>：以字符串形式引用该节点所在一类杆件的两个真实端点。</li>
+</ul>
+<p><img src="/img/blogs/3d/sanwei2/5.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="B-生成二类杆件"><a href="#B-生成二类杆件" class="headerlink" title="B. 生成二类杆件"></a>B. 生成二类杆件</h4><p>将二类节点的二维位置重新与当前视图所有杆件端点匹配，建立“杆件编号 → 节点编号列表”的映射。只有恰好匹配到两个端点节点的杆件才写入输出。</p>
+<p><img src="/img/blogs/3d/sanwei2/6.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-1-3-三类杆件和三类节点的重建"><a href="#2-1-3-三类杆件和三类节点的重建" class="headerlink" title="2.1.3 三类杆件和三类节点的重建"></a>2.1.3 三类杆件和三类节点的重建</h3><h4 id="A-找出尚未生成的杆件"><a href="#A-找出尚未生成的杆件" class="headerlink" title="A. 找出尚未生成的杆件"></a>A. 找出尚未生成的杆件</h4><p>比较当前视图二维杆件编号和本视图已经生成的二类杆件编号，并排除一类杆件。剩余杆件作为三类杆件候选。</p>
+<h4 id="B-找到三类节点并计算三类节点"><a href="#B-找到三类节点并计算三类节点" class="headerlink" title="B. 找到三类节点并计算三类节点"></a>B. 找到三类节点并计算三类节点</h4><p>检查每根候选杆件的二维端点是否落在：</p>
+<ul>
+<li>已生成的二类杆件上；</li>
+<li>当前视图的两根一类杆件上。</li>
+</ul>
+<p>对于真正的新交点，代码沿基准一类杆件的二维范围进行比例换算，得到真实 X，并用该交点所在已有杆件的两个端点编号表达另外两个坐标引用。</p>
+<p><img src="/img/blogs/3d/sanwei2/7.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="C-生成三类杆件"><a href="#C-生成三类杆件" class="headerlink" title="C. 生成三类杆件"></a>C. 生成三类杆件</h4><p>新生成的三类节点再次与二维杆件端点匹配。仅当候选三类杆件最终拥有两个不同的有效节点时，才生成杆件记录。</p>
+<p><img src="/img/blogs/3d/sanwei2/8.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-1-4-底视图和顶视图同理构建"><a href="#2-1-4-底视图和顶视图同理构建" class="headerlink" title="2.1.4 底视图和顶视图同理构建"></a>2.1.4 底视图和顶视图同理构建</h3><p><img src="/img/blogs/3d/sanwei2/9.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2-2-直流塔复合担架重建流程"><a href="#2-2-直流塔复合担架重建流程" class="headerlink" title="2.2 直流塔复合担架重建流程"></a>2.2 直流塔复合担架重建流程</h2><p>直流塔由 03 和 04 组成一套复合担架，右侧由 05 和 06 组成一套复合担架</p>
+<p><img src="/img/blogs/3d/sanwei2/10.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="正视图"><a href="#正视图" class="headerlink" title="正视图"></a>正视图</h3><ol>
+<li>一类节点和一类杆件：确定三根主杆（分为两根一类主杆和一根一类副杆），生成真实三维xyz的一类节点，生成一类杆件信息</li>
+</ol>
+<p><img src="/img/blogs/3d/sanwei2/11.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="2">
+<li>二类节点和二类杆件：划分为两片需要处理的框架，处理逻辑和以前一样<ul>
+<li>水平主杆与斜主杆之间；</li>
+<li>水平主杆与一类副杆之间。</li>
+</ul>
+</li>
+</ol>
+<p><img src="/img/blogs/3d/sanwei2/12.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/blogs/3d/sanwei2/13.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="底视图和顶视图复用以前的代码逻辑"><a href="#底视图和顶视图复用以前的代码逻辑" class="headerlink" title="底视图和顶视图复用以前的代码逻辑"></a>底视图和顶视图复用以前的代码逻辑</h3><p><img src="/img/blogs/3d/sanwei2/14.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA/" class="category-chain-item">三维重建</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA/" class="print-no-link">#三维重建</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/08/18/FT/%E5%BE%AE%E8%B0%83%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/" title="微调的基本步骤">
+                        <span class="hidden-mobile">微调的基本步骤</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"sj2tGuxMGSDhkN5hNuOIVta1-gzGzoHsz","appKey":"ysR5OTuTzoby2oNvNyGOtXFQ","path":"window.location.pathname","placeholder":"如有问题，欢迎指正~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>AI</span> <i class="iconfont icon-love"></i> <span>LLM</span> <i class="iconfont icon-love"></i> <span>Java</span> <i class="iconfont icon-love"></i> <span>Agent</span> <i class="iconfont icon-love"></i> <span>Python</span> <i class="iconfont icon-love"></i> <span>CyberSec</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/love.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiaoxingxing.js"></script>
+<script src="/js/bubble.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>
