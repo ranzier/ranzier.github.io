@@ -33,7 +33,7 @@
     <link href="/2026/08/18/FT/%E5%BE%AE%E8%B0%83%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/"/>
     <url>/2026/08/18/FT/%E5%BE%AE%E8%B0%83%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/</url>
     
-    <content type="html"><![CDATA[<h1 align="center">微调的基本步骤</h1><p>大模型微调的标准化流程，可以概括为：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">需求定义 → 基线评测 → 数据构建 → 训练方案设计<br>→ 微调训练 → 离线评测 → 人工验收 → 部署 → 在线监控与迭代<br></code></pre></td></tr></table></figure><h1 id="1-明确微调目标与验收标准"><a href="#1-明确微调目标与验收标准" class="headerlink" title="1. 明确微调目标与验收标准"></a>1. 明确微调目标与验收标准</h1>]]></content>
+    <content type="html"><![CDATA[<h1 align="center">微调的基本步骤</h1><p>大模型微调的标准化流程，可以概括为：</p><ol><li>找一个基座模型</li><li>准备训练数据（重中之重）</li><li>进行训练调整参数</li></ol><p><strong>下文基于魔搭平台提供的免费GPU环境</strong></p><p><strong>微调框架使用Llamafactory</strong></p><h2 id="1-选择并下载模型"><a href="#1-选择并下载模型" class="headerlink" title="1. 选择并下载模型"></a>1. 选择并下载模型</h2><p>下载模型使用的命令：</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">modelscope</span> download <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --model Qwen/Qwen2.<span class="hljs-number">5</span>-<span class="hljs-number">3</span>B-Instruct <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --local_dir /mnt/workspace/models/Qwen2.<span class="hljs-number">5</span>-<span class="hljs-number">3</span>B-Instruct<br></code></pre></td></tr></table></figure><p>模型对话,使用 LLaMA-Factory 自带的命令行对话：</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">llamafactory</span>-cli chat <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --model_name_or_path /mnt/workspace/models/Qwen2.<span class="hljs-number">5</span>-<span class="hljs-number">3</span>B-Instruct <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --template qwen <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --infer_backend huggingface<br></code></pre></td></tr></table></figure><h2 id="2-选择并下载数据集"><a href="#2-选择并下载数据集" class="headerlink" title="2. 选择并下载数据集"></a>2. 选择并下载数据集</h2><p>想将该自定义数据集放到我们的系统中使用，则需要进行如下两步操作</p><ol><li>复制该数据集到 data目录下</li><li>修改 data&#x2F;dataset_info.json 新加内容完成注册, 该注册同时完成了3件事</li></ol><p>下载数据集：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /mnt/workspace/LlamaFactory<br><br>modelscope download \<br>  --dataset llamafactory/alpaca_zh \<br>  --local_dir /mnt/workspace/LlamaFactory/data/alpaca_zh<br></code></pre></td></tr></table></figure><p>在 data&#x2F;dataset_info.json 最后添加一个新的本地数据集配置：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;alpaca_zh_local&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;file_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;alpaca_zh/alpaca_data_zh_51k.json&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;formatting&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;alpaca&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;columns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;prompt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;instruction&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;query&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;input&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;response&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;output&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure><p>因为魔搭的notebook对json文件只读，编辑不了</p><p>直接在当前目录执行下面的 Python 修改脚本即可：</p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs py">cd /mnt/workspace/LlamaFactory<br><br>cp data/dataset_info.json data/dataset_info.json.bak<br><br>python - &lt;&lt;<span class="hljs-string">&#x27;PY&#x27;</span><br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path<br><br>path = Path(<span class="hljs-string">&quot;data/dataset_info.json&quot;</span>)<br><br><span class="hljs-keyword">with</span> path.<span class="hljs-built_in">open</span>(encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    info = json.load(f)<br><br>info[<span class="hljs-string">&quot;alpaca_zh_local&quot;</span>] = &#123;<br>    <span class="hljs-string">&quot;file_name&quot;</span>: <span class="hljs-string">&quot;alpaca_zh/alpaca_data_zh_51k.json&quot;</span>,<br>    <span class="hljs-string">&quot;formatting&quot;</span>: <span class="hljs-string">&quot;alpaca&quot;</span>,<br>    <span class="hljs-string">&quot;columns&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;prompt&quot;</span>: <span class="hljs-string">&quot;instruction&quot;</span>,<br>        <span class="hljs-string">&quot;query&quot;</span>: <span class="hljs-string">&quot;input&quot;</span>,<br>        <span class="hljs-string">&quot;response&quot;</span>: <span class="hljs-string">&quot;output&quot;</span><br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">with</span> path.<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;w&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    json.dump(info, f, ensure_ascii=<span class="hljs-literal">False</span>, indent=<span class="hljs-number">2</span>)<br>    f.write(<span class="hljs-string">&quot;\n&quot;</span>)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;dataset_info.json 已更新&quot;</span>)<br>PY<br></code></pre></td></tr></table></figure><h2 id="3-正式训练"><a href="#3-正式训练" class="headerlink" title="3. 正式训练"></a>3. 正式训练</h2><p>在Llamafactory目录下新建一个<code>qwen2.5_3b_alpaca_zh_lora.yaml</code>配置文件</p><p>yaml文件配置如下：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment">### model</span><br><span class="hljs-attr">model_name_or_path:</span> <span class="hljs-string">/mnt/workspace/models/Qwen2.5-3B-Instruct</span><br><span class="hljs-attr">trust_remote_code:</span> <span class="hljs-literal">true</span><br><br><span class="hljs-comment">### method</span><br><span class="hljs-attr">stage:</span> <span class="hljs-string">sft</span><br><span class="hljs-attr">do_train:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">finetuning_type:</span> <span class="hljs-string">lora</span><br><span class="hljs-attr">lora_rank:</span> <span class="hljs-number">8</span><br><span class="hljs-attr">lora_target:</span> <span class="hljs-string">all</span><br><br><span class="hljs-comment">### dataset</span><br><span class="hljs-attr">dataset:</span> <span class="hljs-string">alpaca_zh_local</span><br><span class="hljs-attr">dataset_dir:</span> <span class="hljs-string">/mnt/workspace/LlamaFactory/data</span><br><span class="hljs-attr">template:</span> <span class="hljs-string">qwen</span><br><span class="hljs-attr">cutoff_len:</span> <span class="hljs-number">2048</span><br><span class="hljs-attr">max_samples:</span> <span class="hljs-number">1000</span><br><span class="hljs-attr">preprocessing_num_workers:</span> <span class="hljs-number">8</span><br><span class="hljs-attr">dataloader_num_workers:</span> <span class="hljs-number">2</span><br><br><span class="hljs-comment">### output</span><br><span class="hljs-attr">output_dir:</span> <span class="hljs-string">/mnt/workspace/LlamaFactory/saves/qwen2.5-3b/lora/alpaca_zh</span><br><span class="hljs-attr">logging_steps:</span> <span class="hljs-number">10</span><br><span class="hljs-attr">save_steps:</span> <span class="hljs-number">100</span><br><span class="hljs-attr">plot_loss:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">overwrite_output_dir:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">save_only_model:</span> <span class="hljs-literal">false</span><br><span class="hljs-attr">report_to:</span> <span class="hljs-string">none</span><br><br><span class="hljs-comment">### train</span><br><span class="hljs-attr">per_device_train_batch_size:</span> <span class="hljs-number">1</span><br><span class="hljs-attr">gradient_accumulation_steps:</span> <span class="hljs-number">8</span><br><span class="hljs-attr">learning_rate:</span> <span class="hljs-number">1.0e-4</span><br><span class="hljs-attr">num_train_epochs:</span> <span class="hljs-number">3.0</span><br><span class="hljs-attr">lr_scheduler_type:</span> <span class="hljs-string">cosine</span><br><span class="hljs-attr">warmup_ratio:</span> <span class="hljs-number">0.1</span><br><span class="hljs-attr">bf16:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">ddp_timeout:</span> <span class="hljs-number">180000000</span><br><span class="hljs-attr">resume_from_checkpoint:</span> <span class="hljs-literal">null</span><br><br><span class="hljs-comment">### eval</span><br><span class="hljs-comment"># eval_dataset: alpaca_zh_local</span><br><span class="hljs-comment"># val_size: 0.1</span><br><span class="hljs-comment"># per_device_eval_batch_size: 1</span><br><span class="hljs-comment"># eval_strategy: steps</span><br><span class="hljs-comment"># eval_steps: 100</span><br></code></pre></td></tr></table></figure><p>正式训练命令：</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">CUDA_VISIBLE_DEVICES</span>=<span class="hljs-number">0</span> <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>llamafactory-cli train <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>/mnt/workspace/LlamaFactory/qwen2.<span class="hljs-number">5</span>_3b_alpaca_zh_lora.yaml<br></code></pre></td></tr></table></figure><h2 id="4-训练后验证"><a href="#4-训练后验证" class="headerlink" title="4. 训练后验证"></a>4. 训练后验证</h2><p>训练完之后，加载微调后的 adapter进行对话：</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">cd</span> /mnt/workspace/LlamaFactory<br><br><span class="hljs-attribute">llamafactory</span>-cli chat <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --model_name_or_path /mnt/workspace/models/Qwen2.<span class="hljs-number">5</span>-<span class="hljs-number">3</span>B-Instruct <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --adapter_name_or_path /mnt/workspace/LlamaFactory/saves/qwen2.<span class="hljs-number">5</span>-<span class="hljs-number">3</span>b/lora/alpaca_zh <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --template qwen <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --infer_backend huggingface<br></code></pre></td></tr></table></figure>]]></content>
     
     
     <categories>
@@ -60,7 +60,7 @@
     <link href="/2026/08/17/%E9%9D%A2%E7%BB%8F/2026%E4%B8%8B%E5%8D%8A%E5%B9%B4%E9%9D%A2%E7%BB%8F/"/>
     <url>/2026/08/17/%E9%9D%A2%E7%BB%8F/2026%E4%B8%8B%E5%8D%8A%E5%B9%B4%E9%9D%A2%E7%BB%8F/</url>
     
-    <content type="html"><![CDATA[<h1 align="center">2026下半年面经</h1><h2 id="1-虾皮一面-26-08-13（朋友面经）50min-search部门"><a href="#1-虾皮一面-26-08-13（朋友面经）50min-search部门" class="headerlink" title="1. 虾皮一面 26.08.13（朋友面经）50min search部门"></a>1. 虾皮一面 26.08.13（朋友面经）50min search部门</h2><ol><li>自我介绍</li><li>介绍一下vivo的实习agent是做什么的？</li><li>RAG架构怎么做的？为什么用BGE‑M3？效果怎么样？RRF选了多少个文档？为什么用RRF不用加权融合？</li><li>你们的文档大小有多大？</li><li>如果有一亿个文档存入你们这样的RAG架构，那最先顶不住的的是哪一个环节？</li><li>如果要存一亿个文档的RAG怎么检索出来最想要的那1个？查询检索时间要控制在200ms左右</li><li>如果要存一亿个文档的RAG怎么RRF检索出来最想要的那5000个？</li><li>做目录的话可能只能做到500w个，距离5000个还有很大的距离，进一步怎么做？</li><li>RAG的效果怎么测评？召回率的计算公式是什么？如何提高召回率？你们怎么做的召回率效果的评估？</li><li>Reranker模型怎么做的？</li><li>知道搜索引擎吗？ES的底层原理是什么？</li><li>除了RAG还做了什么？</li><li>什么是ReAct？ReAct怎么停止？到了最大步数了LLM还在执行怎么办？</li><li>ReAct带来的上下文快速膨胀的问题怎么解决？</li><li>除了ReAct还做了哪些Agent调优工作？</li><li>介绍一下Go的实习项目</li><li>用户量有多大？什么叫削峰填谷？</li><li>怎么保证的高可用？什么叫不可用？</li><li>为什么做成这样的架构？要Go去调Python服务？</li><li>你们这个Go‑Redis‑Python服务，如果有一个节点挂了怎么监控？</li><li>Python服务如何监控保证100%其挂了马上就能发现？</li><li>只用心跳监控和多机部署可以保证马上发现吗？</li><li>做支付的时候怎么保证零掉单？只有补单机制可以快速保证零掉单吗？补单定时任务的时间是多长？</li><li>零差错如何定义？</li><li>实习工作中还有哪些亮点我没有问到的吗？</li><li>平时用AI做过什么创造性价值的工作？</li><li>反问：业务和实习生的工作内容</li></ol>]]></content>
+    <content type="html"><![CDATA[<h1 align="center">2026下半年面经</h1><h2 id="1-虾皮一面-26-08-13（朋友面经）50min-search部门"><a href="#1-虾皮一面-26-08-13（朋友面经）50min-search部门" class="headerlink" title="1. 虾皮一面 26.08.13（朋友面经）50min search部门"></a>1. 虾皮一面 26.08.13（朋友面经）50min search部门</h2><ol><li>自我介绍</li><li>介绍一下vivo的实习agent是做什么的？</li><li>RAG架构怎么做的？为什么用BGE‑M3？效果怎么样？RRF选了多少个文档？为什么用RRF不用加权融合？</li><li>你们的文档大小有多大？</li><li>如果有一亿个文档存入你们这样的RAG架构，那最先顶不住的的是哪一个环节？</li><li>如果要存一亿个文档的RAG怎么检索出来最想要的那1个？查询检索时间要控制在200ms左右</li><li>如果要存一亿个文档的RAG怎么RRF检索出来最想要的那5000个？</li><li>做目录的话可能只能做到500w个，距离5000个还有很大的距离，进一步怎么做？</li><li>RAG的效果怎么测评？召回率的计算公式是什么？如何提高召回率？你们怎么做的召回率效果的评估？</li><li>Reranker模型怎么做的？</li><li>知道搜索引擎吗？ES的底层原理是什么？</li><li>除了RAG还做了什么？</li><li>什么是ReAct？ReAct怎么停止？到了最大步数了LLM还在执行怎么办？</li><li>ReAct带来的上下文快速膨胀的问题怎么解决？</li><li>除了ReAct还做了哪些Agent调优工作？</li><li>介绍一下Go的实习项目</li><li>用户量有多大？什么叫削峰填谷？</li><li>怎么保证的高可用？什么叫不可用？</li><li>为什么做成这样的架构？要Go去调Python服务？</li><li>你们这个Go‑Redis‑Python服务，如果有一个节点挂了怎么监控？</li><li>Python服务如何监控保证100%其挂了马上就能发现？</li><li>只用心跳监控和多机部署可以保证马上发现吗？</li><li>做支付的时候怎么保证零掉单？只有补单机制可以快速保证零掉单吗？补单定时任务的时间是多长？</li><li>零差错如何定义？</li><li>实习工作中还有哪些亮点我没有问到的吗？</li><li>平时用AI做过什么创造性价值的工作？</li><li>反问：业务和实习生的工作内容</li></ol><h2 id="2-百度一面-26-8-21（朋友面经）"><a href="#2-百度一面-26-8-21（朋友面经）" class="headerlink" title="2.百度一面 26.8.21（朋友面经）"></a>2.百度一面 26.8.21（朋友面经）</h2><p>35min 智慧医疗部门</p><ol><li>自我介绍</li><li>String是不是基础数据类型</li><li>有哪些基础数据类型？</li><li>说一下jvm的结构</li><li>堆和栈的区别？</li><li>堆栈各自满了的话会报什么错？</li><li>说一下什么情况会导致栈溢出</li><li>说一下api和spi的区别</li><li>一个java程序要启动的话堆内存大小如何设置？</li><li>介绍一下spring的IOC</li><li>如何创建bean？</li><li>如何使用bean？(后续面试官提示在问bean的注入方式有哪些)</li><li>bean的类型？</li><li>数据库对MySQL熟悉还是pgsql？</li><li>说一下char和varchar的区别？</li><li>如果设计一个字段是 &lt; 500字符的，要求有中英文的，那用char还是varchar？为什么？</li><li>select，where，left join，order by的执行顺序？</li><li>Redis的常用数据结构？</li><li>mcp和agent的通信过程？</li><li>mcp首次发送tools给agent，用的是什么接口？</li><li>如何定义一个mcp tools？</li><li>手撕：int类型的数字倒序。例如12345需要输出54321</li><li>介绍实习团队，业务，工作任务和做的最好的地方。</li><li>为什么上一段只实习了三个月？</li><li>反问业务，实习生工作，对ai的看法</li><li>继续追问平时怎么使用ai？用什么模型？</li></ol>]]></content>
     
     
     <categories>
@@ -355,9 +355,9 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>JAVA</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
@@ -422,9 +422,9 @@
     
     <tags>
       
-      <tag>八股</tag>
-      
       <tag>JVM</tag>
+      
+      <tag>八股</tag>
       
       <tag>StringTable</tag>
       
@@ -660,11 +660,11 @@
       
       <tag>AI</tag>
       
-      <tag>LLM</tag>
-      
       <tag>Transformer</tag>
       
       <tag>Attention</tag>
+      
+      <tag>LLM</tag>
       
     </tags>
     
@@ -724,44 +724,13 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>AI</tag>
       
-      <tag>Spring AI</tag>
+      <tag>JAVA</tag>
       
       <tag>RAG</tag>
       
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>Canal实现数据同步的工作原理</title>
-    <link href="/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"/>
-    <url>/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</url>
-    
-    <content type="html"><![CDATA[<h1 align="center">Canal实现数据同步的工作原理</h1><h1 id="1-Canal的核心原理和整体流程"><a href="#1-Canal的核心原理和整体流程" class="headerlink" title="1. Canal的核心原理和整体流程"></a>1. Canal的核心原理和整体流程</h1><p><strong>Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。</strong></p><p>Canal 数据流动的整体链路：</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">MySQL 写入（<span class="hljs-keyword">INSERT</span>/<span class="hljs-keyword">UPDATE</span>/<span class="hljs-keyword">DELETE</span>）<br>          ↓（生成binlog）<br>Canal <span class="hljs-keyword">Server</span> 订阅 binlog（伪装成 slave）<br>          ↓<br>Canal Client（你的 aimin-drug 微服务）<br>          ↓<br>你写的 CanalReceiver 对数据进行处理<br>          ↓<br>同步到 ES / Redis / MQ / 其他地方<br></code></pre></td></tr></table></figure><p><img src="/img/blogs/canal/1.png"></p><h1 id="2-MySQL-产生-binlog（变更日志）"><a href="#2-MySQL-产生-binlog（变更日志）" class="headerlink" title="2. MySQL 产生 binlog（变更日志）"></a>2. MySQL 产生 binlog（变更日志）</h1><p>只要执行：</p><ul><li>INSERT</li><li>UPDATE</li><li>DELETE</li></ul><p>MySQL都会把变化记录到 binlog（Binary log）中。</p><p>binlog 里面存的是<strong>数据变更事件</strong>，例如：</p><table><thead><tr><th>操作</th><th>binlog中记录</th></tr></thead><tbody><tr><td>Insert</td><td>row 新增的数据</td></tr><tr><td>Update</td><td>修改前 &amp; 修改后的值</td></tr><tr><td>Delete</td><td>删除前的值</td></tr></tbody></table><h1 id="3-Canal的具体工作流程"><a href="#3-Canal的具体工作流程" class="headerlink" title="3. Canal的具体工作流程"></a>3. Canal的具体工作流程</h1><ol><li>Canal Server 会去连接 MySQL：<ul><li>以 <code>slave</code> 的身份注册</li><li>发送 <code>show master status</code></li><li>读取 binlog 的位置点（binlog filename + position）</li><li>持续向 MySQL 发送 dump 请求 —— 和从库一样</li></ul></li><li>MySQL 不断把 binlog 推给 Canal Server<ul><li>当 Canal Server 模拟从库连接后，MySQL 会不断把 binlog 内容“推送”给 Canal。</li></ul></li><li>Canal Server 把 binlog 解析并封装成 Java 对象，执行后续逻辑</li></ol><p><img src="/img/blogs/canal/2.png"></p><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
-    
-    
-    <categories>
-      
-      <category>JAVA</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>JAVA</tag>
-      
-      <tag>Canal</tag>
-      
-      <tag>ES</tag>
-      
-      <tag>MQ</tag>
+      <tag>Spring AI</tag>
       
     </tags>
     
@@ -803,6 +772,37 @@
   
   
   <entry>
+    <title>Canal实现数据同步的工作原理</title>
+    <link href="/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"/>
+    <url>/2025/11/24/JAVA/JAVA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SpringCloud/Canal%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">Canal实现数据同步的工作原理</h1><h1 id="1-Canal的核心原理和整体流程"><a href="#1-Canal的核心原理和整体流程" class="headerlink" title="1. Canal的核心原理和整体流程"></a>1. Canal的核心原理和整体流程</h1><p><strong>Canal 通过模拟自己是一个 MySQL slave（从库），向主库“伪装”成从库来订阅 MySQL 的 binlog，从而实时拿到所有写操作（INSERT&#x2F;UPDATE&#x2F;DELETE）的变更数据，再推给你的应用进行处理。</strong></p><p>Canal 数据流动的整体链路：</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">MySQL 写入（<span class="hljs-keyword">INSERT</span>/<span class="hljs-keyword">UPDATE</span>/<span class="hljs-keyword">DELETE</span>）<br>          ↓（生成binlog）<br>Canal <span class="hljs-keyword">Server</span> 订阅 binlog（伪装成 slave）<br>          ↓<br>Canal Client（你的 aimin-drug 微服务）<br>          ↓<br>你写的 CanalReceiver 对数据进行处理<br>          ↓<br>同步到 ES / Redis / MQ / 其他地方<br></code></pre></td></tr></table></figure><p><img src="/img/blogs/canal/1.png"></p><h1 id="2-MySQL-产生-binlog（变更日志）"><a href="#2-MySQL-产生-binlog（变更日志）" class="headerlink" title="2. MySQL 产生 binlog（变更日志）"></a>2. MySQL 产生 binlog（变更日志）</h1><p>只要执行：</p><ul><li>INSERT</li><li>UPDATE</li><li>DELETE</li></ul><p>MySQL都会把变化记录到 binlog（Binary log）中。</p><p>binlog 里面存的是<strong>数据变更事件</strong>，例如：</p><table><thead><tr><th>操作</th><th>binlog中记录</th></tr></thead><tbody><tr><td>Insert</td><td>row 新增的数据</td></tr><tr><td>Update</td><td>修改前 &amp; 修改后的值</td></tr><tr><td>Delete</td><td>删除前的值</td></tr></tbody></table><h1 id="3-Canal的具体工作流程"><a href="#3-Canal的具体工作流程" class="headerlink" title="3. Canal的具体工作流程"></a>3. Canal的具体工作流程</h1><ol><li>Canal Server 会去连接 MySQL：<ul><li>以 <code>slave</code> 的身份注册</li><li>发送 <code>show master status</code></li><li>读取 binlog 的位置点（binlog filename + position）</li><li>持续向 MySQL 发送 dump 请求 —— 和从库一样</li></ul></li><li>MySQL 不断把 binlog 推给 Canal Server<ul><li>当 Canal Server 模拟从库连接后，MySQL 会不断把 binlog 内容“推送”给 Canal。</li></ul></li><li>Canal Server 把 binlog 解析并封装成 Java 对象，执行后续逻辑</li></ol><p><img src="/img/blogs/canal/2.png"></p><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>JAVA</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JAVA</tag>
+      
+      <tag>Canal</tag>
+      
+      <tag>ES</tag>
+      
+      <tag>MQ</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>基于SpringAI实现会话记忆和对话内容持久化的AI对话服务</title>
     <link href="/2025/11/24/AI/AI%E9%A1%B9%E7%9B%AE/%E5%A6%82%E4%BD%95%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90AI%E5%AF%B9%E8%AF%9D%E5%8A%9F%E8%83%BD/"/>
     <url>/2025/11/24/AI/AI%E9%A1%B9%E7%9B%AE/%E5%A6%82%E4%BD%95%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90AI%E5%AF%B9%E8%AF%9D%E5%8A%9F%E8%83%BD/</url>
@@ -821,9 +821,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>AI</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>Spring AI</tag>
       
@@ -847,9 +847,9 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>JAVA</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
@@ -1062,9 +1062,9 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>JAVA</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
@@ -1266,9 +1266,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>MySQL</tag>
       
@@ -1297,9 +1297,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>JVM</tag>
       
@@ -1328,9 +1328,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>JUC</tag>
       
@@ -1359,9 +1359,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>Redis</tag>
       
@@ -1388,9 +1388,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>SpringCloud</tag>
       
@@ -1626,9 +1626,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>javaweb</tag>
       
@@ -1655,9 +1655,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>javase</tag>
       
@@ -1684,9 +1684,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>学习</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>javase</tag>
       

@@ -21,16 +21,16 @@
   <meta name="author" content="ranzier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="微调的基本步骤  大模型微调的标准化流程，可以概括为： 12需求定义 → 基线评测 → 数据构建 → 训练方案设计→ 微调训练 → 离线评测 → 人工验收 → 部署 → 在线监控与迭代    1. 明确微调目标与验收标准">
+    <meta name="description" content="微调的基本步骤  大模型微调的标准化流程，可以概括为：  找一个基座模型 准备训练数据（重中之重） 进行训练调整参数  下文基于魔搭平台提供的免费GPU环境 微调框架使用Llamafactory 1. 选择并下载模型下载模型使用的命令： 123modelscope download \  --model Qwen&#x2F;Qwen2.5-3B-Instruct \  --local_dir &#x2F;mnt&#x2F;wo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微调的基本步骤">
 <meta property="og:url" content="http://example.com/2026/08/18/FT/%E5%BE%AE%E8%B0%83%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/index.html">
 <meta property="og:site_name" content="RANZIER">
-<meta property="og:description" content="微调的基本步骤  大模型微调的标准化流程，可以概括为： 12需求定义 → 基线评测 → 数据构建 → 训练方案设计→ 微调训练 → 离线评测 → 人工验收 → 部署 → 在线监控与迭代    1. 明确微调目标与验收标准">
+<meta property="og:description" content="微调的基本步骤  大模型微调的标准化流程，可以概括为：  找一个基座模型 准备训练数据（重中之重） 进行训练调整参数  下文基于魔搭平台提供的免费GPU环境 微调框架使用Llamafactory 1. 选择并下载模型下载模型使用的命令： 123modelscope download \  --model Qwen&#x2F;Qwen2.5-3B-Instruct \  --local_dir &#x2F;mnt&#x2F;wo">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/bg/73.jpg">
 <meta property="article:published_time" content="2026-08-18T03:43:24.000Z">
-<meta property="article:modified_time" content="2026-08-17T06:33:52.186Z">
+<meta property="article:modified_time" content="2026-08-27T09:24:47.138Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="微调">
@@ -249,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          75 字
+          579 字
         
       </span>
     
@@ -260,7 +260,7 @@
         
         
         
-          1 分钟
+          3 分钟
         
       </span>
     
@@ -318,11 +318,89 @@
                 <h1 align="center">微调的基本步骤</h1>
 
 <p>大模型微调的标准化流程，可以概括为：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">需求定义 → 基线评测 → 数据构建 → 训练方案设计<br>→ 微调训练 → 离线评测 → 人工验收 → 部署 → 在线监控与迭代<br></code></pre></td></tr></table></figure>
+<ol>
+<li>找一个基座模型</li>
+<li>准备训练数据（重中之重）</li>
+<li>进行训练调整参数</li>
+</ol>
+<p><strong>下文基于魔搭平台提供的免费GPU环境</strong></p>
+<p><strong>微调框架使用Llamafactory</strong></p>
+<h2 id="1-选择并下载模型"><a href="#1-选择并下载模型" class="headerlink" title="1. 选择并下载模型"></a>1. 选择并下载模型</h2><p>下载模型使用的命令：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">modelscope</span> download <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --model Qwen/Qwen2.<span class="hljs-number">5</span>-<span class="hljs-number">3</span>B-Instruct <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --local_dir /mnt/workspace/models/Qwen2.<span class="hljs-number">5</span>-<span class="hljs-number">3</span>B-Instruct<br></code></pre></td></tr></table></figure>
+
+
+<p>模型对话,使用 LLaMA-Factory 自带的命令行对话：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">llamafactory</span>-cli chat <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --model_name_or_path /mnt/workspace/models/Qwen2.<span class="hljs-number">5</span>-<span class="hljs-number">3</span>B-Instruct <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --template qwen <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --infer_backend huggingface<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-选择并下载数据集"><a href="#2-选择并下载数据集" class="headerlink" title="2. 选择并下载数据集"></a>2. 选择并下载数据集</h2><p>想将该自定义数据集放到我们的系统中使用，则需要进行如下两步操作</p>
+<ol>
+<li>复制该数据集到 data目录下</li>
+<li>修改 data&#x2F;dataset_info.json 新加内容完成注册, 该注册同时完成了3件事</li>
+</ol>
+<p>下载数据集：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /mnt/workspace/LlamaFactory<br><br>modelscope download \<br>  --dataset llamafactory/alpaca_zh \<br>  --local_dir /mnt/workspace/LlamaFactory/data/alpaca_zh<br></code></pre></td></tr></table></figure>
+
+
+<p>在 data&#x2F;dataset_info.json 最后添加一个新的本地数据集配置：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;alpaca_zh_local&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;file_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;alpaca_zh/alpaca_data_zh_51k.json&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;formatting&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;alpaca&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;columns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;prompt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;instruction&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;query&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;input&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;response&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;output&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>因为魔搭的notebook对json文件只读，编辑不了</p>
+<p>直接在当前目录执行下面的 Python 修改脚本即可：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs py">cd /mnt/workspace/LlamaFactory<br><br>cp data/dataset_info.json data/dataset_info.json.bak<br><br>python - &lt;&lt;<span class="hljs-string">&#x27;PY&#x27;</span><br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path<br><br>path = Path(<span class="hljs-string">&quot;data/dataset_info.json&quot;</span>)<br><br><span class="hljs-keyword">with</span> path.<span class="hljs-built_in">open</span>(encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    info = json.load(f)<br><br>info[<span class="hljs-string">&quot;alpaca_zh_local&quot;</span>] = &#123;<br>    <span class="hljs-string">&quot;file_name&quot;</span>: <span class="hljs-string">&quot;alpaca_zh/alpaca_data_zh_51k.json&quot;</span>,<br>    <span class="hljs-string">&quot;formatting&quot;</span>: <span class="hljs-string">&quot;alpaca&quot;</span>,<br>    <span class="hljs-string">&quot;columns&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;prompt&quot;</span>: <span class="hljs-string">&quot;instruction&quot;</span>,<br>        <span class="hljs-string">&quot;query&quot;</span>: <span class="hljs-string">&quot;input&quot;</span>,<br>        <span class="hljs-string">&quot;response&quot;</span>: <span class="hljs-string">&quot;output&quot;</span><br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">with</span> path.<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;w&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    json.dump(info, f, ensure_ascii=<span class="hljs-literal">False</span>, indent=<span class="hljs-number">2</span>)<br>    f.write(<span class="hljs-string">&quot;\n&quot;</span>)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;dataset_info.json 已更新&quot;</span>)<br>PY<br></code></pre></td></tr></table></figure>
 
 
 
-<h1 id="1-明确微调目标与验收标准"><a href="#1-明确微调目标与验收标准" class="headerlink" title="1. 明确微调目标与验收标准"></a>1. 明确微调目标与验收标准</h1>
+
+<h2 id="3-正式训练"><a href="#3-正式训练" class="headerlink" title="3. 正式训练"></a>3. 正式训练</h2><p>在Llamafactory目录下新建一个<code>qwen2.5_3b_alpaca_zh_lora.yaml</code>配置文件</p>
+<p>yaml文件配置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment">### model</span><br><span class="hljs-attr">model_name_or_path:</span> <span class="hljs-string">/mnt/workspace/models/Qwen2.5-3B-Instruct</span><br><span class="hljs-attr">trust_remote_code:</span> <span class="hljs-literal">true</span><br><br><span class="hljs-comment">### method</span><br><span class="hljs-attr">stage:</span> <span class="hljs-string">sft</span><br><span class="hljs-attr">do_train:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">finetuning_type:</span> <span class="hljs-string">lora</span><br><span class="hljs-attr">lora_rank:</span> <span class="hljs-number">8</span><br><span class="hljs-attr">lora_target:</span> <span class="hljs-string">all</span><br><br><span class="hljs-comment">### dataset</span><br><span class="hljs-attr">dataset:</span> <span class="hljs-string">alpaca_zh_local</span><br><span class="hljs-attr">dataset_dir:</span> <span class="hljs-string">/mnt/workspace/LlamaFactory/data</span><br><span class="hljs-attr">template:</span> <span class="hljs-string">qwen</span><br><span class="hljs-attr">cutoff_len:</span> <span class="hljs-number">2048</span><br><span class="hljs-attr">max_samples:</span> <span class="hljs-number">1000</span><br><span class="hljs-attr">preprocessing_num_workers:</span> <span class="hljs-number">8</span><br><span class="hljs-attr">dataloader_num_workers:</span> <span class="hljs-number">2</span><br><br><span class="hljs-comment">### output</span><br><span class="hljs-attr">output_dir:</span> <span class="hljs-string">/mnt/workspace/LlamaFactory/saves/qwen2.5-3b/lora/alpaca_zh</span><br><span class="hljs-attr">logging_steps:</span> <span class="hljs-number">10</span><br><span class="hljs-attr">save_steps:</span> <span class="hljs-number">100</span><br><span class="hljs-attr">plot_loss:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">overwrite_output_dir:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">save_only_model:</span> <span class="hljs-literal">false</span><br><span class="hljs-attr">report_to:</span> <span class="hljs-string">none</span><br><br><span class="hljs-comment">### train</span><br><span class="hljs-attr">per_device_train_batch_size:</span> <span class="hljs-number">1</span><br><span class="hljs-attr">gradient_accumulation_steps:</span> <span class="hljs-number">8</span><br><span class="hljs-attr">learning_rate:</span> <span class="hljs-number">1.0e-4</span><br><span class="hljs-attr">num_train_epochs:</span> <span class="hljs-number">3.0</span><br><span class="hljs-attr">lr_scheduler_type:</span> <span class="hljs-string">cosine</span><br><span class="hljs-attr">warmup_ratio:</span> <span class="hljs-number">0.1</span><br><span class="hljs-attr">bf16:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">ddp_timeout:</span> <span class="hljs-number">180000000</span><br><span class="hljs-attr">resume_from_checkpoint:</span> <span class="hljs-literal">null</span><br><br><span class="hljs-comment">### eval</span><br><span class="hljs-comment"># eval_dataset: alpaca_zh_local</span><br><span class="hljs-comment"># val_size: 0.1</span><br><span class="hljs-comment"># per_device_eval_batch_size: 1</span><br><span class="hljs-comment"># eval_strategy: steps</span><br><span class="hljs-comment"># eval_steps: 100</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>正式训练命令：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">CUDA_VISIBLE_DEVICES</span>=<span class="hljs-number">0</span> <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>llamafactory-cli train <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>/mnt/workspace/LlamaFactory/qwen2.<span class="hljs-number">5</span>_3b_alpaca_zh_lora.yaml<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="4-训练后验证"><a href="#4-训练后验证" class="headerlink" title="4. 训练后验证"></a>4. 训练后验证</h2><p>训练完之后，加载微调后的 adapter进行对话：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">cd</span> /mnt/workspace/LlamaFactory<br><br><span class="hljs-attribute">llamafactory</span>-cli chat <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --model_name_or_path /mnt/workspace/models/Qwen2.<span class="hljs-number">5</span>-<span class="hljs-number">3</span>B-Instruct <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --adapter_name_or_path /mnt/workspace/LlamaFactory/saves/qwen2.<span class="hljs-number">5</span>-<span class="hljs-number">3</span>b/lora/alpaca_zh <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --template qwen <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --infer_backend huggingface<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 
               </div>
             
