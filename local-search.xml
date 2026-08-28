@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>novel-agent微调教程</title>
+    <link href="/2026/08/27/FT/novel-agent%E5%BE%AE%E8%B0%83%E6%95%99%E7%A8%8B/"/>
+    <url>/2026/08/27/FT/novel-agent%E5%BE%AE%E8%B0%83%E6%95%99%E7%A8%8B/</url>
+    
+    <content type="html"><![CDATA[<h1 align="center">novel-agent微调教程</h1><h1 id="1-微调的场景与目标"><a href="#1-微调的场景与目标" class="headerlink" title="1. 微调的场景与目标"></a>1. 微调的场景与目标</h1><h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>现有长篇中文小说 Agent 虽然通过提示词约束去除 AI 腔，但生成章节中仍会出现模板化句式、空泛心理描写、机械转折和过度解释等问题。</p><ul><li>仅仅通过提示词工程的约束无法完全消除AI味的句子的生成。</li></ul><p>现在已有的可以解决该问题的技术：（调研一下）</p><ol><li>使用skill去AI味：</li></ol><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>因此计划使用 Qwen3-8B，在 A10 22GB GPU 上通过  LoRA 微调一个“局部文学编辑器”。它接收目标段落及前后文，只对句子或段落做最小幅度改写：</p><ul><li>去除明显 AI 腔；</li><li>保持人物、剧情、时间、数字、境界、道具和因果关系不变；</li><li>不新增剧情、不续写、不解释；</li><li>原文自然时保持原样。<br>最终目标是把它接入现有小说生成流程，在章节生成后对高风险段落进行局部润色，使成稿更自然、更像人工写作，同时不破坏长篇小说的一致性。</li></ul><h1 id="2-选择微调框架"><a href="#2-选择微调框架" class="headerlink" title="2. 选择微调框架"></a>2. 选择微调框架</h1><p>这里使用的是<strong>LlamaFactory</strong>大模型微调框架</p><p><a href="https://github.com/hiyouga/LlamaFactory">LlamaFactory</a></p><h1 id="3-选择微调的基础模型"><a href="#3-选择微调的基础模型" class="headerlink" title="3. 选择微调的基础模型"></a>3. 选择微调的基础模型</h1><p>最终选择：</p><ol><li>使用<code>Qwen/Qwen3-8B</code></li></ol><h3 id="资源限制"><a href="#资源限制" class="headerlink" title="资源限制"></a>资源限制</h3><ol><li>受制于硬件GPU显存等的限制，这里最多选择一个<strong>7b参数量左右的小模型</strong></li><li>因为写的小说是中文网文，所以最好选择<strong>中文模型</strong></li></ol><h3 id="选型优点"><a href="#选型优点" class="headerlink" title="选型优点"></a>选型优点</h3><ol><li>中文能力和中文网文表达较稳定；</li><li>是Instruct模型，指令遵循能力比 Base 模型好，适合“只改写目标段落、不能改变事实”；</li><li>文本理解能力比<code>qwen2.5-7b-instruct</code>更强</li><li>你的任务不是从零创作，而是“理解上下文后做局部编辑”，8B 足够</li><li>ModelScope、Transformers、ms-swift 生态成熟；支持 LoRA&#x2F;QLoRA；</li></ol><h1 id="4-数据集的构造"><a href="#4-数据集的构造" class="headerlink" title="4. 数据集的构造"></a>4. 数据集的构造</h1><h2 id="4-1-Alpaca-格式"><a href="#4-1-Alpaca-格式" class="headerlink" title="4.1 Alpaca 格式"></a>4.1 Alpaca 格式</h2><p>在指令监督微调时，instruction 列对应的内容会与 input 列对应的内容拼接后作为提示词，即提示词为 instruction\ninput。而 output 列对应的内容为模型回答。</p><p>如果指定，system 列对应的内容将被作为系统提示词。</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;用户指令（必填）&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;用户输入（选填）&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;模型回答（必填）&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;系统提示词（选填）&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure><p>对于上述格式的数据，dataset_info.json 中的数据集描述应为：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;数据集名称&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;file_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;data.json&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;columns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;prompt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;instruction&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;query&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;input&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;response&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;output&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;system&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;history&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;history&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure><p><strong>具体构造数据集示例</strong>：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs json"><br><span class="hljs-punctuation">[</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网文局部编辑器。只改写表达，不得改变剧情事实、人物关系、时间、数字、专名、叙事视角和对白归属。原文自然时保持原样。只输出处理后的文本，不解释。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;去除空泛心理描写，改为更自然、克制的表达。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;这一刻，他的心中不由得涌现出了一股复杂的情绪。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;复杂的情绪在他心头翻涌。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网文局部编辑器。只改写表达，不得改变剧情事实、人物关系、时间、数字、专名、叙事视角和对白归属。原文自然时保持原样。只输出处理后的文本，不解释。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;删除冗余表达，保持原意不变。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;他缓缓地抬起了自己的右手，然后轻轻地擦拭了一下嘴角的鲜血。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;他抬起右手，擦掉嘴角的血。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网文局部编辑器。只改写表达，不得改变剧情事实、人物关系、时间、数字、专名、叙事视角和对白归属。原文自然时保持原样。只输出处理后的文本，不解释。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;如果原文已经自然，不做任何修改。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;陈默把伞搁在门后，鞋底在门槛上蹭了两下。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;陈默把伞搁在门后，鞋底在门槛上蹭了两下。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure><h2 id="4-2-数据集格式的建议"><a href="#4-2-数据集格式的建议" class="headerlink" title="4.2 数据集格式的建议"></a>4.2 数据集格式的建议</h2><ol><li><code>system</code>固定，<code>instruction</code>尽量短一些</li><li><code>input</code>的文本长度（这个尽量对应后续真实改写时的上下文长度）<ul><li>70%：单句、短句改写</li><li>30%：几百字段落改写样本，平衡长短，防止模型只会输出短句</li></ul></li><li>加入<strong>原样保留样本</strong>,必须占比30%左右: <code>input</code>和<code>output</code>一样</li><li>训练和实际推理的输入形式必须一致</li><li><code>system</code>固定写入硬约束：不得改变事实、不得改变剧情、不得改变专名和数字等</li><li><code>instruction</code> 最好使用有限、稳定的几类要求<ul><li>去除空泛心理描写</li><li>删除重复动作</li><li>减少机械转折</li><li>压缩解释性句子</li><li>让对白更自然</li><li>调整句子节奏</li><li>保留原文，不做修改</li></ul></li><li><code>input</code>中的文本必须完整<ul><li>完整的一句话</li><li>完整的几句话</li><li>完整的一个段落</li></ul></li></ol><h2 id="4-3-第一版数据集构造格式示例"><a href="#4-3-第一版数据集构造格式示例" class="headerlink" title="4.3 第一版数据集构造格式示例"></a>4.3 第一版数据集构造格式示例</h2><ul><li><code>system</code>和<code>instruction</code>都<strong>固定</strong></li><li><code>input</code>是输入的原文内容</li><li><code>output</code>是润色改写后的文章内容</li></ul><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得新增、遗漏或改变任何事实信息，包括剧情、人物关系、专名、数字、时间、地点、境界、道具、因果关系和对白归属。不得续写、扩写或解释。只输出可以直接替换原文的最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请对以下文本进行最小必要的去AI腔改写；仅在确有必要时修改，原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;这一刻，他的心中不由得涌现出了一股复杂的情绪。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;此刻复杂的情绪在他的心头翻涌。&quot;</span><br><span class="hljs-punctuation">&#125;</span><br><br><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得新增、遗漏或改变任何事实信息，包括剧情、人物关系、专名、数字、时间、地点、境界、道具、因果关系和对白归属。不得续写、扩写或解释。只输出可以直接替换原文的最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请对以下文本进行最小必要的去AI腔改写；仅在确有必要时修改，原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;雨水顺着屋檐滴下来，砸在青石板上。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;雨水顺着屋檐滴下来，砸在青石板上。&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure><h2 id="4-4-数据集常见问题的解决方案"><a href="#4-4-数据集常见问题的解决方案" class="headerlink" title="4.4 数据集常见问题的解决方案"></a>4.4 数据集常见问题的解决方案</h2><h4 id="A-数据量：先做小规模高质量数据"><a href="#A-数据量：先做小规模高质量数据" class="headerlink" title="A. 数据量：先做小规模高质量数据"></a>A. 数据量：先做小规模高质量数据</h4><p>1000-&gt;3000-&gt;5000</p><p>分阶段：</p><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs dns">第一轮验证：<span class="hljs-number">1000</span> 条左右<br>正式训练：<span class="hljs-number">3000～5000</span> 条<br>多题材、多风格：<span class="hljs-number">8000～10000</span> 条以上<br></code></pre></td></tr></table></figure><h4 id="B-样本比例"><a href="#B-样本比例" class="headerlink" title="B. 样本比例"></a>B. 样本比例</h4><p>第一轮 1000 条可以这样分：</p><ol><li>需要改写：700 条</li><li>原样保留：300 条</li></ol><p>改写样本内部再覆盖这些问题，并且这些问题需要是平均的：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs">空泛心理描写<br>重复动作<br>机械转折<br>解释性复述<br>模板化收尾<br>不自然对白<br>句子节奏问题<br></code></pre></td></tr></table></figure><h4 id="C-样本偏差：长度和内容要接近真实使用场景"><a href="#C-样本偏差：长度和内容要接近真实使用场景" class="headerlink" title="C. 样本偏差：长度和内容要接近真实使用场景"></a>C. 样本偏差：长度和内容要接近真实使用场景</h4><p>最重要的是，<strong>训练集要接近未来真实输入</strong><br>网文小说的特点就是以段落为一个整体内容</p><p>长度比例：</p><ul><li>80%：<strong>完整段落</strong></li><li>20%：单独句子或几个短句</li></ul><h4 id="D-多样性：针对多种题材的网文内容"><a href="#D-多样性：针对多种题材的网文内容" class="headerlink" title="D. 多样性：针对多种题材的网文内容"></a>D. 多样性：针对多种题材的网文内容</h4><p>不仅支持历史小说、还支持玄幻、都市、言情等题材的小说</p><h2 id="4-5-最终生成的数据集"><a href="#4-5-最终生成的数据集" class="headerlink" title="4.5 最终生成的数据集"></a>4.5 最终生成的数据集</h2><h1 id="5-微调训练"><a href="#5-微调训练" class="headerlink" title="5. 微调训练"></a>5. 微调训练</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>微调</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>AI</tag>
+      
+      <tag>微调</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>三维重建项目文档2.0</title>
     <link href="/2026/08/18/3d/%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3-%E4%BA%94%E7%B1%BB%E5%9B%BE%E7%BA%B8/"/>
     <url>/2026/08/18/3d/%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3-%E4%BA%94%E7%B1%BB%E5%9B%BE%E7%BA%B8/</url>
@@ -60,7 +87,7 @@
     <link href="/2026/08/17/%E9%9D%A2%E7%BB%8F/2026%E4%B8%8B%E5%8D%8A%E5%B9%B4%E9%9D%A2%E7%BB%8F/"/>
     <url>/2026/08/17/%E9%9D%A2%E7%BB%8F/2026%E4%B8%8B%E5%8D%8A%E5%B9%B4%E9%9D%A2%E7%BB%8F/</url>
     
-    <content type="html"><![CDATA[<h1 align="center">2026下半年面经</h1><h2 id="1-虾皮一面-26-08-13（朋友面经）50min-search部门"><a href="#1-虾皮一面-26-08-13（朋友面经）50min-search部门" class="headerlink" title="1. 虾皮一面 26.08.13（朋友面经）50min search部门"></a>1. 虾皮一面 26.08.13（朋友面经）50min search部门</h2><ol><li>自我介绍</li><li>介绍一下vivo的实习agent是做什么的？</li><li>RAG架构怎么做的？为什么用BGE‑M3？效果怎么样？RRF选了多少个文档？为什么用RRF不用加权融合？</li><li>你们的文档大小有多大？</li><li>如果有一亿个文档存入你们这样的RAG架构，那最先顶不住的的是哪一个环节？</li><li>如果要存一亿个文档的RAG怎么检索出来最想要的那1个？查询检索时间要控制在200ms左右</li><li>如果要存一亿个文档的RAG怎么RRF检索出来最想要的那5000个？</li><li>做目录的话可能只能做到500w个，距离5000个还有很大的距离，进一步怎么做？</li><li>RAG的效果怎么测评？召回率的计算公式是什么？如何提高召回率？你们怎么做的召回率效果的评估？</li><li>Reranker模型怎么做的？</li><li>知道搜索引擎吗？ES的底层原理是什么？</li><li>除了RAG还做了什么？</li><li>什么是ReAct？ReAct怎么停止？到了最大步数了LLM还在执行怎么办？</li><li>ReAct带来的上下文快速膨胀的问题怎么解决？</li><li>除了ReAct还做了哪些Agent调优工作？</li><li>介绍一下Go的实习项目</li><li>用户量有多大？什么叫削峰填谷？</li><li>怎么保证的高可用？什么叫不可用？</li><li>为什么做成这样的架构？要Go去调Python服务？</li><li>你们这个Go‑Redis‑Python服务，如果有一个节点挂了怎么监控？</li><li>Python服务如何监控保证100%其挂了马上就能发现？</li><li>只用心跳监控和多机部署可以保证马上发现吗？</li><li>做支付的时候怎么保证零掉单？只有补单机制可以快速保证零掉单吗？补单定时任务的时间是多长？</li><li>零差错如何定义？</li><li>实习工作中还有哪些亮点我没有问到的吗？</li><li>平时用AI做过什么创造性价值的工作？</li><li>反问：业务和实习生的工作内容</li></ol><h2 id="2-百度一面-26-8-21（朋友面经）"><a href="#2-百度一面-26-8-21（朋友面经）" class="headerlink" title="2.百度一面 26.8.21（朋友面经）"></a>2.百度一面 26.8.21（朋友面经）</h2><p>35min 智慧医疗部门</p><ol><li>自我介绍</li><li>String是不是基础数据类型</li><li>有哪些基础数据类型？</li><li>说一下jvm的结构</li><li>堆和栈的区别？</li><li>堆栈各自满了的话会报什么错？</li><li>说一下什么情况会导致栈溢出</li><li>说一下api和spi的区别</li><li>一个java程序要启动的话堆内存大小如何设置？</li><li>介绍一下spring的IOC</li><li>如何创建bean？</li><li>如何使用bean？(后续面试官提示在问bean的注入方式有哪些)</li><li>bean的类型？</li><li>数据库对MySQL熟悉还是pgsql？</li><li>说一下char和varchar的区别？</li><li>如果设计一个字段是 &lt; 500字符的，要求有中英文的，那用char还是varchar？为什么？</li><li>select，where，left join，order by的执行顺序？</li><li>Redis的常用数据结构？</li><li>mcp和agent的通信过程？</li><li>mcp首次发送tools给agent，用的是什么接口？</li><li>如何定义一个mcp tools？</li><li>手撕：int类型的数字倒序。例如12345需要输出54321</li><li>介绍实习团队，业务，工作任务和做的最好的地方。</li><li>为什么上一段只实习了三个月？</li><li>反问业务，实习生工作，对ai的看法</li><li>继续追问平时怎么使用ai？用什么模型？</li></ol>]]></content>
+    <content type="html"><![CDATA[<h1 align="center">2026下半年面经</h1><h2 id="1-虾皮一面-26-08-13（朋友面经）50min-search部门"><a href="#1-虾皮一面-26-08-13（朋友面经）50min-search部门" class="headerlink" title="1. 虾皮一面 26.08.13（朋友面经）50min search部门"></a>1. 虾皮一面 26.08.13（朋友面经）50min search部门</h2><ol><li>自我介绍</li><li>介绍一下vivo的实习agent是做什么的？</li><li>RAG架构怎么做的？为什么用BGE‑M3？效果怎么样？RRF选了多少个文档？为什么用RRF不用加权融合？</li><li>你们的文档大小有多大？</li><li>如果有一亿个文档存入你们这样的RAG架构，那最先顶不住的的是哪一个环节？</li><li>如果要存一亿个文档的RAG怎么检索出来最想要的那1个？查询检索时间要控制在200ms左右</li><li>如果要存一亿个文档的RAG怎么RRF检索出来最想要的那5000个？</li><li>做目录的话可能只能做到500w个，距离5000个还有很大的距离，进一步怎么做？</li><li>RAG的效果怎么测评？召回率的计算公式是什么？如何提高召回率？你们怎么做的召回率效果的评估？</li><li>Reranker模型怎么做的？</li><li>知道搜索引擎吗？ES的底层原理是什么？</li><li>除了RAG还做了什么？</li><li>什么是ReAct？ReAct怎么停止？到了最大步数了LLM还在执行怎么办？</li><li>ReAct带来的上下文快速膨胀的问题怎么解决？</li><li>除了ReAct还做了哪些Agent调优工作？</li><li>介绍一下Go的实习项目</li><li>用户量有多大？什么叫削峰填谷？</li><li>怎么保证的高可用？什么叫不可用？</li><li>为什么做成这样的架构？要Go去调Python服务？</li><li>你们这个Go‑Redis‑Python服务，如果有一个节点挂了怎么监控？</li><li>Python服务如何监控保证100%其挂了马上就能发现？</li><li>只用心跳监控和多机部署可以保证马上发现吗？</li><li>做支付的时候怎么保证零掉单？只有补单机制可以快速保证零掉单吗？补单定时任务的时间是多长？</li><li>零差错如何定义？</li><li>实习工作中还有哪些亮点我没有问到的吗？</li><li>平时用AI做过什么创造性价值的工作？</li><li>反问：业务和实习生的工作内容</li></ol><h2 id="2-百度一面-26-8-21（朋友面经）"><a href="#2-百度一面-26-8-21（朋友面经）" class="headerlink" title="2.百度一面 26.8.21（朋友面经）"></a>2.百度一面 26.8.21（朋友面经）</h2><p>35min 智慧医疗部门</p><ol><li>自我介绍</li><li>String是不是基础数据类型</li><li>有哪些基础数据类型？</li><li>说一下jvm的结构</li><li>堆和栈的区别？</li><li>堆栈各自满了的话会报什么错？</li><li>说一下什么情况会导致栈溢出</li><li>说一下api和spi的区别</li><li>一个java程序要启动的话堆内存大小如何设置？</li><li>介绍一下spring的IOC</li><li>如何创建bean？</li><li>如何使用bean？(后续面试官提示在问bean的注入方式有哪些)</li><li>bean的类型？</li><li>数据库对MySQL熟悉还是pgsql？</li><li>说一下char和varchar的区别？</li><li>如果设计一个字段是 &lt; 500字符的，要求有中英文的，那用char还是varchar？为什么？</li><li>select，where，left join，order by的执行顺序？</li><li>Redis的常用数据结构？</li><li>mcp和agent的通信过程？</li><li>mcp首次发送tools给agent，用的是什么接口？</li><li>如何定义一个mcp tools？</li><li>手撕：int类型的数字倒序。例如12345需要输出54321</li><li>介绍实习团队，业务，工作任务和做的最好的地方。</li><li>为什么上一段只实习了三个月？</li><li>反问业务，实习生工作，对ai的看法</li><li>继续追问平时怎么使用ai？用什么模型？</li></ol><h2 id="3-百度二面-26-8-24-（朋友面经）-40min"><a href="#3-百度二面-26-8-24-（朋友面经）-40min" class="headerlink" title="3. 百度二面 26.8.24 （朋友面经）   40min"></a>3. 百度二面 26.8.24 （朋友面经）   40min</h2><ol><li>自我介绍</li><li>开学是研一还是研二？</li><li>介绍一下vivo的实习，业务，主要负责的是哪个部分，做过最有挑战的内容，如何解决的？</li><li>RAG里存的是什么?混合检索怎么做的？为什么要用混合检索？权重怎么设置的？低置信度的问题如何解决？</li><li>输入侧做了哪些处理？是否允许用户输入？</li><li>这个agent是只有部门内部使用吗？用户量有多少？线上有没有遇到过什么问题？</li><li>介绍Go实习项目。业务,负责什么部分，遇到的最大的挑战以及如何解决的？</li><li>核心接口的QPS测过吗？能达到多少？优化之前呢？这个链路最耗时的地方有没有排查过问题出在哪？</li><li>图数据怎么存的？知识图谱是通用的还是某一领域的？通用的知识图谱怎么确保提取的准确性？</li><li>介绍Java项目，是黑马点评吗？是自己做着玩的还是真实上线了？线上有没有遇到什么问题？</li><li>学校的课程里有没有涉及ai的部分，现在学校里的ai是怎么教学的？举个例子说明</li><li>面试官介绍业务(15min)</li><li>反问对ai的看法</li></ol><h2 id="4-8-26-得物一面（朋友的朋友面经）"><a href="#4-8-26-得物一面（朋友的朋友面经）" class="headerlink" title="4. 8.26 得物一面（朋友的朋友面经）"></a>4. 8.26 得物一面（朋友的朋友面经）</h2><ol><li>mysql索引的原理 数据结构是什么</li><li>用过什么存储引擎 了解memory吗</li><li>hash和b+树在存储上的区别</li><li>能给我说说四种隔离级别分别解决了什么问题吗 怎么解决的</li><li>慢sql有遇到过吗 如何排查 结合explain计划说说</li><li>redis缓存穿透击穿雪崩说说 如何解决</li><li>redis mysql双写听说过吗 可以讲讲吗 有什么解决方法</li><li>java里面 linkedlist和arraylist有什么区别 你一般用什么 在什么场景下选用什么</li><li>给我说说hashmap的扩容</li><li>快速排序、归并排序、堆排序的时间复杂度 空间复杂度 原理 讲讲</li><li>java优先队列的底层数据结构是什么</li></ol>]]></content>
     
     
     <categories>
@@ -660,11 +687,11 @@
       
       <tag>AI</tag>
       
+      <tag>LLM</tag>
+      
       <tag>Transformer</tag>
       
       <tag>Attention</tag>
-      
-      <tag>LLM</tag>
       
     </tags>
     
@@ -724,13 +751,13 @@
     
     <tags>
       
-      <tag>AI</tag>
-      
       <tag>JAVA</tag>
       
-      <tag>RAG</tag>
+      <tag>AI</tag>
       
       <tag>Spring AI</tag>
+      
+      <tag>RAG</tag>
       
     </tags>
     
@@ -748,9 +775,9 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>SpringCloud</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
@@ -821,9 +848,9 @@
     
     <tags>
       
-      <tag>AI</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>AI</tag>
       
       <tag>Spring AI</tag>
       
@@ -882,9 +909,9 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>SpringCloud</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
@@ -911,9 +938,9 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>SpringCloud</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
@@ -922,9 +949,9 @@
       
       <tag>SpringCloud</tag>
       
-      <tag>Sa-Token</tag>
-      
       <tag>Gateway</tag>
+      
+      <tag>Sa-Token</tag>
       
     </tags>
     
@@ -969,9 +996,9 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>SpringCloud</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
@@ -1000,9 +1027,9 @@
     
     <categories>
       
-      <category>AI项目</category>
-      
       <category>SpringCloud</category>
+      
+      <category>AI项目</category>
       
     </categories>
     
@@ -1129,11 +1156,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>git</tag>
       
       <tag>开发工具</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -1266,9 +1293,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>MySQL</tag>
       
@@ -1297,9 +1324,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>JVM</tag>
       
@@ -1328,9 +1355,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>JUC</tag>
       
@@ -1359,9 +1386,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>Redis</tag>
       
@@ -1388,9 +1415,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>SpringCloud</tag>
       
@@ -1479,9 +1506,9 @@
     
     <tags>
       
-      <tag>开发工具</tag>
-      
       <tag>学习</tag>
+      
+      <tag>开发工具</tag>
       
       <tag>Docker</tag>
       
@@ -1597,11 +1624,11 @@
     
     <tags>
       
+      <tag>学习</tag>
+      
       <tag>git</tag>
       
       <tag>开发工具</tag>
-      
-      <tag>学习</tag>
       
     </tags>
     
@@ -1626,9 +1653,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javaweb</tag>
       
@@ -1655,9 +1682,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javase</tag>
       
@@ -1684,9 +1711,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>JAVA</tag>
+      
+      <tag>学习</tag>
       
       <tag>javase</tag>
       
@@ -1713,9 +1740,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
+      
+      <tag>学习</tag>
       
       <tag>JavaScript</tag>
       
@@ -1769,9 +1796,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
+      
+      <tag>学习</tag>
       
       <tag>CSS</tag>
       
@@ -1798,11 +1825,11 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>前端</tag>
       
       <tag>HTML</tag>
+      
+      <tag>学习</tag>
       
     </tags>
     
@@ -1856,11 +1883,11 @@
       
       <tag>AI</tag>
       
+      <tag>论文</tag>
+      
       <tag>信息与通信</tag>
       
       <tag>强化学习</tag>
-      
-      <tag>论文</tag>
       
     </tags>
     
