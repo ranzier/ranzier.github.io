@@ -1,0 +1,963 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/about/dogs.jpg">
+  <link rel="icon" href="/img/about/dogs.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ranzier">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="\ResumeItem{Novel-Agent \hfill Agent应用开发&#x2F;个人项目 \hfill 2026.08-至今}\textbf{核心技术：}Python、Claude、Context Engineering、FastAPI、Qwen3-8B、QLoRA、LlamaFactory、RAG \textbf{项目简介：}面向数十万字级长篇网络小说创作场景，设计并实现集分层记忆、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="novel-agent">
+<meta property="og:url" content="http://example.com/2026/10/03/bilibili/novel-agent/index.html">
+<meta property="og:site_name" content="RANZIER">
+<meta property="og:description" content="\ResumeItem{Novel-Agent \hfill Agent应用开发&#x2F;个人项目 \hfill 2026.08-至今}\textbf{核心技术：}Python、Claude、Context Engineering、FastAPI、Qwen3-8B、QLoRA、LlamaFactory、RAG \textbf{项目简介：}面向数十万字级长篇网络小说创作场景，设计并实现集分层记忆、">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-03T12:56:18.000Z">
+<meta property="article:modified_time" content="2026-10-12T03:10:13.594Z">
+<meta property="article:author" content="ranzier">
+<meta property="article:tag" content="随笔">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>novel-agent - RANZIER</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3846514_kabxni94auf.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/gundongtiao.css">
+<link rel="stylesheet" href="/css/bubble.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"🌟","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 80vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>RANZIER</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/suibi/" target="_self">
+                <i class="iconfont icon-pen"></i>
+                <span>随笔</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/3.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.35)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="novel-agent"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-10-03 20:56" pubdate>
+          2026年10月3日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          65 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          本文阅读次数：<span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">novel-agent</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>\ResumeItem{Novel-Agent \hfill Agent应用开发&#x2F;个人项目 \hfill 2026.08-至今}<br>\textbf{核心技术：}Python、Claude、Context Engineering、FastAPI、Qwen3-8B、QLoRA、LlamaFactory、RAG</p>
+<p>\textbf{项目简介：}面向数十万字级长篇网络小说创作场景，设计并实现集分层记忆、语义召回、节奏控制与一致性校验能力的智能写作 Agent；独立微调一个本地小模型完成段落级去AI味改写，并进行量化部署与生成后章节内容处理</p>
+<p>\begin{itemize}<br>\item 设计并实现三层记忆体系：短期注入最近 N 章原文保障局部连贯，中期以结构化世界状态与滚动摘要维持全局一致性，长期基于 NumPy + text-embedding-v3 语义检索召回相关情节，解决长篇小说的设定遗忘与剧情断裂问题<br> \item 构建规则引擎与 LLM 语义审查结合的一致性校验机制，支持自动重写，并通过事务性记忆提交阻断错误状态传播<br>  \item 微调去 AI 腔改写模型：基于 LlamaFactory 框架，以人工构造的 1000 条 Alpaca 格式数据集对 Qwen3-8B 中文模型进行 QLoRA 微调，模型在测试集上达到 90%以上的改写优化通过率<br>   \item 基于 llama.cpp 将微调模型部署为本地 OpenAI 兼容服务，对 Claude 生成的章节初稿进行并发段落级去 AI 腔优化<br>\end{itemize}</p>
+<h1 id="0-总体"><a href="#0-总体" class="headerlink" title="0. 总体"></a>0. 总体</h1><h2 id="0-1-个人问题"><a href="#0-1-个人问题" class="headerlink" title="0.1 个人问题"></a>0.1 个人问题</h2><h2 id="0-2-AI问题"><a href="#0-2-AI问题" class="headerlink" title="0.2 AI问题"></a>0.2 AI问题</h2><p><strong>1. 请用一分钟介绍这个项目。</strong></p>
+<p>答：这是一个面向数十万字长篇网络小说的智能写作 Agent。普通大模型直接生成长篇内容时容易遗忘设定、剧情断裂和节奏失控，因此我设计了分层记忆、情节召回、确定性节奏控制和一致性校验机制。系统能够持续生成章节，并在每章完成后更新摘要和世界状态；同时通过本地微调模型对初稿进行段落级语言优化。</p>
+<p><strong>2. 这个项目最核心的问题是什么？</strong></p>
+<p>答：核心问题不是“生成一章小说”，而是“连续生成上百章后仍然保持设定、人物状态和剧情逻辑一致”。因此重点是上下文管理和状态控制，而不是单次 Prompt 的效果。</p>
+<p><strong>3. 为什么要做成 Agent，而不是写一个很长的 Prompt？</strong></p>
+<p>答：长篇创作包含检索、规划、生成、抽取、校验、重写和持久化等多个步骤，而且需要根据审查结果决定是否重写或提交状态。单个 Prompt 无法可靠完成这种多步骤、有状态、带反馈闭环的流程，所以需要 Agent 编排。</p>
+<p><strong>4. 系统的完整工作流程是什么？</strong></p>
+<p>答：写每章之前先计算章节节奏，再加载最近章节、当前世界状态、滚动摘要和历史召回内容；随后生成初稿，抽取章节摘要和新的世界状态，再进行规则及 LLM 一致性审查。如果存在问题就触发重写，最终保存章节并更新记忆和向量索引。</p>
+<p><strong>5. 在整个系统里，哪些部分由模型决定，哪些部分由程序决定？</strong></p>
+<p>答：正文生成、摘要抽取和语义审查主要由模型完成；章节节奏、流程控制、重写次数、状态提交和文件持久化由程序确定。我的原则是让模型处理开放性任务，让程序控制必须稳定的系统行为。</p>
+<p><strong>6. 为什么采用三层记忆，而不是把所有历史章节都放进上下文？</strong></p>
+<p>答：完整历史很快会超过上下文窗口，而且大量无关内容会稀释有效信息。三层记忆分别解决局部衔接、全局状态和远距离情节召回，在上下文长度、相关性和成本之间取得平衡。</p>
+<p><strong>7. 这个系统中最重要的数据是什么？</strong></p>
+<p>答：除了章节正文，最重要的是结构化世界状态，包括人物存亡、位置、能力等级和未解决剧情线。正文可以重新读取，但如果世界状态被错误更新，后续章节会持续基于错误事实生成。</p>
+<p><strong>8. 为什么一致性检查之后不能直接覆盖世界状态？</strong></p>
+<p>答：新状态是从新章节中抽取出来的，而章节可能存在逻辑错误。如果未通过审查仍然提交状态，就会把错误传播到后续所有章节。因此我采用类似事务提交的方式：章节通过校验后才提交新状态，否则保留上一版本。</p>
+<p><strong>9. CLI 和 Web 端如何共用业务逻辑？</strong></p>
+<p>答：写作流程只有一套实现，CLI 和 Web 只负责不同的交互方式。我抽象了 Reporter 接口，CLI 将进度输出到终端，Web 将事件写入队列并通过 SSE 推送，避免两套流程出现行为差异。</p>
+<p><strong>10. 为什么同一本书不允许同时生成多个章节？</strong></p>
+<p>答：同一本书的章节存在严格顺序，而且多个生成任务会同时读取和修改同一个世界状态。如果并行执行，后完成的任务可能覆盖较新的状态。因此系统对每本书加写锁，不同书之间才可以并行。</p>
+<p><strong>11. 你如何划分 Claude 和本地模型的职责？</strong></p>
+<p>答：Claude负责需要全局理解和创作能力的任务，例如章节生成、状态抽取和语义审查；本地模型负责目标明确、可通过专门数据训练的段落改写。这样可以兼顾生成质量、隐私、成本和可控性。</p>
+<p><strong>12. 系统中最容易成为瓶颈的环节是什么？</strong></p>
+<p>答：主要是多次大模型调用带来的延迟和成本，特别是生成、抽取、审查以及可能发生的重写。优化方向包括减少无效上下文、使用不同档位的模型、限制重写次数，以及对段落后处理进行受控并发。</p>
+<p><strong>13. 你如何证明这个系统比直接调用大模型更好？</strong></p>
+<p>答：需要设置基线对比，例如使用相同故事设定，分别采用直接生成和完整 Agent 流程连续生成多章，再比较人物状态冲突率、设定违背率、剧情线遗漏率、人工可接受率以及单章成本。当前项目已经具备流程验证，但大规模、标准化评测仍是需要补充的部分。</p>
+<p><strong>14. 你如何评价一部长篇小说是否“连贯”？</strong></p>
+<p>答：我会拆成可观测指标，包括人物属性是否前后一致、时间地点是否冲突、已死亡角色是否错误出现、能力体系是否越级、伏笔是否被遗忘，以及相邻章节是否自然衔接。开放性的文学质量仍需人工评价，不能完全依赖自动指标。</p>
+<p><strong>15. 如果向量检索服务不可用，系统还能工作吗？</strong></p>
+<p>答：可以。向量召回属于增强能力，不应成为整个写作流程的单点故障。服务不可用时，系统仍然可以依靠最近章节、滚动摘要和结构化世界状态继续生成，只是远距离情节召回能力会下降。</p>
+<p><strong>16. 如果生成的章节多次未通过一致性检查，系统如何处理？</strong></p>
+<p>答：系统会在限定次数内根据审查结果重写，避免无限循环。如果最终仍有错误，可以保存草稿和审查报告供人工处理，但不提交新的世界状态，从而防止问题污染后续章节。</p>
+<p><strong>17. 如何避免一致性审查模型自己出现误判？</strong></p>
+<p>答：不能完全依赖 LLM，所以我将明确、可结构化的错误交给规则引擎，例如人物存亡和等级约束；模糊的语义冲突再交给 LLM。同时保留审查报告，避免把模型判断当成不可解释的绝对结论。</p>
+<p><strong>18. 项目目前最大的风险或局限是什么？</strong></p>
+<p>答：目前最大的局限是缺少覆盖多部小说、数百章节的标准化评测；向量召回和批量生成也还需要更多真实生产数据验证。另外，世界状态目前是快照模型，查询简单，但缺少完整的历史变化轨迹。</p>
+<p><strong>19. 这个项目最难的部分是什么？</strong></p>
+<p>答：最难的不是接入模型，而是设计可靠的状态流转：什么时候抽取状态、什么时候校验、失败后如何回滚，以及怎样保证 CLI 和 Web 使用完全相同的流程。它决定了系统能否长期运行而不逐步积累错误。</p>
+<p><strong>20. 开发过程中做过哪些重要取舍？</strong></p>
+<p>答：我没有一开始就建设复杂的知识图谱，而是使用结构化状态快照和滚动摘要，优先保证系统能够闭环运行；向量库也选择 NumPy 实现，以降低部署复杂度。这些方案扩展性不是最强，但更适合当前数据规模。</p>
+<p><strong>21. 如果让你重新设计一次，你会优先改什么？</strong></p>
+<p>答：我会先建立一套稳定的评测集和回归测试体系，再继续增加功能。包括固定故事设定、预埋冲突案例、多章连续生成基线，以及质量、延迟、成本三方面指标。这样每次修改 Prompt、模型或召回策略时都能量化影响。</p>
+<p><strong>22. 如果要支持百万字规模，你会如何扩展？</strong></p>
+<p>答：我会将摘要从单层滚动摘要升级为章节、剧情弧和卷级的层次化摘要；为历史状态增加时间维度；优化向量索引和过滤机制；同时建立异步任务队列、失败恢复和版本化状态存储。但同一本书的状态提交仍然需要保持顺序。</p>
+<p><strong>23. 这个项目中你的个人贡献是什么？</strong></p>
+<p>答：这是个人项目，我负责需求分析、系统架构、写作流程编排、记忆与一致性机制、CLI 和 Web 接口、本地模型微调及部署。调用第三方模型只是基础能力，主要工作集中在上下文构造、状态管理、失败处理和完整工程闭环上。</p>
+<p><strong>24. 这个项目让你学到的最重要的一点是什么？</strong></p>
+<p>答：大模型应用的可靠性不能只依赖模型变强。对于长流程任务，数据结构、状态边界、校验机制和失败恢复往往比单次 Prompt 优化更重要。模型负责生成可能性，工程系统负责约束和保持一致性。</p>
+<h1 id="1-设计并实现三层记忆体系：短期注入最近-N-章原文保障局部连贯，中期以结构化世界状态与滚动摘要维持全局一致性，长期基于-NumPy-text-embedding-v3-语义检索召回相关情节，解决长篇小说的设定遗忘与剧情断裂问题"><a href="#1-设计并实现三层记忆体系：短期注入最近-N-章原文保障局部连贯，中期以结构化世界状态与滚动摘要维持全局一致性，长期基于-NumPy-text-embedding-v3-语义检索召回相关情节，解决长篇小说的设定遗忘与剧情断裂问题" class="headerlink" title="1. 设计并实现三层记忆体系：短期注入最近 N 章原文保障局部连贯，中期以结构化世界状态与滚动摘要维持全局一致性，长期基于 NumPy + text-embedding-v3 语义检索召回相关情节，解决长篇小说的设定遗忘与剧情断裂问题"></a>1. 设计并实现三层记忆体系：短期注入最近 N 章原文保障局部连贯，中期以结构化世界状态与滚动摘要维持全局一致性，长期基于 NumPy + text-embedding-v3 语义检索召回相关情节，解决长篇小说的设定遗忘与剧情断裂问题</h1><h2 id="1-1-个人问题"><a href="#1-1-个人问题" class="headerlink" title="1.1 个人问题"></a>1.1 个人问题</h2><h2 id="1-2-AI问题"><a href="#1-2-AI问题" class="headerlink" title="1.2 AI问题"></a>1.2 AI问题</h2><p><strong>1. 为什么要设计三层记忆，而不是把历史正文全部放进上下文？</strong></p>
+<p>答：长篇小说正文会快速超过模型上下文，而且大量历史内容与当前章节无关。三层记忆按信息粒度拆分：短期保留最近章节的高保真文本，中期保存全局状态和剧情摘要，长期按当前章节需求检索历史细节，在连贯性、上下文长度和调用成本之间取得平衡。</p>
+<p><strong>2. 写第 N 章时，三层记忆如何进入生成流程？</strong></p>
+<p>答：系统首先根据本章标题、摘要和叙事目标构造查询，召回相关历史片段；随后读取最近章节、世界状态和历史摘要，将三层记忆分别注入写作 Prompt。生成结束后，再抽取摘要和状态变化，通过校验后持久化并建立向量索引。</p>
+<p><strong>3. 短期记忆是怎样选取章节的？</strong></p>
+<p>答：系统找到当前章节之前已经存在的章节，按章节号排序后选取最近 N 章，默认 N 为 3。读取时从最近一章向前装填，保证最接近当前章节的内容优先进入上下文。</p>
+<p><strong>4. 如果最近 N 章超过上下文预算怎么办？为什么保留尾部？</strong></p>
+<p>答：短期记忆默认有 12000 字符预算。预算不足时，会截断最早被纳入章节的前半部分并保留结尾，因为新章节通常需要直接承接上一章末尾的人物、地点和动作状态。</p>
+<p>当前使用的是字符预算，而不是严格的 token 预算。中文场景下可以近似控制长度，但更完善的实现应该使用对应模型的 tokenizer。</p>
+<p><strong>5. “滚动摘要”具体是怎么实现的？</strong></p>
+<p>答：每章完成后都会生成一条章节摘要，保存到摘要文件中。写新章节时不会注入所有摘要，而是排除已经通过短期正文覆盖的最近 N 章，再选取最多 30 条较早摘要。</p>
+<p>当前实现是“逐章摘要持续累积、读取窗口滚动”，还不是卷级摘要、章节摘要继续压缩的多级摘要树。</p>
+<p><strong>6. 世界状态里保存了哪些信息？为什么要结构化？</strong></p>
+<p>答：目前保存故事时间、主角境界、主角位置、角色状态、关键物品、进行中的剧情线和未回收伏笔。结构化后可以准确表达“谁已经死亡”“主角当前在哪里”等硬事实，也方便后续进行规则校验，而不是让模型从自然语言摘要中自行推断。</p>
+<p><strong>7. 世界状态是让 LLM 整体重写，还是增量更新？</strong></p>
+<p>答：采用增量更新。LLM只负责抽取本章明确发生的变化，例如角色位置变化、物品增减和剧情线开启或结束；程序复制旧状态后应用这些增量。模型不能决定章节号、标题和最新章节号，避免一次抽取遗漏导致旧状态被整体清空。</p>
+<p><strong>8. 如果 LLM 返回的记忆结构不合法怎么办？</strong></p>
+<p>答：程序会校验摘要长度、结尾场景、字段类型和状态变化结构。第一次失败后，会把错误原因和原始任务交给模型修复一次；第二次仍不合法，就终止这次记忆固化，不提交错误数据。</p>
+<p><strong>9. 为什么还要单独保存上一章的收尾场景？</strong></p>
+<p>答：最近章节正文虽然信息完整，但关键即时状态不一定足够突出。收尾场景专门记录上一章最后一幕的地点、在场人物、伤势和未完成动作，并作为高优先级信息注入下一章，减少人物凭空消失或突然恢复的问题。</p>
+<p><strong>10. 长期记忆如何切块和建立索引？</strong></p>
+<p>答：章节正文先按段落拆分，再聚合成目标约 300 字、通常不超过 450 字的片段。每个片段生成 embedding，以章节号和片段序号组成唯一 ID，向量写入 NumPy 文件，正文和章节元数据写入 JSON 文件。</p>
+<p>目前有一个边界情况：如果原文中的单个段落本身超过 450 字，系统不会继续细分，因此 450 字并不是绝对上限。</p>
+<p><strong>11. 检索查询是如何构造的？为什么不用完整 Prompt？</strong></p>
+<p>答：当前查询由本章大纲中的标题、情节摘要和叙事目标组成。它们能够表达本章准备写什么，同时比完整 Prompt 更集中，减少人物设定和写作指令对语义检索的干扰。</p>
+<p><strong>12. NumPy 是怎么完成余弦相似度检索的？</strong></p>
+<p>答：入库向量和查询向量都会进行 L2 归一化，归一化后的点积就是余弦相似度。系统先排除当前章节、未来章节和已经由短期记忆覆盖的最近章节，然后从剩余结果中选取相似度最高的 Top-K 个片段。</p>
+<p><strong>13. 为什么选择 NumPy，而不是 FAISS 或专业向量数据库？</strong></p>
+<p>答：一本小说即使有几百章，切块后通常也只是几千到几万条向量。暴力检索在这个规模下足够快，而且 NumPy 部署简单、没有额外服务和本地扩展依赖。规模增长到百万级片段后，才有必要考虑 FAISS、HNSW 或独立向量数据库。</p>
+<p><strong>14. 三层记忆是否会重复注入相同内容？</strong></p>
+<p>答：代码进行了窗口去重。短期记忆覆盖最近 N 章后，中期摘要只选择更早章节，向量检索也会排除最近 N 章。因此同一章节通常不会同时以正文、摘要和向量片段三种形式重复进入 Prompt。</p>
+<p><strong>15. 如果向量服务不可用，写作会失败吗？</strong></p>
+<p>答：不会。缺少 embedding key 时会关闭长期召回；检索或索引发生异常时，系统记录警告并继续使用短期和中期记忆。向量召回属于增强能力，不是写作主链路的单点故障。</p>
+<p><strong>16. 重写章节时如何避免向量库中出现重复或过期内容？</strong></p>
+<p>答：重新索引某章前，会先按照章节号删除原有片段，再对新正文重新切块、向量化并写入。</p>
+<p>当前流程存在一个可以改进的地方：旧索引删除后，如果 embedding 请求失败，该章节会暂时没有向量索引，需要通过重新索引功能补建。</p>
+<p><strong>17. 如何防止错误章节污染后续记忆？</strong></p>
+<p>答：正文生成后，系统先抽取候选摘要和候选状态，再执行一致性校验。只有不存在未解决的硬错误时，才会写入摘要、世界状态和向量索引；否则只保存正文和审查报告，继续沿用上一章的干净状态。</p>
+<p><strong>18. 如果世界状态、最近正文和向量召回内容互相冲突，以谁为准？</strong></p>
+<p>答：设计上应当以当前世界状态和最近正文为准，向量召回只提供历史细节。但当前 Prompt 还没有非常明确地声明三者的冲突优先级，这是可以改进的地方。</p>
+<p>后续可以明确规定“当前世界状态 &gt; 最近正文 &gt; 历史召回”，并为检索结果补充时间和章节信息。</p>
+<p><strong>19. Top-K、相似度阈值和最近章节数量是怎么确定的？</strong></p>
+<p>答：目前 Top-K 默认为 4，相似度阈值默认为 0.3，短期记忆默认为最近 3 章。这些是可配置的工程初始值，还不能声称是实验得到的最优参数。</p>
+<p>后续需要通过固定测试集，比较不同参数下的召回准确率、上下文长度、生成冲突率、延迟和调用成本。</p>
+<p><strong>20. 如何证明三层记忆确实改善了长篇连贯性？</strong></p>
+<p>答：当前实现证明了三层记忆、状态合并和异常保护机制能够形成完整闭环，但还缺少严格的端到端消融实验。</p>
+<p>可以设置“无记忆、仅短期、短期加中期、完整三层”四组实验，在相同大纲和生成参数下连续生成，再比较人物状态冲突率、设定违背率、预埋事实召回率和人工偏好。</p>
+<h1 id="2-构建规则引擎与-LLM-语义审查结合的一致性校验机制，支持自动重写，并通过事务性记忆提交阻断错误状态传播"><a href="#2-构建规则引擎与-LLM-语义审查结合的一致性校验机制，支持自动重写，并通过事务性记忆提交阻断错误状态传播" class="headerlink" title="2. 构建规则引擎与 LLM 语义审查结合的一致性校验机制，支持自动重写，并通过事务性记忆提交阻断错误状态传播"></a>2. 构建规则引擎与 LLM 语义审查结合的一致性校验机制，支持自动重写，并通过事务性记忆提交阻断错误状态传播</h1><h2 id="2-1-个人问题"><a href="#2-1-个人问题" class="headerlink" title="2.1 个人问题"></a>2.1 个人问题</h2><h2 id="2-2-AI问题"><a href="#2-2-AI问题" class="headerlink" title="2.2 AI问题"></a>2.2 AI问题</h2><p><strong>1. 请整体介绍一下这套一致性校验机制。</strong></p>
+<p>答：章节生成后，系统先检查正文是否完整，再从正文中抽取章节摘要和候选世界状态。之后执行确定性规则检查与 LLM 语义检查；如果存在 <code>error</code> 级问题，就把错误反馈给写作模型重新生成。最终通过校验才提交摘要、世界状态和向量索引。</p>
+<p><strong>2. 为什么采用“规则引擎 + LLM”，而不是全部交给 LLM？</strong></p>
+<p>答：境界倒退、死人复活等问题可以结构化比较，规则判断更稳定、便宜且可解释。时间线矛盾、世界规则违背和能力越界很难完全枚举，适合交给 LLM。两者结合可以兼顾确定性和语义覆盖范围。</p>
+<p><strong>3. 当前规则检查具体覆盖哪些问题？</strong></p>
+<p>答：目前主要包括正文截断、引号不闭合、未定义角色、主角境界倒退、已死亡角色重新出场以及配角境界倒退。其中正文不完整、主角境界倒退和死人复活属于硬错误；新增角色和配角境界变化通常只作为警告。</p>
+<p><strong>4. 为什么要单独进行正文完整性检查？</strong></p>
+<p>答：如果正文因为输出长度等原因被截断，直接进行摘要抽取，模型可能根据残缺正文生成一个看似合法的状态，最终污染记忆。因此完整性检查发生在摘要和状态抽取之前，发现结尾缺少标点或引号不成对时直接进入重写。</p>
+<p><strong>5. 境界倒退是怎样判断的？</strong></p>
+<p>答：力量体系中的每个境界有顺序编号。系统将新旧境界名称映射为对应顺序，再比较是否发生倒退。为了兼容“凝灵境三层”这类写法，当前使用境界名称的包含匹配。</p>
+<p>这个实现比较简单。如果故事允许散功、受伤降级或者临时封印，就可能误报，后续应当增加合法降级事件或例外规则。</p>
+<p><strong>6. “死人复活”规则是怎么实现的？</strong></p>
+<p>答：系统从上一章世界状态中获取状态为“死亡”的角色，再检查本章摘要中的实际出场角色。如果角色名称命中死亡名单，就产生 <code>error</code>。</p>
+<p>当前主要采用名称精确匹配，对别名、回忆、幻象和同名人物支持有限，需要结合角色 ID 和出场类型进一步完善。</p>
+<p><strong>7. 未定义角色为什么只是警告，而不是直接重写？</strong></p>
+<p>答：长篇小说允许自然引入新角色，因此设定库外角色不一定是错误，也可能是正常剧情发展。系统会同时检查正式角色库、角色别名和已有世界状态；仍无法识别时给出警告，交给作者确认是否为有意新增或角色名漂移。</p>
+<p><strong>8. 规则检查真的是完全确定性的吗？</strong></p>
+<p>答：比较过程本身是确定性的，但部分输入来自 LLM 抽取，例如本章出场角色和候选世界状态。因此它不是完全摆脱模型的规则系统：如果抽取阶段漏掉一个角色，后续规则也可能漏检。</p>
+<p>更严格的实现可以增加正文实体识别，直接从正文抽取人名后与 LLM 结果交叉验证。</p>
+<p><strong>9. LLM 语义审查主要检查什么？</strong></p>
+<p>答：主要检查时间线冲突、力量体系和世界规则违背、金手指能力越界、死亡状态冲突以及伏笔逻辑冲突。Prompt 要求模型只报告有依据的矛盾，不进行文风评价，也不输出泛化的改写建议。</p>
+<p><strong>10. LLM 审查时会给模型哪些上下文？</strong></p>
+<p>答：当前提供力量体系、世界规则、金手指限制、主角上一章境界、已死亡角色、未回收伏笔和本章正文。</p>
+<p>这里存在一个不足：虽然要求检查时间线，但当前没有完整注入上一章时间、地点、物品和所有角色状态。因此语义审查的覆盖能力有限，后续应该注入经过裁剪的完整世界状态。</p>
+<p><strong>11. 如何区分需要重写的问题和只需要提醒的问题？</strong></p>
+<p>答：问题分为 <code>error</code>、<code>warn</code> 和 <code>info</code>。只有 <code>error</code> 会触发自动重写，例如正文截断、主角境界倒退和死人复活；<code>warn</code> 只记录并提示人工检查，避免因为不确定问题反复重写。</p>
+<p><strong>12. 自动重写是如何实现的？</strong></p>
+<p>答：校验发现硬错误后，系统将错误类别和描述组成 <code>revision_note</code>，重新调用章节写作流程。重写 Prompt 会明确要求避免上一稿中的连贯性问题，并再次执行语言后处理、事实抽取和一致性校验。</p>
+<p>当前重写是重新生成整章，不是在旧稿上进行局部修改，也不会把完整旧稿再次传给模型。</p>
+<p><strong>13. 如何避免自动重写进入无限循环？</strong></p>
+<p>答：系统使用 <code>max_rewrites</code> 限制最大重写次数。默认命令行配置允许重写一次，也就是最多生成初稿和一份重写稿。重写额度耗尽后仍有硬错误，正文会保留，但记忆不会提交。</p>
+<p><strong>14. 为什么每次重写后都要重新抽取状态？</strong></p>
+<p>答：重写后的正文可能与上一稿完全不同，因此上一稿的摘要、候选状态和校验结果都不能复用。代码在每次生成开始前都会清空这些候选数据，并基于新正文重新执行完整检查。</p>
+<p><strong>15. 为什么流程是“先抽取，再校验”，而不是先校验正文？</strong></p>
+<p>答：正文完整性可以直接检查，所以会最先执行。但境界倒退、人物状态变化等规则依赖结构化的新状态，必须先从正文抽取候选状态。关键点是这个状态此时只存在于内存中，校验通过之前不会写入正式文件。</p>
+<p><strong>16. 如果记忆抽取本身失败，会触发正文重写吗？</strong></p>
+<p>答：不会。抽取接口失败或者返回结构不合法属于技术故障，重新生成正文通常不能解决问题。系统会保存正文，记录“记忆固化失败”，同时阻止摘要、世界状态和向量索引提交。</p>
+<p><strong>17. 如果 LLM 语义审查服务失败，系统如何处理？</strong></p>
+<p>答：当前实现采用可用性优先策略：LLM 审查失败时返回空问题列表，规则检查仍然有效，主流程继续。</p>
+<p>这属于 fail-open，会存在漏检风险。更严格的生产模式应该记录“审查未完成”，并根据配置决定阻止记忆提交、进入人工审核，或者允许降级放行。</p>
+<p><strong>18. 所谓“事务性记忆提交”具体指什么？</strong></p>
+<p>答：生成和抽取阶段只产生候选摘要与候选世界状态，不立即覆盖正式数据。只有最终没有未解决的 <code>error</code> 时，才更新摘要、世界状态和向量索引；校验失败则丢弃候选状态，保留上一章的干净记忆。</p>
+<p><strong>19. 这是真正的数据库事务吗？</strong></p>
+<p>答：不是。它实现的是业务层面的“校验后提交”，每个 JSON 文件通过临时文件和原子替换避免半写损坏，但摘要、状态和向量索引之间没有统一事务。</p>
+<p>如果进程恰好在多个文件写入之间崩溃，仍可能出现部分提交。更严格的方案可以使用 SQLite 事务，或者通过版本目录加 manifest 指针实现整批切换。</p>
+<p><strong>20. 最终重写仍然失败时，系统会保存什么？</strong></p>
+<p>答：系统会保存最后一版正文和校验报告，方便人工检查；不会保存该章摘要、候选世界状态，也不会建立向量索引。这样可以保留生成结果，同时避免错误结构化状态直接进入长期记忆。</p>
+<p><strong>21. 这样是否完全阻断了错误传播？</strong></p>
+<p>答：没有完全阻断，只阻断了结构化记忆和向量索引传播。错误正文仍然会落盘，而批量写作默认可以继续；后续章节的短期记忆仍可能读取这份错误正文。</p>
+<p>更稳妥的做法是校验失败后默认停止批量写作，或者把章节标记为未通过，短期记忆只读取状态为 <code>approved</code> 的章节。</p>
+<p><strong>22. 如何防止多个任务同时提交世界状态？</strong></p>
+<p>答：Web 任务管理器按照书籍标识加写锁，同一本书同一时间只能运行一个写任务，避免多个章节同时读取并覆盖同一个状态文件。</p>
+<p>不过这个锁只覆盖 Web 后台任务。如果同时启动两个独立 CLI 进程，仍可能发生竞争，生产化时应使用文件锁或数据库锁。</p>
+<p><strong>23. 校验结果如何做到可观测和可追踪？</strong></p>
+<p>答：每个问题都会记录严重程度、类别、描述、正文证据和来源，来源分为规则、LLM 或系统。最终结果按章节保存，CLI 和 Web 也会通过统一的进度上报接口展示重写和校验过程。</p>
+<p><strong>24. 当前有哪些测试覆盖？</strong></p>
+<p>答：现有测试覆盖了正文截断、引号不闭合、记忆抽取失败时禁止提交，以及最终处理后的正文参与记忆抽取等场景。</p>
+<p>目前还缺少规则引擎边界测试、LLM 审查异常测试、自动重写成功与额度耗尽测试，以及跨文件提交中断后的恢复测试。</p>
+<p><strong>25. 如何评估这套一致性校验机制是否有效？</strong></p>
+<p>答：我会构造一批可控错误样本，包括死人复活、境界倒退、时间冲突、角色名漂移和能力越界，分别统计规则层和 LLM 层的准确率、召回率及误报率。</p>
+<p>系统层面还要比较启用和关闭校验后的章节冲突率、平均重写次数、成功修复率、额外延迟和 token 成本。</p>
+<p><strong>26. 如果继续迭代，你会优先改进什么？</strong></p>
+<p>答：我会优先做四件事：为角色和剧情线引入稳定 ID；向 LLM 审查注入更完整的世界状态；增加严格模式避免审查失败时静默放行；将“未通过章节”从后续短期记忆中隔离。之后再考虑规则配置化和真正的跨文件事务。</p>
+<h1 id="3-微调去-AI-腔改写模型：基于-LlamaFactory-框架，以人工构造的-1000-条-Alpaca-格式数据集对-Qwen3-8B-中文模型进行-QLoRA-微调，模型在测试集上达到-90-以上的改写优化通过率"><a href="#3-微调去-AI-腔改写模型：基于-LlamaFactory-框架，以人工构造的-1000-条-Alpaca-格式数据集对-Qwen3-8B-中文模型进行-QLoRA-微调，模型在测试集上达到-90-以上的改写优化通过率" class="headerlink" title="3. 微调去 AI 腔改写模型：基于 LlamaFactory 框架，以人工构造的 1000 条 Alpaca 格式数据集对 Qwen3-8B 中文模型进行 QLoRA 微调，模型在测试集上达到 90%以上的改写优化通过率"></a>3. 微调去 AI 腔改写模型：基于 LlamaFactory 框架，以人工构造的 1000 条 Alpaca 格式数据集对 Qwen3-8B 中文模型进行 QLoRA 微调，模型在测试集上达到 90%以上的改写优化通过率</h1><h2 id="3-1-个人问题"><a href="#3-1-个人问题" class="headerlink" title="3.1 个人问题"></a>3.1 个人问题</h2><h2 id="3-2-AI问题"><a href="#3-2-AI问题" class="headerlink" title="3.2 AI问题"></a>3.2 AI问题</h2><p><strong>1. 你所说的“去 AI 腔”具体是什么任务？</strong></p>
+<p>答：它不是判断文本是否由 AI 生成，而是一个受约束的段落编辑任务。模型只消除机械转折、重复表达、过度解释和不自然句式，不得改变人物、数字、时间、地点、因果关系和对白归属；原文自然时应原样返回。</p>
+<p><strong>2. 为什么要微调小模型，而不是继续优化 Claude Prompt？</strong></p>
+<p>答：Prompt 可以改善单次效果，但这个任务会对每章大量段落重复执行。本地微调模型能够降低长期调用成本和数据外发风险，并把“最小修改、事实不变、自然段落不修改”等行为固化下来。它负责窄任务，不取代 Claude 的创作能力。</p>
+<p><strong>3. 为什么选择段落级改写，而不是整章改写？</strong></p>
+<p>答：整章改写更容易改变剧情事实、人物关系和章节结构，失败后的回滚粒度也太大。段落级输入能保留必要的指代、对白和动作关系，同时可以对单个失败段落恢复原文。</p>
+<p><strong>4. 为什么不是句子级改写？</strong></p>
+<p>答：孤立句子缺少上下文，容易误判代词指代、对白归属和前后递进关系。完整段落提供了更充分的局部语境，又不会引入整章级别的高成本和事实漂移风险。</p>
+<p><strong>5. 为什么选择 Qwen3-8B？</strong></p>
+<p>答：Qwen3-8B 的中文语义和指令遵循能力较好，能够同时理解“改善语言、尽量少改、事实不变、必要时保持原样”等复合约束。8B 规模也能在约 22GB 显存的 A10 上通过 QLoRA 训练，并在本地量化部署。</p>
+<p><strong>6. 为什么使用 Instruct 模型，而不是 Base 模型？</strong></p>
+<p>答：这是明确的指令编辑任务，不是继续预训练。Instruct 模型已经具备消息模板和指令遵循能力，用少量领域数据就可以学习编辑偏好；Base 模型需要更多数据才能稳定学会任务格式。</p>
+<p><strong>7. QLoRA 的原理是什么？</strong></p>
+<p>答：LoRA 将权重更新近似为两个低秩矩阵的乘积，只训练适配器参数。QLoRA 进一步把冻结的基础模型以 4-bit 形式加载，减少基础权重的显存占用，而适配器仍使用较高精度参与训练，因此适合单卡微调 8B 模型。</p>
+<p><strong>8. 为什么不用全参数微调？</strong></p>
+<p>答：这个任务范围窄，主要学习固定编辑行为和文风偏好，没有必要更新全部模型参数。全参数微调显存和存储成本更高，在 1000 条小数据上也更容易过拟合和破坏原模型能力。</p>
+<p><strong>9. 你的具体训练参数是什么？</strong></p>
+<p>答：项目文档中的初始方案是 4-bit NF4、batch size 1、梯度累积 16、最大长度 1024、训练 2 个 epoch、学习率 <code>1e-4</code>、LoRA rank 16、alpha 32、dropout 0.05，并开启 gradient checkpointing。</p>
+<p>但这些目前只是文档中的建议配置。面试时必须以真实训练日志为准，不能把方案参数说成最终实验参数。</p>
+<p><strong>10. Alpaca 数据中的四个字段分别是什么？</strong></p>
+<p>答：<code>system</code> 定义局部编辑器的硬边界，<code>instruction</code> 定义最小必要改写任务，<code>input</code> 是原始段落，<code>output</code> 是可以直接替换原文的目标文本。训练和线上推理使用相同的 system、instruction 和消息拼接方式，避免训练与推理分布不一致。</p>
+<p><strong>11. 1000 条数据是怎么构造出来的？</strong></p>
+<p>答：设计流程是从项目已有小说章节中按段落提取候选，过滤标题、分隔符、不完整段落和长度异常内容，再区分 keep、rewrite 和 reject。候选输出经过数字、专名、对白结构和格式检查，最后应由人工逐条确认。</p>
+<p>但当前仓库只能证明自动抽取、规则生成草稿和部分人工覆盖流程，不能证明全部 1000 条已经人工确认。</p>
+<p><strong>12. 为什么训练数据里必须有 keep 样本？</strong></p>
+<p>答：如果所有样本都要求改写，模型会学成“无论输入是否自然都必须修改”，导致过度编辑。keep 样本的输入输出完全相同，用于训练模型识别不需要修改的自然段落。</p>
+<p>当前训练文件 keep 比例只有 4.8%，而测试集为 35%，这一分布差异可能导致模型倾向于过度改写，需要重新确认实际训练版本。</p>
+<p><strong>13. 训练数据做了哪些质量检查？</strong></p>
+<p>答：包括字段完整性、Prompt 常量一致性、输入去重、数字和数量单位保持、英文标识保持、专名不增不减、对白结构保持、输出完整性以及修改幅度检查。自动检查只能发现形式和部分事实变化，概率强度、主客体交换和语义因果变化仍需要人工复核。</p>
+<p><strong>14. 如何避免训练集和测试集泄漏？</strong></p>
+<p>答：设计上按照完整章节划分数据，而不是随机打散段落，避免同一章节的相邻段落分别进入训练集和测试集。同时对归一化后的输入去重，并通过哈希冻结测试集。</p>
+<p>当前测试集使用的是相同两本小说中更靠后的章节，因此避免了章节级泄漏，但还不能验证跨书、跨题材泛化能力。</p>
+<p><strong>15. 为什么关闭 Qwen3 的 thinking 模式？</strong></p>
+<p>答：这个任务只需要输出最终替换文本，不需要推理过程。thinking 内容会增加延迟，也可能产生解释、前缀或 <code>&lt;think&gt;</code> 标签，破坏输出直接替换原文的接口契约。</p>
+<p><strong>16. “改写优化通过率 90%”应该怎样定义？</strong></p>
+<p>答：应该在冻结测试集上计算。每条样本只有同时满足格式合规、事实不变，并且 rewrite 样本确实更自然，或者 keep 样本没有被错误修改，才算通过：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">通过率 = 满足全部条件的样本数 / 测试集总样本数<br></code></pre></td></tr></table></figure>
+
+<p>如果测试集是 100 条，90% 就意味着至少 90 条通过，但还必须分别报告 rewrite 通过率、keep 准确率和事实保持率，不能只给一个总数。</p>
+<p><strong>17. 为什么不能使用 BLEU 或 ROUGE 评价改写效果？</strong></p>
+<p>答：自然语言改写通常存在多个正确答案，和参考答案字面不同不代表质量差。BLEU、ROUGE 更偏向表面重合度，无法准确判断自然度和事实是否改变，因此应采用自动硬规则加人工盲审，并和原文进行成对比较。</p>
+<p><strong>18. 90% 指标目前能够复现吗？</strong></p>
+<p>答：仅根据当前仓库不能复现，因为缺少模型 checkpoint、实际推理输出、评测脚本和逐条判定结果。如果真实实验在外部完成，需要准备训练配置、adapter 信息、测试集模型输出、人工评分表和指标计算脚本；否则不应该在简历中保留这个数字。</p>
+<p><strong>19. 评测时应该和哪些基线比较？</strong></p>
+<p>答：至少比较原始文本、未微调 Qwen3-8B、仅使用 Prompt 的 Qwen3-8B、QLoRA 模型以及 Claude 等强模型。否则无法判断提升来自微调、Prompt，还是基础模型本身。</p>
+<p><strong>20. 1000 条数据足够吗？</strong></p>
+<p>答：足够验证训练链路和任务可行性，但不足以证明跨题材的稳定泛化。项目文档也将 500～1000 条定位为冒烟训练，正式版本建议扩充到 3000～5000 条，生产迭代再达到 8000 条以上。</p>
+<p><strong>21. 如何防止小数据训练过拟合？</strong></p>
+<p>答：应按章节划分训练、验证和测试集，限制 epoch，观察验证集指标并比较多个 checkpoint，而不是只看训练 loss。还需要增加不同书籍、题材、句长以及对白和叙述类型的数据。</p>
+<p>当前目录缺少验证集，因此无法完整执行 checkpoint 选择和早停。</p>
+<p><strong>22. 模型改写后改变了事实怎么办？</strong></p>
+<p>答：线上不会直接接受模型输出。系统会检查数字、数量单位、专名、否定关系、对白结构、段落结构和修改幅度；任一硬规则失败就恢复原段。单段请求失败也只回退该段，本地服务整体不可用则保留 Claude 初稿。</p>
+<p><strong>23. 为什么训练阶段做过检查，线上还要再检查？</strong></p>
+<p>答：微调只能降低错误概率，不能提供确定性保证。小说中的人数、境界和人物名称属于高风险事实，因此需要把模型当作不可信候选生成器，通过程序规则决定是否接受结果。</p>
+<p><strong>24. 这项工作的最大局限是什么？</strong></p>
+<p>答：当前数据主要来自两本历史题材小说，规模小、题材单一，而且实际数据文件和设计文档没有完全对齐。自动规则能够保证部分事实安全，但无法判断所有语义变化；90% 指标也缺少仓库内的可复现证据。</p>
+<h1 id="4-基于-llama-cpp-将微调模型部署为本地-OpenAI-兼容服务，对-Claude-生成的章节初稿进行并发段落级去-AI-腔优化"><a href="#4-基于-llama-cpp-将微调模型部署为本地-OpenAI-兼容服务，对-Claude-生成的章节初稿进行并发段落级去-AI-腔优化" class="headerlink" title="4. 基于 llama.cpp 将微调模型部署为本地 OpenAI 兼容服务，对 Claude 生成的章节初稿进行并发段落级去 AI 腔优化"></a>4. 基于 llama.cpp 将微调模型部署为本地 OpenAI 兼容服务，对 Claude 生成的章节初稿进行并发段落级去 AI 腔优化</h1><h2 id="4-1-个人问题"><a href="#4-1-个人问题" class="headerlink" title="4.1 个人问题"></a>4.1 个人问题</h2><h2 id="4-2-AI问题"><a href="#4-2-AI问题" class="headerlink" title="4.2 AI问题"></a>4.2 AI问题</h2><p><strong>1. 请介绍一下本地去 AI 腔服务的完整调用链。</strong></p>
+<p>答：Claude先生成章节初稿，系统按空行拆分段落，筛选符合条件的段落，并发调用本地 Qwen 服务。每个输出经过事实安全校验，通过后回填原位置，否则恢复原段。最终文本再进入完整性检查、记忆抽取和一致性审查。</p>
+<p><strong>2. 为什么选择 llama.cpp，而不是直接使用 Transformers？</strong></p>
+<p>答：部署产物是量化后的 GGUF 模型，llama.cpp 对单机量化推理支持成熟，部署依赖少，并且可以直接提供 OpenAI 兼容接口。业务端不需要管理 tokenizer、模型加载和 GPU 推理细节，只需要调用标准 HTTP API。</p>
+<p><strong>3. 为什么不选择 vLLM？</strong></p>
+<p>答：当前是单机个人项目，主要处理短段落和低并发请求，llama.cpp 更轻量，也方便部署 Q4_K_M 模型。vLLM 更适合高并发、连续批处理和较大 GPU 服务集群；如果后续并发规模提升，可以重新评估。</p>
+<p><strong>4. 微调模型是怎样转换为 llama.cpp 可加载格式的？</strong></p>
+<p>答：标准流程是将 LoRA adapter 与基础模型合并，再转换为 GGUF，最后量化为 Q4_K_M，并通过 llama-server 加载。</p>
+<p>不过当前仓库只有最终 GGUF 文件的启动示例，没有合并、转换和量化脚本。面试时应当根据真实外部操作记录回答，不能说仓库已经完整实现了这部分流水线。</p>
+<p><strong>5. 为什么选择 Q4_K_M 量化？</strong></p>
+<p>答：Q4_K_M 在模型体积、显存占用、推理速度和质量之间比较均衡，适合本地部署 8B 模型。风格改写任务的输出较短，对极限生成能力要求低，但仍需要通过测试集比较 Q4、Q5和高精度版本的事实保持率与自然度。</p>
+<p><strong>6. llama-server 使用了哪些关键参数？</strong></p>
+<p>答：当前示例将尽可能多的模型层卸载到 GPU，设置 4096 上下文、2 个并行槽位，只监听本机地址，并为模型设置稳定别名。同时关闭 reasoning，避免输出思维链和解释文本。</p>
+<p><strong>7. OpenAI 兼容服务是怎么接入的？</strong></p>
+<p>答：客户端使用 OpenAI SDK，将 <code>base_url</code> 指向本地 llama-server 的 <code>/v1</code> 地址，使用占位 API key，再调用 <code>models.list</code> 检查服务和 <code>chat.completions</code> 完成段落改写。这样业务代码与具体推理框架解耦。</p>
+<p><strong>8. 为什么启动时要设置模型别名？</strong></p>
+<p>答：业务配置使用固定模型名。如果不设置别名，llama-server 可能暴露完整 GGUF 路径或文件名，换机器后模型 ID 会变化。稳定别名可以减少环境差异。</p>
+<p>当前代码在服务只暴露一个模型时会自动采用该 ID；如果服务暴露多个模型但别名配置错误，后续请求仍可能失败。</p>
+<p><strong>9. 章节是如何拆分成段落的？</strong></p>
+<p>答：系统按照连续空行拆分正文，同时保留原来的空行分隔符。处理完成后按照原始位置回填，因此不会因为并发返回顺序改变章节结构。</p>
+<p><strong>10. 哪些段落会进入本地模型？</strong></p>
+<p>答：默认只处理长度在 15 到 220 字之间、没有内部换行、不是标题或装饰分隔符，并且以完整句末标点结束的段落。短句、超长段落、标题和疑似残缺内容会直接跳过。</p>
+<p>因此“段落级优化”准确来说是“对符合安全条件的完整段落进行优化”。</p>
+<p><strong>11. 为什么限制段落长度？</strong></p>
+<p>答：过短段落缺少足够语境，修改收益有限；过长段落增加延迟，也更容易发生事实遗漏或大范围改写。15到220字与训练数据和局部编辑任务的输入分布较接近，也便于控制输出。</p>
+<p><strong>12. 并发处理是如何实现的？</strong></p>
+<p>答：系统使用线程池，每个 worker 独立向本地 OpenAI 接口发送一个段落请求。默认客户端并发数是2，与 llama-server 的2个并行槽位对应；实际 worker 数不会超过符合条件的段落数量。</p>
+<p><strong>13. 为什么使用线程池，而不是多进程或 asyncio？</strong></p>
+<p>答：主要耗时在HTTP请求和模型推理，属于I&#x2F;O等待，线程池已经可以并发利用服务端推理槽位。多进程会增加进程和内存开销；当前核心写作链路是同步实现，引入 asyncio 会扩大改造范围。</p>
+<p><strong>14. 并发完成顺序不一致，如何保证段落顺序？</strong></p>
+<p>答：每个任务都携带原始段落下标，完成后按照对应位置回填。线程池的批量映射也按输入顺序收集结果，因此请求完成先后不会改变正文顺序。</p>
+<p><strong>15. 并发数是不是越大越好？</strong></p>
+<p>答：不是。并发数超过 llama-server 的并行槽位后，请求主要是在服务端排队，还会增加上下文缓存和显存压力。合理值需要结合 GPU 显存、每段 token 数、并行槽位和实测吞吐确定。</p>
+<p>当前默认值2只是工程配置，仓库没有压测数据证明它是最优值。</p>
+<p><strong>16. 如何保证本地模型不会改变剧情事实？</strong></p>
+<p>答：模型输出先被视为候选文本。程序会检查数字和中文数量、数量单位、英文标识、受保护专名、否定词数量、对白结构、段落结构、句末完整性以及总体修改幅度。任何硬检查失败都会恢复原段。</p>
+<p><strong>17. 受保护专名是从哪里来的？</strong></p>
+<p>答：系统会递归读取设定圣经、角色库和章节大纲，从人名、别名、地点、势力、道具、境界等字段中收集专名。输出如果删除已有专名或引入其他已知专名，就会被回退。</p>
+<p><strong>18. 否定关系检查可靠吗？</strong></p>
+<p>答：当前只比较排除少量固定短语后的否定词数量，可以发现“不”变成肯定或新增否定等常见问题，但不能判断否定词是否移动到了另一个对象上。因此它是保守防线，不是完整的语义等价证明。</p>
+<p><strong>19. 对白结构是如何保护的？</strong></p>
+<p>答：系统比较引号数量和配对情况，并检查对白中的数字信息，防止模型删除引号、把叙述改成对白或修改对白里的数量。</p>
+<p>但当前没有完整判断说话人是否变化，因此复杂对白仍需后续一致性检查或人工抽检。</p>
+<p><strong>20. 如果某一个段落请求失败怎么办？</strong></p>
+<p>答：只恢复这个段落的原文，其他段落仍然可以正常处理。系统会统计失败数量和失败类型，不会因为单段润色失败而让整章生成失败。</p>
+<p><strong>21. 如果整个 llama.cpp 服务不可用怎么办？</strong></p>
+<p>答：处理前会调用模型列表接口检查服务。如果连接失败、超时或初始化异常，写作引擎会保留整章 Claude 初稿，并继续执行记忆抽取和一致性审查。本地润色属于增强功能，不能成为核心写作链路的单点故障。</p>
+<p><strong>22. 为什么段落失败后不自动重试？</strong></p>
+<p>答：原始段落本身已经可用，润色不是必须完成的核心操作。重试会增加延迟，而且再次生成仍可能改变事实，因此当前选择快速回退原文。服务级偶发错误可以在基础设施层增加有限重试，但必须设置明确上限。</p>
+<p><strong>23. 为什么去 AI 腔必须发生在记忆抽取之前？</strong></p>
+<p>答：如果先根据 Claude 初稿提取世界状态，再让本地模型修改正文，就可能出现“保存的正文”和“记忆中的事实”不一致。因此系统先得到最终润色正文，再基于它生成摘要、更新候选状态并执行一致性校验。</p>
+<p><strong>24. 当前是否实现了 AI 腔检测器，只处理需要改写的段落？</strong></p>
+<p>答：没有。当前所有符合长度和格式要求的段落都会发送给模型，由模型决定改写或原样返回。代码会分别统计 changed 和 unchanged。</p>
+<p>两阶段的“检测器 + 改写器”仍是设计方案，尚未落地。它可以减少推理量和过度修改风险。</p>
+<p><strong>25. 为什么使用较低的 temperature？</strong></p>
+<p>答：默认 temperature 为0.2，因为这是受约束编辑任务，不需要高随机性。较低温度有助于提高输出稳定性，减少无关扩写和事实漂移，但仍需要安全规则兜底。</p>
+<p><strong>26. 这套处理有哪些可观测指标？</strong></p>
+<p>答：每章会统计符合条件的段落数、跳过数、实际改写数、原样返回数、安全回退数、请求失败数以及各类回退原因。服务整体失败也会记录错误信息，并通过 CLI 或 Web 进度事件展示。</p>
+<p><strong>27. 当前测试覆盖了哪些场景？</strong></p>
+<p>答：单元测试覆盖了训练与推理 Prompt 一致、段落布局保持、数字变化回退、专名丢失回退、解释性输出回退、单段异常恢复原文和服务不可用等场景。引擎测试还验证了记忆抽取使用的是润色后的最终正文。</p>
+<p>目前缺少真实 llama.cpp 服务的集成测试、并发压力测试、GPU 显存测试和长章节延迟测试。</p>
+<p><strong>28. 本地服务有什么安全注意事项？</strong></p>
+<p>答：当前客户端使用占位 API key，本地服务本身没有可靠鉴权，因此只应监听 <code>127.0.0.1</code>。如果部署到远程机器或绑定公网地址，需要增加反向代理、认证、TLS和访问控制。</p>
+<p><strong>29. 这套实现最大的性能瓶颈是什么？</strong></p>
+<p>答：每个段落都是一次独立推理请求，Prompt前缀会被重复处理；线程池最终还要等待所有请求完成。后续可以增加检测器、请求批处理、Prompt缓存、动态并发和超时熔断，并重点评估每章延迟和每万字吞吐。</p>
+<p><strong>30. 你如何证明并发优化真的有效？</strong></p>
+<p>答：应使用固定章节分别测试串行和不同并发数，记录总耗时、首段延迟、段落吞吐、GPU利用率、峰值显存、失败率和回退率，并保证输出质量使用相同评测标准。</p>
+<p>当前仓库没有这些压测结果，因此面试时不能给出未经记录的加速倍数。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E9%9A%8F%E7%AC%94/" class="print-no-link">#随笔</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/10/02/bilibili/%E6%99%BA%E8%83%BD%E8%BF%90%E8%90%A5agent/" title="智能运营agent">
+                        <span class="hidden-mobile">智能运营agent</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"sj2tGuxMGSDhkN5hNuOIVta1-gzGzoHsz","appKey":"ysR5OTuTzoby2oNvNyGOtXFQ","path":"window.location.pathname","placeholder":"如有问题，欢迎指正~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>AI</span> <i class="iconfont icon-love"></i> <span>LLM</span> <i class="iconfont icon-love"></i> <span>Java</span> <i class="iconfont icon-love"></i> <span>Agent</span> <i class="iconfont icon-love"></i> <span>Python</span> <i class="iconfont icon-love"></i> <span>CyberSec</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/love.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiaoxingxing.js"></script>
+<script src="/js/bubble.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>

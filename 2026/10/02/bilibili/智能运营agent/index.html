@@ -1,0 +1,2035 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/about/dogs.jpg">
+  <link rel="icon" href="/img/about/dogs.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ranzier">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="\ResumeItem{OGV 智能运营 Agent 平台 \hfill Agent应用开发 \hfill 2026.07-2026.09}\textbf{核心技术：}Java、Spring Boot、AgentScope、DashScope、Redis、Reactor、Paladin、BFS、PDFBox、EasyExcel \textbf{项目简介：}参与面向 OGV 运营场景的多 Agent">
+<meta property="og:type" content="article">
+<meta property="og:title" content="智能运营agent">
+<meta property="og:url" content="http://example.com/2026/10/02/bilibili/%E6%99%BA%E8%83%BD%E8%BF%90%E8%90%A5agent/index.html">
+<meta property="og:site_name" content="RANZIER">
+<meta property="og:description" content="\ResumeItem{OGV 智能运营 Agent 平台 \hfill Agent应用开发 \hfill 2026.07-2026.09}\textbf{核心技术：}Java、Spring Boot、AgentScope、DashScope、Redis、Reactor、Paladin、BFS、PDFBox、EasyExcel \textbf{项目简介：}参与面向 OGV 运营场景的多 Agent">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-02T12:56:18.000Z">
+<meta property="article:modified_time" content="2026-10-12T03:09:58.186Z">
+<meta property="article:author" content="ranzier">
+<meta property="article:tag" content="随笔">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>智能运营agent - RANZIER</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3846514_kabxni94auf.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/gundongtiao.css">
+<link rel="stylesheet" href="/css/bubble.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"🌟","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 80vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>RANZIER</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/suibi/" target="_self">
+                <i class="iconfont icon-pen"></i>
+                <span>随笔</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/3.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.35)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="智能运营agent"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-10-02 20:56" pubdate>
+          2026年10月2日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          30k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          150 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          本文阅读次数：<span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">智能运营agent</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>\ResumeItem{OGV 智能运营 Agent 平台 \hfill Agent应用开发 \hfill 2026.07-2026.09}<br>\textbf{核心技术：}Java、Spring Boot、AgentScope、DashScope、Redis、Reactor、Paladin、BFS、PDFBox、EasyExcel</p>
+<p>\textbf{项目简介：}参与面向 OGV 运营场景的多 Agent 智能操作平台建设；本人主要负责长任务执行与恢复、业务子 Agent 动态配置及多格式文档理解模块<br>\begin{itemize}<br>    \item 负责 Agent 长任务执行机制，将复杂任务抽象为计划、步骤和批次，基于 Redis 持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动续跑以及暂停、继续、停止、重试与服务重启恢复</p>
+<pre><code class="hljs">\item 为计划内写操作设计稳定操作标识和结果记录机制，并通过执行守卫限制未创建任务、未提交计划或未经确认时执行批量写操作，降低模型重试和网络异常导致的重复执行及越权调用风险
+
+\item 负责业务子 Agent 配置化改造，支持通过 Paladin 动态配置系统提示词、Tool、Skill 和权限码；实现配置解析、合法性校验、热更新及 Agent 缓存失效，降低新增业务域 Agent 的代码改动成本
+
+\item 负责多格式文档理解链路，支持 XLSX、CSV、DOCX、PDF、PPTX、TXT、JSON 等 7 类文件的异步解析、内容分片、内嵌图片提取、BFS 上传和 Redis 临时存储，使 Agent 能按需读取文档而非一次性注入全文
+</code></pre>
+<h1 id="0-总体"><a href="#0-总体" class="headerlink" title="0. 总体"></a>0. 总体</h1><h2 id="0-1-个人问题"><a href="#0-1-个人问题" class="headerlink" title="0.1 个人问题"></a>0.1 个人问题</h2><h2 id="0-2-AI问题"><a href="#0-2-AI问题" class="headerlink" title="0.2 AI问题"></a>0.2 AI问题</h2><p>下面的问题更关注“整个项目为什么做、怎么设计、如何落地、你的贡献是什么”，适合作为项目整体介绍后的面试追问。回答是示例话术，涉及数据的部分需要替换成真实情况。</p>
+<p><strong>1. 这个平台主要解决什么业务问题？</strong></p>
+<p>OGV 运营工作中存在大量跨系统、重复且步骤较长的操作，例如读取运营材料、生成执行方案、调用业务工具并批量落地。传统方式依赖人工串联，效率较低，也容易出现遗漏。平台希望通过多个业务 Agent 协作，把自然语言需求转换为可确认、可执行、可恢复的任务。</p>
+<p><strong>2. 为什么要做多 Agent，而不是一个大模型加一组 Tool？</strong></p>
+<p>不同业务域的提示词、工具、权限和操作规则差异较大。如果全部放到一个 Agent 中，上下文会比较复杂，工具选择也更容易混乱。我们使用主 Agent 负责任务理解和路由，业务子 Agent 负责具体领域能力，从而实现职责隔离、权限隔离和独立迭代。</p>
+<p><strong>3. 系统整体架构是什么样的？</strong></p>
+<p>整体可以分为四层：</p>
+<ul>
+<li>接入层：接收用户请求、文件和任务控制指令。</li>
+<li>Agent 编排层：完成意图识别、子 Agent 路由、计划生成和执行控制。</li>
+<li>能力层：提供业务 Tool、Skill 和文档理解能力。</li>
+<li>基础设施层：Redis 保存任务状态，Paladin 管理动态配置，BFS 存储文件，业务服务负责实际操作。</li>
+</ul>
+<p><strong>4. 一个用户请求从进入系统到执行完成，完整流程是什么？</strong></p>
+<p>用户请求首先由主 Agent 理解，并选择对应的业务子 Agent。子 Agent 根据用户输入和文档内容生成执行计划；涉及写操作时，需要用户确认。确认后，系统按照计划逐步调用工具，持续记录执行进度和结果，最后汇总执行情况返回给用户。</p>
+<p><strong>5. AgentScope 和 DashScope 分别承担什么角色？</strong></p>
+<p>AgentScope 主要用于组织 Agent、Tool 调用和多 Agent 协作流程；DashScope 提供底层大模型能力。我们在框架之上补充了任务状态管理、权限控制、动态配置和文档理解等面向生产环境的能力。</p>
+<p><strong>6. 这个系统与普通聊天机器人的核心区别是什么？</strong></p>
+<p>普通聊天机器人主要生成文本，而这个系统需要执行真实业务操作。因此除了模型效果，还必须解决任务状态、权限、幂等、异常恢复、人工确认和可观测性等工程问题。核心目标不是“回答得像”，而是“执行得正确且可控制”。</p>
+<p><strong>7. 系统如何划分主 Agent 和业务子 Agent 的职责？</strong></p>
+<p>主 Agent 负责理解需求、识别业务域和选择子 Agent，不直接承载复杂业务规则。业务子 Agent 只暴露自己领域内的 Tool 和 Skill，并配置对应权限。具体写操作最终仍由确定性的业务接口执行，模型主要承担理解、规划和参数组织。</p>
+<p><strong>8. 为什么让模型生成计划，而不是直接调用业务接口？</strong></p>
+<p>复杂运营任务通常包含多个步骤，而且用户需要在执行前了解系统准备做什么。显式计划可以提高可解释性，也方便用户确认、任务恢复和失败重试。对于简单只读操作，可以缩短流程；对于批量写操作，则必须经过计划和确认。</p>
+<p><strong>9. 如何控制模型的不确定性？</strong></p>
+<p>主要通过缩小模型的决策范围来控制。模型负责理解和规划，但实际执行依赖结构化 Tool；工具参数需要经过校验，写操作还受到任务状态、用户确认和权限的约束。同时记录每一步输入、输出和状态，方便发现问题和人工介入。</p>
+<p><strong>10. 为什么选择 Redis 保存任务状态？</strong></p>
+<p>任务状态需要频繁读写，并且要支持服务重启后恢复。Redis 的访问延迟较低，也适合保存任务游标、执行状态和临时结果。对于有明确生命周期的数据，可以通过 TTL 控制存储时间；如果后续需要长期审计，还需要再落到持久化数据库。</p>
+<p><strong>11. 系统如何保证业务安全？</strong></p>
+<p>安全控制不依赖模型自行判断。我们从 Agent 能看到哪些 Tool、调用者是否具备权限、任务是否已经确认、当前状态是否允许执行等多个层面进行校验。真正的业务接口还会保留自身的鉴权和参数校验，Agent 层不会绕过原有安全边界。</p>
+<p><strong>12. 多 Agent 之间如何协作，是否会互相直接调用？</strong></p>
+<p>目前以主 Agent 路由到业务子 Agent 为主，尽量减少子 Agent 之间自由调用。这样执行链路更容易追踪，权限关系也更清晰。如果任务需要跨业务域协作，由编排层统一组织，而不是让 Agent 自主形成不可控的调用链。</p>
+<p><strong>13. 项目中最难的工程问题是什么？</strong></p>
+<p>最难的不是接入模型，而是把模型的概率性输出接入确定性的业务系统。尤其是长任务、批量写操作和异常重试场景，需要同时处理任务状态、用户确认、幂等、恢复和权限问题。我们的思路是把这些约束放在确定性的执行框架中，而不是依靠提示词保证。</p>
+<p><strong>14. 如何评估这个平台是否有效？</strong></p>
+<p>可以从三类指标评估：</p>
+<ul>
+<li>效率：任务平均耗时、人工操作步骤减少量。</li>
+<li>质量：计划成功率、工具调用成功率、任务完成率。</li>
+<li>安全与稳定性：重复写入次数、异常恢复成功率、越权拦截数量。</li>
+</ul>
+<p>面试时最好补充真实数据，例如“平均处理时长从多少降低到多少”，不要编造指标。</p>
+<p><strong>15. 你在项目中的职责边界是什么？</strong></p>
+<p>我主要负责平台中偏执行基础设施的部分，包括长任务执行与恢复、业务子 Agent 配置化以及多格式文档理解。主 Agent 的部分路由逻辑和具体业务 Tool 由团队其他成员共同建设。我也参与了这些模块之间的协议设计和联调，但不会把整个项目描述成个人独立完成。</p>
+<p><strong>16. 你和业务方、其他研发是如何协作的？</strong></p>
+<p>业务方负责明确实际操作流程、风险点和验收标准；各业务研发提供可调用的领域接口；平台侧负责 Agent 编排、统一协议和安全控制。对于不明确的业务语义，我们会先固化为结构化规则或工具参数，再交给模型使用。</p>
+<p><strong>17. 项目上线前如何测试？</strong></p>
+<p>除了普通单元测试和接口测试，还需要重点覆盖 Agent 场景，包括模型输出不合法、工具调用失败、执行中断、重复请求、权限不足、配置热更新和大文件解析等情况。对于写操作，会在测试环境使用可回滚或模拟数据验证完整执行链路。</p>
+<p><strong>18. 出现线上问题时如何定位？</strong></p>
+<p>需要通过任务 ID 串联用户请求、Agent 路由、计划版本、步骤状态和工具调用结果。定位时先判断是模型规划问题、框架状态问题，还是下游业务接口问题。对于执行失败的任务，可以根据任务状态决定重试、继续执行或人工终止。</p>
+<p><strong>19. 这个项目有哪些设计取舍？</strong></p>
+<p>我们没有追求完全自主的 Agent，而是选择“模型规划加确定性执行”的方式。这样灵活性会受到一定限制，但更适合涉及真实业务写操作的场景。配置化也不是无限开放，而是在可校验的 Tool、Skill 和权限范围内提供动态能力。</p>
+<p><strong>20. 如果重新做一次，你会改进什么？</strong></p>
+<p>我会更早建立统一的任务事件模型和评测体系。任务事件模型可以降低状态排查和审计成本；评测体系可以通过固定用例持续衡量路由、计划和工具调用效果，而不是主要依赖人工体验。另外，长期任务数据应进一步区分临时状态与持久化审计数据。</p>
+<h1 id="1-负责-Agent-长任务执行机制，将复杂任务抽象为计划、步骤和批次，基于-Redis-持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动续跑以及暂停、继续、停止、重试与服务重启恢复"><a href="#1-负责-Agent-长任务执行机制，将复杂任务抽象为计划、步骤和批次，基于-Redis-持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动续跑以及暂停、继续、停止、重试与服务重启恢复" class="headerlink" title="1. 负责 Agent 长任务执行机制，将复杂任务抽象为计划、步骤和批次，基于 Redis 持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动续跑以及暂停、继续、停止、重试与服务重启恢复"></a>1. 负责 Agent 长任务执行机制，将复杂任务抽象为计划、步骤和批次，基于 Redis 持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动续跑以及暂停、继续、停止、重试与服务重启恢复</h1><h2 id="1-1-具体实现方式"><a href="#1-1-具体实现方式" class="headerlink" title="1.1 具体实现方式"></a>1.1 具体实现方式</h2><h4 id="1-背景与目标"><a href="#1-背景与目标" class="headerlink" title="1. 背景与目标"></a>1. 背景与目标</h4><p>普通 Agent 通常在一次请求中完成“推理、调用 Tool、返回结果”。但批量运营任务可能包含多个步骤、几十个对象、异步等待和真实写操作，单轮请求无法可靠完成。</p>
+<p>这套机制的核心目标是：</p>
+<blockquote>
+<p>将模型生成的长任务转换为服务端可持久化、可确认、可分批推进、可恢复的状态机。</p>
+</blockquote>
+<p>核心代码集中在 <code>app/ogv-agent-gateway</code> 模块。</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/model/task/AgentTaskCheckpoint.java:10">AgentTaskCheckpoint.java</a></td>
+<td>定义任务、计划、游标和运行轮次</td>
+</tr>
+<tr>
+<td><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/AgentTaskCheckpointService.java:40">AgentTaskCheckpointService.java</a></td>
+<td>实现任务状态机</td>
+</tr>
+<tr>
+<td><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/AgentTaskCheckpointStore.java:20">AgentTaskCheckpointStore.java</a></td>
+<td>Redis 持久化与原子 CAS 更新</td>
+</tr>
+<tr>
+<td><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/tool/common/AgentTaskCheckpointTool.java:25">AgentTaskCheckpointTool.java</a></td>
+<td>向 Agent 暴露任务操作</td>
+</tr>
+<tr>
+<td><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/DeterministicBatchCoordinator.java:22">DeterministicBatchCoordinator.java</a></td>
+<td>服务端确定性推进批次</td>
+</tr>
+<tr>
+<td><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/middleware/LongTaskExecutionGuardMiddleware.java:38">LongTaskExecutionGuardMiddleware.java</a></td>
+<td>限制模型的调用顺序和执行范围</td>
+</tr>
+<tr>
+<td><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/ChatService.java:200">ChatService.java</a></td>
+<td>续跑事件接入、轮次收口</td>
+</tr>
+<tr>
+<td><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/resources/skills/long-running-task-workflow/SKILL.md:1">SKILL.md</a></td>
+<td>约束 Agent 的长任务工作流</td>
+</tr>
+</tbody></table>
+<h4 id="2-核心数据模型"><a href="#2-核心数据模型" class="headerlink" title="2. 核心数据模型"></a>2. 核心数据模型</h4><p><code>AgentTaskCheckpoint</code> 保存恢复任务所需的最小事实，而不是依赖对话历史猜测执行位置。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> Status status;<br><span class="hljs-keyword">private</span> <span class="hljs-type">long</span> planVersion;<br><span class="hljs-keyword">private</span> <span class="hljs-type">long</span> confirmedPlanVersion;<br><span class="hljs-keyword">private</span> List&lt;PlanStep&gt; steps;<br><span class="hljs-keyword">private</span> String stepCursor;<br><span class="hljs-keyword">private</span> <span class="hljs-type">int</span> currentStepNo;<br><span class="hljs-keyword">private</span> <span class="hljs-type">int</span> nextStepNo;<br><span class="hljs-keyword">private</span> String progressDigest;<br><br><span class="hljs-keyword">private</span> String runId;<br><span class="hljs-keyword">private</span> <span class="hljs-type">long</span> runLeaseUntil;<br><span class="hljs-keyword">private</span> <span class="hljs-type">long</span> version;<br><br><span class="hljs-keyword">private</span> String pendingNotificationId;<br><span class="hljs-keyword">private</span> ContinuationKind pendingContinuationKind;<br></code></pre></td></tr></table></figure>
+
+<p>这些字段分别解决：</p>
+<ul>
+<li><code>planVersion</code>：当前计划版本。</li>
+<li><code>confirmedPlanVersion</code>：用户确认过的版本，二者不同就不能执行。</li>
+<li><code>currentStepNo/nextStepNo</code>：高层步骤位置。</li>
+<li><code>stepCursor</code>：步骤内部的批次位置。</li>
+<li><code>version</code>：Redis 乐观锁版本，防止旧请求覆盖新状态。</li>
+<li><code>runId/runLeaseUntil</code>：标识唯一执行轮次及其租约。</li>
+<li><code>pendingNotificationId</code>：标识唯一待消费续跑事件。</li>
+<li><code>progressDigest</code>：保存累计结果摘要。</li>
+</ul>
+<p>当前实现没有通用的 <code>List&lt;OperationResult&gt;</code>。操作结果主要以进度摘要、失败摘要、下游引用和异步任务引用的形式保存。</p>
+<h4 id="3-任务状态机"><a href="#3-任务状态机" class="headerlink" title="3. 任务状态机"></a>3. 任务状态机</h4><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs text">PLANNING<br>   |<br>   | submitPlan<br>   v<br>AWAITING_PLAN_CONFIRMATION<br>   |<br>   | CONFIRM<br>   v<br>WAITING_CONTINUATION<br>   |<br>   | consume notification<br>   v<br>RUNNING<br>   |<br>   +--&gt; WAITING_CONTINUATION<br>   +--&gt; WAITING_ASYNC_RESULT<br>   +--&gt; WAITING_RETRY<br>   +--&gt; RECONCILIATION_REQUIRED<br>   +--&gt; COMPLETED / FAILED / CANCELLED / EXPIRED<br></code></pre></td></tr></table></figure>
+
+<p>任务状态定义见 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/model/task/AgentTaskCheckpoint.java:12">AgentTaskCheckpoint.java</a>。</p>
+<h4 id="4-从创建到执行的完整流程"><a href="#4-从创建到执行的完整流程" class="headerlink" title="4. 从创建到执行的完整流程"></a>4. 从创建到执行的完整流程</h4><h5 id="4-1-创建任务"><a href="#4-1-创建任务" class="headerlink" title="4.1 创建任务"></a>4.1 创建任务</h5><p>Agent 判定任务无法在单轮完成后，调用 <code>agent_task_create</code>。服务端生成 UUID，初始化为 <code>PLANNING</code>，同时设置任务截止时间和 Redis 过期时间。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">checkpoint.setStatus(Status.PLANNING);<br>checkpoint.setVersion(<span class="hljs-number">1L</span>);<br>checkpoint.setTaskDeadlineAt(now + continuationLifetimeMillis);<br>checkpoint.setStorageExpireAt(taskDeadlineAt + terminalRetentionMillis);<br>store.create(checkpoint);<br></code></pre></td></tr></table></figure>
+
+<p>此时只是建立任务容器，不能执行写操作。</p>
+<h5 id="4-2-提交完整计划"><a href="#4-2-提交完整计划" class="headerlink" title="4.2 提交完整计划"></a>4.2 提交完整计划</h5><p><code>agent_task_submit_plan</code> 将任务拆成高层步骤，每个步骤可包含结构化批次：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;批量生成图片&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;sideEffect&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;batch&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;action&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;image-generate-submit&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;items&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>      <span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;prompt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;方案一&quot;</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;prompt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;方案二&quot;</span><span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>服务端会规范化步骤编号、校验批次执行器和参数，然后更新：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">checkpoint.setPlanVersion(checkpoint.getPlanVersion() + <span class="hljs-number">1</span>);<br>checkpoint.setPlanDigest(sha256(canonicalPlan));<br>checkpoint.setConfirmedPlanVersion(<span class="hljs-number">0</span>);<br>checkpoint.setStatus(Status.AWAITING_PLAN_CONFIRMATION);<br></code></pre></td></tr></table></figure>
+
+<p>计划发生修改后，旧确认自动失效，必须重新确认新版本。</p>
+<h5 id="4-3-用户一次整体确认"><a href="#4-3-用户一次整体确认" class="headerlink" title="4.3 用户一次整体确认"></a>4.3 用户一次整体确认</h5><p>用户回复“确认执行”后，<code>ChatService</code> 将自然语言转换为受控 <code>CONFIRM</code> 命令：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">checkpoint.setConfirmedPlanVersion(checkpoint.getPlanVersion());<br>checkpoint.setStatus(Status.WAITING_CONTINUATION);<br>continuation = scheduleContinuation(checkpoint, ContinuationKind.NORMAL);<br></code></pre></td></tr></table></figure>
+
+<p>之后每个步骤不再重复询问用户。确认针对的是完整计划版本，而不是某一次模型推理。</p>
+<h5 id="4-4-开始唯一运行轮次"><a href="#4-4-开始唯一运行轮次" class="headerlink" title="4.4 开始唯一运行轮次"></a>4.4 开始唯一运行轮次</h5><p>续跑事件到达后，<code>beginRun</code> 校验：</p>
+<ul>
+<li><code>notificationId</code> 是否仍是当前 pending 事件；</li>
+<li>续跑类型是否匹配；</li>
+<li><code>confirmedPlanVersion == planVersion</code>；</li>
+<li>任务是否过期；</li>
+<li>当前状态是否允许执行。</li>
+</ul>
+<p>校验成功才创建：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">checkpoint.setStatus(Status.RUNNING);<br>checkpoint.setRunId(UUID.randomUUID().toString());<br>checkpoint.setRunLeaseUntil(now + runLeaseMillis);<br></code></pre></td></tr></table></figure>
+
+<p>Redis 中还保存 <code>{taskId}|{runId}</code> 的当前运行标记，防止两个续跑请求同时推进任务。</p>
+<h4 id="5-确定性批次与执行游标"><a href="#5-确定性批次与执行游标" class="headerlink" title="5. 确定性批次与执行游标"></a>5. 确定性批次与执行游标</h4><p>批次游标格式为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">batch:&#123;stepNo&#125;:&#123;nextItemIndex&#125;<br></code></pre></td></tr></table></figure>
+
+<p>例如 <code>batch:3:5</code> 表示第 3 个高层步骤下一次从第 6 个工作项开始。</p>
+<p>核心循环位于 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/DeterministicBatchCoordinator.java:93">DeterministicBatchCoordinator.java</a>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span> <span class="hljs-variable">index</span> <span class="hljs-operator">=</span> cursorIndex(checkpoint.getStepCursor(), currentStepNo, items.size());<br><br><span class="hljs-keyword">while</span> (index &lt; items.size() &amp;&amp; completed &lt; executor.maxBatchSize()) &#123;<br>    checkpoint = checkpointService.prepareOperation(..., cursor(stepNo, index));<br>    itemResult = executor.execute(items.get(index), runtimeContext, itemContext);<br>    index++;<br><br>    checkpoint = checkpointService.recordOutcome(<br>        ..., index == items.size() ? <span class="hljs-string">&quot;STEP_COMPLETED&quot;</span> : <span class="hljs-string">&quot;STEP_PROGRESS&quot;</span>,<br>        summary, index == items.size() ? <span class="hljs-literal">null</span> : cursor(stepNo, index), nextAction);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>每完成一项就持久化新游标。请求超时或进程退出后，不需要重新执行整个批次，只需要从 Redis 中的下一游标继续。</p>
+<p>当前确定性批次执行器通过 <code>BatchWorkExecutor</code> 注册；现有代码中明确实现该接口的是图片生成 Tool，每轮最多处理 5 项。普通长任务仍可以按照高层步骤由 Agent 推进。</p>
+<h4 id="6-自动续跑如何实现"><a href="#6-自动续跑如何实现" class="headerlink" title="6. 自动续跑如何实现"></a>6. 自动续跑如何实现</h4><p>单轮预算默认是请求超时时间的 80%。当前配置为请求超时 10 分钟，因此约 8 分钟后停止启动新业务调用。</p>
+<p>如果本轮取得进展但任务未完成，<code>finishCurrentRun</code> 会：</p>
+<ol>
+<li>将 <code>RUNNING</code> 转换为 <code>WAITING_CONTINUATION</code>；</li>
+<li>清除本轮 <code>runId</code>；</li>
+<li>生成唯一 <code>pendingNotificationId</code>；</li>
+<li>将 checkpoint 更新和通知入队放在同一个 Redis Lua 脚本中完成。</li>
+</ol>
+<p>通知携带一条隐藏消息：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">继续执行系统任务，taskId=...，notificationId=...，kind=NORMAL。<br>开始前必须重新读取任务状态。<br></code></pre></td></tr></table></figure>
+
+<p>Web 端通过 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/controller/ChatNotificationController.java:33">ChatNotificationController.java</a> 拉取通知，再以隐藏请求调用聊天接口。因此正常批次推进不需要用户再次回复“继续”。</p>
+<p>需要准确说明：当前普通长任务的自动续跑是“Redis 持久化通知 + 客户端隐藏请求”驱动，不是服务端线程在后台永久循环执行。</p>
+<h4 id="7-暂停、继续、停止和重试"><a href="#7-暂停、继续、停止和重试" class="headerlink" title="7. 暂停、继续、停止和重试"></a>7. 暂停、继续、停止和重试</h4><p>统一入口是 <code>controlTask</code>：</p>
+<ul>
+<li><code>PAUSE</code>：保存原可恢复状态到 <code>resumeStatus</code>，进入 <code>PAUSED</code>，清理当前运行租约。</li>
+<li><code>CONTINUE</code>：恢复 <code>resumeStatus</code>，根据是否存在未闭合操作，选择正常续跑、结果核对或异步监控恢复。</li>
+<li><code>CANCEL</code>：进入 <code>CANCELLED</code>，清理后续通知和运行信息，不再启动新步骤。</li>
+<li><code>RETRY</code>：只允许从 <code>WAITING_RETRY</code> 或 <code>RECONCILIATION_REQUIRED</code> 发起。</li>
+</ul>
+<p>暂停和停止是协作式控制：它们可以阻止后续步骤，但不能撤销已经发送到下游的写请求。</p>
+<h4 id="8-Redis-原子性与并发控制"><a href="#8-Redis-原子性与并发控制" class="headerlink" title="8. Redis 原子性与并发控制"></a>8. Redis 原子性与并发控制</h4><p>Store 使用 Lua 脚本同时更新：</p>
+<ul>
+<li>checkpoint JSON；</li>
+<li>活动任务集合；</li>
+<li>当前运行轮次；</li>
+<li>续跑通知队列；</li>
+<li>当前选中任务。</li>
+</ul>
+<p>关键 CAS 判断是：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-keyword">if</span> <span class="hljs-built_in">tonumber</span>(decoded[<span class="hljs-string">&#x27;version&#x27;</span>]) ~= <span class="hljs-built_in">tonumber</span>(ARGV[<span class="hljs-number">1</span>]) <span class="hljs-keyword">then</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>只有 <code>expectedVersion</code> 与 Redis 当前版本一致时才能保存。这样可以拒绝旧轮次、重复通知和并发控制请求。</p>
+<p>Redis Key 使用相同的用户、会话 Hash Tag，使相关 Key 落在同一 Redis Cluster slot，从而能够由同一个 Lua 脚本原子更新。</p>
+<h4 id="9-服务重启恢复"><a href="#9-服务重启恢复" class="headerlink" title="9. 服务重启恢复"></a>9. 服务重启恢复</h4><p>恢复依赖 Redis 中的持久化事实，不依赖 JVM 内存和模型对话记忆。</p>
+<ul>
+<li>通知尚未消费：服务恢复后仍可从 Redis 通知队列拉取并继续。</li>
+<li>批次部分完成：根据 <code>currentStepNo + stepCursor</code> 从下一项继续。</li>
+<li>执行中服务退出：<code>runLeaseUntil</code> 到期后，下一次加载任务会执行生命周期归一化。</li>
+<li>尚未发起副作用：进入 <code>WAITING_RETRY</code>，可以安全重试。</li>
+<li>已有异步任务：进入 <code>WAITING_ASYNC_RESULT</code> 或恢复监控。</li>
+<li>副作用已发起但结果未知：进入 <code>RECONCILIATION_REQUIRED</code>，先查询真实结果。</li>
+</ul>
+<p>当前实现不是“应用启动时全量扫描并立即拉起所有长任务”，而是由未消费通知、异步轮询事件或用户再次进入会话触发恢复。</p>
+<h4 id="10-执行守卫的作用"><a href="#10-执行守卫的作用" class="headerlink" title="10. 执行守卫的作用"></a>10. 执行守卫的作用</h4><p>Prompt 和 Skill 只是指导，真正的安全约束位于 Tool 调用前的 Middleware。它会拒绝：</p>
+<ul>
+<li>没有创建任务就直接执行多项业务操作；</li>
+<li>没有保存计划或计划未经确认；</li>
+<li>未读取真实 checkpoint 就执行控制命令；</li>
+<li>没有有效 <code>runId</code> 就执行计划步骤；</li>
+<li>核对轮次再次执行写操作；</li>
+<li>超过单轮预算后启动新业务调用；</li>
+<li>任务状态调用和业务调用放在同一批执行；</li>
+<li>一个 reasoning 同时启动多个非并行安全业务 Tool。</li>
+</ul>
+<p>这使模型只能在服务端允许的状态转换范围内行动。</p>
+<h4 id="11-这项工作的准确总结"><a href="#11-这项工作的准确总结" class="headerlink" title="11. 这项工作的准确总结"></a>11. 这项工作的准确总结</h4><p>这项工作的本质不是“用 Redis 保存一个任务状态”，而是建立了一套长任务执行协议：</p>
+<blockquote>
+<p>通过持久化计划版本、状态机、步骤和批次游标，将长任务拆成多个有租约的执行轮次；用户只需整体确认一次，后续由 Redis 通知驱动自动续跑；通过版本 CAS、运行租约和执行守卫防止旧请求并发推进；在超时或服务重启后，根据 checkpoint 和下游操作引用恢复到安全状态。</p>
+</blockquote>
+<p>需要保留两个技术边界：</p>
+<ol>
+<li>系统提供的是可恢复和幂等控制，不应宣称跨下游系统严格 <code>exactly-once</code>。</li>
+<li>当前专门的长任务测试主要覆盖执行守卫，<code>CheckpointService/Store/Coordinator</code> 缺少直接单元测试，面试中不宜表述为“状态机已有完整自动化测试覆盖”。</li>
+</ol>
+<h2 id="1-2-提问"><a href="#1-2-提问" class="headerlink" title="1.2 提问"></a>1.2 提问</h2><h3 id="1-2-1-自己想到的问题"><a href="#1-2-1-自己想到的问题" class="headerlink" title="1.2.1 自己想到的问题"></a>1.2.1 自己想到的问题</h3><h3 id="1-2-2-AI想到的问题"><a href="#1-2-2-AI想到的问题" class="headerlink" title="1.2.2 AI想到的问题"></a>1.2.2 AI想到的问题</h3><ol>
+<li><strong>为什么需要单独设计长任务机制，直接让 Agent 连续调用 Tool 不行吗？</strong></li>
+</ol>
+<p>参考回答：普通 Agent 更适合在一次请求中完成较短的推理和工具调用，但复杂运营任务可能包含多个依赖步骤、批量写操作和异步等待，通常无法在一轮对话中稳定完成。如果只依赖模型上下文，一旦请求超时、模型重新生成、服务重启或者用户中途暂停，就很难准确判断之前执行到了哪里，还可能重复调用写接口。因此我把任务计划、执行位置和操作结果持久化，由服务端负责确定性推进，Agent 主要负责理解目标、生成计划和调用受控工具。</p>
+<ol start="2">
+<li><strong>整个长任务模块由哪些组件组成？各自负责什么？</strong></li>
+</ol>
+<p>参考回答：整体上可以分成五部分：任务服务负责状态流转和业务校验；Redis 存储负责持久化任务事实；批次协调器负责按照已保存的进度逐项执行；续跑机制负责在一轮结束后触发下一轮；执行守卫负责在工具真正调用前做安全检查。各层职责是分开的，模型不能直接修改任务状态，存储层也不决定业务流程。这样即使更换 Agent 或者服务实例，任务仍然能够按照同一套规则推进。</p>
+<ol start="3">
+<li><strong>计划、步骤和批次是怎么建模的？</strong></li>
+</ol>
+<p>参考回答：计划表示用户确认的完整执行方案，步骤表示有先后依赖关系的业务阶段，批次表示某个步骤中需要重复处理的一组同类对象。例如“为 100 个内容创建运营配置”可以拆成数据校验、批量创建、结果汇总三个步骤，其中批量创建步骤再拆成多个小批次。每个批次完成后都会保存进度，因此发生故障时只需要从未完成的位置继续，而不是重新执行整个计划。</p>
+<ol start="4">
+<li><strong>任务状态机包含哪些状态？</strong></li>
+</ol>
+<p>参考回答：从业务阶段看，状态可以分为计划生成、等待用户确认、等待调度、正在执行、等待异步结果、等待重试、结果核对、暂停以及终态。终态又包括完成、失败、取消和过期。状态机不仅用于展示任务进度，更重要的是限制允许执行的动作，例如计划未确认时不能执行写操作，结果不确定时只能查询已有结果，已经结束的任务不能再次启动。</p>
+<ol start="5">
+<li><strong>为什么同时保存 <code>planVersion</code> 和 <code>confirmedPlanVersion</code>？</strong></li>
+</ol>
+<p>参考回答：一个表示当前最新计划，另一个表示用户实际确认过的计划。每次用户补充要求或者系统重新生成计划时，当前计划版本都会变化，原来的确认立即失效。任务开始执行前必须确认“用户确认的版本就是当前版本”，从而避免用户确认的是旧方案，系统实际执行的却是修改后的新方案。这本质上是把用户授权和计划内容绑定在一起。</p>
+<ol>
+<li><strong>“用户一次确认后自动续跑”是怎么实现的？</strong></li>
+</ol>
+<p>参考回答：用户确认完整计划后，系统会保存确认结果并创建一条续跑事件。执行器收到事件后读取最新任务状态，完成当前步骤或当前批次，再把新的执行位置和结果写回 Redis。如果后面还有工作，系统继续创建下一条续跑事件；如果需要等待异步结果，则暂时停止执行，结果返回后再恢复。因此用户只需要确认一次，后续推进由持久化状态和内部调度驱动。</p>
+<ol start="7">
+<li><strong><code>beginRun</code> 为什么需要传入 notificationId？</strong></li>
+</ol>
+<p>参考回答：可以把它理解为一次性执行凭证。系统只有在收到与当前任务匹配的续跑事件时，才允许启动新一轮执行；已经消费过的事件、旧计划产生的事件或者重复投递的事件都会被拒绝。这样即使通知发生重复或乱序，也不会轻易启动两个相同的执行轮次。通知消费和任务状态更新还需要原子完成，避免通知已消费但任务没有真正进入运行状态。</p>
+<ol start="8">
+<li><strong><code>version</code>、<code>runId</code> 和 <code>runLeaseUntil</code> 分别解决什么问题？</strong></li>
+</ol>
+<p>参考回答：任务版本解决并发覆盖问题，保证只有基于最新状态的请求才能保存；运行轮次标识用于区分当前执行和历史执行，避免上一轮的迟到结果污染新一轮；运行租约则解决服务异常退出后任务一直显示“执行中”的问题。租约过期后，系统会重新判断任务应该安全重试、等待已有异步结果，还是进入结果核对。三者分别处理并发、隔离和故障恢复。</p>
+<ol start="9">
+<li><strong>Redis 中的并发更新是怎么保证原子的？</strong></li>
+</ol>
+<p>参考回答：保存任务时会同时校验任务版本和当前运行轮次，只有二者都符合预期才允许更新。具体通过 Redis Lua 脚本，把任务内容、运行占用、活动任务索引和续跑通知放在同一次原子操作中完成。如果版本已经变化，说明有其他请求率先更新了任务，当前请求就会失败并重新读取最新状态。这样可以避免先写任务、再写通知过程中出现一半成功、一半失败。</p>
+<ol start="10">
+<li><strong>批次任务怎样避免重复项、漏项和跳项？</strong></li>
+</ol>
+<p>参考回答：批次执行位置由服务端维护，而不是让模型自行描述。每一项执行前先记录当前要处理的最小操作单元，调用业务接口后再记录真实结果，结果保存成功后才推进到下一项。如果业务调用失败且确定没有产生副作用，就保留当前位置等待重试；如果是否成功无法确认，就停在当前位置先核对结果。这样可以尽量避免跳过数据，也不会因为模型重试而直接重复整批操作。</p>
+<ol start="11">
+<li><strong>为什么每轮不把整个批次全部执行完？</strong></li>
+</ol>
+<p>参考回答：大批量操作可能超过模型单轮时间、服务请求超时或者下游接口承载能力。按固定大小拆分后，每轮只处理有限数量的数据，可以控制执行时间、上下文长度和下游压力。每个小批次也是一个恢复点，用户暂停或者服务异常时，最多只需要处理当前最小单元的不确定性。剩余数据由续跑机制自动进入下一轮。</p>
+<ol start="12">
+<li><strong><code>recordOutcome</code> 为什么不允许模型直接提交任意状态？</strong></li>
+</ol>
+<p>参考回答：模型输出具有不确定性，如果允许它直接把任务修改为完成、失败或跳到任意步骤，就可能绕过计划和确认流程。因此模型只能上报有限类型的执行结果，例如取得进展、完成步骤、可重试失败或者结果不确定。最终应该进入什么状态、是否推进步骤、是否创建续跑事件，都由服务端结合真实任务状态计算。这样把业务状态机控制权留在确定性代码中。</p>
+<ol start="13">
+<li><strong>暂停、继续和停止分别如何实现？</strong></li>
+</ol>
+<p>参考回答：暂停会保存当前执行位置和暂停前的阶段，同时停止启动新的执行轮次；继续时重新读取最新任务状态，判断应该继续正常执行、恢复异步监控，还是先核对未确认的操作结果。停止会把任务设置为终止状态，并清理后续调度，使系统不再执行剩余步骤。需要注意，暂停和停止只能阻止尚未发起的操作，无法撤销已经到达下游系统的请求。</p>
+<ol start="14">
+<li><strong>重试失败和副作用结果不确定有什么区别？</strong></li>
+</ol>
+<p>参考回答：如果能够确定请求没有发送出去，例如参数校验失败或执行前就发生异常，那么重试不会造成重复写入，可以进入普通重试流程。如果请求已经发送，但因为超时或断连没有收到结果，就不能判断下游是否执行成功，此时直接重试可能产生重复数据。系统会把这种情况转入结果核对流程，优先通过查询接口、业务唯一键或者异步任务编号确认真实结果。</p>
+<ol start="15">
+<li><strong>服务重启后，任务是如何恢复的？</strong></li>
+</ol>
+<p>参考回答：任务恢复依赖 Redis 中保存的计划、当前步骤、批次位置、操作记录、异步任务信息和待处理通知，而不依赖 JVM 内存。服务恢复后，在任务再次被加载或续跑事件被处理时，会检查上一次执行是否已经结束以及运行租约是否过期。如果没有发起写操作，可以从当前位置重试；如果已经发起写操作，则先核对结果；如果已经提交异步任务，则恢复对原任务的监控，而不是重新提交。</p>
+<ol start="16">
+<li><strong>如果服务在业务接口成功后、保存 checkpoint 前宕机会怎样？</strong></li>
+</ol>
+<p>参考回答：这属于最典型的分布式不确定窗口：下游可能已经成功，但本地没有保存成功结果。如果直接重试，可能产生重复写入；如果直接标记成功，又没有证据。因此系统会在调用前先保存稳定的操作标识，恢复后根据这个标识查询下游结果。下游支持幂等键或结果查询时可以自动处理，否则就需要停止自动执行并转人工确认。</p>
+<ol start="17">
+<li><strong>异步任务是怎样与父任务关联的？</strong></li>
+</ol>
+<p>参考回答：提交异步任务时，系统会同时保存外部任务编号以及它所属的父任务、计划版本、步骤和批次位置。异步结果返回后，必须验证这些关联仍然有效，才能推动父任务继续执行。这样可以避免旧计划产生的迟到结果误更新新计划，也能在服务重启后继续查询原来的异步任务，而不是重复创建一个新任务。</p>
+<ol start="18">
+<li><strong>怎样防止任务无限自动续跑？</strong></li>
+</ol>
+<p>参考回答：系统会判断每轮执行是否产生了真实进展，例如步骤是否推进、批次位置是否变化或者是否获得了新的结果。如果连续多轮没有有效进展，就停止自动续跑，转为等待用户重试或人工处理。同时任务还有整体执行期限，超过期限后不再发起新的写操作。这样可以避免模型或下游异常导致任务持续空转。</p>
+<h2 id="四、架构边界与高级追问"><a href="#四、架构边界与高级追问" class="headerlink" title="四、架构边界与高级追问"></a>四、架构边界与高级追问</h2><ol start="19">
+<li><strong>为什么选择 Redis，而不是数据库或 MQ？</strong></li>
+</ol>
+<p>参考回答：长任务运行期间需要频繁读取和更新状态，还要完成版本校验、运行占用和续跑通知的原子更新，Redis 的低延迟和 Lua 脚本比较适合这种运行态协调。数据库更适合长期审计和复杂查询，MQ 更适合独立的可靠消息投递，但单独使用它们仍需要解决任务状态与消息之间的一致性。当前方案以 Redis 管理运行状态，如果业务要求更强的持久性，可以把关键操作流水和最终结果额外写入数据库。</p>
+<ol start="20">
+<li><strong>这套机制能保证 exactly-once 吗？</strong></li>
+</ol>
+<p>参考回答：不能宣称跨系统严格的 exactly-once。平台内部可以通过版本控制、执行位置、稳定操作标识和结果记录降低重复执行概率，但如果下游已经写成功、本地却因为网络问题没有收到响应，平台无法凭自身状态证明下游结果。真正实现端到端幂等，需要下游接受并保存统一的幂等键，或者提供可靠的结果查询接口。当前更准确的描述是“可恢复执行和重复风险控制”。</p>
+<ol start="21">
+<li><strong>执行守卫在长任务里解决了什么问题？</strong></li>
+</ol>
+<p>参考回答：提示词只能告诉模型应该怎么做，但不能保证模型一定遵守，特别是在模型重试、上下文压缩或者工具并行调用时。因此系统会在工具真正执行前检查任务是否已经创建、计划是否已经确认、当前是否具有有效执行资格，以及写操作是否已经完成必要准备。在结果核对阶段还会禁止调用写工具，防止把“查询结果”错误地变成“再次执行”。服务层会再做一次状态校验，形成双层保护。</p>
+<ol start="22">
+<li><strong>你认为当前方案还有哪些改进空间？</strong></li>
+</ol>
+<p>参考回答：第一，可以推动所有写接口统一支持幂等键，让平台生成的操作标识真正贯穿下游系统。第二，可以把关键操作流水写入数据库，增强审计、追踪和长期恢复能力。第三，需要补充 Redis 故障、重复通知、网络超时和服务宕机等故障注入测试。第四，可以增加任务积压、租约超时、结果核对数量和无进展轮次等监控指标，方便及时发现异常任务。</p>
+<h1 id="2-为计划内写操作设计稳定操作标识和结果记录机制，并通过执行守卫限制未创建任务、未提交计划或未经确认时执行批量写操作，降低模型重试和网络异常导致的重复执行及越权调用风险"><a href="#2-为计划内写操作设计稳定操作标识和结果记录机制，并通过执行守卫限制未创建任务、未提交计划或未经确认时执行批量写操作，降低模型重试和网络异常导致的重复执行及越权调用风险" class="headerlink" title="2. 为计划内写操作设计稳定操作标识和结果记录机制，并通过执行守卫限制未创建任务、未提交计划或未经确认时执行批量写操作，降低模型重试和网络异常导致的重复执行及越权调用风险"></a>2. 为计划内写操作设计稳定操作标识和结果记录机制，并通过执行守卫限制未创建任务、未提交计划或未经确认时执行批量写操作，降低模型重试和网络异常导致的重复执行及越权调用风险</h1><h2 id="2-1-具体实现方式"><a href="#2-1-具体实现方式" class="headerlink" title="2.1 具体实现方式"></a>2.1 具体实现方式</h2><h4 id="一、问题背景"><a href="#一、问题背景" class="headerlink" title="一、问题背景"></a>一、问题背景</h4><p>Agent 与普通后端接口不同：模型可能因为超时、上下文续跑或服务重启重复生成同一个 Tool 调用；网络异常时，也无法仅根据“没有收到响应”判断请求是否已经到达下游。如果直接重试写操作，可能重复创建卡片、重复提交图片任务或重复回滚生产任务。</p>
+<p>因此，这部分工作的核心不是简单增加一个重试，而是把写操作改造成受服务端状态机约束的协议：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">创建任务 -&gt; 提交完整计划 -&gt; 用户确认计划<br>       -&gt; 开启受租约保护的运行轮次<br>       -&gt; 为最小写操作生成 operationId<br>       -&gt; 执行业务 Tool<br>       -&gt; 记录确定结果或进入只读核对<br></code></pre></td></tr></table></figure>
+
+<p>模型负责选择动作和描述结果，服务端负责判断“现在是否允许执行、是否可以重试、下一状态是什么”。</p>
+<h4 id="二、整体组件"><a href="#二、整体组件" class="headerlink" title="二、整体组件"></a>二、整体组件</h4><p>主要实现分为五层：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>AgentTaskCheckpoint</code></td>
+<td>保存计划版本、步骤、游标、运行租约、操作标识、外部任务引用和失败信息</td>
+</tr>
+<tr>
+<td><code>AgentTaskCheckpointService</code></td>
+<td>生成操作标识、校验运行上下文、记录结果并计算状态迁移</td>
+</tr>
+<tr>
+<td><code>AgentTaskCheckpointStore</code></td>
+<td>使用 Redis Lua CAS 原子保存 checkpoint、当前运行轮次和续跑通知</td>
+</tr>
+<tr>
+<td><code>LongTaskExecutionGuardMiddleware</code></td>
+<td>在 Tool 真正执行前拦截未规划、未确认、越过运行边界的调用</td>
+</tr>
+<tr>
+<td><code>ToolExecutionConfirmationCoordinator</code></td>
+<td>对特定高风险 Tool 的具体参数进行二次确认和一次性放行</td>
+</tr>
+</tbody></table>
+<h4 id="三、稳定操作标识"><a href="#三、稳定操作标识" class="headerlink" title="三、稳定操作标识"></a>三、稳定操作标识</h4><p>写操作开始前，模型或确定性批处理协调器必须调用 <code>prepareOperation</code>。核心代码位于 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/AgentTaskCheckpointService.java:631">AgentTaskCheckpointService.java</a>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">cursor</span> <span class="hljs-operator">=</span> normalizeOptional(stepCursor, MAX_PROGRESS_BYTES);<br><span class="hljs-type">String</span> <span class="hljs-variable">cursorDigest</span> <span class="hljs-operator">=</span> sha256(cursor == <span class="hljs-literal">null</span> ? <span class="hljs-string">&quot;&quot;</span> : cursor);<br><br>checkpoint.setOperationId(sha256(lengthPrefix(<br>        checkpoint.getTaskId(),<br>        String.valueOf(checkpoint.getPlanVersion()),<br>        String.valueOf(checkpoint.getCurrentStepNo()),<br>        cursorDigest)));<br><br>checkpoint.setOperationRunId(runId);<br>checkpoint.setOperationCursorDigest(cursorDigest);<br></code></pre></td></tr></table></figure>
+
+<p>操作标识可以概括为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">operationId = SHA-256(taskId + planVersion + stepNo + SHA-256(stepCursor))<br></code></pre></td></tr></table></figure>
+
+<p>这里使用带长度前缀的编码，而不是直接拼接字符串，避免字段边界歧义。<code>runId</code> 没有进入 operationId，因此同一个计划、步骤和批次游标在重试或服务恢复后仍对应同一个稳定操作；同时通过独立的 <code>operationRunId</code> 校验本次操作属于哪个运行轮次。</p>
+<p><code>prepareOperation</code> 还会校验：任务必须处于 <code>RUNNING</code>、运行租约有效、当前是 <code>NORMAL</code> 而不是核对轮次、步骤声明了 <code>sideEffect=true</code>、没有未闭合 operation、任务没有过期。任一条件不满足，写操作都不能开始。</p>
+<h4 id="四、Prepare、Execute、Record-三段式协议"><a href="#四、Prepare、Execute、Record-三段式协议" class="headerlink" title="四、Prepare、Execute、Record 三段式协议"></a>四、Prepare、Execute、Record 三段式协议</h4><p>完整执行过程如下：</p>
+<ol>
+<li><code>submitPlan</code> 保存完整步骤，增加 <code>planVersion</code>，并把状态切换为 <code>AWAITING_PLAN_CONFIRMATION</code>。</li>
+<li>用户确认后，服务端令 <code>confirmedPlanVersion = planVersion</code>；计划修改会产生新版本，旧确认自动失效。</li>
+<li><code>beginRun</code> 校验续跑通知 ID、续跑类型和计划版本，生成有过期时间的 <code>runId</code>。</li>
+<li><code>prepareOperation</code> 为当前最小操作单元生成 operationId。</li>
+<li>业务 Tool 在真正发送 HTTP、RPC 或 MCP 请求前调用 <code>markSideEffectAttempted</code>。</li>
+<li>调用结束后只能通过 <code>recordOutcome</code> 提交受控结果，最终状态由服务端计算。</li>
+</ol>
+<p>批处理由 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/DeterministicBatchCoordinator.java:93">DeterministicBatchCoordinator.java</a> 按项推进：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java">checkpoint = checkpointService.prepareOperation(..., currentCursor);<br>itemResult = executor.execute(items.get(index), runtimeContext, batchContext);<br><br>index++;<br>checkpoint = checkpointService.recordOutcome(<br>        ..., stepCompleted ? <span class="hljs-string">&quot;STEP_COMPLETED&quot;</span> : <span class="hljs-string">&quot;STEP_PROGRESS&quot;</span>,<br>        aggregateSummary(...),<br>        stepCompleted ? <span class="hljs-literal">null</span> : cursor(stepNo, index),<br>        ...);<br></code></pre></td></tr></table></figure>
+
+<p>只有当前项取得真实返回后，游标才会向下一项移动。异常时，协调器根据 <code>sideEffectAttempted</code> 自动选择 <code>RETRYABLE_FAILURE</code> 或 <code>UNCERTAIN_SIDE_EFFECT</code>，并停止继续推进当前批次。</p>
+<h4 id="五、结果记录和异常分类"><a href="#五、结果记录和异常分类" class="headerlink" title="五、结果记录和异常分类"></a>五、结果记录和异常分类</h4><p><code>recordOutcome</code> 只接受固定结果类型，模型不能直接指定 checkpoint 状态：</p>
+<table>
+<thead>
+<tr>
+<th>结果类型</th>
+<th>含义与处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>STEP_PROGRESS</code></td>
+<td>当前批次有进展；要求新游标非空且必须向前推进</td>
+</tr>
+<tr>
+<td><code>STEP_COMPLETED</code></td>
+<td>当前高层步骤完成；清理当前 operation 并推进下一步骤</td>
+</tr>
+<tr>
+<td><code>RETRYABLE_FAILURE</code></td>
+<td>业务请求未发出或明确失败，可以安全重试</td>
+</tr>
+<tr>
+<td><code>UNCERTAIN_SIDE_EFFECT</code></td>
+<td>请求已经发出但结果未知，保留 operation 并进入核对流程</td>
+</tr>
+<tr>
+<td><code>PLAN_REVISION_REQUIRED</code></td>
+<td>计划需要修改；存在未核对 operation 时禁止修改</td>
+</tr>
+<tr>
+<td><code>TASK_COMPLETED</code></td>
+<td>仅计划最后一步允许结束整个任务</td>
+</tr>
+<tr>
+<td><code>TASK_FAILED</code></td>
+<td>明确结束任务，不再自动续跑</td>
+</tr>
+</tbody></table>
+<p>关键校验位于 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/AgentTaskCheckpointService.java:1876">AgentTaskCheckpointService.java</a>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (successOutcome &amp;&amp; step.isSideEffect()<br>        &amp;&amp; checkpoint.getOperationId() == <span class="hljs-literal">null</span>) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalStateException</span>(<span class="hljs-string">&quot;副作用步骤完成前必须先准备操作标识&quot;</span>);<br>&#125;<br><span class="hljs-keyword">if</span> (outcome == UNCERTAIN_SIDE_EFFECT &amp;&amp; preparedButNotAttempted) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalStateException</span>(<span class="hljs-string">&quot;副作用尚未发起，应记录可重试失败&quot;</span>);<br>&#125;<br><span class="hljs-keyword">if</span> (outcome == RETRYABLE_FAILURE &amp;&amp; operationAlreadyAttempted) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalStateException</span>(<span class="hljs-string">&quot;必须先核对副作用结果，不能直接重试&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Checkpoint 不保存无限增长的通用结果列表，而是保存恢复执行所需的最小状态：<code>progressDigest</code>、<code>lastProgressFingerprint</code>、<code>stepCursor</code>、<code>lastFailureType/lastFailureDigest</code>、<code>operationRef</code>、<code>asyncTaskRef</code> 和 <code>asyncResultStatus</code>。进度指纹还能拒绝完全重复的进度提交。</p>
+<h4 id="六、网络异常和迟到结果"><a href="#六、网络异常和迟到结果" class="headerlink" title="六、网络异常和迟到结果"></a>六、网络异常和迟到结果</h4><p>图片生成是完整接入该协议的例子。Tool 提交前先捕获父任务快照，快照包含：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">taskId + planVersion + stepNo + operationId<br>+ operationCursorDigest + operationRunId + monitorGeneration<br></code></pre></td></tr></table></figure>
+
+<p>请求成功后，将下游返回的 <code>openSessionId</code> 保存为 <code>operationRef</code>。绑定时必须与父快照全部匹配，防止旧请求结果写入新计划或新步骤。</p>
+<p>如果请求已经返回，但当前 Agent 请求刚好关闭，<code>recordLateOperationReference</code> 会通过 Redis CAS 尝试补写该引用，并把任务转入 <code>MONITOR_RECOVERY</code>。恢复时只允许使用已保存的 <code>openSessionId</code> 重建监控，不允许再次提交图片任务。相关实现见 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/tool/common/ImageGenerateSubmitTool.java:140">ImageGenerateSubmitTool.java</a>。</p>
+<h4 id="七、执行守卫"><a href="#七、执行守卫" class="headerlink" title="七、执行守卫"></a>七、执行守卫</h4><p><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/middleware/LongTaskExecutionGuardMiddleware.java:659">LongTaskExecutionGuardMiddleware.java</a> 在 <code>next.apply(input)</code> 之前检查 Tool 调用，因此约束不是仅靠 Prompt 提醒。</p>
+<p>守卫主要限制：</p>
+<ul>
+<li>多项任务必须先加载长任务工作流、创建任务、提交完整计划并等待整体确认。</li>
+<li>任务已经创建后，下一次调用只能提交该任务的计划。</li>
+<li>计划保存后不能继续调用业务 Tool，只能向用户展示计划并等待确认。</li>
+<li>任务状态 Tool 和业务 Tool 不能在同一批执行。</li>
+<li>单次 reasoning 最多执行一个未声明为并行安全的业务调用。</li>
+<li>图片提交必须独占批次，并且副作用步骤必须先准备 operationId。</li>
+<li>核对轮次只能调用显式声明为 reconciliation-safe 的只读核对或监控恢复能力。</li>
+<li>超出本轮执行预算后，禁止开启新运行轮次和新业务写操作。</li>
+<li>系统续跑通知的 ID、类型和目标任务必须与 checkpoint 一致，旧通知不能启动新轮次。</li>
+</ul>
+<p>守卫在 supervisor 和 domain 两层生效：前者限制跨业务域委托，后者限制叶子 Tool。Tool 的 planning-safe、reconciliation-safe、parallel-safe 等属性由 <code>DomainAgentSupport</code> 统一组装。</p>
+<h4 id="八、高风险-Tool-的参数级确认"><a href="#八、高风险-Tool-的参数级确认" class="headerlink" title="八、高风险 Tool 的参数级确认"></a>八、高风险 Tool 的参数级确认</h4><p>完整计划确认解决的是“用户是否同意执行整个计划”；导航卡创建、生产任务回滚等高风险能力还增加了第二层确认，即用户是否同意执行这一组具体参数。</p>
+<p>Tool 通过 <code>executionConfirmationRisk</code> 声明风险分类。首次调用不会真正执行，而是保存：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">domain + toolName + riskCategory + canonicalArguments<br></code></pre></td></tr></table></figure>
+
+<p>并把长任务从 <code>RUNNING</code> 原子切换为 <code>AWAITING_TOOL_CONFIRMATION</code>。用户确认后，Redis Lua 将确认记录从 <code>PENDING</code> 原子 claim 为 <code>EXECUTING</code>。真正执行时使用一次性 bypass：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">return</span> domain.equals(actualDomain)<br>        &amp;&amp; toolName.equals(actualToolName)<br>        &amp;&amp; riskCategory.equals(actualRiskCategory)<br>        &amp;&amp; canonicalArguments.equals(actualCanonicalArguments)<br>        &amp;&amp; consumed.compareAndSet(<span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>);<br></code></pre></td></tr></table></figure>
+
+<p>因此确认只能用于原 Tool、原风险类型和原参数，而且只能消费一次。执行结果会保存为 <code>resultState/resultText/resultJson</code>；恢复轮次消费该结果时，守卫禁止再次调用风险 Tool。</p>
+<h4 id="九、Redis-并发保护"><a href="#九、Redis-并发保护" class="headerlink" title="九、Redis 并发保护"></a>九、Redis 并发保护</h4><p>Checkpoint 更新使用 <code>expectedVersion</code> 加 Redis Lua CAS。Lua 脚本在同一次原子操作中校验旧版本，并更新 checkpoint、活动任务集合、current run 和续跑通知。旧模型响应、重复续跑请求或并发控制命令拿着过期版本写入时，会直接失败并要求重新读取状态。</p>
+<p>确认记录也通过 Lua 原子完成注册、<code>PENDING -&gt; EXECUTING</code> 抢占和最终结果保存，避免两个确认请求同时取得执行权。</p>
+<h4 id="十、能力边界"><a href="#十、能力边界" class="headerlink" title="十、能力边界"></a>十、能力边界</h4><p>这套实现保证的是平台内部的稳定关联、防止盲目重放和可恢复核对，不应表述为“所有外部写操作严格 exactly-once”。当前 operationId 并没有统一作为下游接口的幂等键传递；如果下游在请求成功后断网，平台仍需要依赖 <code>operationRef</code>、查询接口或业务流水核对真实结果。</p>
+<p>另外，执行守卫防止的是任务协议越权，例如未规划、未确认、无运行租约或在核对轮次执行写操作。用户是否拥有某项业务权限，仍由 Tool 可见性、权限码和 Tool 自身权限校验负责。</p>
+<p>面试时可以总结为：<strong>我把 Agent 写操作从模型自由调用改造成服务端约束的 Prepare-Execute-Record 协议，用计划版本、步骤和游标生成稳定 operationId；再结合副作用发出标记、结果分类、外部操作锚点、Redis CAS 和执行守卫，使请求未发出时可以安全重试、请求结果未知时只能先核对，从而降低模型重试、网络异常和并发续跑带来的重复写入与协议越权风险。</strong></p>
+<h2 id="2-2-提问"><a href="#2-2-提问" class="headerlink" title="2.2 提问"></a>2.2 提问</h2><h3 id="2-2-1-自己想到的问题"><a href="#2-2-1-自己想到的问题" class="headerlink" title="2.2.1 自己想到的问题"></a>2.2.1 自己想到的问题</h3><h3 id="2-2-2-AI想到的问题"><a href="#2-2-2-AI想到的问题" class="headerlink" title="2.2.2 AI想到的问题"></a>2.2.2 AI想到的问题</h3><ol>
+<li><strong>这套机制主要解决什么问题？</strong></li>
+</ol>
+<p>参考回答：它主要解决两类风险。第一类是模型重试、请求超时或服务重启后，系统可能重复调用写接口；第二类是模型没有完成建任务、提交计划和用户确认，就直接执行批量写操作。我的处理思路是：写操作前先建立稳定身份，执行后保存结果；同时在工具调用层增加强制校验，把不符合流程的调用拦截在业务接口之前。</p>
+<ol start="2">
+<li><strong>整体执行流程是什么？</strong></li>
+</ol>
+<p>参考回答：完整流程是先创建任务，再保存完整计划并让用户确认。任务进入合法运行阶段后，每个写操作都要先登记本次要执行的逻辑单元，再调用业务接口，最后根据真实结果记录成功、可重试失败或者结果不确定。只有结果保存成功后，系统才会推进批次位置或进入下一步骤。</p>
+<ol start="3">
+<li><strong>为什么既需要稳定操作标识，又需要结果记录？</strong></li>
+</ol>
+<p>参考回答：操作标识只能说明“准备执行哪个逻辑操作”，不能证明这个操作是否已经成功。结果记录用于保存业务接口的真实返回、执行进度和下一步处理方式。两者结合后，系统恢复时才能判断应该直接继续、重新执行，还是先查询下游结果。如果只有操作标识而没有结果，任务仍然会停留在待核对状态。</p>
+<ol start="4">
+<li><strong>什么叫“稳定操作标识”？</strong></li>
+</ol>
+<p>参考回答：稳定指的是同一个任务、同一个计划版本、同一个步骤和同一个批次位置，无论因为模型重试还是服务重启，计算出的操作标识都保持一致。不同计划版本、不同步骤或者不同批次项，标识则不同。这样系统可以区分“同一个操作的再次尝试”和“一个新的业务操作”。</p>
+<ol start="5">
+<li><strong>稳定操作标识是如何生成的？</strong></li>
+</ol>
+<p>参考回答：代码会把任务身份、当前计划版本、步骤编号和批次位置组合起来，规范化后计算摘要。批次位置不会直接使用模型提供的任意文本，而是基于服务端保存的执行位置。计划变化后版本也会变化，因此旧计划和新计划中的操作不会错误地复用同一个标识。</p>
+<ol start="6">
+<li><strong>为什么操作标识中不直接包含每次执行的运行轮次？</strong></li>
+</ol>
+<p>参考回答：因为运行轮次每次重试都会变化，如果把它作为稳定标识的一部分，同一个逻辑操作重试时就会生成新标识，失去防重意义。当前实现把“逻辑操作身份”和“本次执行轮次”分开保存：前者用于识别同一个业务操作，后者用于判断当前请求是否仍属于有效执行轮次。</p>
+<ol start="7">
+<li><strong>为什么必须在调用业务接口之前生成操作标识？</strong></li>
+</ol>
+<p>参考回答：如果先调用业务接口，再保存操作标识，那么服务在两者之间宕机时，本地完全没有任何记录，却可能已经在下游产生了写入。提前保存后，即使调用过程中发生异常，系统至少知道当前存在一个尚未闭合的写操作，可以阻止盲目重试，并尝试通过下游业务标识查询真实结果。</p>
+<ol start="8">
+<li><strong>准备操作时会做哪些校验？</strong></li>
+</ol>
+<p>参考回答：系统会检查当前任务是否处于有效运行阶段、当前步骤是否确实包含写操作、任务是否已经超过执行期限，以及是否存在上一次尚未核对完成的操作。如果已经有一个未闭合操作，就不能再准备新的写操作，必须先完成结果核对。这避免了多个不确定副作用同时存在，导致恢复逻辑无法判断。</p>
+<ol start="9">
+<li><strong>写操作执行后记录哪些内容？</strong></li>
+</ol>
+<p>参考回答：主要记录当前操作对应的业务结果、批次执行位置、进展摘要、下游返回的业务引用以及下一步动作。对于异步任务，还会保存外部任务编号和轮询信息。这些信息的目标不是保存完整业务响应，而是保存足够支持恢复和核对的最小事实集。</p>
+<ol start="10">
+<li><strong>为什么只允许记录有限的结果类型？</strong></li>
+</ol>
+<p>参考回答：模型不能直接决定任务应该进入任意状态，否则可能跳过步骤、提前结束任务或者绕过确认。当前实现只允许模型报告几类受控结果，例如取得进展、步骤完成、可重试失败、结果不确定、需要修订计划以及任务结束。服务端再结合当前任务状态计算真正的下一状态。</p>
+<ol start="11">
+<li><strong>如何区分“可以重试”和“结果不确定”？</strong></li>
+</ol>
+<p>参考回答：关键是判断业务请求是否已经真实发出。如果在参数校验、权限检查或者调用前准备阶段就失败，可以认为没有产生副作用，允许安全重试。如果请求已经发给下游，但因为网络超时、连接中断或者响应解析失败没有拿到明确结果，就属于结果不确定，不能直接重试。</p>
+<ol start="12">
+<li><strong>代码如何知道业务请求是否已经发出？</strong></li>
+</ol>
+<p>参考回答：具体业务工具会在真正调用 HTTP 或 RPC 接口之前标记“副作用已经开始尝试”。例如导航卡创建、生产任务回滚和图片提交等工具都在下游调用边界设置这个标记。发生异常时，上层根据该标记进行分类：尚未发起的按普通失败处理，已经发起但没有确定结果的进入核对流程。</p>
+<ol start="13">
+<li><strong>网络超时后为什么不能直接重试？</strong></li>
+</ol>
+<p>参考回答：网络超时可能发生在下游处理之前，也可能发生在下游已经写成功、但响应返回失败之后。本地无法仅凭超时判断是哪一种情况。如果直接重试，可能创建重复数据或者重复修改业务状态。因此系统会保留操作标识和已有下游引用，先调用只读查询能力核对结果。</p>
+<ol start="14">
+<li><strong>结果不确定后系统如何继续？</strong></li>
+</ol>
+<p>参考回答：任务会停止正常写入流程，切换到结果核对阶段。在这个阶段只允许读取任务状态、查询下游结果或者恢复已有异步任务监控，不允许再次执行写工具。如果确认原操作已经成功，就补录结果并继续计划；确认没有执行时，才能重新发起；仍然无法判断时，则等待人工处理。</p>
+<ol start="15">
+<li><strong>如果业务调用成功，但保存结果失败了怎么办？</strong></li>
+</ol>
+<p>参考回答：这种情况不能对用户简单返回失败并允许再次执行，因为下游写操作可能已经完成。系统会保留已准备的操作信息，并尽量记录下游返回的业务引用。后续恢复时通过该引用核对真实结果；如果引用也没有保存成功，就进入更保守的不确定状态，禁止自动重复执行。</p>
+<ol start="16">
+<li><strong>异步写操作如何记录结果？</strong></li>
+</ol>
+<p>参考回答：像图片生成这种操作，提交成功后不会立即产生最终结果。代码会先保存下游返回的任务编号，并把它与当前父任务、步骤和批次位置绑定，然后启动结果监控。即使监控进程中断，恢复时也只会重新监控原来的外部任务，不会再次提交一个新的生成任务。</p>
+<ol start="17">
+<li><strong>为什么不能只通过 Prompt 要求模型遵守流程？</strong></li>
+</ol>
+<p>参考回答：Prompt 只能提供行为指导，不能成为副作用安全边界。模型可能因为上下文压缩、重试、错误推理或者并行工具调用而跳过流程。因此项目在 Tool 真正执行前增加了代码级守卫，只要任务状态、确认状态或运行条件不满足，就直接拒绝工具调用。</p>
+<ol start="18">
+<li><strong>未创建任务时，守卫如何阻止批量写操作？</strong></li>
+</ol>
+<p>参考回答：系统会结合用户请求中的对象数量、编号列表、多图片输入以及“逐项处理”等语义，识别明显的多对象任务。一旦判定需要受控批量执行，当前请求只能先加载长任务工作流、完成必要的只读规划查询，然后创建任务。此时如果模型直接调用业务写工具，守卫会拒绝执行。</p>
+<p>这里也存在一个边界：自然语言识别具有启发式性质，不能覆盖所有表达方式。因此代码还会结合已注册业务工具、调用数量和是否属于安全并行工具做第二层判断。</p>
+<ol start="19">
+<li><strong>任务已经创建但计划还没提交时，会发生什么？</strong></li>
+</ol>
+<p>参考回答：任务创建成功后，守卫会把下一步限制为提交该任务的完整计划。模型不能继续加载无关能力、执行写操作或者只在自然语言中描述一个没有持久化的计划。只有计划经过服务端校验并成功保存，系统才会向用户展示并请求确认。</p>
+<ol start="20">
+<li><strong>计划已经提交但用户尚未确认时，为什么仍然不能执行？</strong></li>
+</ol>
+<p>参考回答：计划提交只代表系统保存了执行方案，不代表用户已经授权执行。计划保存后，当前轮次会进入收口阶段，守卫禁止继续调用业务工具，只允许把完整计划展示给用户。用户确认后，系统还会核对确认的是不是最新计划版本，防止用户确认旧计划、系统执行新计划。</p>
+<ol start="21">
+<li><strong>计划已经确认后，模型是不是就可以随意调用写工具？</strong></li>
+</ol>
+<p>参考回答：不可以。计划确认后还要由系统启动有效执行轮次，并限定当前唯一允许执行的步骤。对于有副作用的步骤，还需要先完成操作准备；如果任务已经暂停、取消、过期或者执行轮次失效，业务工具仍然会被拒绝。确认是必要条件，但不是唯一条件。</p>
+<ol start="22">
+<li><strong>为什么不允许任务状态工具和业务工具在同一批调用？</strong></li>
+</ol>
+<p>参考回答：因为模型在发起业务调用时，必须基于任务状态工具返回的真实结果进行决策。如果两个调用同时提交，模型实际上还没有看到最新任务状态，就已经开始执行业务操作。项目要求先读取或更新任务状态，下一次推理再发起业务调用，从而形成明确的状态屏障。</p>
+<ol start="23">
+<li><strong>为什么限制一次只能调用一个非并行安全的业务工具？</strong></li>
+</ol>
+<p>参考回答：多个写工具并行执行后，如果其中一部分成功、一部分超时，恢复时很难判断每个操作的真实结果，也难以确定批次位置。当前守卫默认只允许一个非并行安全调用，只有明确登记为可安全并行的只读或独立能力才能并行，并且还有数量上限。这种限制牺牲了一部分吞吐量，但显著降低了副作用恢复的复杂度。</p>
+<ol start="24">
+<li><strong>结果核对阶段如何防止再次写入？</strong></li>
+</ol>
+<p>参考回答：结果核对会使用单独的运行模式，守卫只允许任务读取、结果查询和监控恢复等白名单操作。普通写工具和不匹配当前恢复类型的查询都会被拒绝。这样即使模型把“核对之前的结果”误解成“重新执行一次”，调用也无法到达业务接口。</p>
+<ol start="25">
+<li><strong>整体计划确认和高风险工具确认有什么区别？</strong></li>
+</ol>
+<p>参考回答：整体计划确认表示用户同意执行完整任务方案；高风险工具确认针对的是某一次具体调用及其参数快照。对于需要单独确认的敏感工具，用户确认后只能执行保存下来的那份参数，不能由模型临时修改。重复确认会被识别为已经处理，不会再次执行工具。</p>
+<ol start="26">
+<li><strong>模型重试或者两个请求并发执行时，如何避免重复推进？</strong></li>
+</ol>
+<p>参考回答：任务状态更新采用乐观并发控制，每次写入都必须基于读取时的版本。Redis 脚本会原子校验任务版本、当前执行轮次和相关操作信息，然后再更新任务和续跑通知。两个请求并发时，只有一个能保存成功，另一个必须重新读取状态，不能用旧结果覆盖新进度。</p>
+<ol start="27">
+<li><strong>服务端批次协调器和执行守卫是什么关系？</strong></li>
+</ol>
+<p>参考回答：执行守卫负责回答“当前允不允许调用”，批次协调器负责回答“当前应该执行哪一项”。协调器从服务端保存的位置取出下一项，先准备操作，再调用业务执行器，最后保存结果。失败时不会推进位置，所以恢复后仍然处理当前项；成功保存后才进入下一项。</p>
+<ol start="28">
+<li><strong>这套机制能保证所有写操作 exactly-once 吗？</strong></li>
+</ol>
+<p>参考回答：不能宣称跨系统严格 exactly-once。平台内部可以稳定识别逻辑操作、拒绝旧请求并保留结果核对信息，但如果下游成功而本地没有收到响应，最终仍然需要下游提供幂等键或者结果查询能力。更准确的说法是：系统显著降低重复执行和越权调用风险，并对不确定副作用提供可恢复的处理路径。</p>
+<ol start="29">
+<li><strong>这套方案最大的取舍是什么？</strong></li>
+</ol>
+<p>参考回答：最大的取舍是用一定的执行复杂度和串行限制换取副作用安全。写操作前后都要持久化状态，部分工具不能并行，结果不确定时还需要额外核对，因此吞吐量会受到影响。但对于运营后台的批量写场景，可恢复性和避免重复修改通常比极致吞吐更重要。</p>
+<ol start="30">
+<li><strong>当前方案还有哪些改进空间？</strong></li>
+</ol>
+<p>参考回答：第一，可以把稳定操作标识统一透传给所有下游，让下游真正按幂等键防重；第二，为关键写操作增加数据库审计流水，增强长期追踪能力；第三，完善工具副作用属性的统一注册，减少依赖自然语言识别；第四，补充并发请求、重复确认、结果保存失败和服务宕机等故障注入测试；第五，增加不确定操作数量、守卫拒绝原因和核对任务积压等监控指标。</p>
+<h1 id="3-负责业务子-Agent-配置化改造，支持通过-Paladin-动态配置系统提示词、Tool、Skill-和权限码；实现配置解析、合法性校验、热更新及-Agent-缓存失效，降低新增业务域-Agent-的代码改动成本"><a href="#3-负责业务子-Agent-配置化改造，支持通过-Paladin-动态配置系统提示词、Tool、Skill-和权限码；实现配置解析、合法性校验、热更新及-Agent-缓存失效，降低新增业务域-Agent-的代码改动成本" class="headerlink" title="3. 负责业务子 Agent 配置化改造，支持通过 Paladin 动态配置系统提示词、Tool、Skill 和权限码；实现配置解析、合法性校验、热更新及 Agent 缓存失效，降低新增业务域 Agent 的代码改动成本"></a>3. 负责业务子 Agent 配置化改造，支持通过 Paladin 动态配置系统提示词、Tool、Skill 和权限码；实现配置解析、合法性校验、热更新及 Agent 缓存失效，降低新增业务域 Agent 的代码改动成本</h1><h2 id="3-1-具体实现方式"><a href="#3-1-具体实现方式" class="headerlink" title="3.1 具体实现方式"></a>3.1 具体实现方式</h2><h4 id="一、改造背景"><a href="#一、改造背景" class="headerlink" title="一、改造背景"></a>一、改造背景</h4><p>改造前，每个业务域都需要编写一个独立 Java 装配类，在代码中固定：</p>
+<ul>
+<li>Agent 名称和系统提示词；</li>
+<li>当前域包含哪些 Tool、Skill；</li>
+<li>每项能力需要什么权限；</li>
+<li>主 Agent 应注册哪些业务子 Agent。</li>
+</ul>
+<p>例如历史上的 <code>ActivityDomainAgent</code>、<code>DeliveryDomainAgent</code> 和 <code>AiCreatorIncentiveDomainAgent</code> 都维护了静态 <code>ToolBinding</code>、<code>SkillBinding</code> 和 Prompt。新增或调整业务域通常需要修改 Java、重新编译并发布。</p>
+<p>改造后，业务域的“编排关系”放入 Paladin：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">Paladin JSON<br>    -&gt; 配置解析与完整校验<br>    -&gt; 不可变业务域快照<br>    -&gt; 按用户权限裁剪 Tool/Skill<br>    -&gt; 动态组装子 Agent<br>    -&gt; 注册为主 Agent 的 delegate Tool<br></code></pre></td></tr></table></figure>
+
+<p>如果所需 Tool、Skill 已经部署，新增业务域或调整能力组合只需要修改配置；只有新增业务实现时才需要开发新的 Java Bean。</p>
+<h4 id="二、整体架构"><a href="#二、整体架构" class="headerlink" title="二、整体架构"></a>二、整体架构</h4><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>主要职责</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>BusinessDomainAgentConfig</code></td>
+<td>定义 Paladin JSON 的字段结构</td>
+</tr>
+<tr>
+<td><code>DomainAgentConfigParser</code></td>
+<td>解析配置并完成合法性、安全性校验</td>
+</tr>
+<tr>
+<td><code>AgentCapabilityCatalog</code></td>
+<td>维护 <code>capabilityId -&gt; Tool/Skill Bean</code> 白名单</td>
+</tr>
+<tr>
+<td><code>ToolBinding</code> &#x2F; <code>SkillBinding</code></td>
+<td>保存能力实现、权限码和可见性</td>
+</tr>
+<tr>
+<td><code>DomainAgentSupport</code></td>
+<td>按权限筛选能力并构建 AgentScope <code>ReActAgent</code></td>
+</tr>
+<tr>
+<td><code>AgentFactory</code></td>
+<td>监听 Paladin、发布配置快照、构建和缓存主 Agent</td>
+</tr>
+<tr>
+<td><code>UserPermissionService</code></td>
+<td>根据用户和请求权限范围计算有效权限</td>
+</tr>
+</tbody></table>
+<p>主要入口位于 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/AgentFactory.java:72">AgentFactory.java</a>。</p>
+<h4 id="三、Paladin-配置结构"><a href="#三、Paladin-配置结构" class="headerlink" title="三、Paladin 配置结构"></a>三、Paladin 配置结构</h4><p>业务域配置键为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">ogv_agent_business_domain_config<br></code></pre></td></tr></table></figure>
+
+<p>字段模型定义在 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/config/BusinessDomainAgentConfig.java:5">BusinessDomainAgentConfig.java</a>。配置示例如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;domains&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;agentCode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;delivery-domain-agent&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;投放业务域 Agent。&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;systemPrompt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是 OGV 投放域专家，只处理当前已接入的投放能力。&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;tools&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;capabilityId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;deliveryProjectQueryTool&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;permissionCodes&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;delivery:project:query&quot;</span><span class="hljs-punctuation">]</span><br>        <span class="hljs-punctuation">&#125;</span><br>      <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;skills&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;capabilityId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;imageGenerationWorkflowSkill&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;permissionCodes&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;ai:image&quot;</span><span class="hljs-punctuation">]</span><br>        <span class="hljs-punctuation">&#125;</span><br>      <span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>agentCode</code> 会自动派生主 Agent 中的委托 Tool 名：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">delivery-domain-agent -&gt; delegate_to_delivery_domain<br></code></pre></td></tr></table></figure>
+
+<p>配置中的 <code>systemPrompt</code> 只负责角色定位、业务边界和行为基调。Tool 用法来自 <code>@Tool</code> 描述，具体业务限制由 Tool 代码校验，副作用确认由中间件处理，避免 Prompt 与真实能力发生漂移。</p>
+<h4 id="四、能力目录与白名单"><a href="#四、能力目录与白名单" class="headerlink" title="四、能力目录与白名单"></a>四、能力目录与白名单</h4><p>配置不能填写任意 Java 类名。Spring 启动时会将所有 <code>OgvToolBase</code>、<code>OgvSkillBase</code> Bean 注入 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/capability/AgentCapabilityCatalog.java:17">AgentCapabilityCatalog.java</a>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> OgvToolBase <span class="hljs-title function_">requireTool</span><span class="hljs-params">(String capabilityId)</span> &#123;<br>    <span class="hljs-type">OgvToolBase</span> <span class="hljs-variable">tool</span> <span class="hljs-operator">=</span> toolsById.get(capabilityId);<br>    <span class="hljs-keyword">if</span> (tool == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalArgumentException</span>(<br>                <span class="hljs-string">&quot;未知 Tool capabilityId: &quot;</span> + capabilityId);<br>    &#125;<br>    <span class="hljs-keyword">return</span> tool;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>目录同时建立正向和反向索引：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">capabilityId -&gt; OgvToolBase / OgvSkillBase<br>实现类型       -&gt; capabilityId<br></code></pre></td></tr></table></figure>
+
+<p>因此 Paladin 只能组合已经部署并注册的能力，不能通过配置反射加载任意类。系统还会检查同一种实现类型不能对应多个 capabilityId。</p>
+<p>当前代码实际使用 Spring Bean 名作为 capabilityId。若使用默认 <code>@Component</code> 命名，<code>DeliveryProjectQueryTool</code> 对应 <code>deliveryProjectQueryTool</code>。因此 capabilityId 应被视为稳定配置契约；如果以后重命名 Java 类，最好显式固定 Bean 名，否则可能同时影响 Paladin 配置。</p>
+<h4 id="五、配置解析和合法性校验"><a href="#五、配置解析和合法性校验" class="headerlink" title="五、配置解析和合法性校验"></a>五、配置解析和合法性校验</h4><p><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/config/DomainAgentConfigParser.java:65">DomainAgentConfigParser.java</a> 不只是反序列化 JSON，而是整个动态配置的安全边界。</p>
+<p>核心解析过程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">BusinessDomainAgentConfig</span> <span class="hljs-variable">root</span> <span class="hljs-operator">=</span><br>        objectMapper.readValue(rawConfig, BusinessDomainAgentConfig.class);<br><br><span class="hljs-keyword">for</span> (DomainConfig domain : root.getDomains()) &#123;<br>    <span class="hljs-keyword">if</span> (!domain.getEnabled()) &#123;<br>        <span class="hljs-keyword">continue</span>;<br>    &#125;<br>    <span class="hljs-type">ConfiguredDomain</span> <span class="hljs-variable">configured</span> <span class="hljs-operator">=</span> parseDomain(domain);<br>    result.add(configured);<br>&#125;<br><span class="hljs-keyword">return</span> List.copyOf(result);<br></code></pre></td></tr></table></figure>
+
+<p>Parser 会完成以下校验：</p>
+<ul>
+<li>配置不能为空，<code>domains</code> 必须存在且最多 64 个；</li>
+<li><code>enabled</code> 必须显式配置；</li>
+<li><code>agentCode</code> 必须符合 <code>xxx-domain-agent</code> 格式；</li>
+<li>禁止使用主 Agent、公共域 Agent 等保留名称；</li>
+<li><code>description</code>、<code>systemPrompt</code> 必填并限制长度；</li>
+<li><code>tools</code>、<code>skills</code> 必须是数组，且不能同时为空；</li>
+<li>capabilityId 必须能在能力目录中找到；</li>
+<li>Tool 必须声明有效的 <code>@Tool</code> 方法；</li>
+<li>Skill 必须有可读取的 classpath 资源或实现 <code>RuntimeOgvSkill</code>；</li>
+<li>每项 USER 能力必须绑定非空、格式合法的权限码；</li>
+<li>同一个域不能重复绑定同一 Tool 或 Skill；</li>
+<li>Tool 名、Skill ID、Skill Action 名不能发生冲突；</li>
+<li>不同域不能有重复的 agentCode 或委托 Tool 名；</li>
+<li>业务域禁止引用 SYSTEM Tool 和 SYSTEM Skill。</li>
+</ul>
+<p>只有全部域都校验成功，才会生成不可变的 <code>ConfiguredDomain</code> 列表，不存在只更新一半域的情况。</p>
+<h4 id="六、SYSTEM-能力隔离"><a href="#六、SYSTEM-能力隔离" class="headerlink" title="六、SYSTEM 能力隔离"></a>六、SYSTEM 能力隔离</h4><p><code>ToolBinding</code> 和 <code>SkillBinding</code> 将能力分为两种可见性：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">USER   普通业务能力，必须绑定 permissionCodes<br>SYSTEM 平台控制能力，不依赖用户权限，但不能由业务配置引用<br></code></pre></td></tr></table></figure>
+
+<p>例如长任务 checkpoint、任务控制和部分平台 Skill 属于系统协议。如果允许 Paladin 业务域随意引用这些能力，就可能绕过主 Agent 的执行约束。</p>
+<p>Parser 会通过 <code>AgentCapabilityCatalog.isSystemTool/isSystemSkill</code> 在配置生效前直接拒绝。这是装配期隔离，而不是依赖 Prompt 告诉模型“不要调用”。</p>
+<h4 id="七、按用户权限动态装配-Tool-和-Skill"><a href="#七、按用户权限动态装配-Tool-和-Skill" class="headerlink" title="七、按用户权限动态装配 Tool 和 Skill"></a>七、按用户权限动态装配 Tool 和 Skill</h4><p>配置中的 <code>permissionCodes</code> 表示该能力允许哪些权限使用，同一能力配置多个权限码时采用 OR 语义。</p>
+<p><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/DomainAgentSupport.java:298">DomainAgentSupport.java</a> 在组装阶段完成过滤：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (binding.getVisibility() == CapabilityVisibility.USER<br>        &amp;&amp; (permission == <span class="hljs-literal">null</span><br>        || !permission.hasAnyAccess(binding.getPermissionCodes()))) &#123;<br>    <span class="hljs-keyword">continue</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>没有权限的能力不会注册到 Toolkit，也不会出现在 Agent 的系统提示词或能力描述中。因此模型从一开始就看不到未授权 Tool，而不是等调用时才拒绝。</p>
+<p>Tool 过滤后注册到 AgentScope <code>Toolkit</code>；Skill 则解析为 <code>RegisteredSkillCapability</code>，通过 <code>SkillFilter.only(skillIds)</code> 限定当前 Agent 可加载的 Skill。若当前用户一个 Tool、Skill 都不可见，则该业务域不会注册到主 Agent。</p>
+<p>系统提示词最终由三部分组成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">Paladin 中的域 systemPrompt<br>+ 平台统一执行规则<br>+ 当前用户真正可见的 Tool/Skill 能力清单<br></code></pre></td></tr></table></figure>
+
+<p>这保证 Prompt 中展示的能力和 Toolkit 中实际存在的能力一致。</p>
+<h4 id="八、用户权限来源"><a href="#八、用户权限来源" class="headerlink" title="八、用户权限来源"></a>八、用户权限来源</h4><p>用户基础权限由另一份 Paladin 配置 <code>ogv_agent_user_permission_config</code> 管理。<code>UserPermissionService</code> 根据 <code>userId</code> 和 <code>ANYONE</code> 配置计算权限集合。</p>
+<p>如果请求还携带 <code>permissionScope</code>，最终权限取交集：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">effectivePermissions = basePermissions ∩ permissionScope<br></code></pre></td></tr></table></figure>
+
+<p>因此请求只能缩小权限，不能通过参数声明自己原本没有的权限。</p>
+<p>部分 Tool&#x2F;Skill 还会读取权限项中的 <code>bizConfigs</code>，通过 <code>bindRuntimeContext</code> 创建用户相关的运行时能力。如果所需业务配置不存在，该能力即使权限码匹配，也可以不注册。</p>
+<h4 id="九、Paladin-热更新"><a href="#九、Paladin-热更新" class="headerlink" title="九、Paladin 热更新"></a>九、Paladin 热更新</h4><p><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/AgentFactory.java:176">AgentFactory.java</a> 在 <code>@PostConstruct</code> 阶段注册监听：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java">configSource.watch(<br>        BUSINESS_DOMAIN_CONFIG_KEY,<br>        <span class="hljs-built_in">this</span>::onBusinessDomainConfigChanged,<br>        Runnable::run);<br><br><span class="hljs-type">String</span> <span class="hljs-variable">rawConfig</span> <span class="hljs-operator">=</span> configSource<br>        .getNullableString(BUSINESS_DOMAIN_CONFIG_KEY)<br>        .orElse(<span class="hljs-string">&quot;&quot;</span>);<br>refreshBusinessDomainConfig(rawConfig);<br></code></pre></td></tr></table></figure>
+
+<p>收到配置变更后，更新过程由写锁保护：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;ConfiguredDomain&gt; domains = domainConfigParser.parse(rawConfig);<br><span class="hljs-type">DomainConfigSnapshot</span> <span class="hljs-variable">snapshot</span> <span class="hljs-operator">=</span><br>        createDomainConfigSnapshot(domains, rawConfig);<br><br>domainConfigSnapshot = snapshot;<br>supervisorAgentCache.invalidateAll();<br></code></pre></td></tr></table></figure>
+
+<p>执行顺序非常关键：先解析、再构造完整新快照、最后原子替换并清缓存。若解析或校验失败，赋值和缓存失效都不会执行，线上继续使用旧的业务域快照。</p>
+<p>启动阶段则采用 fail-fast：缺少 <code>ConfigSource</code>、监听注册失败或初始业务域配置非法时，应用启动失败，避免服务以不完整 Agent 拓扑运行。</p>
+<h4 id="十、Agent-缓存与失效"><a href="#十、Agent-缓存与失效" class="headerlink" title="十、Agent 缓存与失效"></a>十、Agent 缓存与失效</h4><p>主 Agent 使用 Caffeine 缓存：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">maximumSize       = 256<br>expireAfterAccess = 6 小时<br>cache key          = 当前有效权限集合的 MD5 指纹<br></code></pre></td></tr></table></figure>
+
+<p>用户权限集合先过滤为“配置中实际绑定过的权限”，排序后计算指纹。权限完全相同的用户可以复用同一套 Agent 装配结果，避免为每个 userId 重复创建 Agent。</p>
+<p>当前配置版本没有直接拼入缓存 key，而是通过以下方式保证一致性：</p>
+<ol>
+<li><code>createSupervisor</code> 在读锁内读取快照并访问缓存；</li>
+<li>配置更新在写锁内替换快照；</li>
+<li>替换成功后调用 <code>supervisorAgentCache.invalidateAll()</code>；</li>
+<li>下一次请求基于新快照重新构建 Agent。</li>
+</ol>
+<p>读写锁避免出现“更新线程刚清完缓存，另一个线程又把旧快照 Agent 放回缓存”的竞态。</p>
+<p>用户权限配置变化时，同样在写锁内刷新权限快照并清空 supervisor 缓存。<code>userFingerprintCache</code> 只缓存“权限集合到指纹”的纯计算结果，无需随业务配置失效。</p>
+<h4 id="十一、新请求如何生成-Agent"><a href="#十一、新请求如何生成-Agent" class="headerlink" title="十一、新请求如何生成 Agent"></a>十一、新请求如何生成 Agent</h4><p>新请求调用 <code>createSupervisor</code> 后：</p>
+<ol>
+<li>读取当前 <code>DomainConfigSnapshot</code>；</li>
+<li>根据用户权限计算权限指纹；</li>
+<li>按指纹查找 supervisor Agent 缓存；</li>
+<li>遍历公共域和所有已启用业务域；</li>
+<li>调用 <code>DomainAgentSupport.createSpec</code> 过滤 Tool、Skill；</li>
+<li>无可见能力的域直接跳过；</li>
+<li>为可见域创建 <code>SubAgentTool</code>；</li>
+<li>将其注册为 <code>delegate_to_xxx</code>；</li>
+<li>根据实际 delegate 列表生成主 Agent 路由 Prompt。</li>
+</ol>
+<p>子 Agent provider 每次委托都会创建新的 <code>ReActAgent</code>，但其 Tool&#x2F;Skill 集合和 Prompt 来自当前已校验配置及用户权限。</p>
+<p>热更新影响后续请求，不会在一个正在执行的请求中修改现有 Agent 对象，也不会偷偷改变已经确认的长任务计划。</p>
+<h4 id="十二、改造前后对比"><a href="#十二、改造前后对比" class="headerlink" title="十二、改造前后对比"></a>十二、改造前后对比</h4><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>改造前</th>
+<th>改造后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>新增已有能力的业务域</td>
+<td>新建 DomainAgent Java 类并改 AgentFactory</td>
+<td>新增 Paladin 域配置</td>
+</tr>
+<tr>
+<td>修改系统提示词</td>
+<td>修改代码并发布</td>
+<td>修改 Paladin，下一请求生效</td>
+</tr>
+<tr>
+<td>调整 Tool&#x2F;Skill 组合</td>
+<td>修改静态 Binding</td>
+<td>修改 capabilityId 列表</td>
+</tr>
+<tr>
+<td>调整能力权限</td>
+<td>修改 Java 常量或 Binding</td>
+<td>修改 permissionCodes</td>
+</tr>
+<tr>
+<td>下线业务域</td>
+<td>修改注册代码</td>
+<td><code>enabled=false</code></td>
+</tr>
+<tr>
+<td>新增全新 Tool&#x2F;Skill</td>
+<td>需要开发发布</td>
+<td>仍需要开发发布，之后可配置组合</td>
+</tr>
+</tbody></table>
+<p>历史静态业务域类目前已标记 <code>@Deprecated</code> 且不再被生产装配链路引用；公共域 <code>CommonDomainAgent</code> 仍保留固定代码装配，因为它承载 SYSTEM 能力和平台协议。</p>
+<h4 id="十三、能力边界"><a href="#十三、能力边界" class="headerlink" title="十三、能力边界"></a>十三、能力边界</h4><p>这项改造实现的是“业务子 Agent 编排配置化”，不是让配置中心动态上传和执行任意代码：</p>
+<ul>
+<li>Paladin 只能选择已经部署的 Tool&#x2F;Skill；</li>
+<li>新增全新业务能力仍然需要开发、测试和发布；</li>
+<li>SYSTEM 能力不能被业务域配置引用；</li>
+<li>用户基础权限不会因为配置了 permissionCode 自动获得；</li>
+<li>systemPrompt 可以动态更新，但不能绕过 Toolkit 的权限过滤；</li>
+<li>业务域坏配置保留旧快照；用户权限配置解析失败则按当前实现降级为空权限映射，属于 fail-closed 策略；</li>
+<li><code>configDigest</code> 主要用于日志观测，不承担安全校验或缓存键职责。</li>
+</ul>
+<h2 id="3-2-提问"><a href="#3-2-提问" class="headerlink" title="3.2 提问"></a>3.2 提问</h2><h3 id="3-2-1-自己想到的问题"><a href="#3-2-1-自己想到的问题" class="headerlink" title="3.2.1 自己想到的问题"></a>3.2.1 自己想到的问题</h3><h3 id="3-2-2-AI想到的问题"><a href="#3-2-2-AI想到的问题" class="headerlink" title="3.2.2 AI想到的问题"></a>3.2.2 AI想到的问题</h3><ol>
+<li><strong>为什么要做业务子 Agent 配置化？</strong></li>
+</ol>
+<p>参考回答：改造前，每增加一个业务域，都需要新增一个 Java Agent 类，并在类中静态维护提示词、Tool、Skill 和权限绑定。随着业务域增加，这些类的结构高度重复，能力调整或权限变化也需要重新发布。配置化之后，已有能力之间的组合可以通过 Paladin 调整，新增业务域主要变成配置工作，Java 代码只保留通用装配逻辑和实际能力实现。</p>
+<ol start="2">
+<li><strong>改造前后的架构有什么区别？</strong></li>
+</ol>
+<p>参考回答：改造前是每个业务域对应一个静态 Java 类，由这个类决定提示词和能力集合；改造后由 Paladin 提供业务域配置，配置解析器将其转换为统一的领域定义，再由 Agent 工厂根据当前用户权限组装对应的子 Agent。原来的活动、投放、创作激励等静态业务 Agent 类目前已经标记为废弃，公共域仍然固定在代码中，因为它包含任务状态、通知等系统能力。</p>
+<ol start="3">
+<li><strong>哪些内容适合动态配置，哪些内容仍然保留在代码里？</strong></li>
+</ol>
+<p>参考回答：适合动态配置的是业务域开关、业务域标识、描述、基础系统提示词、Tool 和 Skill 的组合以及相应权限码。不适合配置化的是 Tool 的具体实现、下游接口调用、参数校验、风险确认规则和平台系统能力。也就是说，配置决定“组合哪些已部署能力”，代码决定“能力实际上做什么，以及是否安全”。</p>
+<ol start="4">
+<li><strong>完整的配置加载流程是什么？</strong></li>
+</ol>
+<p>参考回答：服务启动时先注册 Paladin 配置监听器，然后读取当前业务域配置。配置经过 JSON 反序列化、字段校验、能力目录解析和权限绑定校验后，生成不可变的业务域快照。主 Agent 创建时读取这个快照，并根据当前用户实际拥有的权限过滤可见业务域和能力。Paladin 发生变化后，系统重新完成整套校验，成功后再替换快照并清理 Agent 缓存。</p>
+<ol start="5">
+<li><strong>配置化后，新增业务域是不是完全不需要发版？</strong></li>
+</ol>
+<p>参考回答：不是。如果新业务域只是重新组合系统中已经存在的 Tool 和 Skill，可以主要通过配置完成；如果业务域需要新的下游接口或者新的业务能力，仍然要开发 Tool 或 Skill、编写测试并发布。配置化降低的是业务域装配和能力组合的改动成本，不是消除所有代码开发。</p>
+<ol start="6">
+<li><strong>业务子 Agent 的配置中包含哪些核心内容？</strong></li>
+</ol>
+<p>参考回答：一个业务域主要包含是否启用、业务域标识、业务描述、系统提示词、Tool 列表和 Skill 列表。每项 Tool 或 Skill 通过能力标识引用已经部署的实现，同时绑定一个或多个权限码。业务域标识还会派生出主 Agent 调用该子 Agent 时使用的委托名称。</p>
+<ol start="7">
+<li><strong>为什么配置中使用能力标识，而不是直接写 Java 类名？</strong></li>
+</ol>
+<p>参考回答：配置中心不应该感知 Java 包名和实现类，否则代码重构会直接破坏线上配置。当前代码通过能力目录把配置标识解析到已经注册的 Spring 能力实例，只允许使用系统已经部署和登记的能力。这样至少避免了配置通过反射实例化任意类，也可以在刷新阶段提前发现不存在的能力。</p>
+<p>需要准确说明的是，当前实现中的能力标识实际来源于 Spring Bean 名称，因此仍然存在一定命名耦合。更完善的做法是通过专门注解或能力描述接口声明稳定 ID，使它不受 Java 类名和默认 Bean 命名规则影响。</p>
+<ol start="8">
+<li><strong>为什么需要能力目录，直接从 Spring 容器按名称取 Bean 不行吗？</strong></li>
+</ol>
+<p>参考回答：能力目录不仅负责查找实例，还会建立能力标识和实现类型之间的双向索引，并检查同一种实现是否被多个标识重复注册。解析配置时，只有能力目录中的 Tool 和 Skill 才能使用。它相当于一个受控白名单，也为区分普通业务能力和系统能力提供统一入口。</p>
+<ol start="9">
+<li><strong>配置解析器主要做了哪些基础校验？</strong></li>
+</ol>
+<p>参考回答：首先校验配置不能为空、业务域列表结构正确、业务域数量不能超过上限。然后校验每个启用域的标识格式、描述和系统提示词是否为空或超长。Tool 和 Skill 列表必须明确提供，并且不能同时为空。权限码也需要满足非空、长度和字符格式要求。</p>
+<ol start="10">
+<li><strong>对于 Tool，还会进行哪些进一步校验？</strong></li>
+</ol>
+<p>参考回答：解析器会确认能力标识已经注册，并且不是仅供平台内部使用的系统能力。同一个业务域不能重复绑定同一种 Tool。Tool 本身还必须声明至少一个有效的工具方法，并检查工具名称是否合法，避免同一子 Agent 中出现名称冲突，否则模型无法确定应该调用哪个能力。</p>
+<ol start="11">
+<li><strong>对于 Skill，会进行哪些进一步校验？</strong></li>
+</ol>
+<p>参考回答：Skill 必须能够被系统实际加载。静态 Skill 需要有可读取的 classpath 资源，动态 Skill 则需要实现运行时解析协议。如果 Skill 同时提供可执行 Action，还会检查 Action 是否为空、名称是否合法，以及是否与当前域中的其他 Tool 或 Action 冲突。这样可以尽量把资源缺失和注册冲突提前到配置刷新阶段。</p>
+<ol start="12">
+<li><strong>为什么要限制业务域数量、提示词长度和权限码长度？</strong></li>
+</ol>
+<p>参考回答：配置中心内容最终会影响内存占用、Agent 提示词长度和模型上下文。如果完全不限制，错误配置可能一次创建大量业务域，或者把超长文本注入所有请求。长度和数量限制既是输入校验，也是资源保护手段，可以避免配置错误扩大为运行时故障。</p>
+<ol start="13">
+<li><strong>为什么解析结果要转换成不可变快照？</strong></li>
+</ol>
+<p>参考回答：不可变快照可以保证一个请求在组装 Agent 时看到的是完整一致的配置，而不是正在被修改的中间状态。热更新时先在新对象中完成全部解析和校验，成功后一次替换引用。旧请求可以继续使用旧实例，新请求使用新快照，不需要在原对象上逐项修改。</p>
+<ol start="14">
+<li><strong>用户权限是怎么计算出来的？</strong></li>
+</ol>
+<p>参考回答：系统先根据用户身份从 Paladin 权限配置中解析基础权限集合，同时支持所有用户共享的公共授权。请求还可以携带一个权限范围，但这个范围只能与用户基础权限取交集，不能增加用户原本没有的权限。因此请求参数只能缩小权限，不能通过声明权限码实现越权。</p>
+<ol start="15">
+<li><strong>一个 Tool 绑定多个权限码时是什么语义？</strong></li>
+</ol>
+<p>参考回答：当前实现采用“拥有任意一个即可使用”的语义，也就是 OR。如果某个能力绑定了多个权限码，只要用户命中其中一个，能力就可以进入该用户的 Agent。这个语义需要在配置规范中明确，否则配置人员可能误认为必须同时拥有全部权限。</p>
+<ol start="16">
+<li><strong>为什么要在 Agent 组装阶段过滤权限，而不是调用 Tool 时再校验？</strong></li>
+</ol>
+<p>参考回答：如果先把无权能力注册给模型，再依赖运行时拒绝，模型仍然能看到工具名称、描述和参数，并可能反复尝试调用。当前方案在组装阶段直接移除无权 Tool 和 Skill，使模型根本看不到这些能力。部分依赖具体业务配置的工具还会进行第二次运行时绑定，如果缺少必要业务配置，也不会注册到 Agent 中。</p>
+<ol start="17">
+<li><strong>用户对某个业务域完全没有权限时怎么办？</strong></li>
+</ol>
+<p>参考回答：系统会先过滤该域下所有能力。如果过滤后 Tool 和 Skill 都为空，就不创建这个业务子 Agent，主 Agent 也不会获得对应的委托入口。这比创建一个空 Agent 后再返回“无权限”更干净，也减少了模型把请求错误路由到不可用业务域的概率。</p>
+<ol start="18">
+<li><strong>如何防止 Paladin 配置把系统能力暴露给业务 Agent？</strong></li>
+</ol>
+<p>参考回答：平台将能力区分为普通业务能力和系统能力。任务状态、通知、临时状态等平台协议能力只允许由固定公共域装配。解析业务域配置时，如果发现引用了系统能力会直接拒绝整份配置，而不是依赖提示词告诉模型“不要调用”。</p>
+<ol start="19">
+<li><strong>动态系统提示词会不会产生安全问题？</strong></li>
+</ol>
+<p>参考回答：会有风险，因此系统提示词不能代替权限和业务校验。当前解析器主要校验提示词非空和长度，提示词内容规范更多依赖配置发布流程，例如只描述角色定位、业务边界和行为基调，不应该在里面写权限绕过或具体工具调用规则。真正的能力范围由组装结果决定，即使提示词声称拥有某个 Tool，只要用户无权限，该 Tool 也不会出现在 Agent 中。</p>
+<ol start="20">
+<li><strong>配置的提示词和最终子 Agent 提示词是什么关系？</strong></li>
+</ol>
+<p>参考回答：Paladin 配置的是业务域基础提示词。组装时系统还会追加统一的执行规则、语言要求以及当前用户实际可见的能力清单。能力清单根据权限过滤后的真实结果生成，而不是由配置人员手工维护，从而避免提示词中写着一个能力，但实际 Agent 没有该能力，或者反过来。</p>
+<ol start="21">
+<li><strong>Paladin 热更新具体是怎么实现的？</strong></li>
+</ol>
+<p>参考回答：服务启动时通过配置源注册监听器。配置发生变化后，监听器取得新的原始 JSON，重新执行完整解析和能力校验，生成新的领域快照。只有这些步骤全部成功后，系统才替换当前快照并清空主 Agent 缓存，后续请求会按照新配置重新组装 Agent。</p>
+<ol start="22">
+<li><strong>配置更新失败时如何处理？</strong></li>
+</ol>
+<p>参考回答：由于新快照是在完整解析成功后才赋值，所以运行时配置解析失败时，旧快照不会被半成品覆盖，Agent 缓存也不会被清理。服务启动阶段则采用更严格的失败策略：配置源缺失、监听注册失败或者初始业务域配置非法都会导致启动失败，避免服务在未知能力集合下运行。</p>
+<p>当前监听回调中没有单独做完善的异常捕获和告警，这是可以继续改进的地方。更完整的方案应该明确记录失败原因、配置摘要和刷新指标，同时保留最后一次成功快照。</p>
+<ol start="23">
+<li><strong>热更新过程中如何保证线程安全？</strong></li>
+</ol>
+<p>参考回答：配置刷新和 Agent 创建通过读写锁协调。正常请求获取读锁并读取当前完整快照；热更新获取写锁，完成快照替换和缓存清理。在写锁释放前，新请求不会拿到“新配置配旧缓存”或者“旧配置配新缓存”的混合状态。</p>
+<p>目前解析过程也在写锁内部完成，配置规模被限制后问题不大，但仍会增加刷新期间的请求等待。进一步优化可以先在锁外解析和校验，成功后只在写锁内完成快照替换和缓存失效。</p>
+<ol start="24">
+<li><strong>为什么要缓存 Agent？缓存的依据是什么？</strong></li>
+</ol>
+<p>参考回答：Agent 组装涉及权限过滤、Tool 注册、Skill 解析和提示词构建，如果每次请求都重新完成会带来额外开销。当前实现会先计算用户在所有已配置能力中的有效权限集合，再对该集合生成指纹，权限集合相同的用户可以复用同一种主 Agent 装配结果。用户身份和会话状态由运行时存储隔离，不直接写入这个缓存键。</p>
+<ol start="25">
+<li><strong>为什么缓存键里没有直接加入配置版本？</strong></li>
+</ol>
+<p>参考回答：当前代码的缓存键主要是权限指纹，业务配置变化时通过写锁下的全量缓存失效保证新请求重新创建 Agent。配置原文会计算摘要用于日志和识别快照，但没有直接拼入缓存键。这种方式实现简单，不过正确性依赖每条配置变更路径都必须执行缓存清理；另一种实现是把配置版本加入缓存键，可以减少漏清理风险，但需要处理旧缓存回收。</p>
+<ol start="26">
+<li><strong>权限配置变化后，缓存怎么处理？</strong></li>
+</ol>
+<p>参考回答：用户权限配置也注册了独立监听器。权限配置刷新后，系统会清空主 Agent 缓存；下一次请求重新计算该用户的基础权限和有效权限集合，再构建或复用对应 Agent。权限指纹缓存按“权限集合”而不是用户 ID 保存，因此权限集合变化后自然会得到不同的指纹。</p>
+<ol start="27">
+<li><strong>正在执行的请求会立即切换到新配置吗？</strong></li>
+</ol>
+<p>参考回答：不会强行修改已经创建并正在执行的 Agent。热更新主要对后续请求生效，正在执行的请求继续使用创建时的能力快照，这样可以避免执行到一半时 Tool 集合突然变化。相应地，紧急权限回收不能只依赖 Agent 缓存失效，关键写接口还应该在调用时重新校验权限或使用权限版本。</p>
+<ol start="28">
+<li><strong>业务域被动态关闭后会发生什么？</strong></li>
+</ol>
+<p>参考回答：关闭的业务域在解析时会被跳过，新快照中不再包含该域，缓存清理后新请求也不会看到对应委托入口。已经运行中的请求通常不会被强制终止。对于长任务，还要结合任务自身的计划和状态决定是继续、暂停还是人工处理，不能仅根据新配置直接重复或跳过既有步骤。</p>
+<ol start="29">
+<li><strong>业务域配置和用户权限配置为什么采用不同的失败策略？</strong></li>
+</ol>
+<p>参考回答：业务域配置非法时不能构造可靠的能力拓扑，因此初始加载选择失败启动，运行时刷新则保留旧快照。用户权限配置解析失败时，当前实现会得到空权限集合，整体上偏向 fail-closed，也就是宁可暂时不可用，也不继续授予无法确认的权限。后者安全性更高，但会影响所有用户可用性，因此需要配套告警和快速回滚。</p>
+<ol start="30">
+<li><strong>如何测试这套配置化机制？</strong></li>
+</ol>
+<p>参考回答：需要覆盖四类测试。第一类是解析测试，包括空配置、非法格式、重复域、未知能力、系统能力引用和 Skill 资源缺失；第二类是权限测试，验证无权限能力不会出现在 Tool、Skill、子 Agent 描述和提示词中；第三类是热更新测试，验证成功刷新后缓存失效、失败刷新保留旧快照；第四类是并发测试，验证刷新与请求并发时不会产生混合快照。</p>
+<p>当前仓库已有测试覆盖权限过滤、无可见能力时不创建子 Agent、仅 Skill 可见、运行时业务配置缺失以及权限解析等场景，但配置解析器和热更新并发场景还值得补充专项测试。</p>
+<ol start="31">
+<li><strong>这个方案还有哪些不足和改进空间？</strong></li>
+</ol>
+<p>参考回答：第一，能力标识目前仍与 Spring Bean 名称有关，可以引入显式、稳定的能力 ID；第二，热更新失败需要增加独立日志、指标和告警；第三，可以把耗时解析移出写锁，只在快照切换时加锁；第四，对高风险 Tool 增加调用时权限复核，支持紧急撤权；第五，可以增加配置灰度、配置版本回滚和变更审计，避免错误配置直接影响全部实例。</p>
+<h1 id="4-负责多格式文档理解链路，支持-XLSX、CSV、DOCX、PDF、PPTX、TXT、JSON-等-7-类文件的异步解析、内容分片、内嵌图片提取、BFS-上传和-Redis-临时存储，使-Agent-能按需读取文档而非一次性注入全文"><a href="#4-负责多格式文档理解链路，支持-XLSX、CSV、DOCX、PDF、PPTX、TXT、JSON-等-7-类文件的异步解析、内容分片、内嵌图片提取、BFS-上传和-Redis-临时存储，使-Agent-能按需读取文档而非一次性注入全文" class="headerlink" title="4. 负责多格式文档理解链路，支持 XLSX、CSV、DOCX、PDF、PPTX、TXT、JSON 等 7 类文件的异步解析、内容分片、内嵌图片提取、BFS 上传和 Redis 临时存储，使 Agent 能按需读取文档而非一次性注入全文"></a>4. 负责多格式文档理解链路，支持 XLSX、CSV、DOCX、PDF、PPTX、TXT、JSON 等 7 类文件的异步解析、内容分片、内嵌图片提取、BFS 上传和 Redis 临时存储，使 Agent 能按需读取文档而非一次性注入全文</h1><h2 id="4-1-具体实现方式"><a href="#4-1-具体实现方式" class="headerlink" title="4.1 具体实现方式"></a>4.1 具体实现方式</h2><h4 id="一、需求背景"><a href="#一、需求背景" class="headerlink" title="一、需求背景"></a>一、需求背景</h4><p>用户希望直接把运营报表、策划文档、PDF、演示稿等文件交给 Agent 查询和总结。如果直接把原文件或全文放进 Prompt，会产生几个问题：</p>
+<ul>
+<li>不同格式的解析方式不同；</li>
+<li>大文档容易超过模型上下文；</li>
+<li>每次提问都注入全文，Token 成本和响应延迟较高；</li>
+<li>Excel Sheet、PDF 页码、Word 标题等结构信息会丢失；</li>
+<li>Office&#x2F;PDF 中的图片无法通过纯文本解析；</li>
+<li>文件解析和 BFS 上传耗时较长，不适合阻塞聊天请求；</li>
+<li>不可信文件可能通过 ZIP Bomb、超大图片等方式耗尽资源。</li>
+</ul>
+<p>因此，系统没有把文档处理成一个大字符串，而是转换成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">原文件<br>  -&gt; DocumentMeta<br>  -&gt; DocumentManifest<br>  -&gt; 多个压缩内容分片<br>  -&gt; 可按 imageId 访问的图片引用<br></code></pre></td></tr></table></figure>
+
+<p>Agent 先查看结构，再根据用户问题读取相关范围，必要时才加载图片。</p>
+<h4 id="二、端到端架构"><a href="#二、端到端架构" class="headerlink" title="二、端到端架构"></a>二、端到端架构</h4><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs text">用户上传文件<br>   |<br>   v<br>上传鉴权、格式和大小校验<br>   |<br>   v<br>写入本地临时文件 + Redis PARSING 元数据<br>   |<br>   v<br>HTTP 202 返回 fileId<br>   |<br>   v<br>专用线程池异步执行<br>   |<br>   +--&gt; OOXML 安全预扫描<br>   +--&gt; 原文件上传 BFS<br>   +--&gt; Office/PDF 图片提取并上传 BFS<br>   +--&gt; 格式 Parser 生成结构化记录<br>   +--&gt; GZIP 分片写入 Redis<br>   +--&gt; Manifest 写入 Redis<br>   |<br>   v<br>发布 READY<br>   |<br>   v<br>Agent: inspect -&gt; read -&gt; image_read<br></code></pre></td></tr></table></figure>
+
+<p>核心组件包括：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>DocumentController</code></td>
+<td>上传和解析状态接口</td>
+</tr>
+<tr>
+<td><code>DocumentService</code></td>
+<td>上传校验、状态查询和按范围读取</td>
+</tr>
+<tr>
+<td><code>DocumentParseService</code></td>
+<td>异步解析、BFS、图片提取和状态编排</td>
+</tr>
+<tr>
+<td><code>DocumentParser</code></td>
+<td>七种文件格式的统一解析接口</td>
+</tr>
+<tr>
+<td><code>DocumentPartAccumulator</code></td>
+<td>累积结构化记录并按大小分片</td>
+</tr>
+<tr>
+<td><code>DocumentRedisStore</code></td>
+<td>Redis 元数据、Manifest、分片和 TTL 管理</td>
+</tr>
+<tr>
+<td><code>OfficeEmbeddedImageExtractor</code></td>
+<td>XLSX、DOCX、PPTX 图片提取</td>
+</tr>
+<tr>
+<td><code>PdfEmbeddedImageExtractor</code></td>
+<td>PDF 内嵌图片提取</td>
+</tr>
+<tr>
+<td>文档 Tool&#x2F;Skill</td>
+<td>控制 Agent 渐进式读取文档</td>
+</tr>
+</tbody></table>
+<h4 id="三、上传和异步解析"><a href="#三、上传和异步解析" class="headerlink" title="三、上传和异步解析"></a>三、上传和异步解析</h4><p>上传接口位于 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/controller/DocumentController.java:42">DocumentController.java</a>，成功后返回 HTTP 202：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">DocumentMeta</span> <span class="hljs-variable">meta</span> <span class="hljs-operator">=</span> documentService.upload(username, file);<br><br><span class="hljs-keyword">return</span> ResponseEntity.accepted().body(<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">UploadResponse</span>(<br>                meta.getFileId(),<br>                meta.getFileName(),<br>                meta.getFileType(),<br>                meta.getStatus().name(),<br>                meta.getExpiresAt()));<br></code></pre></td></tr></table></figure>
+
+<p>上传前，<code>DocumentUploadAccessFilter</code> 完成：</p>
+<ul>
+<li>Manager 身份校验；</li>
+<li><code>COMMON_UTILS_PERMISSION</code> 权限校验；</li>
+<li>单实例上传并发限制；</li>
+<li>Multipart 大小异常转换；</li>
+<li>并发满时返回 <code>DOCUMENT_BUSY</code>。</li>
+</ul>
+<p><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/DocumentService.java:112">DocumentService.java</a> 将文件复制到实例隔离的临时目录，校验大小和格式，创建 UUID fileId，并写入 <code>PARSING</code> 状态：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java">meta.setStatus(DocumentMeta.Status.PARSING);<br>meta.setTaskDeadlineAt(now + taskTimeoutMillis);<br>meta.setExpiresAt(now + ttlMillis);<br><br><span class="hljs-keyword">if</span> (!store.admit(username, meta)) &#123;<br>    <span class="hljs-keyword">throw</span> documentBusy();<br>&#125;<br><br>parseService.submit(username, meta, path);<br><span class="hljs-keyword">return</span> meta;<br></code></pre></td></tr></table></figure>
+
+<p>上传请求不等待 BFS 上传和解析完成。解析任务进入独立的 <code>documentParseExecutor</code>，默认配置为 1 个解析线程、10 个排队任务；队列已满时拒绝任务并清理临时文件和 Redis admission。</p>
+<h4 id="四、统一-Parser-设计"><a href="#四、统一-Parser-设计" class="headerlink" title="四、统一 Parser 设计"></a>四、统一 Parser 设计</h4><p>所有格式实现统一接口 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/document/DocumentParser.java:7">DocumentParser.java</a>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">DocumentParser</span> &#123;<br><br>    DocumentMeta.FileType <span class="hljs-title function_">fileType</span><span class="hljs-params">()</span>;<br><br>    DocumentManifest <span class="hljs-title function_">parse</span><span class="hljs-params">(</span><br><span class="hljs-params">            Path path,</span><br><span class="hljs-params">            PartWriter writer,</span><br><span class="hljs-params">            Deadline deadline)</span> <span class="hljs-keyword">throws</span> Exception;<br><br>    <span class="hljs-keyword">interface</span> <span class="hljs-title class_">PartWriter</span> &#123;<br>        <span class="hljs-keyword">void</span> <span class="hljs-title function_">write</span><span class="hljs-params">(Integer sheetNo, <span class="hljs-type">int</span> partNo,</span><br><span class="hljs-params">                   <span class="hljs-type">byte</span>[] compressedValue)</span> <span class="hljs-keyword">throws</span> Exception;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Parser 不返回无限长字符串，而是通过 <code>PartWriter</code> 边解析边写分片，最终只返回结构索引 Manifest。</p>
+<p><code>DocumentParseService</code> 启动时将所有 Parser 注册到 <code>EnumMap&lt;FileType, DocumentParser&gt;</code>。同一类型重复注册会启动失败，七种枚举类型没有全部注册也会启动失败。</p>
+<h4 id="五、七种格式的解析方式"><a href="#五、七种格式的解析方式" class="headerlink" title="五、七种格式的解析方式"></a>五、七种格式的解析方式</h4><table>
+<thead>
+<tr>
+<th>格式</th>
+<th>实现和输出结构</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>XLSX</td>
+<td>EasyExcel 流式读取所有 Sheet；每行输出 <code>rowNo + cells</code>，首行作为建议表头</td>
+</tr>
+<tr>
+<td>CSV</td>
+<td>Commons CSV 流式读行；固定 <code>sheetNo=0</code>，每行输出 <code>rowNo + cells</code></td>
+</tr>
+<tr>
+<td>DOCX</td>
+<td>StAX 读取 OOXML；提取段落、表格行、标题层级和标题路径</td>
+</tr>
+<tr>
+<td>PDF</td>
+<td>PDFBox 按页提取文本；每页输出 <code>itemNo + pageNo + text</code></td>
+</tr>
+<tr>
+<td>PPTX</td>
+<td>StAX 按幻灯片解析；提取标题、文本、表格行和备注</td>
+</tr>
+<tr>
+<td>TXT</td>
+<td>UTF-8 流式读取；按行处理，超长行继续拆成有界文本块</td>
+</tr>
+<tr>
+<td>JSON</td>
+<td>Jackson 流式解析；展平为 <code>JSON Pointer + type + value</code> 标量记录</td>
+</tr>
+</tbody></table>
+<p>例如 PDF 解析位于 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/document/PdfDocumentParser.java:61">PdfDocumentParser.java</a>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">pageNo</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; pageNo &lt; pages; pageNo++) &#123;<br>    deadline.check();<br><br>    stripper.setStartPage(pageNo + <span class="hljs-number">1</span>);<br>    stripper.setEndPage(pageNo + <span class="hljs-number">1</span>);<br>    stripper.writeText(document, output);<br><br>    Map&lt;String, Object&gt; record = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedHashMap</span>&lt;&gt;();<br>    record.put(<span class="hljs-string">&quot;itemNo&quot;</span>, (<span class="hljs-type">long</span>) pageNo);<br>    record.put(<span class="hljs-string">&quot;pageNo&quot;</span>, pageNo);<br>    record.put(<span class="hljs-string">&quot;text&quot;</span>, output.value());<br><br>    accumulator.add(pageNo, record);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>JSON 不把整个对象反序列化到内存，而是递归消费 Jackson Token。例如：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;project&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;OGV&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;budget&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1000</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>会转换为类似记录：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;itemNo&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;path&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;/project/name&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;string&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;value&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;OGV&quot;</span><span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;itemNo&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;path&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;/project/budget&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;number&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;value&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;1000&quot;</span><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="六、内容分片"><a href="#六、内容分片" class="headerlink" title="六、内容分片"></a>六、内容分片</h4><p>通用分片逻辑位于 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/document/DocumentPartAccumulator.java:60">DocumentPartAccumulator.java</a>。</p>
+<p>每条解析记录先序列化为 JSON，用估算字节数累积；接近目标大小时执行 flush：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (!buffer.isEmpty()<br>        &amp;&amp; estimatedBytes + encoded.length + <span class="hljs-number">1</span> &gt; partTargetBytes) &#123;<br>    flush();<br>&#125;<br><br>buffer.add(record);<br><br><span class="hljs-type">byte</span>[] value =<br>        DocumentPartCodec.gzipJson(objectMapper, buffer, partMaxBytes);<br><br>writer.write(sheetNo, partNo, value);<br>parts.add(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Part</span>(partNo, partStart, end, sheetNo));<br></code></pre></td></tr></table></figure>
+
+<p>默认参数为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">目标分片大小：256 KiB<br>最大分片大小：512 KiB<br>单文件最大分片数：1024<br>解析后最大非压缩数据：128 MiB<br>Redis 单文件最大写入量：64 MiB<br></code></pre></td></tr></table></figure>
+
+<p>分片内容使用 JSON 数组表达，再通过 GZIP 压缩。Manifest 不保存正文，只记录每个分片覆盖的逻辑范围：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">partNo + itemStart + itemEnd + sheetNo<br></code></pre></td></tr></table></figure>
+
+<p>Agent 调用时传的是 <code>offset + limit</code>，不是直接指定内部 partNo。服务端根据范围找到相交分片，批量读取、解压，再精确过滤对应记录。</p>
+<h4 id="七、Manifest-结构"><a href="#七、Manifest-结构" class="headerlink" title="七、Manifest 结构"></a>七、Manifest 结构</h4><p><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/model/document/DocumentManifest.java:6">DocumentManifest.java</a> 保存文档的结构索引：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">schemaVersion / parserVersion / fileType<br>recordCount / paragraphCount / tableCount<br>sheets / parts / headings / images<br>compressedBytes<br></code></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li><code>Sheet</code> 保存 Sheet 编号、名称、建议表头、行数和分片范围；</li>
+<li><code>Part</code> 保存分片编号和逻辑记录范围；</li>
+<li><code>Heading</code> 保存 DOCX 标题、层级、路径和所在 item；</li>
+<li><code>EmbeddedImage</code> 保存 imageId、URL、类型和文档内锚点。</li>
+</ul>
+<p>需要注意：fileId、文件名、状态、过期时间和原文件 BFS URL 保存在 <code>DocumentMeta</code>，不在 Manifest 中。</p>
+<h4 id="八、BFS-上传"><a href="#八、BFS-上传" class="headerlink" title="八、BFS 上传"></a>八、BFS 上传</h4><p>异步任务会先将原文件上传 BFS：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java">downloadUrl = bfsUpload.uploadDocument(<br>        path,<br>        meta.getFileId() + meta.getFileType().getSuffix(),<br>        meta.getFileType().getContentType(),<br>        deadlineAt);<br><br>meta.setDownloadUrl(downloadUrl);<br></code></pre></td></tr></table></figure>
+
+<p><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/integration/upload/BfsUploadIntegration.java:67">BfsUploadIntegration.java</a> 对文档使用基于本地文件的流式 <code>RequestBody</code>，不会先把 100 MiB 文件整体读入 Java 堆。</p>
+<p>上传最多重试三次，并受任务截止时间以及连接、写入、读取、总调用超时共同限制。只有 BFS 返回合法 HTTP(S) URL 后，解析流程才继续。</p>
+<p>原文件地址保存为 <code>DocumentMeta.downloadUrl</code>；内嵌图片也上传 BFS，但图片 URL 只在 Agent 明确调用 <code>document_image_read</code> 时作为多模态内容返回。</p>
+<h4 id="九、内嵌图片提取"><a href="#九、内嵌图片提取" class="headerlink" title="九、内嵌图片提取"></a>九、内嵌图片提取</h4><p>支持内嵌图片的类型为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">XLSX、DOCX、PPTX、PDF<br></code></pre></td></tr></table></figure>
+
+<p>Office 文件本质上是 ZIP 包。<a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/document/OfficeEmbeddedImageExtractor.java:49">OfficeEmbeddedImageExtractor.java</a> 解析 OOXML relationship，找到实际媒体文件及其位置：</p>
+<ul>
+<li>XLSX：记录 <code>sheetNo、row、column</code>；</li>
+<li>DOCX：记录对应的段落或表格行 <code>itemNo</code>；</li>
+<li>PPTX：记录对应的幻灯片 <code>itemNo</code>；</li>
+<li>同一个媒体文件多次引用时只上传 BFS 一次。</li>
+</ul>
+<p>PDF 使用 PDFBox 遍历页面资源和嵌套 Form XObject，找到 <code>PDImageXObject</code>。图片会渲染为 PNG，校验像素数和文件大小后上传 BFS，并用页码作为 <code>itemNo</code>。</p>
+<p>每个引用生成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">img-0001、img-0002……<br></code></pre></td></tr></table></figure>
+
+<p>Manifest 中只返回图片 ID和位置摘要，不默认把所有图片送入模型。</p>
+<h4 id="十、Redis-临时存储"><a href="#十、Redis-临时存储" class="headerlink" title="十、Redis 临时存储"></a>十、Redis 临时存储</h4><p><a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/DocumentRedisStore.java:127">DocumentRedisStore.java</a> 将数据拆成多类 Key：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">&#123;owner&#125;:active<br>&#123;owner&#125;:file:&#123;fileId&#125;:meta<br>&#123;owner&#125;:file:&#123;fileId&#125;:manifest<br>&#123;owner&#125;:file:&#123;fileId&#125;:&#123;type&#125;:&#123;sheetNo&#125;:part:&#123;partNo&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>owner</code> 是用户名的 SHA-256，既避免直接暴露用户名，也让同一用户的 Key 通过 Redis hash tag 落到同一槽位。</p>
+<p>Redis Lua 脚本负责：</p>
+<ul>
+<li>原子检查单用户活动文件上限并创建元数据；</li>
+<li>只允许在 <code>PARSING</code> 且未超时状态下写分片；</li>
+<li>只允许存在 Manifest 且已有 BFS URL 时发布 <code>READY</code>；</li>
+<li>解析失败时更新 <code>FAILED</code> 并释放活动配额；</li>
+<li>为 Meta、Manifest 和 Part 设置一致的绝对过期时间。</li>
+</ul>
+<p>默认正常数据 TTL 为 24 小时，失败状态清理成功后只保留 10 分钟，因此这是临时文档存储，不是永久知识库。</p>
+<h4 id="十一、READY-发布屏障"><a href="#十一、READY-发布屏障" class="headerlink" title="十一、READY 发布屏障"></a>十一、READY 发布屏障</h4><p>核心解析顺序位于 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/DocumentParseService.java:170">DocumentParseService.java</a>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">上传原文件 BFS<br>-&gt; 提取并上传图片<br>-&gt; Parser 写全部内容分片<br>-&gt; 写 Manifest<br>-&gt; status = READY<br>-&gt; publishReady<br></code></pre></td></tr></table></figure>
+
+<p><code>READY</code> 是文档可读性的发布屏障。Agent 只有在以下条件满足后才能看到 READY：</p>
+<ul>
+<li>原文件 BFS URL 已存在；</li>
+<li>所有解析步骤已经返回成功；</li>
+<li>内容分片已写入；</li>
+<li>Manifest 已写入；</li>
+<li>任务和解析截止时间没有到期。</li>
+</ul>
+<p>这不是一个覆盖所有 Redis Key 的大事务，而是通过条件写、固定发布顺序和失败清理构成的应用级发布协议。若读取时发现 Manifest 或分片缺失，服务端仍会按 <code>DOCUMENT_EXPIRED</code> 拒绝返回半成品。</p>
+<h4 id="十二、Agent-按需读取流程"><a href="#十二、Agent-按需读取流程" class="headerlink" title="十二、Agent 按需读取流程"></a>十二、Agent 按需读取流程</h4><p>聊天请求携带 fileId 时，<a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/controller/ChatController.java:251">ChatController.java</a> 会检查：</p>
+<ul>
+<li>用户拥有文档权限；</li>
+<li>fileId 属于当前用户；</li>
+<li>文档状态为 READY；</li>
+<li>Manifest 和 BFS URL 仍然存在。</li>
+</ul>
+<p>随后只把轻量引用加入用户消息：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">temporary_document_refs</span>&gt;</span><br>[<br>  &#123;&quot;fileId&quot;:&quot;UUID&quot;,&quot;name&quot;:&quot;运营报表.xlsx&quot;,&quot;type&quot;:&quot;XLSX&quot;&#125;<br>]<br><span class="hljs-tag">&lt;/<span class="hljs-name">temporary_document_refs</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>相关代码位于 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/ChatService.java:1532">ChatService.java</a>。这里不会注入正文、分片或下载 URL。</p>
+<p>公共域 Agent 加载 <code>document-reading-workflow</code> 后，按以下顺序操作：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs text">document_inspect(fileId)<br>        |<br>        v<br>获取 Sheet、记录数、标题和图片引用<br>        |<br>        v<br>document_read(fileId, sheetNo, offset, limit)<br>        |<br>        v<br>只读取当前问题需要的记录<br>        |<br>        v<br>确实需要视觉信息时<br>document_image_read(fileId, imageIds)<br></code></pre></td></tr></table></figure>
+
+<p><code>document_read</code> 对 XLSX、CSV 强制要求 <code>sheetNo</code>，其他类型按 <code>itemNo</code> 顺序读取。<code>document_image_read</code> 将指定 BFS 图片构造成 AgentScope <code>ImageBlock</code>，交给多模态模型理解，默认单次最多读取 10 张。</p>
+<h4 id="十三、为什么能避免全文注入"><a href="#十三、为什么能避免全文注入" class="headerlink" title="十三、为什么能避免全文注入"></a>十三、为什么能避免全文注入</h4><p>该设计通过四层机制控制上下文：</p>
+<ol>
+<li>聊天消息只携带 fileId、文件名和类型。</li>
+<li><code>document_inspect</code> 只返回结构，不返回全文。</li>
+<li><code>document_read</code> 使用 offset&#x2F;limit 定向读取逻辑范围。</li>
+<li>图片只按 imageId 单独加载，不自动注入全部图片。</li>
+</ol>
+<p>Skill 还明确要求：总结和分析必须由公共域 Agent 基于必要分页结果直接完成，只向主 Agent 返回结论和少量引用，禁止把全文转交主 Agent、写入临时状态或长期记忆。</p>
+<p>文档引用会随会话历史保存，使用户后续说“继续看刚才的文档”时可以找回准确 fileId，但历史中仍然只保存轻量引用，不保存文档正文。</p>
+<h4 id="十四、安全与资源限制"><a href="#十四、安全与资源限制" class="headerlink" title="十四、安全与资源限制"></a>十四、安全与资源限制</h4><p>系统对不可信文件设置了多层限制：</p>
+<table>
+<thead>
+<tr>
+<th>限制</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>文件最大 100 MiB</td>
+<td>控制上传和本地磁盘占用</td>
+</tr>
+<tr>
+<td>每消息最多 10 个文件</td>
+<td>控制一次请求规模</td>
+</tr>
+<tr>
+<td>单用户活动文件上限</td>
+<td>避免单用户占满解析队列</td>
+</tr>
+<tr>
+<td>ZIP 条目、展开大小、压缩率</td>
+<td>防止 ZIP Bomb</td>
+</tr>
+<tr>
+<td>禁止宏、加密包和嵌套 ZIP</td>
+<td>降低复杂格式风险</td>
+</tr>
+<tr>
+<td>XML 单项、shared strings、styles 上限</td>
+<td>限制 OOXML 高风险结构</td>
+</tr>
+<tr>
+<td>禁用 XML DTD 和外部实体</td>
+<td>防止 XXE</td>
+</tr>
+<tr>
+<td>页数、幻灯片数、Sheet 数和记录数上限</td>
+<td>控制 CPU 和内存</td>
+</tr>
+<tr>
+<td>图片数量、单图大小、总大小和像素数</td>
+<td>防止图片资源耗尽</td>
+</tr>
+<tr>
+<td>JSON 深度和标量大小</td>
+<td>防止深层递归和超大字符串</td>
+</tr>
+<tr>
+<td>分片、Manifest、Redis 总字节数</td>
+<td>控制临时存储</td>
+</tr>
+<tr>
+<td>解析截止时间</td>
+<td>防止后台任务无限执行</td>
+</tr>
+</tbody></table>
+<p>文件类型虽然先由扩展名确定，但还会校验真实结构：PDF 检查 <code>%PDF-</code>，OOXML 检查 ZIP 和必要入口，文本类要求合法 UTF-8 且不能包含空字节。</p>
+<p>fileId 必须是 UUID v4，并在 Redis Key 中绑定当前用户名。其他用户即使猜到 fileId，也无法通过自己的 owner Key 读取对应内容。</p>
+<h4 id="十五、失败和生命周期处理"><a href="#十五、失败和生命周期处理" class="headerlink" title="十五、失败和生命周期处理"></a>十五、失败和生命周期处理</h4><p>解析过程中会记录已经写入的 Redis Key。如果任意阶段失败：</p>
+<ol>
+<li>删除已经写入的 Part 和 Manifest；</li>
+<li>将状态更新为 <code>FAILED</code>；</li>
+<li>保存明确的 failureCode；</li>
+<li>清理成功时把失败状态 TTL 缩短为 10 分钟；</li>
+<li>删除本地临时文件；</li>
+<li>释放活动任务配额。</li>
+</ol>
+<p>本地临时目录还设置定时清理。<code>activePaths</code> 中正在解析的文件不会被误删；超过保留时间且不再活动的遗留文件会被清理。</p>
+<p>状态接口还会检测排队任务和解析任务是否超过截止时间，并通过 Redis 条件更新避免过期状态覆盖并发产生的新 <code>READY</code> 状态。</p>
+<h4 id="十六、实现边界"><a href="#十六、实现边界" class="headerlink" title="十六、实现边界"></a>十六、实现边界</h4><p>这套能力有几个需要准确说明的边界：</p>
+<ul>
+<li>只支持 <code>.xlsx</code>、<code>.csv</code>、<code>.docx</code>、<code>.pdf</code>、<code>.pptx</code>、<code>.txt</code>、<code>.json</code>，不支持旧版 <code>.xls/.doc/.ppt</code>；</li>
+<li>PDF 使用 PDFBox 提取文本，没有 OCR；</li>
+<li>扫描 PDF 正文为空时，只能按需读取页面内嵌图片，不能声称已识别扫描文字；</li>
+<li>DOCX&#x2F;PPTX 主要提取文本、表格、标题和图片引用，不还原完整排版；</li>
+<li>文档数据受 TTL 管理，不是永久知识库；</li>
+<li>Redis 中保存的是解析后的结构和压缩分片，原文件与可访问图片保存在 BFS；</li>
+<li>文档内容、文件名、图片和替代文本均被视为不可信用户数据，不能作为系统指令执行。</li>
+</ul>
+<h2 id="4-2-提问"><a href="#4-2-提问" class="headerlink" title="4.2 提问"></a>4.2 提问</h2><h3 id="4-2-1-自己想到的问题"><a href="#4-2-1-自己想到的问题" class="headerlink" title="4.2.1 自己想到的问题"></a>4.2.1 自己想到的问题</h3><h3 id="4-2-2-AI想到的问题"><a href="#4-2-2-AI想到的问题" class="headerlink" title="4.2.2 AI想到的问题"></a>4.2.2 AI想到的问题</h3><ol>
+<li><strong>为什么不直接把文件或者全文交给大模型？</strong></li>
+</ol>
+<p>参考回答：不同模型对 Office、PDF 等文件的支持不一致，而且大文件很容易超过上下文窗口。即使模型能够接收文件，一次性注入全文也会增加延迟和 Token 成本，并且不方便定位某个工作表、页面或段落。因此系统先把文档解析成结构化索引和小分片，让 Agent 根据问题按需读取。</p>
+<ol start="2">
+<li><strong>整个文档理解链路是怎样的？</strong></li>
+</ol>
+<p>参考回答：用户上传文件后，系统先完成身份、权限、文件类型和大小校验，再把文件保存到实例临时目录，并创建解析中的文档记录。后台线程依次完成安全扫描、原文件上传 BFS、内嵌图片提取、正文解析、Redis 分片写入和结构清单写入。全部成功后才把文档发布为可读状态，随后 Agent 可以通过结构检查、正文读取和图片读取三类能力使用文档。</p>
+<ol start="3">
+<li><strong>为什么采用异步解析？</strong></li>
+</ol>
+<p>参考回答：Office 解压、PDF 文本提取、图片转换和 BFS 上传都可能耗时较长，不适合占用上传请求线程。上传接口只返回文件编号、类型、解析状态和过期时间，前端通过状态接口查询进度。聊天请求只有在文件解析完成后才允许携带该文件，避免 Agent 读取半成品。</p>
+<ol start="4">
+<li><strong>异步解析如何做流量控制？</strong></li>
+</ol>
+<p>参考回答：解析使用独立的有界线程池和有界队列，队列满时直接拒绝新任务并返回繁忙，而不是无限堆积。上传入口还有单实例并发信号量，Redis 侧也限制单用户同时处于活动状态的文件数量。服务启动时还会校验任务总超时时间能够覆盖预期排队时间，避免任务还没开始就已经过期。</p>
+<ol start="5">
+<li><strong>文档模块的核心组件如何分工？</strong></li>
+</ol>
+<p>参考回答：上传服务负责入口校验、临时文件和状态创建；解析服务负责编排后台流程；不同格式的解析器负责把内容转换为统一记录；Redis 存储负责元数据、结构清单和正文分片；BFS 负责保存原文件和图片；Agent Tool 负责向模型提供有限、按需的读取接口。格式差异被限制在解析器内部，其他层只处理统一数据结构。</p>
+<ol start="6">
+<li><strong>7 种文件格式是如何统一接入的？</strong></li>
+</ol>
+<p>参考回答：系统定义了统一解析接口，每个解析器声明自己支持的文件类型，并通过回调逐个输出压缩后的正文分片，最后返回文档结构清单。解析服务启动时会校验所有枚举中的文件类型都有对应解析器，并拒绝重复注册。新增格式时主要增加文件类型、解析器、安全校验和必要的图片处理，存储及 Agent 读取流程可以复用。</p>
+<ol start="7">
+<li><strong>不同格式解析后分别保留什么结构？</strong></li>
+</ol>
+<p>参考回答：</p>
+<ul>
+<li>XLSX 按工作表和行保存，保留工作表名称、行数及第一行建议表头。</li>
+<li>CSV 视为编号为 0 的单工作表，按行保存。</li>
+<li>DOCX 保存段落、表格行和标题层级路径。</li>
+<li>PDF 以页面为最小逻辑项，保存页码和页面文本。</li>
+<li>PPTX 以幻灯片为最小逻辑项，保存标题、正文、表格和备注。</li>
+<li>TXT 按有界文本块保存，同时保留行号和行内分块编号。</li>
+<li>JSON 使用流式解析，将叶子值转换为带 JSON Pointer 路径、类型和值的记录。</li>
+</ul>
+<ol start="8">
+<li><strong>为什么 XLSX 使用 EasyExcel？</strong></li>
+</ol>
+<p>参考回答：Excel 文件可能包含大量行，如果使用一次性加载整个工作簿的方式，内存占用会随文件大小增长。EasyExcel 可以通过监听器逐行消费数据，解析器只保留当前待写分片的少量记录。每个工作表独立维护分片编号，既降低内存压力，也方便后续按工作表读取。</p>
+<ol start="9">
+<li><strong>DOCX 和 PPTX 为什么采用流式 XML 解析？</strong></li>
+</ol>
+<p>参考回答：DOCX 和 PPTX 本质上是 OOXML 压缩包，直接构造完整对象模型可能占用较多内存。当前实现读取压缩包中的核心 XML，通过流式事件提取段落、表格、标题、幻灯片正文和备注。同时关闭 DTD 和外部实体能力，减少 XML 外部实体类攻击风险。</p>
+<ol start="10">
+<li><strong>PDF 是如何解析的？支持 OCR 吗？</strong></li>
+</ol>
+<p>参考回答：PDF 使用 PDFBox，按页面提取文本，每页作为一个逻辑记录，并使用临时文件型缓存减少大文件对堆内存的压力。当前代码不提供 OCR，因此扫描版 PDF 可能提取不到正文。扫描页存在图片时，系统可以按需读取图片让多模态模型理解，但不能宣称已经通过 OCR 得到了页面文字。</p>
+<ol start="11">
+<li><strong>JSON 为什么不直接反序列化成一个大对象？</strong></li>
+</ol>
+<p>参考回答：大 JSON 整体反序列化可能占用大量内存，也难以对嵌套深度和超长字符串进行细粒度限制。当前实现使用流式 JSON 解析器，逐层遍历对象和数组，把标量值输出为带路径的记录。同时限制嵌套深度、路径长度、字符串和数字长度，避免恶意 JSON 消耗过多资源。</p>
+<ol start="12">
+<li><strong>TXT 和 CSV 的编码如何处理？</strong></li>
+</ol>
+<p>参考回答：当前实现统一要求 UTF-8，并允许开头存在 BOM。解析器使用严格字符解码，遇到非法字节会失败，而不是静默替换乱码。TXT 还会拒绝空字符等明显二进制内容；CSV 则限制列数、单元格字节数和单行总字节数。</p>
+<ol start="13">
+<li><strong>什么是文档 Manifest，为什么需要它？</strong></li>
+</ol>
+<p>参考回答：Manifest 可以理解为文档的结构目录，它描述文件类型、解析器版本、记录数量、工作表、标题、分片范围和图片引用。文件名、下载地址和状态等基础信息单独保存在文档元数据中。Agent 先读取结构目录，就能判断应该读取哪个工作表、哪一段正文以及是否存在相关图片，而不需要盲目扫描全文。</p>
+<ol start="14">
+<li><strong>正文是如何分片的？</strong></li>
+</ol>
+<p>参考回答：解析器不断向分片累积器写入统一记录，当估算大小达到目标值时，就把当前记录集合编码为 JSON 并使用 GZIP 压缩，然后写入 Redis。每个分片会记录覆盖的起止行号或顺序项编号。系统同时限制单条记录、单分片、总记录数、总解压数据量和分片数量，防止单个文件占用过多资源。</p>
+<ol start="15">
+<li><strong>为什么按字节大小分片，而不是固定每 100 行一个分片？</strong></li>
+</ol>
+<p>参考回答：不同记录大小差异很大，一百行短文本和一百行长文本的存储及模型成本完全不同。按目标字节数分片可以让 Redis value 和单次读取结果更加稳定。行号或顺序项仍然保存在分片索引中，因此读取接口可以继续按业务范围查询。</p>
+<ol start="16">
+<li><strong>Agent 按 offset 和 limit 读取时，如何找到对应分片？</strong></li>
+</ol>
+<p>参考回答：Manifest 中记录了每个分片覆盖的逻辑范围。读取时先筛选与目标区间相交的分片，再通过 Redis 批量读取并解压，最后按照记录自身的行号或顺序项编号做一次精确过滤。这样不会扫描所有分片，也不会因为分片边界与请求范围不完全一致而返回额外内容。</p>
+<ol start="17">
+<li><strong>如何保证 Agent 不会读到半解析数据？</strong></li>
+</ol>
+<p>参考回答：正文分片会先逐个写入 Redis，全部解析成功后再写 Manifest，最后才发布可读状态。发布时会检查文档仍处于解析中、没有超时、Manifest 已存在并且原文件地址有效。读取端只接受可读状态，同时要求元数据、Manifest 和必要分片都存在。</p>
+<p>需要准确说明的是，这不是一个覆盖所有分片的多 Key 数据库事务，而是通过写入顺序和最终发布屏障保证正常流程一致性。如果某个分片后来被异常删除或淘汰，读取端会把文档视为不可用，而不会返回不完整结果。</p>
+<ol start="18">
+<li><strong>为什么 Redis 中不把全文放在一个 Key 里？</strong></li>
+</ol>
+<p>参考回答：单个大 value 会增加网络传输、序列化和内存峰值，即使只需要一页内容也必须读取全部数据。拆成元数据、Manifest 和正文分片后，可以按范围批量读取，也方便解析失败时删除已经写入的部分。每个 Key 使用同一个绝对过期时间，避免后写入的分片比文档本身多存活很久。</p>
+<ol start="19">
+<li><strong>BFS 在这条链路里承担什么职责？</strong></li>
+</ol>
+<p>参考回答：BFS 用来保存原文件和提取后的内嵌图片，Redis 只保存临时结构化内容和 URL 引用。原文件上传使用流式请求体，不需要把整个大文件再次读入 JVM 堆。这样二进制文件和高频临时索引分别由适合的存储系统承载。</p>
+<ol start="20">
+<li><strong>为什么要在发布可读状态前完成 BFS 上传？</strong></li>
+</ol>
+<p>参考回答：原文件引用和图片引用也是文档完整性的一部分。如果先标记可读，再异步上传 BFS，Agent 可能拿到一个缺少原文件或图片地址的半成品。当前流程只有 BFS 上传、图片提取、正文分片和 Manifest 全部成功后才发布可读状态。</p>
+<ol start="21">
+<li><strong>BFS 上传失败如何处理？</strong></li>
+</ol>
+<p>参考回答：上传集成会在总截止时间内进行有限次数重试，并为连接、读写和总调用设置超时。如果仍然失败，整个解析任务进入失败状态，不会发布为可读。已经写入的 Redis 分片会被清理，但当前代码没有看到对已上传 BFS 文件的反向删除，因此后续可以增加对象生命周期策略或补偿删除，避免形成孤儿文件。</p>
+<ol start="22">
+<li><strong>Office 内嵌图片是如何提取的？</strong></li>
+</ol>
+<p>参考回答：系统读取 OOXML 中的文档关系、绘图关系和媒体文件，确定图片属于哪个工作表、行列、段落或幻灯片。支持 PNG、JPEG、GIF 和 WebP，并校验实际文件签名，不能只相信扩展名。同一个媒体资源在文档中出现多次时只上传一次，但可以生成多个位置引用。</p>
+<ol start="23">
+<li><strong>PDF 图片是如何提取的？</strong></li>
+</ol>
+<p>参考回答：PDFBox 会递归遍历页面资源和表单对象，找到嵌入图片，并记录对应页码。图片转换为 PNG 后检查像素数、单图大小和总大小，再上传 BFS。同一个底层图片对象会复用上传结果，解析失败或超限的个别图片会被跳过，避免图片问题完全阻塞正文读取。</p>
+<ol start="24">
+<li><strong>为什么不给模型一次性加载所有图片？</strong></li>
+</ol>
+<p>参考回答：图片的多模态推理成本较高，而且很多用户问题只需要正文。Manifest 和正文读取结果只返回图片编号、位置和替代文本，不代表模型已经理解图片内容。只有用户问题确实涉及图表、截图或图片中的文字时，Agent 才选择相关图片编号调用图片读取接口，并且单次读取数量有上限。</p>
+<ol start="25">
+<li><strong>系统如何识别文件类型？只看后缀吗？</strong></li>
+</ol>
+<p>参考回答：入口先根据允许的后缀确定目标解析器，但不会只相信后缀。PDF 会检查文件头，文本类文件会检查 UTF-8 和二进制空字符，OOXML 会检查 ZIP 结构、必要入口文件和内容类型文件。这个方案能过滤常见伪造文件，但还不是完整 MIME 嗅探，后续可以增加更严格的文件魔数检测。</p>
+<ol start="26">
+<li><strong>如何防止 ZIP Bomb？</strong></li>
+</ol>
+<p>参考回答：XLSX、DOCX 和 PPTX 本质上都是 ZIP，单纯限制上传文件大小并不够。系统先根据 ZIP 目录检查条目数量、声明解压大小、压缩率、图片数量和图片大小；后台解析前还会真正读取条目，统计实际展开字节，并对核心 XML、共享字符串和样式文件设置单独上限。两次校验可以降低伪造 ZIP 元数据绕过检查的风险。</p>
+<ol start="27">
+<li><strong>除了 ZIP Bomb，还有哪些资源限制？</strong></li>
+</ol>
+<p>参考回答：系统限制上传文件大小、单用户活动文件数、解析线程和队列、解析时间、总记录数、正文总字节数、分片数量、Manifest 大小、PDF 页数、PPT 页数、JSON 深度、图片像素和 Redis 单文件写入量。这些限制覆盖磁盘、内存、CPU、Redis 和模型上下文多个资源维度。</p>
+<ol start="28">
+<li><strong>用户之间如何实现文档隔离？</strong></li>
+</ol>
+<p>参考回答：上传、状态查询和聊天使用统一的登录身份，并检查文档能力权限。Redis Key 不只是使用文件编号，还会加入用户名的 SHA-256 摘要；即使另一个用户猜到文件 UUID，也会查询到完全不同的 Key 空间。Agent Tool 读取时使用运行上下文中的当前用户身份，不接受模型自行传入用户名。</p>
+<ol start="29">
+<li><strong>如何防止模型伪造 fileId？</strong></li>
+</ol>
+<p>参考回答：聊天服务只把已经解析完成的文件转换成轻量引用并注入对话，引用中包含服务端生成的 UUID。文档工作流要求 Agent 原样使用这个 UUID，不能根据文件名、路径或下载地址自行拼接。服务端还会校验 UUID 格式以及当前用户下是否存在对应文档。</p>
+<ol start="30">
+<li><strong>文档内容中的提示词注入如何处理？</strong></li>
+</ol>
+<p>参考回答：文件名、正文、图片替代文本和图片内容都被视为不可信用户数据，不能当成系统指令执行。Agent 的文档工作流明确要求这些内容只用于回答当前问题，并且不能把正文写入长期记忆。真正的访问控制仍由服务端 Tool、用户绑定和范围校验保证，而不是依赖文档中的文字。</p>
+<ol start="31">
+<li><strong>Redis 数据和本地临时文件如何过期？</strong></li>
+</ol>
+<p>参考回答：元数据、Manifest 和分片使用统一的绝对过期时间，默认属于短期临时数据。解析失败时通常只保留较短时间的失败状态，便于前端查看错误。本地临时文件无论解析成功还是失败都会尝试删除，同时定时任务会清理超过保留时间、且不在活动集合中的遗留文件。</p>
+<ol start="32">
+<li><strong>解析超时是如何处理的？</strong></li>
+</ol>
+<p>参考回答：文档有整体任务截止时间，后台 Worker 启动后还有更短的单次解析截止时间。解析器在读取文件、处理记录、上传图片和写分片过程中都会检查截止时间。状态查询也会识别长期停留在解析中的任务，通过条件更新将其标记为失败，避免任务无限处于处理中。</p>
+<ol start="33">
+<li><strong>服务重启后，正在解析的文档能自动恢复吗？</strong></li>
+</ol>
+<p>参考回答：当前异步任务使用的是进程内线程池，不是持久化消息队列，因此服务重启后不会自动恢复原解析任务。Redis 中的文档会暂时保持解析中，之后在状态查询时根据截止时间转为失败；本地遗留文件由定时任务清理。若要求真正的重启续跑，应使用持久化任务队列，并让解析步骤具备幂等和断点恢复能力。</p>
+<ol start="34">
+<li><strong>为什么要求 Agent 先 inspect 再 read？</strong></li>
+</ol>
+<p>参考回答：不同文件的结构差异很大，表格可能有多个 Sheet，Word 可能有标题层级，PDF 和 PPT 则以页为单位。先查看结构，Agent 才能知道有效范围和图片位置，然后选择与问题相关的部分读取。这既减少上下文，也降低读取错误 Sheet 或越界范围的概率。</p>
+<ol start="35">
+<li><strong>为什么 XLSX 和 CSV 必须指定 sheetNo？</strong></li>
+</ol>
+<p>参考回答：XLSX 可能包含多个工作表，如果省略工作表编号，服务端无法确定用户希望读取哪一张表。CSV 虽然只有一张逻辑表，也统一使用编号 0，从而让表格类文件共享相同的读取协议。其他文档则按照顺序项读取，不需要工作表编号。</p>
+<ol start="36">
+<li><strong>当前按需读取还有什么不足？</strong></li>
+</ol>
+<p>参考回答：读取接口会校验 offset 非负和 limit 大于零，但当前代码没有明显的单次 limit 上限。如果模型传入非常大的范围，仍可能一次读取大量分片并返回较大的工具结果。后续应增加单次最大记录数和最大返回字节数，并让 Agent 自动分页读取。</p>
+<ol start="37">
+<li><strong>为什么文档正文不能写入 Agent 长期记忆？</strong></li>
+</ol>
+<p>参考回答：文档属于用户上传的临时、不可信数据，而且 Redis 内容会过期。如果把全文写入长期记忆，不仅占用大量存储，还可能造成敏感信息长期残留，并让过期文档内容继续影响后续对话。因此长期记忆只保留轻量引用或必要结论，需要原文时重新通过受控工具读取。</p>
+<ol start="38">
+<li><strong>如何测试这套文档链路？</strong></li>
+</ol>
+<p>参考回答：需要为 7 种格式分别准备正常、空文件、超限和损坏样例，验证结构清单、分片边界和范围读取；为 OOXML 增加 ZIP Bomb、路径穿越、宏、嵌套压缩和超大图片用例；为 Redis 测试发布与超时竞争、缺失分片和 TTL；为 BFS 测试超时、重试和部分成功；最后做跨用户读取和 Agent 按需读取的端到端测试。</p>
+<p>从当前仓库能看到完整的生产实现和大量防护逻辑，但没有检索到该文档模块对应的专项测试类，面试时不应夸大已有测试覆盖。更稳妥的表述是说明自己设计或执行过哪些验证，并把缺失的自动化测试作为改进项。</p>
+<ol start="39">
+<li><strong>这个方案还有哪些可以继续优化的地方？</strong></li>
+</ol>
+<p>参考回答：第一，引入持久化任务队列，支持服务重启后的解析恢复；第二，为 BFS 文件和图片增加失败补偿及生命周期清理；第三，限制单次正文读取结果大小；第四，补充 OCR 和版面分析，提升扫描 PDF 与复杂表格能力；第五，增加解析耗时、队列等待、失败类型、Redis 写入量和图片提取量等监控；第六，完善 7 种格式和恶意文件的自动化测试。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E9%9A%8F%E7%AC%94/" class="print-no-link">#随笔</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/10/03/bilibili/novel-agent/" title="novel-agent">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">novel-agent</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/10/01/bilibili/%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AE%B9/" title="工作内容">
+                        <span class="hidden-mobile">工作内容</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"sj2tGuxMGSDhkN5hNuOIVta1-gzGzoHsz","appKey":"ysR5OTuTzoby2oNvNyGOtXFQ","path":"window.location.pathname","placeholder":"如有问题，欢迎指正~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>AI</span> <i class="iconfont icon-love"></i> <span>LLM</span> <i class="iconfont icon-love"></i> <span>Java</span> <i class="iconfont icon-love"></i> <span>Agent</span> <i class="iconfont icon-love"></i> <span>Python</span> <i class="iconfont icon-love"></i> <span>CyberSec</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/love.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiaoxingxing.js"></script>
+<script src="/js/bubble.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>

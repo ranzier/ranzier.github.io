@@ -1,0 +1,1100 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/about/dogs.jpg">
+  <link rel="icon" href="/img/about/dogs.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ranzier">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="OGV Agent 项目面试复盘 SOP 适用范围：2026.07-2026.09 在 ogv-agent-gateway 上的工作复盘。 使用方式：面试前先看“项目总览”和“个人贡献边界”，再按目标岗位选择长任务、动态子 Agent、文档理解三个模块深入复习。文档中的类名、状态和提交号来自当前仓库代码；个人负责程度应以自己的实际提交和工作记录为准。  1. 一分钟项目介绍1.1 项目定位OGV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RANZIER">
+<meta property="og:url" content="http://example.com/2026/09/18/bilibili/OGV-Agent-%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%98SOP/index.html">
+<meta property="og:site_name" content="RANZIER">
+<meta property="og:description" content="OGV Agent 项目面试复盘 SOP 适用范围：2026.07-2026.09 在 ogv-agent-gateway 上的工作复盘。 使用方式：面试前先看“项目总览”和“个人贡献边界”，再按目标岗位选择长任务、动态子 Agent、文档理解三个模块深入复习。文档中的类名、状态和提交号来自当前仓库代码；个人负责程度应以自己的实际提交和工作记录为准。  1. 一分钟项目介绍1.1 项目定位OGV">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-18T08:27:21.938Z">
+<meta property="article:modified_time" content="2026-09-18T08:27:21.938Z">
+<meta property="article:author" content="ranzier">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>RANZIER</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3846514_kabxni94auf.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/gundongtiao.css">
+<link rel="stylesheet" href="/css/bubble.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"🌟","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 80vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>RANZIER</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/suibi/" target="_self">
+                <i class="iconfont icon-pen"></i>
+                <span>随笔</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/3.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.35)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-18 16:27" pubdate>
+          2026年9月18日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          本文阅读次数：<span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="OGV-Agent-项目面试复盘-SOP"><a href="#OGV-Agent-项目面试复盘-SOP" class="headerlink" title="OGV Agent 项目面试复盘 SOP"></a>OGV Agent 项目面试复盘 SOP</h1><blockquote>
+<p>适用范围：2026.07-2026.09 在 <code>ogv-agent-gateway</code> 上的工作复盘。</p>
+<p>使用方式：面试前先看“项目总览”和“个人贡献边界”，再按目标岗位选择长任务、动态子 Agent、文档理解三个模块深入复习。文档中的类名、状态和提交号来自当前仓库代码；个人负责程度应以自己的实际提交和工作记录为准。</p>
+</blockquote>
+<h2 id="1-一分钟项目介绍"><a href="#1-一分钟项目介绍" class="headerlink" title="1. 一分钟项目介绍"></a>1. 一分钟项目介绍</h2><h3 id="1-1-项目定位"><a href="#1-1-项目定位" class="headerlink" title="1.1 项目定位"></a>1.1 项目定位</h3><p>OGV Agent Gateway 是面向 OGV 运营人员的自然语言操作平台。用户通过对话提出查询或操作需求，主 Agent 负责意图识别、任务拆解和业务域路由，业务 Agent 通过 Tool&#x2F;Skill 调用下游服务。系统同时提供会话持久化、权限过滤、文档理解、图片任务和长任务恢复能力。</p>
+<h3 id="1-2-个人工作口径"><a href="#1-2-个人工作口径" class="headerlink" title="1.2 个人工作口径"></a>1.2 个人工作口径</h3><p>推荐使用下面这段开场，不要把团队平台说成个人独立完成：</p>
+<blockquote>
+<p>我参与了 OGV 智能运营 Agent 平台建设，主要负责三条工程链路：一是把多步骤 Agent 请求做成长任务，支持计划确认、分批执行、状态持久化和异常恢复；二是参与把业务子 Agent 从代码静态注册改成 Paladin 配置化生成，并接入权限过滤；三是建设多格式文档上传、异步解析、分片读取和内嵌图片提取链路。我的重点不是单纯写一个模型调用，而是把模型的不确定输出约束到可恢复、可校验的后端流程里。</p>
+</blockquote>
+<h3 id="1-3-技术栈"><a href="#1-3-技术栈" class="headerlink" title="1.3 技术栈"></a>1.3 技术栈</h3><p><code>Java</code>、<code>Spring Boot</code>、<code>AgentScope</code>、<code>DashScope</code>、<code>Redis/Redisson</code>、<code>Reactor/SSE</code>、<code>Paladin</code>、<code>BFS</code>、<code>PDFBox</code>、<code>EasyExcel</code>、<code>Commons CSV</code>。</p>
+<h2 id="2-需求演进时间线"><a href="#2-需求演进时间线" class="headerlink" title="2. 需求演进时间线"></a>2. 需求演进时间线</h2><p>提交历史显示，这不是一次性开发，而是先建立最小闭环，再围绕状态不一致、恢复失败、配置扩展和文件格式逐步收敛。</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>主要需求</th>
+<th>关键提交</th>
+<th>面试记忆点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2026.07.23</td>
+<td>公共域引入长任务能力</td>
+<td><code>483d4eb</code></td>
+<td>新增任务 checkpoint、公共域 Tool、通知与临时状态</td>
+</tr>
+<tr>
+<td>2026.07.24</td>
+<td>受控批量执行与执行守卫</td>
+<td><code>2147926</code></td>
+<td>防止未建任务、未确认计划时直接执行批量写操作</td>
+</tr>
+<tr>
+<td>2026.07.26-07.30</td>
+<td>批次计划、游标和自动续跑</td>
+<td><code>348f110</code>、<code>8cedf1c</code>、<code>7f4b0df</code>、<code>e7c45cd</code></td>
+<td>服务端持有游标，计划和执行轮次可恢复</td>
+</tr>
+<tr>
+<td>2026.07.27-08.04</td>
+<td>图片批次、确定性恢复和失败收敛</td>
+<td><code>711372e</code>、<code>3646956</code>、<code>16825f6</code>、<code>5bd5417</code></td>
+<td>异步结果与父任务绑定，失败时区分可重试和副作用不确定</td>
+</tr>
+<tr>
+<td>2026.08.10-08.12</td>
+<td>Tool 调用前确认</td>
+<td><code>748c629</code>、<code>3462203</code>、<code>b8541fc</code>、<code>6e9ee62</code></td>
+<td>用户确认、工具快照和长任务确认收口</td>
+</tr>
+<tr>
+<td>2026.08.19</td>
+<td>Excel&#x2F;Word 文档上传解析</td>
+<td><code>dba464c</code></td>
+<td>异步解析、Redis 分片、BFS 原文件、解析状态</td>
+</tr>
+<tr>
+<td>2026.08.19-08.20</td>
+<td>内嵌图片和多格式扩展</td>
+<td><code>032d33c</code>、<code>4c915df</code>、<code>428baef</code>、<code>eca7fde</code></td>
+<td>PDF&#x2F;PPTX&#x2F;CSV&#x2F;JSON&#x2F;TXT、Office&#x2F;PDF 图片提取</td>
+</tr>
+<tr>
+<td>2026.09.02-09.04</td>
+<td>权限范围和业务子 Agent 配置化</td>
+<td><code>26142d8</code>、<code>eda7d9b</code>、<code>ebbb14a</code></td>
+<td>Paladin 配置生成、能力目录、动态刷新、SYSTEM 隔离</td>
+</tr>
+<tr>
+<td>2026.09.04</td>
+<td>结构化批次规划收敛</td>
+<td><code>be34f69</code>、<code>f92b4c7</code></td>
+<td>收敛批次模式决策，减少模型自由发挥导致的执行分歧</td>
+</tr>
+</tbody></table>
+<h3 id="2-1-如何解释“为什么提交记录很多”"><a href="#2-1-如何解释“为什么提交记录很多”" class="headerlink" title="2.1 如何解释“为什么提交记录很多”"></a>2.1 如何解释“为什么提交记录很多”</h3><p>可以这样回答：</p>
+<blockquote>
+<p>Agent 任务的难点不在第一次调用成功，而在中断、重试、异步等待和用户控制下仍保持状态一致。开发过程中先实现主流程，再通过提交逐个修复恢复规划、批次游标、通知重复消费、确认收口和失败分类等边界问题，因此提交记录体现的是状态机逐步收敛，而不是重复改同一处代码。</p>
+</blockquote>
+<h2 id="3-总体架构和请求链路"><a href="#3-总体架构和请求链路" class="headerlink" title="3. 总体架构和请求链路"></a>3. 总体架构和请求链路</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs text">用户 / Web / H5 / 企微<br>        |<br>        v<br>ChatController / SSE<br>        |<br>        v<br>ChatService<br>  - 用户身份与权限<br>  - 会话锁与上下文恢复<br>  - 历史图片/文档引用<br>  - 长任务续跑入口<br>        |<br>        v<br>AgentFactory<br>  - CommonDomainAgent（系统级固定能力）<br>  - Paladin 配置的业务域 Agent<br>  - Tool/Skill 按权限装配<br>        |<br>        +--&gt; AgentTaskCheckpointTool<br>        |      |<br>        |      +--&gt; AgentTaskCheckpointService<br>        |      |      +--&gt; AgentTaskCheckpointStore / Redis<br>        |      |      +--&gt; NotificationPollingService<br>        |      |      +--&gt; DeterministicBatchCoordinator<br>        |      |<br>        |      +--&gt; LongTaskExecutionGuardMiddleware<br>        |<br>        +--&gt; Document Tools --&gt; DocumentService --&gt; DocumentParseService<br>        |                           +--&gt; format parsers<br>        |                           +--&gt; Redis manifest/parts<br>        |                           +--&gt; BFS upload<br>        |<br>        +--&gt; 下游 HTTP / MCP / 图片服务 / 知了 OpenAPI<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-模块一：Agent-长任务执行与恢复"><a href="#4-模块一：Agent-长任务执行与恢复" class="headerlink" title="4. 模块一：Agent 长任务执行与恢复"></a>4. 模块一：Agent 长任务执行与恢复</h2><h3 id="4-1-需求背景"><a href="#4-1-需求背景" class="headerlink" title="4.1 需求背景"></a>4.1 需求背景</h3><p>普通聊天请求适合“一问一答”，但运营任务可能包含多个步骤、多个对象、异步图片生成或需要用户确认的写操作。如果把所有工作放在一次 Agent 调用中，会出现：</p>
+<ul>
+<li>上下文或请求超时，任务只完成一部分；</li>
+<li>模型重复调用同一个写 Tool；</li>
+<li>进程重启后不知道执行到哪一步；</li>
+<li>异步任务返回时无法判断属于哪个父任务；</li>
+<li>用户只能反复输入“继续”，系统无法自动推进；</li>
+<li>计划未确认时就开始产生副作用。</li>
+</ul>
+<p>目标是把 Agent 的自由形式推理约束为服务端可持久化、可校验、可恢复的任务协议。</p>
+<h3 id="4-2-方案总览"><a href="#4-2-方案总览" class="headerlink" title="4.2 方案总览"></a>4.2 方案总览</h3><p>核心对象是 <code>AgentTaskCheckpoint</code>，由 <code>AgentTaskCheckpointService</code> 管理，并通过 <code>AgentTaskCheckpointStore</code> 写入 Redis。</p>
+<p>任务至少包含以下信息：</p>
+<ul>
+<li><code>taskId</code>、<code>userId</code>、<code>sessionId</code>：任务归属；</li>
+<li><code>status</code>：当前生命周期状态；</li>
+<li><code>planVersion</code>、<code>confirmedPlanVersion</code>、<code>planDigest</code>：计划版本和内容指纹；</li>
+<li><code>steps</code>、<code>currentStepNo</code>、<code>nextStepNo</code>：高层步骤；</li>
+<li><code>stepCursor</code>：当前批次游标；</li>
+<li><code>runId</code>、<code>runLeaseUntil</code>：当前执行轮次和租约；</li>
+<li><code>operationId</code>、<code>operationCursorDigest</code>：当前写操作的稳定标识；</li>
+<li><code>asyncTaskRef</code>：外部异步任务与父计划的绑定；</li>
+<li><code>version</code>：乐观并发版本；</li>
+<li><code>pendingNotificationId</code>、<code>continuationSeq</code>：自动续跑通知；</li>
+<li><code>lastFailureType</code>、<code>resumeStatus</code>：失败分类和恢复状态。</li>
+</ul>
+<p>代码中的状态包括：<code>PLANNING</code>、<code>AWAITING_PLAN_CONFIRMATION</code>、<code>RUNNING</code>、<code>WAITING_CONTINUATION</code>、<code>WAITING_ASYNC_RESULT</code>、<code>WAITING_RETRY</code>、<code>RECONCILIATION_REQUIRED</code>、<code>PAUSED</code>、<code>COMPLETED</code>、<code>FAILED</code>、<code>CANCELLED</code>、<code>EXPIRED</code>。</p>
+<h3 id="4-3-标准执行-SOP"><a href="#4-3-标准执行-SOP" class="headerlink" title="4.3 标准执行 SOP"></a>4.3 标准执行 SOP</h3><h4 id="Step-1：判断是否需要长任务"><a href="#Step-1：判断是否需要长任务" class="headerlink" title="Step 1：判断是否需要长任务"></a>Step 1：判断是否需要长任务</h4><p>判断依据不是“对象数量大于某个阈值”或用户是否说了“批量”，而是综合：</p>
+<ul>
+<li>是否有多个高层步骤；</li>
+<li>是否存在步骤依赖；</li>
+<li>是否需要等待异步结果；</li>
+<li>是否会执行多个写操作；</li>
+<li>单轮请求是否有足够预算完成；</li>
+<li>是否需要服务端自动续跑。</li>
+</ul>
+<p>若只是单次、无副作用、单轮可完成的查询，不应为了形式创建长任务。</p>
+<h4 id="Step-2：创建任务"><a href="#Step-2：创建任务" class="headerlink" title="Step 2：创建任务"></a>Step 2：创建任务</h4><p>通过 <code>agent_task_create</code> 创建任务，保存目标摘要和会话归属。此时仍不能执行写操作。</p>
+<h4 id="Step-3：提交完整计划"><a href="#Step-3：提交完整计划" class="headerlink" title="Step 3：提交完整计划"></a>Step 3：提交完整计划</h4><p>通过 <code>agent_task_submit_plan</code> 保存完整高层步骤、计划引用和必要批次游标，服务端生成或校验计划版本和摘要。</p>
+<p>关键原则：</p>
+<ul>
+<li>计划必须覆盖全部剩余工作，而不是只保存当前一批；</li>
+<li>批次游标由服务端维护，模型不能随意跳过或回退；</li>
+<li>计划提交后进入 <code>AWAITING_PLAN_CONFIRMATION</code>；</li>
+<li>没有持久化计划，不允许开始业务执行。</li>
+</ul>
+<h4 id="Step-4：等待一次整体确认"><a href="#Step-4：等待一次整体确认" class="headerlink" title="Step 4：等待一次整体确认"></a>Step 4：等待一次整体确认</h4><p>用户确认后调用 <code>agent_task_control(CONFIRM)</code>。系统校验任务 ID、会话、版本和当前状态，然后把任务推进到可运行状态。</p>
+<p>暂停、继续、停止、重试也统一通过受控命令处理，避免把自然语言直接映射为任意状态变更。</p>
+<h4 id="Step-5：开始唯一运行轮次"><a href="#Step-5：开始唯一运行轮次" class="headerlink" title="Step 5：开始唯一运行轮次"></a>Step 5：开始唯一运行轮次</h4><p>通过 <code>agent_task_begin_run</code> 创建当前 <code>runId</code> 和运行租约。一次任务在同一时刻只能有一个有效运行轮次，避免重复续跑或并发轮次同时消费同一游标。</p>
+<h4 id="Step-6：执行批次"><a href="#Step-6：执行批次" class="headerlink" title="Step 6：执行批次"></a>Step 6：执行批次</h4><p><code>DeterministicBatchCoordinator</code> 根据当前步骤和 <code>stepCursor</code> 读取待处理项：</p>
+<ol>
+<li>校验游标属于当前步骤且没有越界；</li>
+<li>执行单个批次项；</li>
+<li>获取执行结果和最新 checkpoint 版本；</li>
+<li>更新已完成数量与进度摘要；</li>
+<li>写回下一个游标；</li>
+<li>发生失败时停止当前批次，进入可重试或需核对状态。</li>
+</ol>
+<p>独立只读查询可以在运行时允许并行；图片提交、结果绑定、写操作和任务状态写入必须按协议串行。</p>
+<h4 id="Step-7：等待异步结果或安排续跑"><a href="#Step-7：等待异步结果或安排续跑" class="headerlink" title="Step 7：等待异步结果或安排续跑"></a>Step 7：等待异步结果或安排续跑</h4><p>如果当前步骤依赖图片等外部异步结果，则保存：</p>
+<ul>
+<li>外部任务 ID；</li>
+<li>轮询 ID；</li>
+<li>父计划版本；</li>
+<li>父步骤编号；</li>
+<li>对应操作 ID 和游标摘要。</li>
+</ul>
+<p>结果到达后先核对父任务和操作引用，不能只根据一个外部 sessionId 推断归属。当前批次完成但仍有剩余时，写入 <code>pendingNotificationId</code> 并安排下一轮，不要求用户正常回复“继续”。</p>
+<h4 id="Step-8：记录结果并收口"><a href="#Step-8：记录结果并收口" class="headerlink" title="Step 8：记录结果并收口"></a>Step 8：记录结果并收口</h4><p>通过 <code>agent_task_record_outcome</code> 记录 <code>STEP_COMPLETED</code>、<code>RETRYABLE_FAILURE</code>、<code>UNCERTAIN_SIDE_EFFECT</code>、<code>TASK_COMPLETED</code> 等受控结果类型。服务端根据真实状态计算下一状态，而不是完全信任模型传入的状态。</p>
+<h3 id="4-4-幂等和副作用不确定性"><a href="#4-4-幂等和副作用不确定性" class="headerlink" title="4.4 幂等和副作用不确定性"></a>4.4 幂等和副作用不确定性</h3><p>面试中不要说“外部写操作严格 exactly-once”。更准确的表述是：</p>
+<blockquote>
+<p>系统通过计划版本、运行租约、稳定操作 ID、游标摘要和结果记录降低重复执行概率；如果请求超时发生在外部系统已接受但本地未收到响应的窗口，系统不能凭空证明外部副作用是否发生，因此会进入 <code>RECONCILIATION_REQUIRED</code> 或 <code>UNCERTAIN_SIDE_EFFECT</code>，优先核对已有结果，而不是直接盲目重试。</p>
+</blockquote>
+<p>准备操作的流程是：</p>
+<ol>
+<li><code>agent_task_prepare_operation</code> 生成当前计划步骤下的稳定操作引用；</li>
+<li>执行 Tool；</li>
+<li>根据是否已经发起副作用分类失败；</li>
+<li>无副作用失败可以安全重试；</li>
+<li>副作用不确定时保留操作引用，进入核对或人工确认；</li>
+<li>成功或失败结果写入 checkpoint。</li>
+</ol>
+<h3 id="4-5-为什么使用版本号"><a href="#4-5-为什么使用版本号" class="headerlink" title="4.5 为什么使用版本号"></a>4.5 为什么使用版本号</h3><p><code>expectedVersion</code> 用于乐观并发控制。Agent 读取任务后，只有在版本仍然匹配时才能提交计划、开始运行、准备操作或记录结果。这样可以拒绝：</p>
+<ul>
+<li>过期的旧轮次继续写状态；</li>
+<li>两个续跑请求同时推进同一个游标；</li>
+<li>用户在任务已经暂停或完成后重复提交旧命令；</li>
+<li>异步回调覆盖更新后的任务状态。</li>
+</ul>
+<h3 id="4-6-关键代码证据"><a href="#4-6-关键代码证据" class="headerlink" title="4.6 关键代码证据"></a>4.6 关键代码证据</h3><ul>
+<li><code>AgentTaskCheckpointService</code>：任务生命周期、计划、运行轮次、操作引用、异步绑定和续跑。</li>
+<li><code>AgentTaskCheckpointStore</code>：checkpoint 和通知的 Redis 持久化。</li>
+<li><code>AgentTaskCheckpointTool</code>：暴露创建、读取、提交计划、控制、开始运行、准备操作和记录结果等 Tool。</li>
+<li><code>LongTaskExecutionGuardMiddleware</code>：限制不安全的任务调用，注入当前任务上下文。</li>
+<li><code>DeterministicBatchCoordinator</code>：服务端掌控批次游标和确定性批量执行。</li>
+<li><code>AgentTaskCheckpoint.Status</code>：任务状态枚举。</li>
+<li><code>LongRunningTaskWorkflowSkill</code>：给 Agent 的长任务协议说明。</li>
+</ul>
+<h3 id="4-7-长任务面试问答"><a href="#4-7-长任务面试问答" class="headerlink" title="4.7 长任务面试问答"></a>4.7 长任务面试问答</h3><p><strong>问：为什么不能直接让模型循环调用 Tool？</strong></p>
+<p>答：模型循环没有可靠的持久状态、版本校验和失败恢复语义。请求超时或进程重启后，模型不知道哪些步骤已经完成，也无法安全判断外部副作用是否发生。服务端 checkpoint 把计划、游标和结果变成可验证的状态机。</p>
+<p><strong>问：如何避免重复执行？</strong></p>
+<p>答：在写操作前生成与任务、计划版本、步骤和批次游标绑定的稳定操作引用；执行后记录结果。并通过 <code>expectedVersion</code>、<code>runId</code> 和执行守卫拒绝旧轮次或未授权状态的调用。对于外部结果不确定的情况不直接重试，而是进入核对状态。这里是“降低重复执行并支持恢复”，不是承诺所有下游都严格 exactly-once。</p>
+<p><strong>问：为什么要保存完整计划，而不是每轮现生成？</strong></p>
+<p>答：每轮重新规划可能改变目标、步骤顺序或批次边界，导致已经完成的工作被重复处理。完整计划和 <code>planVersion</code> 让后续轮次有稳定依据；需要变更时显式进入计划修订，而不是隐式覆盖。</p>
+<p><strong>问：服务重启后如何恢复？</strong></p>
+<p>答：Redis 保存任务 checkpoint 和待处理通知。服务恢复后根据任务状态、运行租约、父任务引用和未消费通知重新建立续跑或异步监控；恢复时会先校验版本和归属，不直接从模型上下文猜测进度。</p>
+<p><strong>问：失败为什么分成可重试和不确定副作用？</strong></p>
+<p>答：网络超时可能发生在下游执行前，也可能发生在下游执行后。前者可以重试，后者重试可能造成重复写入。系统因此区分 <code>RETRYABLE_FAILURE</code> 和 <code>UNCERTAIN_SIDE_EFFECT</code>，后者优先核对结果。</p>
+<h2 id="5-模块二：业务子-Agent-配置化与权限控制"><a href="#5-模块二：业务子-Agent-配置化与权限控制" class="headerlink" title="5. 模块二：业务子 Agent 配置化与权限控制"></a>5. 模块二：业务子 Agent 配置化与权限控制</h2><h3 id="5-1-需求背景"><a href="#5-1-需求背景" class="headerlink" title="5.1 需求背景"></a>5.1 需求背景</h3><p>早期业务域 Agent 由 Java 类静态装配。新增一个业务域通常需要新增或修改 Agent 类、绑定 Tool、配置提示词和权限码，扩展成本高，也容易把系统级能力暴露给业务域。</p>
+<p>需求是把业务域差异放入 Paladin 配置，同时保留公共域长任务、状态读写等系统能力的代码控制和安全边界。</p>
+<h3 id="5-2-改造前后"><a href="#5-2-改造前后" class="headerlink" title="5.2 改造前后"></a>5.2 改造前后</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">改造前：业务域 Agent Java 类<br>  DomainAgent 类 -&gt; 静态 ToolBinding / SkillBinding -&gt; AgentFactory<br><br>改造后：Paladin JSON<br>  ConfigSource 监听<br>      -&gt; DomainAgentConfigParser<br>      -&gt; AgentCapabilityCatalog<br>      -&gt; 权限过滤<br>      -&gt; AgentFactory 动态组装<br>      -&gt; 主 Agent 委托 Tool<br></code></pre></td></tr></table></figure>
+
+<p><code>ActivityDomainAgent</code>、<code>DeliveryDomainAgent</code>、<code>AiCreatorIncentiveDomainAgent</code> 仍保留作历史装配定义，但当前代码已标记为 deprecated；公共域 <code>CommonDomainAgent</code> 仍固定注册，因为它承载系统级能力。</p>
+<h3 id="5-3-配置模型"><a href="#5-3-配置模型" class="headerlink" title="5.3 配置模型"></a>5.3 配置模型</h3><p>配置键为 <code>ogv_agent_business_domain_config</code>，结构核心如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;domains&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;agentCode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;delivery-domain-agent&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;投放业务域 Agent&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;systemPrompt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;业务域约束和处理规则&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;tools&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;capabilityId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;delivery-project-query&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;permissionCodes&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;ogv.delivery.read&quot;</span><span class="hljs-punctuation">]</span><br>        <span class="hljs-punctuation">&#125;</span><br>      <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;skills&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>实际字段模型见 <code>BusinessDomainAgentConfig</code>。<code>agentCode</code> 会派生委托 Tool 名，例如 <code>delivery-domain-agent</code> 对应 <code>delegate_to_delivery_domain</code>。</p>
+<h3 id="5-4-配置加载-SOP"><a href="#5-4-配置加载-SOP" class="headerlink" title="5.4 配置加载 SOP"></a>5.4 配置加载 SOP</h3><ol>
+<li><code>AgentFactory</code> 启动时读取配置源，初始化空或当前配置快照。</li>
+<li>注册 Paladin 配置监听器，配置变更时获取原始 JSON。</li>
+<li><code>DomainAgentConfigParser</code> 解析 JSON，拒绝空配置和非法结构。</li>
+<li><code>AgentCapabilityCatalog</code> 根据稳定 <code>capabilityId</code> 找到 Spring Bean。</li>
+<li>校验 Agent code、委托 Tool 名、Tool&#x2F;Skill 重复、能力名冲突和资源可读性。</li>
+<li>禁止业务域引用 <code>CapabilityVisibility.SYSTEM</code> 的 Tool&#x2F;Skill。</li>
+<li>为每个配置域构建不可变的 <code>ConfiguredDomain</code>。</li>
+<li>生成新的配置快照，清理受影响的 Agent 缓存。</li>
+<li>下一次请求按用户权限和新快照组装 supervisor Agent。</li>
+</ol>
+<h3 id="5-5-校验重点"><a href="#5-5-校验重点" class="headerlink" title="5.5 校验重点"></a>5.5 校验重点</h3><p>解析器不是简单反序列化，而是配置边界的第一道防线：</p>
+<ul>
+<li>业务域数量不超过上限；</li>
+<li><code>agentCode</code> 必须符合约定格式，且不能使用主 Agent&#x2F;公共域保留值；</li>
+<li>description、systemPrompt、permissionCode 有长度限制；</li>
+<li>Tool 和 Skill 必须是已注册能力；</li>
+<li>一个业务域内不能重复绑定同一 Tool&#x2F;Skill；</li>
+<li>Tool 必须声明有效 <code>@Tool</code> 方法；</li>
+<li>Skill 必须存在 classpath 资源或实现运行时 Skill；</li>
+<li>同一业务域内 Tool 名、Skill ID 和 Action 名不能冲突；</li>
+<li>业务域不能引用系统级 Tool&#x2F;Skill；</li>
+<li>每个 USER 能力必须声明权限码。</li>
+</ul>
+<h3 id="5-6-权限装配逻辑"><a href="#5-6-权限装配逻辑" class="headerlink" title="5.6 权限装配逻辑"></a>5.6 权限装配逻辑</h3><p>权限有两层：</p>
+<ol>
+<li>用户基础权限：<code>UserPermissionService.resolve(userId)</code> 根据 Paladin 用户权限配置得到权限集合。</li>
+<li>请求权限范围：<code>resolve(userId, permissionScope)</code> 只保留基础权限中出现的 scope，不能通过请求参数增加权限。</li>
+</ol>
+<p>能力装配时，只有用户拥有 Tool&#x2F;Skill 绑定的任一权限码，能力才会注册到该用户的 Agent。SYSTEM 能力不依赖用户权限，但只允许系统内部按规则使用，不能由业务配置任意引用。</p>
+<h3 id="5-7-缓存和热更新"><a href="#5-7-缓存和热更新" class="headerlink" title="5.7 缓存和热更新"></a>5.7 缓存和热更新</h3><p>AgentFactory 使用用户权限指纹和业务域配置快照生成缓存键：</p>
+<ul>
+<li>权限集合变化时，新的权限指纹不会复用旧 Agent；</li>
+<li>Paladin 配置变更时，更新配置版本并清理相关 supervisor 缓存；</li>
+<li>避免每个请求都重复解析配置和扫描 Tool；</li>
+<li>同时避免权限变更后继续使用旧能力集合。</li>
+</ul>
+<h3 id="5-8-动态配置面试问答"><a href="#5-8-动态配置面试问答" class="headerlink" title="5.8 动态配置面试问答"></a>5.8 动态配置面试问答</h3><p><strong>问：为什么要配置化，而不是继续新增 Java Agent 类？</strong></p>
+<p>答：业务域的差异主要是提示词、能力集合和权限映射，静态类会让每个业务域都产生重复装配代码。配置化后新增业务域只需要增加配置，AgentFactory 和能力实现保持不变，接入成本更低，也便于权限和能力统一校验。</p>
+<p><strong>问：如何防止配置把系统能力暴露出去？</strong></p>
+<p>答：Tool&#x2F;Skill 在注册时区分 <code>USER</code> 和 <code>SYSTEM</code> 可见性。解析业务域配置时通过 <code>AgentCapabilityCatalog.isSystemTool/isSystemSkill</code> 拒绝 SYSTEM 能力；系统级能力只由固定的 CommonDomainAgent 装配，并由中间件和提示词约束使用场景。</p>
+<p><strong>问：配置热更新有什么风险？</strong></p>
+<p>答：主要风险是新旧 Agent 快照混用、缓存不失效和正在执行的任务能力集合变化。实现上先完整解析校验，再替换不可变配置快照；Agent 缓存按配置版本隔离，正在运行的长任务仍以已持久化的计划和任务上下文为准，而不是中途从模型重新猜测。</p>
+<p><strong>问：permissionScope 会不会造成越权？</strong></p>
+<p>答：不会。它是基础权限的交集过滤器，只能减少权限；不在用户基础权限中的 scope 会被过滤掉。</p>
+<h2 id="6-模块三：多格式文档理解链路"><a href="#6-模块三：多格式文档理解链路" class="headerlink" title="6. 模块三：多格式文档理解链路"></a>6. 模块三：多格式文档理解链路</h2><h3 id="6-1-需求背景"><a href="#6-1-需求背景" class="headerlink" title="6.1 需求背景"></a>6.1 需求背景</h3><p>用户希望直接把 Excel、Word、PDF 等运营材料交给 Agent 进行查询、总结和分析。直接把原文件或全文放进 Prompt 会遇到：</p>
+<ul>
+<li>不同格式解析方式不同；</li>
+<li>大文档超出模型上下文；</li>
+<li>Office&#x2F;PDF 中的表格和图片不能只按纯文本处理；</li>
+<li>同步解析阻塞聊天请求；</li>
+<li>临时文件和 Redis 数据没有生命周期控制；</li>
+<li>恶意压缩包或超大文件可能耗尽资源。</li>
+</ul>
+<h3 id="6-2-端到端流程"><a href="#6-2-端到端流程" class="headerlink" title="6.2 端到端流程"></a>6.2 端到端流程</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs text">上传请求<br>  -&gt; DocumentUploadAccessFilter<br>  -&gt; DocumentService 创建 fileId / meta<br>  -&gt; 临时文件保存 + 异步提交 DocumentParseService<br>  -&gt; 文件类型解析器生成 Manifest<br>       + 内容分片写入 Redis<br>       + Office/PDF 内嵌图片提取<br>       + 原文件上传 BFS<br>  -&gt; 更新解析进度和状态<br>  -&gt; document_inspect 查看结构<br>  -&gt; document_read 按 sheet/part 读取正文<br>  -&gt; document_image_read 按 imageId 读取图片<br>  -&gt; Agent 基于局部内容回答<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-3-解析器设计"><a href="#6-3-解析器设计" class="headerlink" title="6.3 解析器设计"></a>6.3 解析器设计</h3><p><code>DocumentParser</code> 定义统一解析接口，当前覆盖：</p>
+<ul>
+<li><code>XlsxDocumentParser</code></li>
+<li><code>CsvDocumentParser</code></li>
+<li><code>DocxDocumentParser</code></li>
+<li><code>PdfDocumentParser</code></li>
+<li><code>PptxDocumentParser</code></li>
+<li><code>TextDocumentParser</code></li>
+<li><code>JsonDocumentParser</code></li>
+</ul>
+<p>解析结果不是简单拼成一个大字符串，而是写成带 schema&#x2F;version、文件类型、页&#x2F;Sheet 信息、分片索引和图片引用的 <code>DocumentManifest</code>。<code>DocumentPartAccumulator</code> 和 <code>DocumentPartCodec</code> 负责分片累积与编码。</p>
+<h3 id="6-4-异步和存储策略"><a href="#6-4-异步和存储策略" class="headerlink" title="6.4 异步和存储策略"></a>6.4 异步和存储策略</h3><ul>
+<li>上传接口快速返回文件 ID 和解析状态，解析由独立 <code>documentParseExecutor</code> 执行；</li>
+<li>原文件和可访问图片上传 BFS，便于后续引用和展示；</li>
+<li>Manifest、元数据和正文分片写 Redis；</li>
+<li><code>document_inspect</code> 先返回结构，Agent 再按需调用 <code>document_read</code>；</li>
+<li>XLSX&#x2F;CSV 必须指定 <code>sheetNo</code>，其他格式按文档类型读取；</li>
+<li>通过文件 ID、用户名和分片编号构造 Redis key，避免不同用户或不同文件串数据；</li>
+<li>解析成功、失败、过期分别使用不同 TTL；</li>
+<li>临时本地文件由定时任务清理，解析中的文件通过 <code>activePaths</code> 防止被误删。</li>
+</ul>
+<h3 id="6-5-内嵌图片处理"><a href="#6-5-内嵌图片处理" class="headerlink" title="6.5 内嵌图片处理"></a>6.5 内嵌图片处理</h3><p>Office 文件通过 ZIP 内部媒体资源提取图片，PDF 通过 PDFBox 提取嵌入图片。Manifest 保存图片的 <code>imageId</code>、类型和引用关系，Agent 只有在用户问题确实需要图片时才调用 <code>document_image_read</code>，避免把无关图片全部加载进上下文。</p>
+<h3 id="6-6-安全和资源上限"><a href="#6-6-安全和资源上限" class="headerlink" title="6.6 安全和资源上限"></a>6.6 安全和资源上限</h3><p>当前代码对不可信文件设置了多层限制：</p>
+<ul>
+<li>ZIP 条目数量；</li>
+<li>ZIP 总解压体积；</li>
+<li>XML 单条目大小；</li>
+<li>shared strings 和 styles 大小；</li>
+<li>压缩率，防止 ZIP Bomb；</li>
+<li>单文件 Redis 写入量；</li>
+<li>Manifest 最大字节数；</li>
+<li>单文件图片数量；</li>
+<li>单图和总图片大小；</li>
+<li>解析超时和任务截止时间；</li>
+<li>临时文件保留时长；</li>
+<li>失败状态较短 TTL，避免错误数据长期占用。</li>
+</ul>
+<h3 id="6-7-文档模块面试问答"><a href="#6-7-文档模块面试问答" class="headerlink" title="6.7 文档模块面试问答"></a>6.7 文档模块面试问答</h3><p><strong>问：为什么要异步解析？</strong></p>
+<p>答：文件解析、BFS 上传和图片提取可能耗时较长，不能占住聊天请求线程。异步解析让上传接口先返回 fileId，前端通过状态接口查看进度，Agent 只在解析完成后读取内容。</p>
+<p><strong>问：为什么先 inspect 再 read？</strong></p>
+<p>答：先获取结构可以让 Agent 知道文件有哪些 Sheet、页、分片和图片，再按问题读取局部内容，减少上下文和 Redis 读取量，也避免模型盲目使用错误的 sheet 或 part 编号。</p>
+<p><strong>问：为什么不把全文一次性交给模型？</strong></p>
+<p>答：长文档会超出上下文窗口，成本和延迟也更高。Manifest + 分片读取让模型只获得当前问题需要的内容，并能对表格、页码和图片进行定向访问。</p>
+<p><strong>问：如何防止恶意文档？</strong></p>
+<p>答：对 OOXML ZIP 先检查条目数、总解压体积和压缩率，再限制 XML、图片、Manifest 和 Redis 数据量，同时设置解析截止时间和临时文件清理。这样即使文件格式合法，也不能无限制消耗服务资源。</p>
+<p><strong>问：文档 ID 如何防止被伪造？</strong></p>
+<p>答：Tool 使用上下文中的临时文档引用，要求 fileId 逐字使用引用中的 UUID；不能用文件名、路径或 URL 自行拼接 ID。读取服务还会按用户和文件状态校验，错误 ID 与过期 ID 分开处理。</p>
+<h2 id="7-三个模块的通用开发-SOP"><a href="#7-三个模块的通用开发-SOP" class="headerlink" title="7. 三个模块的通用开发 SOP"></a>7. 三个模块的通用开发 SOP</h2><h3 id="7-1-需求澄清"><a href="#7-1-需求澄清" class="headerlink" title="7.1 需求澄清"></a>7.1 需求澄清</h3><p>每接到一个 Agent 能力需求，先问清楚：</p>
+<ol>
+<li>是查询还是写操作？是否有外部副作用？</li>
+<li>一轮请求能否完成？是否需要等待异步结果？</li>
+<li>是否需要用户确认？确认粒度是单次 Tool 还是完整计划？</li>
+<li>任务中断后需要恢复到哪一层：任务、步骤、批次还是单项操作？</li>
+<li>是否需要跨请求、跨进程或跨实例共享状态？</li>
+<li>哪些能力属于用户域，哪些属于 SYSTEM 能力？</li>
+<li>输入文件是否不可信？大小、格式、生命周期和访问边界是什么？</li>
+</ol>
+<h3 id="7-2-方案设计"><a href="#7-2-方案设计" class="headerlink" title="7.2 方案设计"></a>7.2 方案设计</h3><ul>
+<li>先画状态和数据流，再决定 Tool&#x2F;Service&#x2F;Store 的职责；</li>
+<li>让模型负责意图和摘要，让服务端负责 ID、版本、游标、状态转换和资源限制；</li>
+<li>对可重试、不可重试和副作用不确定分别建模；</li>
+<li>把外部系统返回的任务 ID 与本地父任务绑定；</li>
+<li>用稳定能力 ID 做动态配置，不把 Spring Bean 名直接暴露成业务配置契约；</li>
+<li>所有临时数据写入前定义 TTL 和清理路径；</li>
+<li>用失败场景反推接口，而不是只从 happy path 设计。</li>
+</ul>
+<h3 id="7-3-实现顺序"><a href="#7-3-实现顺序" class="headerlink" title="7.3 实现顺序"></a>7.3 实现顺序</h3><ol>
+<li>定义领域对象和状态枚举。</li>
+<li>实现 Store 和基本读写。</li>
+<li>实现 Service 的状态转换和版本校验。</li>
+<li>用 Tool 暴露最小动作。</li>
+<li>在 Middleware&#x2F;Coordinator 中限制模型调用顺序。</li>
+<li>接入通知、异步任务或文件解析器。</li>
+<li>补充 UI&#x2F;SSE 展示和错误映射。</li>
+<li>用单测覆盖状态边界、配置非法输入、文件限制和 Tool 参数。</li>
+</ol>
+<h3 id="7-4-验证清单"><a href="#7-4-验证清单" class="headerlink" title="7.4 验证清单"></a>7.4 验证清单</h3><h4 id="长任务"><a href="#长任务" class="headerlink" title="长任务"></a>长任务</h4><ul>
+<li>任务创建后未提交计划，写 Tool 是否被拒绝？</li>
+<li>未确认计划时，是否不会开始批量副作用？</li>
+<li>同一 <code>expectedVersion</code> 重复提交是否被拒绝？</li>
+<li>暂停、继续、停止、重试后的状态是否正确？</li>
+<li>游标是否只能前进且不能跨步骤？</li>
+<li>当前轮执行一部分后进程重启，能否恢复剩余项？</li>
+<li>外部异步结果回调到达时，是否校验父任务和操作引用？</li>
+<li>失败发生在副作用前后时，是否进入不同处理路径？</li>
+</ul>
+<h4 id="动态-Agent"><a href="#动态-Agent" class="headerlink" title="动态 Agent"></a>动态 Agent</h4><ul>
+<li>非法 JSON、重复 Agent code、重复 Tool 名是否启动失败或拒绝刷新？</li>
+<li>未注册 capabilityId 是否不能生成 Agent？</li>
+<li>业务域引用 SYSTEM Tool&#x2F;Skill 是否被拒绝？</li>
+<li>用户没有权限时，模型是否看不到对应 Tool？</li>
+<li><code>permissionScope</code> 是否只能收窄权限？</li>
+<li>配置热更新后，旧 Agent 缓存是否失效？</li>
+</ul>
+<h4 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h4><ul>
+<li>7 种格式是否都能生成 Manifest？</li>
+<li>XLSX&#x2F;CSV 的 sheet 参数错误是否可解释？</li>
+<li>先 inspect 后 read 的调用顺序是否明确？</li>
+<li>超大 ZIP、异常压缩率和过多图片是否被拒绝？</li>
+<li>解析失败数据是否会过期清理？</li>
+<li>Office&#x2F;PDF 内嵌图片是否能通过 imageId 定向读取？</li>
+<li>用户 A 是否不能读取用户 B 的 fileId？</li>
+</ul>
+<h2 id="8-如何把贡献说准确"><a href="#8-如何把贡献说准确" class="headerlink" title="8. 如何把贡献说准确"></a>8. 如何把贡献说准确</h2><h3 id="8-1-可以说的事实"><a href="#8-1-可以说的事实" class="headerlink" title="8.1 可以说的事实"></a>8.1 可以说的事实</h3><ul>
+<li>“我负责&#x2F;参与了长任务 checkpoint、计划和批次恢复链路。”</li>
+<li>“我实现了计划版本、运行轮次、操作引用和结果记录等状态字段或相关逻辑。”</li>
+<li>“我参与了 Paladin 业务域配置解析、能力目录和权限装配。”</li>
+<li>“我负责了文档异步解析、分片存储、内嵌图片或安全上限中的具体部分。”</li>
+<li>“我通过提交记录验证了从基础能力到边界修复的演进过程。”</li>
+</ul>
+<h3 id="8-2-不建议直接说"><a href="#8-2-不建议直接说" class="headerlink" title="8.2 不建议直接说"></a>8.2 不建议直接说</h3><ul>
+<li>“我独立设计并完成了整个 OGV Agent 平台。”</li>
+<li>“所有写操作都是 exactly-once。”</li>
+<li>“所有业务域 Tool 都已经接入真实系统。”</li>
+<li>“动态配置完全不需要代码发布。”能力实现新增仍然需要开发和发布，配置化主要减少业务域装配代码。</li>
+<li>“文档解析把全文永久存储在 Redis。”当前是临时数据和 TTL 管理。</li>
+</ul>
+<h3 id="8-3-个人贡献核对表"><a href="#8-3-个人贡献核对表" class="headerlink" title="8.3 个人贡献核对表"></a>8.3 个人贡献核对表</h3><p>面试前把下面每项标成“独立负责 &#x2F; 主要参与 &#x2F; 了解”：</p>
+<ul>
+<li><code>AgentTaskCheckpointService</code> 的状态转换；</li>
+<li><code>AgentTaskCheckpointStore</code> 的 Redis key、TTL 或 CAS&#x2F;版本逻辑；</li>
+<li><code>LongTaskExecutionGuardMiddleware</code> 的调用约束；</li>
+<li><code>DeterministicBatchCoordinator</code> 的游标和批次执行；</li>
+<li>Paladin 配置模型和 <code>DomainAgentConfigParser</code>；</li>
+<li><code>AgentCapabilityCatalog</code> 和 Tool&#x2F;Skill ID 映射；</li>
+<li>用户权限与 <code>permissionScope</code>；</li>
+<li><code>DocumentService</code> 上传和状态接口；</li>
+<li><code>DocumentParseService</code> 异步调度和资源限制；</li>
+<li>具体格式解析器、图片提取器或 Redis 分片存储；</li>
+<li>测试、预发验证、日志和故障排查。</li>
+</ul>
+<p>如果只是阅读或配合，不要使用“负责设计”；改成“参与实现”“参与联调”或“熟悉其调用链路”。</p>
+<h2 id="9-面试前-30-分钟复习顺序"><a href="#9-面试前-30-分钟复习顺序" class="headerlink" title="9. 面试前 30 分钟复习顺序"></a>9. 面试前 30 分钟复习顺序</h2><h3 id="0-5-分钟：复述项目"><a href="#0-5-分钟：复述项目" class="headerlink" title="0-5 分钟：复述项目"></a>0-5 分钟：复述项目</h3><p>说清楚用户、主 Agent、业务域 Agent、Tool&#x2F;Skill 和三条个人工作线。</p>
+<h3 id="5-15-分钟：画长任务状态流"><a href="#5-15-分钟：画长任务状态流" class="headerlink" title="5-15 分钟：画长任务状态流"></a>5-15 分钟：画长任务状态流</h3><p>至少能手动画出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">create -&gt; submit plan -&gt; awaiting confirmation -&gt; confirm<br>-&gt; begin run -&gt; prepare operation -&gt; execute -&gt; record outcome<br>-&gt; waiting async / enqueue continuation -&gt; resume -&gt; completed<br></code></pre></td></tr></table></figure>
+
+<p>并能解释 <code>expectedVersion</code>、<code>runId</code>、<code>stepCursor</code>、<code>operationId</code> 的作用。</p>
+<h3 id="15-20-分钟：讲动态配置"><a href="#15-20-分钟：讲动态配置" class="headerlink" title="15-20 分钟：讲动态配置"></a>15-20 分钟：讲动态配置</h3><p>从静态 Java Agent 类讲到 Paladin JSON，再讲解析校验、SYSTEM 隔离、用户权限过滤和缓存刷新。</p>
+<h3 id="20-25-分钟：讲文档链路"><a href="#20-25-分钟：讲文档链路" class="headerlink" title="20-25 分钟：讲文档链路"></a>20-25 分钟：讲文档链路</h3><p>从上传、异步解析、Manifest、分片、BFS、图片提取到 inspect&#x2F;read&#x2F;image_read，并说明为什么要做资源限制。</p>
+<h3 id="25-30-分钟：准备一个失败案例"><a href="#25-30-分钟：准备一个失败案例" class="headerlink" title="25-30 分钟：准备一个失败案例"></a>25-30 分钟：准备一个失败案例</h3><p>优先准备下面三个之一：</p>
+<ol>
+<li>为什么计划必须持久化，如何修复恢复时重复规划；</li>
+<li>外部写操作超时后为什么不能盲目重试；</li>
+<li>文档解析为什么要从 Excel&#x2F;Word 扩展成统一 Parser 和 Manifest。</li>
+</ol>
+<p>回答结构统一使用：<strong>现象 → 原因 → 方案 → 边界 → 验证</strong>。</p>
+<h2 id="10-终版简历四条与复盘文档的对应关系"><a href="#10-终版简历四条与复盘文档的对应关系" class="headerlink" title="10. 终版简历四条与复盘文档的对应关系"></a>10. 终版简历四条与复盘文档的对应关系</h2><table>
+<thead>
+<tr>
+<th>简历表述</th>
+<th>面试展开依据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>长任务计划、批次、Redis、自动续跑和恢复</td>
+<td>第 4 章、<code>483d4eb</code>、<code>2147926</code>、<code>3646956</code></td>
+</tr>
+<tr>
+<td>稳定操作标识、结果记录和执行守卫</td>
+<td>第 4.4 节、<code>AgentTaskCheckpointTool</code>、<code>LongTaskExecutionGuardMiddleware</code></td>
+</tr>
+<tr>
+<td>Paladin 动态配置、校验、热更新和缓存失效</td>
+<td>第 5 章、<code>ebbb14a</code>、<code>DomainAgentConfigParser</code>、<code>AgentFactory</code></td>
+</tr>
+<tr>
+<td>多格式异步解析、分片、图片、BFS 和 Redis</td>
+<td>第 6 章、<code>dba464c</code>、<code>032d33c</code>、<code>4c915df</code></td>
+</tr>
+</tbody></table>
+<p>最后的判断标准是：每一条简历描述都要能继续回答“为什么这样设计、状态如何变化、异常怎么办、你改了哪个类、如何验证”。如果某一条答不到代码和提交级别，就把“负责”降为“参与”，或从简历中删掉。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/09/29/bilibili/OGV-Agent-%E6%8A%80%E6%9C%AF%E4%BA%AE%E7%82%B9%E8%AF%A6%E8%A7%A3%E4%B8%8E%E9%9D%A2%E8%AF%95%E5%A4%8D%E4%B9%A0/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/09/18/bilibili/SLO%E9%A1%B9%E7%9B%AE%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%98SOP/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"sj2tGuxMGSDhkN5hNuOIVta1-gzGzoHsz","appKey":"ysR5OTuTzoby2oNvNyGOtXFQ","path":"window.location.pathname","placeholder":"如有问题，欢迎指正~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>AI</span> <i class="iconfont icon-love"></i> <span>LLM</span> <i class="iconfont icon-love"></i> <span>Java</span> <i class="iconfont icon-love"></i> <span>Agent</span> <i class="iconfont icon-love"></i> <span>Python</span> <i class="iconfont icon-love"></i> <span>CyberSec</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/love.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiaoxingxing.js"></script>
+<script src="/js/bubble.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>
