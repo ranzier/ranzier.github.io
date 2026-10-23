@@ -533,9 +533,9 @@
     
     <tags>
       
-      <tag>JVM</tag>
-      
       <tag>八股</tag>
+      
+      <tag>JVM</tag>
       
       <tag>StringTable</tag>
       
@@ -835,9 +835,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>AI</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>RAG</tag>
       
@@ -899,9 +899,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>SpringCloud</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>Canal</tag>
       
@@ -932,9 +932,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>AI</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>Spring AI</tag>
       
@@ -967,15 +967,15 @@
     
     <tags>
       
+      <tag>SpringCloud</tag>
+      
       <tag>JAVA</tag>
       
-      <tag>SpringCloud</tag>
+      <tag>Redis</tag>
       
       <tag>多级缓存</tag>
       
       <tag>Caffeine</tag>
-      
-      <tag>Redis</tag>
       
     </tags>
     
@@ -1315,9 +1315,9 @@
     
     <tags>
       
-      <tag>JAVA</tag>
-      
       <tag>SpringCloud</tag>
+      
+      <tag>JAVA</tag>
       
       <tag>SpringBoot</tag>
       
@@ -1499,11 +1499,11 @@
     
     <tags>
       
+      <tag>SpringCloud</tag>
+      
       <tag>JAVA</tag>
       
       <tag>学习</tag>
-      
-      <tag>SpringCloud</tag>
       
     </tags>
     
@@ -1530,9 +1530,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>SpringCloud</tag>
+      
+      <tag>学习</tag>
       
       <tag>Elasticsearch</tag>
       
@@ -1561,9 +1561,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>SpringCloud</tag>
+      
+      <tag>学习</tag>
       
       <tag>RabbitMQ</tag>
       
@@ -1621,9 +1621,9 @@
     
     <tags>
       
-      <tag>学习</tag>
-      
       <tag>SpringCloud</tag>
+      
+      <tag>学习</tag>
       
       <tag>MybatisPlus</tag>
       
@@ -1967,11 +1967,11 @@
       
       <tag>AI</tag>
       
-      <tag>论文</tag>
-      
       <tag>信息与通信</tag>
       
       <tag>强化学习</tag>
+      
+      <tag>论文</tag>
       
     </tags>
     
