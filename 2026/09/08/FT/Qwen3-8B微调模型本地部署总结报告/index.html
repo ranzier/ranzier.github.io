@@ -1,0 +1,994 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/about/dogs.jpg">
+  <link rel="icon" href="/img/about/dogs.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ranzier">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Qwen3-8B 微调模型合并、量化与本地部署总结报告1. 项目概述本次部署的目标，是将在魔搭（ModelScope）Notebook 环境中使用 LoRA 微调得到的 Qwen3-8B 模型，合并为完整 Hugging Face 模型，转换并量化为适合个人电脑运行的 GGUF 文件，最后迁移到 Apple M1、16 GB 内存的 MacBook Pro，通过 llama.cpp 实现命令行聊天">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qwen3-8B 微调模型合并、量化与本地部署总结报告">
+<meta property="og:url" content="http://example.com/2026/09/08/FT/Qwen3-8B%E5%BE%AE%E8%B0%83%E6%A8%A1%E5%9E%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/index.html">
+<meta property="og:site_name" content="RANZIER">
+<meta property="og:description" content="Qwen3-8B 微调模型合并、量化与本地部署总结报告1. 项目概述本次部署的目标，是将在魔搭（ModelScope）Notebook 环境中使用 LoRA 微调得到的 Qwen3-8B 模型，合并为完整 Hugging Face 模型，转换并量化为适合个人电脑运行的 GGUF 文件，最后迁移到 Apple M1、16 GB 内存的 MacBook Pro，通过 llama.cpp 实现命令行聊天">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/bg/76.png">
+<meta property="article:published_time" content="2026-09-08T11:37:24.000Z">
+<meta property="article:modified_time" content="2026-09-08T11:49:25.000Z">
+<meta property="article:author" content="ranzier">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="微调">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/bg/76.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Qwen3-8B 微调模型合并、量化与本地部署总结报告 - RANZIER</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3846514_kabxni94auf.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/gundongtiao.css">
+<link rel="stylesheet" href="/css/bubble.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"🌟","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 80vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>RANZIER</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/suibi/" target="_self">
+                <i class="iconfont icon-pen"></i>
+                <span>随笔</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/3.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.35)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Qwen3-8B 微调模型合并、量化与本地部署总结报告"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-08 19:37" pubdate>
+          2026年9月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          本文阅读次数：<span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Qwen3-8B 微调模型合并、量化与本地部署总结报告</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Qwen3-8B-微调模型合并、量化与本地部署总结报告"><a href="#Qwen3-8B-微调模型合并、量化与本地部署总结报告" class="headerlink" title="Qwen3-8B 微调模型合并、量化与本地部署总结报告"></a>Qwen3-8B 微调模型合并、量化与本地部署总结报告</h1><h2 id="1-项目概述"><a href="#1-项目概述" class="headerlink" title="1. 项目概述"></a>1. 项目概述</h2><p>本次部署的目标，是将在魔搭（ModelScope）Notebook 环境中使用 LoRA 微调得到的 Qwen3-8B 模型，合并为完整 Hugging Face 模型，转换并量化为适合个人电脑运行的 GGUF 文件，最后迁移到 Apple M1、16 GB 内存的 MacBook Pro，通过 <code>llama.cpp</code> 实现命令行聊天、本地网页以及 OpenAI 兼容 API 服务。</p>
+<p>最终结果：部署成功。模型已能在本地通过 Apple Metal 加速运行，命令行聊天和 <code>llama-server</code> 均验证通过。关闭思考输出时，本地实测生成速度约为 10～12 tokens&#x2F;s。</p>
+<p>本次流程如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">LoRA 微调产物<br>  → 与 Qwen3-8B 底座模型合并<br>  → Hugging Face 完整模型（约 16 GB）<br>  → 转换为 F16 GGUF（约 16 GB）<br>  → Q4_K_M 量化（约 4.7 GB）<br>  → 从魔搭 Notebook 下载到 Mac<br>  → llama.cpp + Metal 本地推理<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-环境与最终产物"><a href="#2-环境与最终产物" class="headerlink" title="2. 环境与最终产物"></a>2. 环境与最终产物</h2><h3 id="2-1-云端环境"><a href="#2-1-云端环境" class="headerlink" title="2.1 云端环境"></a>2.1 云端环境</h3><ul>
+<li>平台：魔搭 ModelScope Notebook &#x2F; DSW</li>
+<li>系统架构：Linux x86_64</li>
+<li>工作目录：<code>/mnt/workspace</code></li>
+<li>已有 Python：Python 3.12</li>
+<li>已有 PyTorch：<code>2.10.0+cu128</code></li>
+<li>转换工具：<code>llama.cpp</code></li>
+<li>合并模型目录：<code>/mnt/workspace/models/Qwen3-8B-ai-style-merged</code></li>
+<li>GGUF 转换目录：<code>/mnt/workspace/llama.cpp</code></li>
+</ul>
+<h3 id="2-2-本地环境"><a href="#2-2-本地环境" class="headerlink" title="2.2 本地环境"></a>2.2 本地环境</h3><ul>
+<li>设备：MacBook Pro</li>
+<li>芯片：Apple M1，8 核 CPU</li>
+<li>内存：16 GB 统一内存</li>
+<li>系统架构：Darwin arm64</li>
+<li>本地 <code>llama.cpp</code>：<code>0.4.0</code>，build 10809，commit <code>5266f24da</code></li>
+<li>本地模型路径：<code>/Users/bilibili/Desktop/llm/Qwen3-8B-ai-style-Q4_K_M.gguf</code></li>
+</ul>
+<h3 id="2-3-最终产物"><a href="#2-3-最终产物" class="headerlink" title="2.3 最终产物"></a>2.3 最终产物</h3><table>
+<thead>
+<tr>
+<th>产物</th>
+<th>云端路径</th>
+<th align="right">大小</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>合并后的 Hugging Face 模型</td>
+<td><code>/mnt/workspace/models/Qwen3-8B-ai-style-merged</code></td>
+<td align="right">约 16 GB</td>
+<td>完整模型源文件</td>
+</tr>
+<tr>
+<td>F16 GGUF</td>
+<td><code>/mnt/workspace/Qwen3-8B-ai-style-F16.gguf</code></td>
+<td align="right">约 16 GB</td>
+<td>量化中间文件</td>
+</tr>
+<tr>
+<td>Q4_K_M GGUF</td>
+<td><code>/mnt/workspace/Qwen3-8B-ai-style-Q4_K_M.gguf</code></td>
+<td align="right">约 4.7 GB</td>
+<td>最终本地部署文件</td>
+</tr>
+<tr>
+<td>本地 Q4_K_M GGUF</td>
+<td><code>/Users/bilibili/Desktop/llm/Qwen3-8B-ai-style-Q4_K_M.gguf</code></td>
+<td align="right">约 4.7 GB</td>
+<td>Mac 实际运行文件</td>
+</tr>
+</tbody></table>
+<p>Q4_K_M 在模型体积、输出质量、内存占用和运行速度之间较均衡，适合 M1 16 GB 设备。</p>
+<h2 id="3-LoRA-与底座模型合并"><a href="#3-LoRA-与底座模型合并" class="headerlink" title="3. LoRA 与底座模型合并"></a>3. LoRA 与底座模型合并</h2><p>本次进入 GGUF 转换阶段前，LoRA 已经与 Qwen3-8B 底座模型合并完成。合并后的目录结构包括：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs text">Qwen3-8B-ai-style-merged/<br>├── chat_template.jinja<br>├── config.json<br>├── generation_config.json<br>├── model-00001-of-00005.safetensors<br>├── model-00002-of-00005.safetensors<br>├── model-00003-of-00005.safetensors<br>├── model-00004-of-00005.safetensors<br>├── model-00005-of-00005.safetensors<br>├── model.safetensors.index.json<br>├── tokenizer_config.json<br>└── tokenizer.json<br></code></pre></td></tr></table></figure>
+
+<p>合并模型必须同时包含模型权重、权重索引、模型配置、Tokenizer 和聊天模板。仅有 <code>adapter_model.safetensors</code> 与 <code>adapter_config.json</code> 的 LoRA 目录不能脱离底座模型独立运行。</p>
+<p>如果需要复现合并步骤，可在 LLaMA-Factory 中使用如下结构的导出配置。以下路径和模板名称是示例，实际复现时必须使用训练阶段的底座模型路径、LoRA 输出路径和相同聊天模板：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">model_name_or_path:</span> <span class="hljs-string">/mnt/workspace/models/Qwen3-8B</span><br><span class="hljs-attr">adapter_name_or_path:</span> <span class="hljs-string">/mnt/workspace/saves/qwen3-8b/lora/train_xxx</span><br><span class="hljs-attr">template:</span> <span class="hljs-string">qwen3</span><br><span class="hljs-attr">finetuning_type:</span> <span class="hljs-string">lora</span><br><br><span class="hljs-attr">export_dir:</span> <span class="hljs-string">/mnt/workspace/models/Qwen3-8B-ai-style-merged</span><br><span class="hljs-attr">export_size:</span> <span class="hljs-number">5</span><br><span class="hljs-attr">export_device:</span> <span class="hljs-string">cpu</span><br><span class="hljs-attr">export_legacy_format:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+
+<p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">llamafactory-cli <span class="hljs-built_in">export</span> merge_lora.yaml<br></code></pre></td></tr></table></figure>
+
+<p>合并完成后进行基础检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">MODEL_DIR=/mnt/workspace/models/Qwen3-8B-ai-style-merged<br><br><span class="hljs-built_in">test</span> -f <span class="hljs-string">&quot;<span class="hljs-variable">$MODEL_DIR</span>/config.json&quot;</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;模型目录正常&quot;</span><br><span class="hljs-built_in">test</span> -f <span class="hljs-string">&quot;<span class="hljs-variable">$MODEL_DIR</span>/model.safetensors.index.json&quot;</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;模型分片正常&quot;</span><br><span class="hljs-built_in">du</span> -sh <span class="hljs-string">&quot;<span class="hljs-variable">$MODEL_DIR</span>&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>本次检查结果为模型目录正常、5 个权重分片完整，总体积约 16 GB。</p>
+<h2 id="4-获取和准备-llama-cpp"><a href="#4-获取和准备-llama-cpp" class="headerlink" title="4. 获取和准备 llama.cpp"></a>4. 获取和准备 llama.cpp</h2><p>Notebook 直接访问 <code>github.com:443</code> 时出现连接超时或传输中断，因此没有继续使用常规 <code>git clone</code>。改用 GitHub 的源码下载域名 <code>codeload.github.com</code> 后，约 35.6 MB 的源码包成功下载。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /mnt/workspace<br><br>curl -L \<br>  --connect-timeout 20 \<br>  --retry 5 \<br>  --retry-delay 3 \<br>  --retry-all-errors \<br>  -o llama.cpp.tar.gz \<br>  https://codeload.github.com/ggml-org/llama.cpp/tar.gz/refs/heads/master<br><br>tar -xzf llama.cpp.tar.gz<br><span class="hljs-built_in">mv</span> llama.cpp-master llama.cpp<br><span class="hljs-built_in">cd</span> llama.cpp<br></code></pre></td></tr></table></figure>
+
+<p>源码压缩包不包含 <code>.git</code> 历史，但不影响编译、模型转换和量化。更新版本时需要重新下载源码包。</p>
+<h2 id="5-创建隔离的模型转换环境"><a href="#5-创建隔离的模型转换环境" class="headerlink" title="5. 创建隔离的模型转换环境"></a>5. 创建隔离的模型转换环境</h2><p>最初直接安装转换依赖时，requirements 指定下载约 190 MB 的 CPU 版 <code>torch==2.11.0</code>，下载源 <code>download-r2.pytorch.org</code> 速度极慢并最终超时。Notebook 系统环境已经安装 <code>torch 2.10.0+cu128</code>，因此采用“虚拟环境复用系统 PyTorch”的方案，避免重复下载并避免直接修改训练环境。</p>
+<p>创建虚拟环境：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /mnt/workspace/llama.cpp<br><br>python -m venv \<br>  --system-site-packages \<br>  /mnt/workspace/llama-convert-env<br><br><span class="hljs-built_in">source</span> /mnt/workspace/llama-convert-env/bin/activate<br></code></pre></td></tr></table></figure>
+
+<p>从依赖文件中移除固定的 PyTorch 版本，并将相对 requirements 路径改为绝对路径：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">sed \<br>  -e <span class="hljs-string">&#x27;/^[[:space:]]*torch==/d&#x27;</span> \<br>  -e <span class="hljs-string">&#x27;s|^-r \./|-r /mnt/workspace/llama.cpp/requirements/|&#x27;</span> \<br>  requirements/requirements-convert_hf_to_gguf.txt \<br>  &gt; /tmp/requirements-convert-no-torch.txt<br></code></pre></td></tr></table></figure>
+
+<p>使用阿里云 PyPI 镜像安装其余依赖：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">python -m pip install \<br>  --index-url https://mirrors.cloud.aliyuncs.com/pypi/simple \<br>  --<span class="hljs-built_in">timeout</span> 300 \<br>  --retries 10 \<br>  -r /tmp/requirements-convert-no-torch.txt<br></code></pre></td></tr></table></figure>
+
+<p>实际安装的关键版本：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">torch        2.10.0+cu128<br>numpy        1.26.4<br>protobuf     4.25.9<br>transformers 4.57.6<br></code></pre></td></tr></table></figure>
+
+<p>安装时出现了系统环境中 <code>vllm</code>、TensorBoard、OpenCV 等软件与旧版 <code>protobuf</code>、<code>numpy</code> 的依赖冲突提示。由于转换环境是独立 venv，且仅用于 GGUF 转换，这些提示没有影响转换。训练、vLLM 推理等任务不应在此转换环境中运行。</p>
+<p>验证环境：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">python -c <span class="hljs-string">&quot;</span><br><span class="hljs-string">import torch</span><br><span class="hljs-string">import numpy</span><br><span class="hljs-string">import transformers</span><br><span class="hljs-string">import gguf</span><br><span class="hljs-string">import safetensors</span><br><span class="hljs-string">import google.protobuf</span><br><span class="hljs-string">print(&#x27;torch:&#x27;, torch.__version__)</span><br><span class="hljs-string">print(&#x27;numpy:&#x27;, numpy.__version__)</span><br><span class="hljs-string">print(&#x27;protobuf:&#x27;, google.protobuf.__version__)</span><br><span class="hljs-string">print(&#x27;transformers:&#x27;, transformers.__version__)</span><br><span class="hljs-string">print(&#x27;依赖导入正常&#x27;)</span><br><span class="hljs-string">&quot;</span><br><br>python convert_hf_to_gguf.py --<span class="hljs-built_in">help</span><br></code></pre></td></tr></table></figure>
+
+<p>注意：PyPI 包名是 <code>protobuf</code>，Python 中正确的导入名是 <code>google.protobuf</code>，不是 <code>import protobuf</code>。</p>
+<h2 id="6-处理-Qwen3-Tokenizer-兼容问题"><a href="#6-处理-Qwen3-Tokenizer-兼容问题" class="headerlink" title="6. 处理 Qwen3 Tokenizer 兼容问题"></a>6. 处理 Qwen3 Tokenizer 兼容问题</h2><p>第一次转换权重时，权重张量已经开始处理，但在设置 Tokenizer 阶段失败。主要异常为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">FileNotFoundError: tokenizer.model<br>AttributeError: &#x27;list&#x27; object has no attribute &#x27;keys&#x27;<br></code></pre></td></tr></table></figure>
+
+<p>Qwen3 使用 <code>tokenizer.json</code>，没有 <code>tokenizer.model</code> 本身并不是问题；转换器会先尝试 SentencePiece，再回退到 GPT-2&#x2F;BPE Tokenizer。真正的失败原因是合并模型的 <code>tokenizer_config.json</code> 中：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;extra_special_tokens&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>  <span class="hljs-string">&quot;&lt;|im_start|&gt;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;&lt;|im_end|&gt;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;&lt;|object_ref_start|&gt;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;&lt;|object_ref_end|&gt;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;&lt;|box_start|&gt;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;&lt;|box_end|&gt;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;&lt;|quad_start|&gt;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;&lt;|quad_end|&gt;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;&lt;|vision_start|&gt;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;&lt;|vision_end|&gt;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;&lt;|vision_pad|&gt;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;&lt;|image_pad|&gt;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;&lt;|video_pad|&gt;&quot;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<p>当前 <code>transformers 4.57.6</code> 的相关代码把 <code>extra_special_tokens</code> 视为字典并调用 <code>.keys()</code>，而当前文件保存的是列表。解决方案是先备份配置，再将列表迁移到支持列表格式的 <code>additional_special_tokens</code>，保留全部特殊 token。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">MODEL_DIR=/mnt/workspace/models/Qwen3-8B-ai-style-merged<br><br><span class="hljs-built_in">test</span> -e <span class="hljs-string">&quot;<span class="hljs-variable">$MODEL_DIR</span>/tokenizer_config.json.before-gguf&quot;</span> || \<br>  <span class="hljs-built_in">cp</span> <span class="hljs-string">&quot;<span class="hljs-variable">$MODEL_DIR</span>/tokenizer_config.json&quot;</span> \<br>     <span class="hljs-string">&quot;<span class="hljs-variable">$MODEL_DIR</span>/tokenizer_config.json.before-gguf&quot;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash">python -c <span class="hljs-string">&quot;</span><br><span class="hljs-string">import json</span><br><span class="hljs-string">from pathlib import Path</span><br><span class="hljs-string"></span><br><span class="hljs-string">path = Path(&#x27;<span class="hljs-variable">$MODEL_DIR</span>/tokenizer_config.json&#x27;)</span><br><span class="hljs-string">data = json.loads(path.read_text(encoding=&#x27;utf-8&#x27;))</span><br><span class="hljs-string">extra = data.get(&#x27;extra_special_tokens&#x27;)</span><br><span class="hljs-string">additional = data.get(&#x27;additional_special_tokens&#x27;)</span><br><span class="hljs-string"></span><br><span class="hljs-string">if not isinstance(extra, list):</span><br><span class="hljs-string">    raise SystemExit(&#x27;extra_special_tokens 不是列表&#x27;)</span><br><span class="hljs-string">if additional is None:</span><br><span class="hljs-string">    additional = []</span><br><span class="hljs-string">if not isinstance(additional, list):</span><br><span class="hljs-string">    raise SystemExit(&#x27;additional_special_tokens 不是列表&#x27;)</span><br><span class="hljs-string"></span><br><span class="hljs-string">data[&#x27;additional_special_tokens&#x27;] = list(dict.fromkeys(additional + extra))</span><br><span class="hljs-string">del data[&#x27;extra_special_tokens&#x27;]</span><br><span class="hljs-string">path.write_text(</span><br><span class="hljs-string">    json.dumps(data, ensure_ascii=False, indent=2) + &#x27;\\n&#x27;,</span><br><span class="hljs-string">    encoding=&#x27;utf-8&#x27;</span><br><span class="hljs-string">)</span><br><span class="hljs-string">print(&#x27;迁移完成，共保留特殊 token：&#x27;, len(data[&#x27;additional_special_tokens&#x27;]))</span><br><span class="hljs-string">&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>修复后验证 Tokenizer 可以加载，并确认对话标记仍有有效 token ID：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">python -c <span class="hljs-string">&quot;</span><br><span class="hljs-string">from transformers import AutoTokenizer</span><br><span class="hljs-string">t = AutoTokenizer.from_pretrained(&#x27;<span class="hljs-variable">$MODEL_DIR</span>&#x27;, local_files_only=True)</span><br><span class="hljs-string">print(&#x27;Tokenizer 类型:&#x27;, type(t).__name__)</span><br><span class="hljs-string">print(&#x27;Tokenizer 长度:&#x27;, len(t))</span><br><span class="hljs-string">print(&#x27;&lt;|im_start|&gt; ID:&#x27;, t.convert_tokens_to_ids(&#x27;&lt;|im_start|&gt;&#x27;))</span><br><span class="hljs-string">print(&#x27;&lt;|im_end|&gt; ID:&#x27;, t.convert_tokens_to_ids(&#x27;&lt;|im_end|&gt;&#x27;))</span><br><span class="hljs-string">print(&#x27;Tokenizer 加载成功&#x27;)</span><br><span class="hljs-string">&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>如需回滚配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> \<br>  <span class="hljs-string">&quot;<span class="hljs-variable">$MODEL_DIR</span>/tokenizer_config.json.before-gguf&quot;</span> \<br>  <span class="hljs-string">&quot;<span class="hljs-variable">$MODEL_DIR</span>/tokenizer_config.json&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="7-将-Hugging-Face-模型转换为-F16-GGUF"><a href="#7-将-Hugging-Face-模型转换为-F16-GGUF" class="headerlink" title="7. 将 Hugging Face 模型转换为 F16 GGUF"></a>7. 将 Hugging Face 模型转换为 F16 GGUF</h2><p>Tokenizer 修复并验证通过后，重新执行转换：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /mnt/workspace/llama.cpp<br><br>python convert_hf_to_gguf.py \<br>  /mnt/workspace/models/Qwen3-8B-ai-style-merged \<br>  --outfile /mnt/workspace/Qwen3-8B-ai-style-F16.gguf \<br>  --outtype f16<br></code></pre></td></tr></table></figure>
+
+<p>日志中的转换形式符合预期：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">大型权重矩阵：torch.bfloat16 → F16<br>RMSNorm 等敏感参数：torch.bfloat16 → F32<br></code></pre></td></tr></table></figure>
+
+<p>完成后检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -lh /mnt/workspace/Qwen3-8B-ai-style-F16.gguf<br></code></pre></td></tr></table></figure>
+
+<p>本次生成的 F16 GGUF 约 16 GB。F16 文件主要作为量化输入，不适合直接在 16 GB 内存的 M1 Mac 上运行。</p>
+<h2 id="8-编译-llama-cpp-并执行-Q4-K-M-量化"><a href="#8-编译-llama-cpp-并执行-Q4-K-M-量化" class="headerlink" title="8. 编译 llama.cpp 并执行 Q4_K_M 量化"></a>8. 编译 llama.cpp 并执行 Q4_K_M 量化</h2><p>如果 <code>build/bin/llama-quantize</code>、<code>build/bin/llama-cli</code> 和 <code>build/bin/llama-server</code> 不存在，可执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /mnt/workspace/llama.cpp<br><br>cmake -B build -DCMAKE_BUILD_TYPE=Release<br><br>cmake --build build \<br>  --target llama-quantize llama-cli llama-server \<br>  -j <span class="hljs-string">&quot;<span class="hljs-subst">$(nproc)</span>&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>执行 Q4_K_M 量化：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">./build/bin/llama-quantize \<br>  /mnt/workspace/Qwen3-8B-ai-style-F16.gguf \<br>  /mnt/workspace/Qwen3-8B-ai-style-Q4_K_M.gguf \<br>  Q4_K_M<br></code></pre></td></tr></table></figure>
+
+<p>本次量化统计：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">张量进度：399 / 399<br>原始模型大小：15623.18 MiB，16.00 BPW<br>量化模型大小：4789.19 MiB，4.90 BPW<br>量化耗时：963056.87 ms，约 16 分钟<br></code></pre></td></tr></table></figure>
+
+<p>最终文件：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">/mnt/workspace/Qwen3-8B-ai-style-F16.gguf       约 16 GB<br>/mnt/workspace/Qwen3-8B-ai-style-Q4_K_M.gguf   约 4.7 GB<br></code></pre></td></tr></table></figure>
+
+<h2 id="9-在云端验证-GGUF-模型"><a href="#9-在云端验证-GGUF-模型" class="headerlink" title="9. 在云端验证 GGUF 模型"></a>9. 在云端验证 GGUF 模型</h2><p>当前使用的 <code>llama-cli 0.4.0-dev</code> 属于新版命令界面，默认会进入对话模式，不支持旧参数 <code>-cnv</code>、<code>-i</code>、<code>--interactive</code> 或 <code>--conversation</code>。因此直接运行即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /mnt/workspace/llama.cpp<br><br>./build/bin/llama-cli \<br>  -m /mnt/workspace/Qwen3-8B-ai-style-Q4_K_M.gguf \<br>  -c 4096<br></code></pre></td></tr></table></figure>
+
+<p>也可以进行一次性测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">./build/bin/llama-cli \<br>  -m /mnt/workspace/Qwen3-8B-ai-style-Q4_K_M.gguf \<br>  -p <span class="hljs-string">&quot;你好，请介绍一下你自己。&quot;</span> \<br>  -n 256 \<br>  -st \<br>  -c 4096<br></code></pre></td></tr></table></figure>
+
+<p>云端实测结果：</p>
+<ul>
+<li>模型成功加载；</li>
+<li>中文生成正常；</li>
+<li>Prompt 处理速度约 15.6 tokens&#x2F;s；</li>
+<li>生成速度约 7.2 tokens&#x2F;s；</li>
+<li>GGUF 转换和 Q4_K_M 量化均可正常推理。</li>
+</ul>
+<p>模型自我介绍仍可能使用“通义千问”等底座身份。这不能单独证明 LoRA 未生效。验证微调效果时，应使用与训练任务同类型、但不与训练集原文完全相同的提示词，并对比底座模型、合并模型和量化模型的输出。</p>
+<h2 id="10-从-Notebook-直接下载模型"><a href="#10-从-Notebook-直接下载模型" class="headerlink" title="10. 从 Notebook 直接下载模型"></a>10. 从 Notebook 直接下载模型</h2><p>最终只需迁移 Q4_K_M 文件：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">/mnt/workspace/Qwen3-8B-ai-style-Q4_K_M.gguf<br></code></pre></td></tr></table></figure>
+
+<p>下载前在 Notebook 生成 SHA-256：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sha256sum</span> /mnt/workspace/Qwen3-8B-ai-style-Q4_K_M.gguf<br></code></pre></td></tr></table></figure>
+
+<p>随后在魔搭 Notebook 左侧文件管理器中进入 <code>/mnt/workspace</code>，找到该 GGUF 文件并直接下载到 Mac。下载完成后在 Mac 校验：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">shasum -a 256 \<br>  /Users/bilibili/Desktop/llm/Qwen3-8B-ai-style-Q4_K_M.gguf<br></code></pre></td></tr></table></figure>
+
+<p>本地哈希应与 Notebook 中的哈希完全一致。直接下载成功后不需要再搬运 F16 GGUF、原始 <code>safetensors</code> 分片或云端 <code>llama.cpp</code> 源码。</p>
+<h2 id="11-在-Apple-M1-Mac-上部署-llama-cpp"><a href="#11-在-Apple-M1-Mac-上部署-llama-cpp" class="headerlink" title="11. 在 Apple M1 Mac 上部署 llama.cpp"></a>11. 在 Apple M1 Mac 上部署 llama.cpp</h2><p>通过 Homebrew 安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">brew install llama.cpp<br></code></pre></td></tr></table></figure>
+
+<p>验证版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">llama-cli --version<br></code></pre></td></tr></table></figure>
+
+<p>本次实际版本：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">version: 0.4.0 (build 10809, commit 5266f24da)<br>built with AppleClang 16.0.0.16000026 for Darwin arm64<br></code></pre></td></tr></table></figure>
+
+<p>该构建是 Apple Silicon 原生 arm64 版本，可通过 Metal 使用 M1 的统一内存和 GPU。</p>
+<h2 id="12-本地命令行运行"><a href="#12-本地命令行运行" class="headerlink" title="12. 本地命令行运行"></a>12. 本地命令行运行</h2><p>显示思考过程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">llama-cli \<br>  -m <span class="hljs-string">&quot;/Users/bilibili/Desktop/llm/Qwen3-8B-ai-style-Q4_K_M.gguf&quot;</span> \<br>  -ngl 99 \<br>  -c 4096<br></code></pre></td></tr></table></figure>
+
+<p>隐藏 Qwen3 思考过程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">llama-cli \<br>  -m <span class="hljs-string">&quot;/Users/bilibili/Desktop/llm/Qwen3-8B-ai-style-Q4_K_M.gguf&quot;</span> \<br>  -ngl 99 \<br>  -c 4096 \<br>  --reasoning off<br></code></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li><code>-m</code>：GGUF 模型路径；</li>
+<li><code>-ngl 99</code>：尽可能将模型层卸载到 Metal GPU；</li>
+<li><code>-c 4096</code>：上下文窗口为 4096 tokens；</li>
+<li><code>--reasoning off</code>：关闭思考内容展示；</li>
+<li><code>/exit</code> 或 <code>Ctrl+C</code>：退出聊天。</li>
+</ul>
+<p>本地实际验证结果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">模型格式：Q4_K - Medium<br>模型模态：text<br>Prompt 处理速度：最高约 32.6 tokens/s<br>生成速度：约 11.4～12.3 tokens/s<br>中文对话：正常<br>多轮交互：正常<br></code></pre></td></tr></table></figure>
+
+<p>如果出现明显内存压力，可将上下文降低到 2048：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">llama-cli \<br>  -m <span class="hljs-string">&quot;/Users/bilibili/Desktop/llm/Qwen3-8B-ai-style-Q4_K_M.gguf&quot;</span> \<br>  -ngl 99 \<br>  -c 2048 \<br>  --reasoning off<br></code></pre></td></tr></table></figure>
+
+<h2 id="13-启动本地网页与-API-服务"><a href="#13-启动本地网页与-API-服务" class="headerlink" title="13. 启动本地网页与 API 服务"></a>13. 启动本地网页与 API 服务</h2><p>启动 <code>llama-server</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">llama-server \<br>  -m <span class="hljs-string">&quot;/Users/bilibili/Desktop/llm/Qwen3-8B-ai-style-Q4_K_M.gguf&quot;</span> \<br>  -ngl 99 \<br>  -c 4096 \<br>  --host 127.0.0.1 \<br>  --port 8080<br></code></pre></td></tr></table></figure>
+
+<p>成功标志：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">model loaded<br>listening on http://127.0.0.1:8080<br></code></pre></td></tr></table></figure>
+
+<p>浏览器访问：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">http://127.0.0.1:8080<br></code></pre></td></tr></table></figure>
+
+<p>OpenAI 兼容接口：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">http://127.0.0.1:8080/v1/chat/completions<br></code></pre></td></tr></table></figure>
+
+<p>API 测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl http://127.0.0.1:8080/v1/chat/completions \<br>  -H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> \<br>  -d <span class="hljs-string">&#x27;&#123;</span><br><span class="hljs-string">    &quot;model&quot;: &quot;local-model&quot;,</span><br><span class="hljs-string">    &quot;messages&quot;: [</span><br><span class="hljs-string">      &#123;</span><br><span class="hljs-string">        &quot;role&quot;: &quot;user&quot;,</span><br><span class="hljs-string">        &quot;content&quot;: &quot;你好，请介绍一下自己&quot;</span><br><span class="hljs-string">      &#125;</span><br><span class="hljs-string">    ],</span><br><span class="hljs-string">    &quot;temperature&quot;: 0.7,</span><br><span class="hljs-string">    &quot;max_tokens&quot;: 256</span><br><span class="hljs-string">  &#125;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>本地服务实测：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">Prompt 评估速度：约 87.03 tokens/s<br>生成速度：约 10.13 tokens/s<br>300 tokens 总耗时：约 11.2 秒<br></code></pre></td></tr></table></figure>
+
+<p>服务日志会提示 CORS 允许所有来源且没有 API key。当前服务只绑定 <code>127.0.0.1</code>，仅本机可访问，个人本地使用风险较低。除非已经设置 API key、防火墙和访问控制，否则不要把监听地址改为 <code>0.0.0.0</code>。</p>
+<h2 id="14-故障及解决方案汇总"><a href="#14-故障及解决方案汇总" class="headerlink" title="14. 故障及解决方案汇总"></a>14. 故障及解决方案汇总</h2><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>原因</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>git clone</code> 连接 GitHub 超时</td>
+<td>Notebook 到 <code>github.com:443</code> 链路不稳定</td>
+<td>使用 <code>codeload.github.com</code> 下载源码压缩包</td>
+</tr>
+<tr>
+<td>安装转换依赖时 PyTorch 下载超时</td>
+<td><code>download-r2.pytorch.org</code> 速度极慢</td>
+<td>创建 venv，复用系统 PyTorch，并从 requirements 中排除固定 torch 版本</td>
+</tr>
+<tr>
+<td><code>import protobuf</code> 失败</td>
+<td>Python 模块名不是包名</td>
+<td>使用 <code>import google.protobuf</code></td>
+</tr>
+<tr>
+<td>转换时找不到 <code>tokenizer.model</code></td>
+<td>Qwen3 使用 <code>tokenizer.json</code> 而非 SentencePiece 文件</td>
+<td>允许转换器回退到 GPT-2&#x2F;BPE Tokenizer；该提示本身不是最终故障</td>
+</tr>
+<tr>
+<td><code>AttributeError: &#39;list&#39; object has no attribute &#39;keys&#39;</code></td>
+<td><code>extra_special_tokens</code> 是列表，但当前 Transformers 按字典处理</td>
+<td>备份配置，将列表迁移到 <code>additional_special_tokens</code></td>
+</tr>
+<tr>
+<td><code>-cnv</code>、<code>-i</code>、<code>--conversation</code> 无效</td>
+<td>新版 <code>llama-cli</code> 已调整命令接口并默认聊天</td>
+<td>不传这些旧参数，直接运行 <code>llama-cli -m ...</code></td>
+</tr>
+<tr>
+<td><code>&lt;/s&gt;</code> 被识别为非 control token</td>
+<td>Tokenizer 元数据标记与 llama.cpp 预期不同</td>
+<td>llama.cpp 运行时自动覆盖；实际推理正常，可暂时忽略</td>
+</tr>
+<tr>
+<td>Server 报 CORS 与无 API key 警告</td>
+<td>默认允许跨域且没有鉴权</td>
+<td>仅绑定 <code>127.0.0.1</code>；对外服务时再配置 API key 和网络访问控制</td>
+</tr>
+</tbody></table>
+<h2 id="15-验收结论"><a href="#15-验收结论" class="headerlink" title="15. 验收结论"></a>15. 验收结论</h2><p>本次部署已经通过以下验收项：</p>
+<ul>
+<li>LoRA 与 Qwen3-8B 底座模型已经合并为完整 Hugging Face 模型；</li>
+<li>5 个 <code>safetensors</code> 权重分片、索引、配置和 Tokenizer 文件完整；</li>
+<li>Tokenizer 兼容问题已经修复，特殊 token 得到保留；</li>
+<li>完整模型已成功转换为 F16 GGUF；</li>
+<li>F16 GGUF 已成功量化为约 4.7 GB 的 Q4_K_M GGUF；</li>
+<li>Q4_K_M 模型在云端 <code>llama-cli</code> 中成功生成中文；</li>
+<li>模型已直接下载到 Apple M1 Mac；</li>
+<li>本地 arm64 版 <code>llama.cpp</code> 已安装；</li>
+<li>Metal GPU 加速运行正常；</li>
+<li>命令行多轮聊天正常；</li>
+<li><code>--reasoning off</code> 生效；</li>
+<li><code>llama-server</code> 网页和 OpenAI 兼容接口均正常；</li>
+<li>本地生成速度约 10～12 tokens&#x2F;s，满足个人交互使用。</li>
+</ul>
+<p>综合判断：本次 Qwen3-8B LoRA 微调模型已经完成从云端训练产物到本地可用模型的完整部署，可进入日常使用、效果评估或本地应用集成阶段。</p>
+<h2 id="16-后续建议"><a href="#16-后续建议" class="headerlink" title="16. 后续建议"></a>16. 后续建议</h2><ol>
+<li>保留最终的 <code>Qwen3-8B-ai-style-Q4_K_M.gguf</code>，并将其 SHA-256 记录在独立文本中。</li>
+<li>在确认本地文件哈希一致且长期运行正常后，可删除云端约 16 GB 的 F16 中间文件。</li>
+<li>云端 Q4_K_M 文件建议短期保留作为备份。</li>
+<li>使用固定的评测问题，对比原始 Qwen3-8B、合并模型和 Q4_K_M 模型，量化微调效果与量化损失。</li>
+<li>如需集成本地应用，优先使用 <code>llama-server</code> 的 OpenAI 兼容 API，不必在应用中直接管理模型加载。</li>
+<li>如需局域网或公网访问，必须增加 API key、反向代理、TLS、防火墙和访问控制，不应直接暴露无鉴权服务。</li>
+<li>以后升级 <code>llama.cpp</code> 时，应重新进行一次命令参数和模型兼容性验证，因为当前项目命令行接口仍在快速演进。</li>
+</ol>
+<hr>
+<p>报告日期：2026-09-08<br>部署状态：已完成并通过本地验证</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BE%AE%E8%B0%83/" class="category-chain-item">微调</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/AI/" class="print-no-link">#AI</a>
+      
+        <a href="/tags/%E5%BE%AE%E8%B0%83/" class="print-no-link">#微调</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/10/01/bilibili/%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AE%B9/" title="工作内容">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">工作内容</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/08/27/FT/novel-agent%E5%BE%AE%E8%B0%83%E6%95%99%E7%A8%8B/" title="novel-agent微调教程">
+                        <span class="hidden-mobile">novel-agent微调教程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"sj2tGuxMGSDhkN5hNuOIVta1-gzGzoHsz","appKey":"ysR5OTuTzoby2oNvNyGOtXFQ","path":"window.location.pathname","placeholder":"如有问题，欢迎指正~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>AI</span> <i class="iconfont icon-love"></i> <span>LLM</span> <i class="iconfont icon-love"></i> <span>Java</span> <i class="iconfont icon-love"></i> <span>Agent</span> <i class="iconfont icon-love"></i> <span>Python</span> <i class="iconfont icon-love"></i> <span>CyberSec</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/love.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiaoxingxing.js"></script>
+<script src="/js/bubble.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>

@@ -1,0 +1,802 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/about/dogs.jpg">
+  <link rel="icon" href="/img/about/dogs.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ranzier">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="2026下半年面经    1. 虾皮一面 26.08.13（朋友面经）50min search部门 自我介绍 介绍一下vivo的实习agent是做什么的？ RAG架构怎么做的？为什么用BGE‑M3？效果怎么样？RRF选了多少个文档？为什么用RRF不用加权融合？ 你们的文档大小有多大？ 如果有一亿个文档存入你们这样的RAG架构，那最先顶不住的的是哪一个环节？ 如果要存一亿个文档的RAG怎么检索出来最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2026下半年面经">
+<meta property="og:url" content="http://example.com/2026/08/17/%E9%9D%A2%E7%BB%8F/2026%E4%B8%8B%E5%8D%8A%E5%B9%B4%E9%9D%A2%E7%BB%8F/index.html">
+<meta property="og:site_name" content="RANZIER">
+<meta property="og:description" content="2026下半年面经    1. 虾皮一面 26.08.13（朋友面经）50min search部门 自我介绍 介绍一下vivo的实习agent是做什么的？ RAG架构怎么做的？为什么用BGE‑M3？效果怎么样？RRF选了多少个文档？为什么用RRF不用加权融合？ 你们的文档大小有多大？ 如果有一亿个文档存入你们这样的RAG架构，那最先顶不住的的是哪一个环节？ 如果要存一亿个文档的RAG怎么检索出来最">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/bg/72.jpg">
+<meta property="article:published_time" content="2026-08-17T03:50:24.000Z">
+<meta property="article:modified_time" content="2026-09-03T09:20:17.000Z">
+<meta property="article:author" content="ranzier">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/bg/72.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>2026下半年面经 - RANZIER</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3846514_kabxni94auf.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/gundongtiao.css">
+<link rel="stylesheet" href="/css/bubble.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"🌟","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 80vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>RANZIER</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/suibi/" target="_self">
+                <i class="iconfont icon-pen"></i>
+                <span>随笔</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/3.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.35)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2026下半年面经"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-08-17 11:50" pubdate>
+          2026年8月17日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          本文阅读次数：<span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2026下半年面经</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 align="center">2026下半年面经</h1>
+
+
+
+<h2 id="1-虾皮一面-26-08-13（朋友面经）50min-search部门"><a href="#1-虾皮一面-26-08-13（朋友面经）50min-search部门" class="headerlink" title="1. 虾皮一面 26.08.13（朋友面经）50min search部门"></a>1. 虾皮一面 26.08.13（朋友面经）50min search部门</h2><ol>
+<li>自我介绍</li>
+<li>介绍一下vivo的实习agent是做什么的？</li>
+<li>RAG架构怎么做的？为什么用BGE‑M3？效果怎么样？RRF选了多少个文档？为什么用RRF不用加权融合？</li>
+<li>你们的文档大小有多大？</li>
+<li>如果有一亿个文档存入你们这样的RAG架构，那最先顶不住的的是哪一个环节？</li>
+<li>如果要存一亿个文档的RAG怎么检索出来最想要的那1个？查询检索时间要控制在200ms左右</li>
+<li>如果要存一亿个文档的RAG怎么RRF检索出来最想要的那5000个？</li>
+<li>做目录的话可能只能做到500w个，距离5000个还有很大的距离，进一步怎么做？</li>
+<li>RAG的效果怎么测评？召回率的计算公式是什么？如何提高召回率？你们怎么做的召回率效果的评估？</li>
+<li>Reranker模型怎么做的？</li>
+<li>知道搜索引擎吗？ES的底层原理是什么？</li>
+<li>除了RAG还做了什么？</li>
+<li>什么是ReAct？ReAct怎么停止？到了最大步数了LLM还在执行怎么办？</li>
+<li>ReAct带来的上下文快速膨胀的问题怎么解决？</li>
+<li>除了ReAct还做了哪些Agent调优工作？</li>
+<li>介绍一下Go的实习项目</li>
+<li>用户量有多大？什么叫削峰填谷？</li>
+<li>怎么保证的高可用？什么叫不可用？</li>
+<li>为什么做成这样的架构？要Go去调Python服务？</li>
+<li>你们这个Go‑Redis‑Python服务，如果有一个节点挂了怎么监控？</li>
+<li>Python服务如何监控保证100%其挂了马上就能发现？</li>
+<li>只用心跳监控和多机部署可以保证马上发现吗？</li>
+<li>做支付的时候怎么保证零掉单？只有补单机制可以快速保证零掉单吗？补单定时任务的时间是多长？</li>
+<li>零差错如何定义？</li>
+<li>实习工作中还有哪些亮点我没有问到的吗？</li>
+<li>平时用AI做过什么创造性价值的工作？</li>
+<li>反问：业务和实习生的工作内容</li>
+</ol>
+<h2 id="2-百度一面-26-8-21（朋友面经）"><a href="#2-百度一面-26-8-21（朋友面经）" class="headerlink" title="2.百度一面 26.8.21（朋友面经）"></a>2.百度一面 26.8.21（朋友面经）</h2><p>35min 智慧医疗部门</p>
+<ol>
+<li>自我介绍</li>
+<li>String是不是基础数据类型</li>
+<li>有哪些基础数据类型？</li>
+<li>说一下jvm的结构</li>
+<li>堆和栈的区别？</li>
+<li>堆栈各自满了的话会报什么错？</li>
+<li>说一下什么情况会导致栈溢出</li>
+<li>说一下api和spi的区别</li>
+<li>一个java程序要启动的话堆内存大小如何设置？</li>
+<li>介绍一下spring的IOC</li>
+<li>如何创建bean？</li>
+<li>如何使用bean？(后续面试官提示在问bean的注入方式有哪些)</li>
+<li>bean的类型？</li>
+<li>数据库对MySQL熟悉还是pgsql？</li>
+<li>说一下char和varchar的区别？</li>
+<li>如果设计一个字段是 &lt; 500字符的，要求有中英文的，那用char还是varchar？为什么？</li>
+<li>select，where，left join，order by的执行顺序？</li>
+<li>Redis的常用数据结构？</li>
+<li>mcp和agent的通信过程？</li>
+<li>mcp首次发送tools给agent，用的是什么接口？</li>
+<li>如何定义一个mcp tools？</li>
+<li>手撕：int类型的数字倒序。例如12345需要输出54321</li>
+<li>介绍实习团队，业务，工作任务和做的最好的地方。</li>
+<li>为什么上一段只实习了三个月？</li>
+<li>反问业务，实习生工作，对ai的看法</li>
+<li>继续追问平时怎么使用ai？用什么模型？</li>
+</ol>
+<h2 id="3-百度二面-26-8-24-（朋友面经）-40min"><a href="#3-百度二面-26-8-24-（朋友面经）-40min" class="headerlink" title="3. 百度二面 26.8.24 （朋友面经）   40min"></a>3. 百度二面 26.8.24 （朋友面经）   40min</h2><ol>
+<li>自我介绍</li>
+<li>开学是研一还是研二？</li>
+<li>介绍一下vivo的实习，业务，主要负责的是哪个部分，做过最有挑战的内容，如何解决的？</li>
+<li>RAG里存的是什么?混合检索怎么做的？为什么要用混合检索？权重怎么设置的？低置信度的问题如何解决？</li>
+<li>输入侧做了哪些处理？是否允许用户输入？</li>
+<li>这个agent是只有部门内部使用吗？用户量有多少？线上有没有遇到过什么问题？</li>
+<li>介绍Go实习项目。业务,负责什么部分，遇到的最大的挑战以及如何解决的？</li>
+<li>核心接口的QPS测过吗？能达到多少？优化之前呢？这个链路最耗时的地方有没有排查过问题出在哪？</li>
+<li>图数据怎么存的？知识图谱是通用的还是某一领域的？通用的知识图谱怎么确保提取的准确性？</li>
+<li>介绍Java项目，是黑马点评吗？是自己做着玩的还是真实上线了？线上有没有遇到什么问题？</li>
+<li>学校的课程里有没有涉及ai的部分，现在学校里的ai是怎么教学的？举个例子说明</li>
+<li>面试官介绍业务(15min)</li>
+<li>反问对ai的看法</li>
+</ol>
+<h2 id="4-8-26-得物一面（朋友的朋友面经）"><a href="#4-8-26-得物一面（朋友的朋友面经）" class="headerlink" title="4. 8.26 得物一面（朋友的朋友面经）"></a>4. 8.26 得物一面（朋友的朋友面经）</h2><ol>
+<li>mysql索引的原理 数据结构是什么</li>
+<li>用过什么存储引擎 了解memory吗</li>
+<li>hash和b+树在存储上的区别</li>
+<li>能给我说说四种隔离级别分别解决了什么问题吗 怎么解决的</li>
+<li>慢sql有遇到过吗 如何排查 结合explain计划说说</li>
+<li>redis缓存穿透击穿雪崩说说 如何解决</li>
+<li>redis mysql双写听说过吗 可以讲讲吗 有什么解决方法</li>
+<li>java里面 linkedlist和arraylist有什么区别 你一般用什么 在什么场景下选用什么</li>
+<li>给我说说hashmap的扩容</li>
+<li>快速排序、归并排序、堆排序的时间复杂度 空间复杂度 原理 讲讲</li>
+<li>java优先队列的底层数据结构是什么</li>
+</ol>
+<h2 id="5-快手-ai-coding题目"><a href="#5-快手-ai-coding题目" class="headerlink" title="5. 快手 ai coding题目"></a>5. 快手 ai coding题目</h2><figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs md"><span class="hljs-section"># Agent 任务编排引擎</span><br><br><span class="hljs-section">## 题目目标</span><br><br>实现一个 Agent 任务编排引擎：接收一个复合任务描述，将其拆解为多个子任务，按依赖关系编排执行，汇总结果。<br><br><span class="hljs-section">## 背景</span><br><br>CRM 龙虾平台中，运营常发出复合指令，如&quot;分析华东大区上周 GMV 异动并生成复盘报告&quot;。这类指令需要拆解为：数据拉取 → 归因分析 → 报告生成等多个子任务，子任务之间有依赖和并行关系。你需要实现一个通用的任务编排引擎。<br><br><span class="hljs-section">## 总体约束</span><br><br><span class="hljs-bullet">-</span> 不限制技术栈和编程语言<br><span class="hljs-bullet">-</span> 子任务的&quot;实际执行&quot;可以用 mock（打印日志、返回预设结果即可），考查重点在编排逻辑<br><span class="hljs-bullet">-</span> 不需要对接真实大模型做任务拆解，拆解逻辑可以用预定义的 DAG 描述<br><span class="hljs-bullet">-</span> 所有功能需要能够演示或有测试覆盖<br><br><span class="hljs-section">## 必做功能</span><br><br><span class="hljs-section">### 1. DAG 任务定义</span><br>支持用 JSON 或代码定义一个任务 DAG，每个节点包含：<br><span class="hljs-bullet">-</span> 任务 ID<br><span class="hljs-bullet">-</span> 任务名称<br><span class="hljs-bullet">-</span> 依赖的任务 ID 列表（前驱任务）<br><span class="hljs-bullet">-</span> 任务类型（用于 mock 执行时区分）<br><br>示例 DAG：<br><br><br>[<br>  &#123;&quot;id&quot;: &quot;fetch<span class="hljs-emphasis">_data&quot;, &quot;name&quot;: &quot;拉取华东大区数据&quot;, &quot;depends&quot;: [], &quot;type&quot;: &quot;data_</span>fetch&quot;&#125;,<br>  &#123;&quot;id&quot;: &quot;analyze&quot;, &quot;name&quot;: &quot;归因分析&quot;, &quot;depends&quot;: [&quot;fetch<span class="hljs-emphasis">_data&quot;], &quot;type&quot;: &quot;analysis&quot;&#125;,</span><br><span class="hljs-emphasis">  &#123;&quot;id&quot;: &quot;gen_</span>report&quot;, &quot;name&quot;: &quot;生成复盘报告&quot;, &quot;depends&quot;: [&quot;analyze&quot;], &quot;type&quot;: &quot;report&quot;&#125;,<br>  &#123;&quot;id&quot;: &quot;notify&quot;, &quot;name&quot;: &quot;通知运营&quot;, &quot;depends&quot;: [&quot;gen<span class="hljs-emphasis">_report&quot;], &quot;type&quot;: &quot;notification&quot;&#125;</span><br><span class="hljs-emphasis">]</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">### 2. 拓扑排序与执行</span><br><span class="hljs-emphasis">对 DAG 做拓扑排序，按依赖关系依次执行子任务。无依赖关系的任务可以并行执行。</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">### 3. 执行状态追踪</span><br><span class="hljs-emphasis">每个子任务有状态（pending / running / success / failed），支持：</span><br><span class="hljs-emphasis">- 查询整个 DAG 的执行进度</span><br><span class="hljs-emphasis">- 查询单个子任务的状态和结果</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">### 4. 失败处理</span><br><span class="hljs-emphasis">某个子任务失败时：</span><br><span class="hljs-emphasis">- 不执行其所有后继任务</span><br><span class="hljs-emphasis">- 标记这些后继任务为 skipped</span><br><span class="hljs-emphasis">- 已成功的任务结果保留</span><br><span class="hljs-emphasis">- 整个 DAG 标记为 failed，并记录失败原因</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">### 5. 结果汇总</span><br><span class="hljs-emphasis">DAG 执行完成后（无论成功或失败），汇总所有已完成子任务的结果，输出一份结构化的执行报告。</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">## 进阶要求（加分项）</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">- 支持子任务超时设置，超时自动标记为 failed</span><br><span class="hljs-emphasis">- 支持子任务重试（最多 N 次）</span><br><span class="hljs-emphasis">- 支持条件分支：某个子任务的结果决定后续走哪条路径</span><br><span class="hljs-emphasis">- 执行过程可视化（如 CLI 输出进度条或 Web 界面）</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">## 验收要求</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">1. 能解析 DAG 定义并按依赖顺序执行</span><br><span class="hljs-emphasis">2. 无依赖的任务能并行执行</span><br><span class="hljs-emphasis">3. 子任务失败时，后继任务被跳过，不影响已完成的任务</span><br><span class="hljs-emphasis">4. 执行报告包含所有子任务的状态和结果</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">## 交付物</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">- 完整源码</span><br><span class="hljs-emphasis">- 启动说明</span><br><span class="hljs-emphasis">- 架构与技术设计说明</span><br><span class="hljs-emphasis"></span><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="6-腾讯"><a href="#6-腾讯" class="headerlink" title="6. 腾讯"></a>6. 腾讯</h2><p><strong>场景题</strong></p>
+<p>需求就是上游有100w个任务，每个任务就是给对应的人发送push短信(这里面有sdk调用不用设计）等等<br>如何保证任务不重复不丢失的去发送</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="category-chain-item">面经</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E9%9D%A2%E8%AF%95/" class="print-no-link">#面试</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/08/18/FT/%E5%BE%AE%E8%B0%83%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/" title="微调的基本步骤">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">微调的基本步骤</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/08/17/FT/%E5%BE%AE%E8%B0%83%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="微调的基础知识">
+                        <span class="hidden-mobile">微调的基础知识</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"sj2tGuxMGSDhkN5hNuOIVta1-gzGzoHsz","appKey":"ysR5OTuTzoby2oNvNyGOtXFQ","path":"window.location.pathname","placeholder":"如有问题，欢迎指正~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>AI</span> <i class="iconfont icon-love"></i> <span>LLM</span> <i class="iconfont icon-love"></i> <span>Java</span> <i class="iconfont icon-love"></i> <span>Agent</span> <i class="iconfont icon-love"></i> <span>Python</span> <i class="iconfont icon-love"></i> <span>CyberSec</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/love.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiaoxingxing.js"></script>
+<script src="/js/bubble.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>

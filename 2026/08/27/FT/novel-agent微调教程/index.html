@@ -1,0 +1,950 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/about/dogs.jpg">
+  <link rel="icon" href="/img/about/dogs.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ranzier">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="novel-agent微调教程   1. 微调的场景与目标1.1 场景现有长篇中文小说 Agent 虽然通过提示词约束去除 AI 腔，但生成章节中仍会出现模板化句式、空泛心理描写、机械转折和过度解释等问题。  仅仅通过提示词工程的约束无法完全消除AI味的句子的生成。  1.2 目标因此计划使用 Qwen3-8B，在 A10 22GB GPU 上通过  LoRA 微调一个“局部文学编辑器”。它接收目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="novel-agent微调教程">
+<meta property="og:url" content="http://example.com/2026/08/27/FT/novel-agent%E5%BE%AE%E8%B0%83%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="RANZIER">
+<meta property="og:description" content="novel-agent微调教程   1. 微调的场景与目标1.1 场景现有长篇中文小说 Agent 虽然通过提示词约束去除 AI 腔，但生成章节中仍会出现模板化句式、空泛心理描写、机械转折和过度解释等问题。  仅仅通过提示词工程的约束无法完全消除AI味的句子的生成。  1.2 目标因此计划使用 Qwen3-8B，在 A10 22GB GPU 上通过  LoRA 微调一个“局部文学编辑器”。它接收目">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/bg/75.jpg">
+<meta property="article:published_time" content="2026-08-27T09:27:24.000Z">
+<meta property="article:modified_time" content="2026-09-10T06:54:45.000Z">
+<meta property="article:author" content="ranzier">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="微调">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/bg/75.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>novel-agent微调教程 - RANZIER</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3846514_kabxni94auf.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/gundongtiao.css">
+<link rel="stylesheet" href="/css/bubble.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"🌟","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 80vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>RANZIER</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/suibi/" target="_self">
+                <i class="iconfont icon-pen"></i>
+                <span>随笔</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/3.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.35)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="novel-agent微调教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-08-27 17:27" pubdate>
+          2026年8月27日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          30 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          本文阅读次数：<span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">novel-agent微调教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 align="center">novel-agent微调教程</h1>
+
+
+<h1 id="1-微调的场景与目标"><a href="#1-微调的场景与目标" class="headerlink" title="1. 微调的场景与目标"></a>1. 微调的场景与目标</h1><h3 id="1-1-场景"><a href="#1-1-场景" class="headerlink" title="1.1 场景"></a>1.1 场景</h3><p>现有长篇中文小说 Agent 虽然通过提示词约束去除 AI 腔，但生成章节中仍会出现模板化句式、空泛心理描写、机械转折和过度解释等问题。</p>
+<ul>
+<li>仅仅通过提示词工程的约束无法完全消除AI味的句子的生成。</li>
+</ul>
+<h3 id="1-2-目标"><a href="#1-2-目标" class="headerlink" title="1.2 目标"></a>1.2 目标</h3><p>因此计划使用 Qwen3-8B，在 A10 22GB GPU 上通过  LoRA 微调一个“局部文学编辑器”。它接收目标段落及前后文，只对句子或段落做最小幅度改写：</p>
+<ul>
+<li>去除明显 AI 腔；</li>
+<li>保持人物、剧情、时间、数字、境界、道具和因果关系不变；</li>
+<li>不新增剧情、不续写、不解释；</li>
+<li>原文自然时保持原样。<br>最终目标是把它接入现有小说生成流程，在章节生成后对高风险段落进行局部润色，使成稿更自然、更像人工写作，同时不破坏长篇小说的一致性。</li>
+</ul>
+<h3 id="1-3-现在已有的可以解决该问题的技术"><a href="#1-3-现在已有的可以解决该问题的技术" class="headerlink" title="1.3 现在已有的可以解决该问题的技术"></a>1.3 现在已有的可以解决该问题的技术</h3><h4 id="A-使用skill去AI味："><a href="#A-使用skill去AI味：" class="headerlink" title="A. 使用skill去AI味："></a>A. 使用skill去AI味：</h4><p><a target="_blank" rel="noopener" href="https://github.com/blader/humanizer">humanizer</a></p>
+<p>Humanizer 是一款面向 <strong>Claude Code &#x2F; OpenCode</strong> 环境的开源 Skill 插件，核心作用是<strong>识别并消除 AI 生成文本中的典型写作痕迹，将文本改写得更自然、更贴近人类真实写作风格</strong>。</p>
+<p><strong>局限性</strong></p>
+<ul>
+<li>本质是规则化指令工程，存在效果天花板：属于<strong>Skill 级别的指令工程</strong></li>
+<li>场景偏向通用非虚构文本，文学创作适配性极差：完全没有覆盖小说、散文等文学体裁的典型 AI 问题</li>
+<li>原生仅适配英文，中文场景效果大幅打折</li>
+</ul>
+<h4 id="B-现有微调模型去AI味"><a href="#B-现有微调模型去AI味" class="headerlink" title="B. 现有微调模型去AI味"></a>B. 现有微调模型去AI味</h4><p>魔搭社区官方发布过《我们给大模型去掉了 “AI 味”》实战教程:</p>
+<p><a target="_blank" rel="noopener" href="https://modelscope.cn/headlines/article/634?f_link_type=f_linkinlinenote&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3MWNmMjQ1NmZhNjAwN2VkLWJmMDk5NGYwYTUzOGEzMzcifQ==">我们给大模型去掉了“AI味”-大模型微调全链路实战</a></p>
+<ul>
+<li>基于 LoRA 技术微调大模型，让输出文本减少标准化 AI 腔，更贴近人类口语 &#x2F; 写作风格</li>
+<li>教程实测微调后模型的 AI 感明显降低</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>训练目标是通用评论风格，<strong>不是小说场景的局部改写</strong>，也不做 “事实不变” 约束</li>
+<li>训练的数据集不贴合网文写作的内容</li>
+</ul>
+<p><strong>Qwen 系列网文写作 LoRA</strong>：基于 Qwen2&#x2F;Qwen3 基座微调，覆盖男频、女频、玄幻、现实等题材，训练数据为优质人类网文正文，能让生成文本更符合网文叙事节奏，减少通用 AI 的书面化腔调和空泛描写。</p>
+<h3 id="1-4-微调模型-vs-中文大模型"><a href="#1-4-微调模型-vs-中文大模型" class="headerlink" title="1.4 微调模型 vs 中文大模型"></a>1.4 微调模型 vs 中文大模型</h3><p><strong>只针对段落为整体的内容进行改写</strong></p>
+<p>微调模型不一定要比先进大模型“写得更好”，它的价值可以是<strong>更便宜、更稳定、更快、更可控</strong>。</p>
+<h1 id="2-选择微调框架"><a href="#2-选择微调框架" class="headerlink" title="2. 选择微调框架"></a>2. 选择微调框架</h1><p>这里使用的是<strong>LlamaFactory</strong>大模型微调框架</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/hiyouga/LlamaFactory">LlamaFactory</a></p>
+<h1 id="3-选择微调的基础模型"><a href="#3-选择微调的基础模型" class="headerlink" title="3. 选择微调的基础模型"></a>3. 选择微调的基础模型</h1><p>最终选择：</p>
+<ol>
+<li>使用<code>Qwen/Qwen3-8B</code></li>
+</ol>
+<h3 id="资源限制"><a href="#资源限制" class="headerlink" title="资源限制"></a>资源限制</h3><ol>
+<li>受制于硬件GPU显存等的限制，这里最多选择一个<strong>7b参数量左右的小模型</strong></li>
+<li>因为写的小说是中文网文，所以最好选择<strong>中文模型</strong></li>
+</ol>
+<h3 id="选型优点"><a href="#选型优点" class="headerlink" title="选型优点"></a>选型优点</h3><ol>
+<li>中文能力和中文网文表达较稳定；</li>
+<li>是Instruct模型，指令遵循能力比 Base 模型好，适合“只改写目标段落、不能改变事实”；</li>
+<li>文本理解能力比<code>qwen2.5-7b-instruct</code>更强</li>
+<li>你的任务不是从零创作，而是“理解上下文后做局部编辑”，8B 足够</li>
+<li>ModelScope、Transformers、ms-swift 生态成熟；支持 LoRA&#x2F;QLoRA；</li>
+</ol>
+<h1 id="4-数据集的构造"><a href="#4-数据集的构造" class="headerlink" title="4. 数据集的构造"></a>4. 数据集的构造</h1><h2 id="4-1-Alpaca-格式"><a href="#4-1-Alpaca-格式" class="headerlink" title="4.1 Alpaca 格式"></a>4.1 Alpaca 格式</h2><p>在指令监督微调时，instruction 列对应的内容会与 input 列对应的内容拼接后作为提示词，即提示词为 instruction\ninput。而 output 列对应的内容为模型回答。</p>
+<p>如果指定，system 列对应的内容将被作为系统提示词。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;用户指令（必填）&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;用户输入（选填）&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;模型回答（必填）&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;系统提示词（选填）&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<p>对于上述格式的数据，dataset_info.json 中的数据集描述应为：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;数据集名称&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;file_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;data.json&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;columns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;prompt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;instruction&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;query&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;input&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;response&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;output&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;system&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;history&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;history&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>具体构造数据集示例</strong>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs json"><br><span class="hljs-punctuation">[</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网文局部编辑器。只改写表达，不得改变剧情事实、人物关系、时间、数字、专名、叙事视角和对白归属。原文自然时保持原样。只输出处理后的文本，不解释。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;去除空泛心理描写，改为更自然、克制的表达。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;这一刻，他的心中不由得涌现出了一股复杂的情绪。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;复杂的情绪在他心头翻涌。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网文局部编辑器。只改写表达，不得改变剧情事实、人物关系、时间、数字、专名、叙事视角和对白归属。原文自然时保持原样。只输出处理后的文本，不解释。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;删除冗余表达，保持原意不变。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;他缓缓地抬起了自己的右手，然后轻轻地擦拭了一下嘴角的鲜血。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;他抬起右手，擦掉嘴角的血。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网文局部编辑器。只改写表达，不得改变剧情事实、人物关系、时间、数字、专名、叙事视角和对白归属。原文自然时保持原样。只输出处理后的文本，不解释。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;如果原文已经自然，不做任何修改。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;陈默把伞搁在门后，鞋底在门槛上蹭了两下。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;陈默把伞搁在门后，鞋底在门槛上蹭了两下。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="4-2-数据集格式的建议"><a href="#4-2-数据集格式的建议" class="headerlink" title="4.2 数据集格式的建议"></a>4.2 数据集格式的建议</h2><ol>
+<li><code>system</code>固定，<code>instruction</code>尽量短一些</li>
+<li><code>input</code>的文本长度（这个尽量对应后续真实改写时的上下文长度）<ul>
+<li>70%：单句、短句改写</li>
+<li>30%：几百字段落改写样本，平衡长短，防止模型只会输出短句</li>
+</ul>
+</li>
+<li>加入<strong>原样保留样本</strong>,必须占比30%左右: <code>input</code>和<code>output</code>一样</li>
+<li>训练和实际推理的输入形式必须一致</li>
+<li><code>system</code>固定写入硬约束：不得改变事实、不得改变剧情、不得改变专名和数字等</li>
+<li><code>instruction</code> 最好使用有限、稳定的几类要求<ul>
+<li>去除空泛心理描写</li>
+<li>删除重复动作</li>
+<li>减少机械转折</li>
+<li>压缩解释性句子</li>
+<li>让对白更自然</li>
+<li>调整句子节奏</li>
+<li>保留原文，不做修改</li>
+</ul>
+</li>
+<li><code>input</code>中的文本必须完整<ul>
+<li>完整的一句话</li>
+<li>完整的几句话</li>
+<li>完整的一个段落</li>
+</ul>
+</li>
+</ol>
+<h2 id="4-3-第一版数据集构造格式示例"><a href="#4-3-第一版数据集构造格式示例" class="headerlink" title="4.3 第一版数据集构造格式示例"></a>4.3 第一版数据集构造格式示例</h2><ul>
+<li><code>system</code>和<code>instruction</code>都<strong>固定</strong></li>
+<li><code>input</code>是输入的原文内容</li>
+<li><code>output</code>是润色改写后的文章内容</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得新增、遗漏或改变任何事实信息，包括剧情、人物关系、专名、数字、时间、地点、境界、道具、因果关系和对白归属。不得续写、扩写或解释。只输出可以直接替换原文的最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请对以下文本进行最小必要的去AI腔改写；仅在确有必要时修改，原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;这一刻，他的心中不由得涌现出了一股复杂的情绪。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;此刻复杂的情绪在他的心头翻涌。&quot;</span><br><span class="hljs-punctuation">&#125;</span><br><br><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得新增、遗漏或改变任何事实信息，包括剧情、人物关系、专名、数字、时间、地点、境界、道具、因果关系和对白归属。不得续写、扩写或解释。只输出可以直接替换原文的最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请对以下文本进行最小必要的去AI腔改写；仅在确有必要时修改，原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;雨水顺着屋檐滴下来，砸在青石板上。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;雨水顺着屋檐滴下来，砸在青石板上。&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-4-数据集常见问题的解决方案"><a href="#4-4-数据集常见问题的解决方案" class="headerlink" title="4.4 数据集常见问题的解决方案"></a>4.4 数据集常见问题的解决方案</h2><h4 id="A-数据量：先做小规模高质量数据"><a href="#A-数据量：先做小规模高质量数据" class="headerlink" title="A. 数据量：先做小规模高质量数据"></a>A. 数据量：先做小规模高质量数据</h4><p>1000-&gt;3000-&gt;5000</p>
+<p>分阶段：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs dns">第一轮验证：<span class="hljs-number">1000</span> 条左右<br>正式训练：<span class="hljs-number">3000～5000</span> 条<br>多题材、多风格：<span class="hljs-number">8000～10000</span> 条以上<br></code></pre></td></tr></table></figure>
+
+<h4 id="B-样本比例"><a href="#B-样本比例" class="headerlink" title="B. 样本比例"></a>B. 样本比例</h4><p>第一轮 1000 条可以这样分：</p>
+<ol>
+<li>需要改写：700 条</li>
+<li>原样保留：300 条</li>
+</ol>
+<p>改写样本内部再覆盖这些问题，并且这些问题需要是平均的：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs">空泛心理描写<br>重复动作<br>机械转折<br>解释性复述<br>模板化收尾<br>不自然对白<br>句子节奏问题<br></code></pre></td></tr></table></figure>
+
+
+<h4 id="C-样本偏差：长度和内容要接近真实使用场景"><a href="#C-样本偏差：长度和内容要接近真实使用场景" class="headerlink" title="C. 样本偏差：长度和内容要接近真实使用场景"></a>C. 样本偏差：长度和内容要接近真实使用场景</h4><p>最重要的是，<strong>训练集要接近未来真实输入</strong><br>网文小说的特点就是以段落为一个整体内容</p>
+<p>长度比例：</p>
+<ul>
+<li>80%：<strong>完整段落</strong></li>
+<li>20%：单独句子或几个短句</li>
+</ul>
+<h4 id="D-多样性：针对多种题材的网文内容"><a href="#D-多样性：针对多种题材的网文内容" class="headerlink" title="D. 多样性：针对多种题材的网文内容"></a>D. 多样性：针对多种题材的网文内容</h4><p>不仅要支持历史小说、还支持玄幻、都市、言情等题材的小说</p>
+<p>增加多来源、多题材数据。 至少覆盖现代都市、玄幻、科幻、悬疑、言情、轻松对白、第一人称和不同叙述密度，避免把任务等同于“古风化”。</p>
+<h2 id="4-5-最终生成的数据集"><a href="#4-5-最终生成的数据集" class="headerlink" title="4.5 最终生成的数据集"></a>4.5 最终生成的数据集</h2><p>前10条展示：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得新增、遗漏或改变任何事实信息，包括剧情、人物关系、专名、数字、时间、地点、境界、道具、因果关系和对白归属。不得续写、扩写或解释。只输出可以直接替换原文的最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请对以下文本进行最小必要的去AI腔改写；仅在确有必要时修改，原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;第一声闷响从地底下炸开，然后是第二声，紧接着是两声几乎叠在一起。泥块和碎木飞起来，火药爆炸的气浪带着呛人的硫磺味灌进隘口，两道排栅从根部整个被掀起来，木桩断裂的咔嚓声尖锐刺耳，塌下来的栅栏砸在篝火堆上，火星溅得满天都是。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;第一声闷响从地底下炸开，然后是第二声，紧接着是几乎叠在了一起的两声。泥块和碎木都飞了起来，火药爆炸的气浪带着呛人的硫磺味灌进隘口，两道排栅从根部整个被掀起来，木桩断裂的咔嚓声尖锐刺耳，塌下来的栅栏砸在篝火堆上，火星溅得四处都是。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得新增、遗漏或改变任何事实信息，包括剧情、人物关系、专名、数字、时间、地点、境界、道具、因果关系和对白归属。不得续写、扩写或解释。只输出可以直接替换原文的最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请对以下文本进行最小必要的去AI腔改写；仅在确有必要时修改，原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;戍卒们围拢过来，七嘴八舌，又惊又喜。田埂一夜活下来的，疫病七日捡回命的，昨夜火光里拼杀的——这些日子，一点一点，全攒在这一刻里。从那个连戈都握不稳的李二，到执掌一屯的屯长，不过月余。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;戍卒们围拢了过来，七嘴八舌，又惊又喜。田埂那一夜活下来的，疫病七日中捡回命的，昨夜火光里拼杀的——这些日子，一点一点，全攒在这一刻里。从那个连戈都握不稳的李二，到如今执掌一屯的屯长，不过月余。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得新增、遗漏或改变任何事实信息，包括剧情、人物关系、专名、数字、时间、地点、境界、道具、因果关系和对白归属。不得续写、扩写或解释。只输出可以直接替换原文的最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请对以下文本进行最小必要的去AI腔改写；仅在确有必要时修改，原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;“军功。”李恒吐出两个字，“《军爵律》怎么写的，什长比我清楚——斩首一级，赐爵一级。立功可抵罪，斩首三级者，抵一死罪而有余。”&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;“军功。”李恒吐出两个字，“《军爵律》怎么写的，什长们应该比我清楚，斩首一级，则赐爵一级。立功可抵罪，斩首三级者，抵一死罪而有余。”&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得新增、遗漏或改变任何事实信息，包括剧情、人物关系、专名、数字、时间、地点、境界、道具、因果关系和对白归属。不得续写、扩写或解释。只输出可以直接替换原文的最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请对以下文本进行最小必要的去AI腔改写；仅在确有必要时修改，原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;赵佗在等中原的乱。他也在等。史册里那几页模糊的字——始皇崩，二世立，陈胜吴广揭竿，楚汉相争，血流成河——那是别人的劫数，是他抢窗口、攒力气的天时。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;赵佗在等中原之乱，他也在等。史册里记录下来的史实——始皇崩，二世立，陈胜吴广揭竿，楚汉相争，血流成河。正是他崛起的好时刻。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得新增、遗漏或改变任何事实信息，包括剧情、人物关系、专名、数字、时间、地点、境界、道具、因果关系和对白归属。不得续写、扩写或解释。只输出可以直接替换原文的最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请对以下文本进行最小必要的去AI腔改写；仅在确有必要时修改，原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;而眼前这个会打仗、会种地、会聚人心的屯长，是他这盘棋里，一颗刚刚被他看见的、有点意思的子。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;而眼前这个会打仗、会种地、会笼络人心的屯长，是他的这盘棋里一颗刚刚被他看到的有点意思的子。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得新增、遗漏或改变任何事实信息，包括剧情、人物关系、专名、数字、时间、地点、境界、道具、因果关系和对白归属。不得续写、扩写或解释。只输出可以直接替换原文的最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请对以下文本进行最小必要的去AI腔改写；仅在确有必要时修改，原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;严某脸上的笑意淡了些。他确实有那册子，记得分毫不差，正是周吏誊送来的。李恒这一说，等于把他预备拿来发难的“私”字，先卸了一半——账目公开，记录在册，哪里“私”了？&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;严某脸上的笑意淡了些。他确实有那册子，正是周吏誊送来的。李恒这一说，等于把他预备拿来发难的“私”字先卸了一半——账目公开并且记录在册，哪里“私”了？&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得新增、遗漏或改变任何事实信息，包括剧情、人物关系、专名、数字、时间、地点、境界、道具、因果关系和对白归属。不得续写、扩写或解释。只输出可以直接替换原文的最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请对以下文本进行最小必要的去AI腔改写；仅在确有必要时修改，原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;天光大亮时,他撑着戈,挨个清点。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;天光大亮时，他撑着戈，挨个清点。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得新增、遗漏或改变任何事实信息，包括剧情、人物关系、专名、数字、时间、地点、境界、道具、因果关系和对白归属。不得续写、扩写或解释。只输出可以直接替换原文的最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请对以下文本进行最小必要的去AI腔改写；仅在确有必要时修改，原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;而此刻他趴在这里，另一个秦烈的记忆也叠了进来——松山参将麾下总旗官，年二十五，陕西延安卫人，崇祯十二年从军，随洪承畴出关，打过锦州，最后困在松山。昨夜突围时被清军截杀，身边的弟兄全打光了，他自己背部中箭，摔下马背，被尸体压住。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;而此刻他趴在这里，另一个秦烈的记忆也叠了进来——松山参将麾下总旗官，年二十五，陕西延安卫人，崇祯十二年从军，随洪承畴出关，打过锦州，最后困在松山。昨夜突围时被清军截杀，身边的弟兄全打光了，他自己背部中箭，摔下马背，被尸体压住。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得新增、遗漏或改变任何事实信息，包括剧情、人物关系、专名、数字、时间、地点、境界、道具、因果关系和对白归属。不得续写、扩写或解释。只输出可以直接替换原文的最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请对以下文本进行最小必要的去AI腔改写；仅在确有必要时修改，原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;北边、西边,凡车上了水的田,打蔫的禾苗,正一寸一寸缓过来。叶子返青,茎秆挺直,蔫黄褪尽。一片本要枯死的苗,被那昼夜不停的水车,从死里拽了回来。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;北边、西边，但凡水车浇灌过的田地，打蔫的禾苗正一寸寸缓过劲来。叶片渐渐返青，茎秆挺直如初，枯黄的色泽尽数褪去。这片原本即将枯死的禾苗，全靠昼夜不停运转的水车，从绝境里硬生生捞了回来。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得新增、遗漏或改变任何事实信息，包括剧情、人物关系、专名、数字、时间、地点、境界、道具、因果关系和对白归属。不得续写、扩写或解释。只输出可以直接替换原文的最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请对以下文本进行最小必要的去AI腔改写；仅在确有必要时修改，原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;黑石口的隘口窄，清军扎的营栅不是砖石墙，是粗木桩打进地里、横闩藤条捆扎的排栅。这种栅栏防人攀爬没问题，但有个毛病——底下的桩根吃土不深。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;黑石口隘口地势狭窄，清军修筑的营栅并非砖石墙体，而是将粗木桩打入地底，再以藤条横捆加固的排栅。这类营栅足以防备人攀爬，却有一处短板——地底的桩根扎得并不深。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-微调训练"><a href="#5-微调训练" class="headerlink" title="5. 微调训练"></a>5. 微调训练</h1><p>下载llamafactory环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /mnt/workspace/LlamaFactory<br><br><br><br>python -m pip install -e .<br>python -m pip install -r requirements/metrics.txt<br><br><span class="hljs-built_in">hash</span> -r<br></code></pre></td></tr></table></figure>
+
+
+
+
+<p>对话命令（非思考型）：</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">llamafactory-cli chat \<br>  <span class="hljs-params">--model_name_or_path</span> <span class="hljs-string">/mnt/workspace/models/Qwen3-8B</span> \<br>  <span class="hljs-params">--template</span> qwen3 \<br>  <span class="hljs-params">--enable_thinking</span> <span class="hljs-literal">false</span> \<br>  <span class="hljs-params">--infer_backend</span> huggingface<br></code></pre></td></tr></table></figure>
+
+
+<p>训练参数(<code>qwen3_8b_ai_style_qlora_full.yaml</code>)：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment">### model</span><br><span class="hljs-attr">model_name_or_path:</span> <span class="hljs-string">/mnt/workspace/models/Qwen3-8B</span><br><span class="hljs-attr">trust_remote_code:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">quantization_bit:</span> <span class="hljs-number">4</span><br><span class="hljs-attr">quantization_method:</span> <span class="hljs-string">bitsandbytes</span><br><span class="hljs-attr">upcast_layernorm:</span> <span class="hljs-literal">true</span><br><br><span class="hljs-comment">### method</span><br><span class="hljs-attr">stage:</span> <span class="hljs-string">sft</span><br><span class="hljs-attr">do_train:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">finetuning_type:</span> <span class="hljs-string">lora</span><br><span class="hljs-attr">lora_rank:</span> <span class="hljs-number">8</span><br><span class="hljs-attr">lora_target:</span> <span class="hljs-string">all</span><br><br><span class="hljs-comment">### dataset</span><br><span class="hljs-attr">dataset:</span> <span class="hljs-string">ai_style_editing</span><br><span class="hljs-attr">dataset_dir:</span> <span class="hljs-string">/mnt/workspace/LlamaFactory/data</span><br><span class="hljs-attr">template:</span> <span class="hljs-string">qwen3</span><br><span class="hljs-attr">enable_thinking:</span> <span class="hljs-literal">false</span><br><span class="hljs-attr">cutoff_len:</span> <span class="hljs-number">1024</span><br><span class="hljs-attr">max_samples:</span> <span class="hljs-number">1000</span><br><span class="hljs-attr">overwrite_cache:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">preprocessing_num_workers:</span> <span class="hljs-number">4</span><br><span class="hljs-attr">dataloader_num_workers:</span> <span class="hljs-number">2</span><br><br><span class="hljs-comment">### output</span><br><span class="hljs-attr">output_dir:</span> <span class="hljs-string">/mnt/workspace/LlamaFactory/saves/qwen3-8b/lora/ai_style_full</span><br><span class="hljs-attr">logging_steps:</span> <span class="hljs-number">10</span><br><span class="hljs-attr">save_steps:</span> <span class="hljs-number">100</span><br><span class="hljs-attr">save_total_limit:</span> <span class="hljs-number">3</span><br><span class="hljs-attr">plot_loss:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">overwrite_output_dir:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">save_only_model:</span> <span class="hljs-literal">false</span><br><span class="hljs-attr">report_to:</span> <span class="hljs-string">none</span><br><br><span class="hljs-comment">### train</span><br><span class="hljs-attr">per_device_train_batch_size:</span> <span class="hljs-number">1</span><br><span class="hljs-attr">gradient_accumulation_steps:</span> <span class="hljs-number">8</span><br><span class="hljs-attr">learning_rate:</span> <span class="hljs-number">1.0e-4</span><br><span class="hljs-attr">num_train_epochs:</span> <span class="hljs-number">3.0</span><br><span class="hljs-attr">lr_scheduler_type:</span> <span class="hljs-string">cosine</span><br><span class="hljs-attr">warmup_steps:</span> <span class="hljs-number">38</span><br><span class="hljs-attr">bf16:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">gradient_checkpointing:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">ddp_timeout:</span> <span class="hljs-number">180000000</span><br><span class="hljs-attr">resume_from_checkpoint:</span> <span class="hljs-literal">null</span><br><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+<p>正式训练命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /mnt/workspace/LlamaFactory<br><br>CUDA_VISIBLE_DEVICES=0 \<br>llamafactory-cli train \<br>/mnt/workspace/LlamaFactory/qwen3_8b_ai_style_qlora_full.yaml<br></code></pre></td></tr></table></figure>
+
+
+<p>训练完成之后对话命令：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">llamafactory</span>-cli chat <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --model_name_or_path /mnt/workspace/models/Qwen3-<span class="hljs-number">8</span>B <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --adapter_name_or_path /mnt/workspace/LlamaFactory/saves/qwen3-<span class="hljs-number">8</span>b/lora/ai_style_full <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --template qwen3 <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --no_enable_thinking <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>  --infer_backend huggingface<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="6-测试模型"><a href="#6-测试模型" class="headerlink" title="6. 测试模型"></a>6. 测试模型</h1><p>在 data&#x2F;dataset_info.json 注册：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;ai_style_editing_test&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;file_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ai_style_editing/test.json&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;formatting&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;alpaca&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;columns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;prompt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;instruction&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;query&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;input&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;response&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;output&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;system&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>测试模型命令的yaml文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment">### model</span><br><span class="hljs-attr">model_name_or_path:</span> <span class="hljs-string">/mnt/workspace/models/Qwen3-8B</span><br><span class="hljs-attr">adapter_name_or_path:</span> <span class="hljs-string">/mnt/workspace/LlamaFactory/saves/qwen3-8b/lora/ai_style_full</span><br><span class="hljs-attr">trust_remote_code:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">quantization_bit:</span> <span class="hljs-number">4</span><br><span class="hljs-attr">quantization_method:</span> <span class="hljs-string">bnb</span><br><br><span class="hljs-comment">### method</span><br><span class="hljs-attr">stage:</span> <span class="hljs-string">sft</span><br><span class="hljs-attr">do_train:</span> <span class="hljs-literal">false</span><br><span class="hljs-attr">do_eval:</span> <span class="hljs-literal">false</span><br><span class="hljs-attr">do_predict:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">finetuning_type:</span> <span class="hljs-string">lora</span><br><br><span class="hljs-comment">### dataset</span><br><span class="hljs-attr">eval_dataset:</span> <span class="hljs-string">ai_style_editing_test</span><br><span class="hljs-attr">dataset_dir:</span> <span class="hljs-string">/mnt/workspace/LlamaFactory/data</span><br><span class="hljs-attr">template:</span> <span class="hljs-string">qwen3</span><br><span class="hljs-attr">enable_thinking:</span> <span class="hljs-literal">false</span><br><span class="hljs-attr">cutoff_len:</span> <span class="hljs-number">1024</span><br><span class="hljs-attr">max_samples:</span> <span class="hljs-number">100</span><br><span class="hljs-attr">overwrite_cache:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">preprocessing_num_workers:</span> <span class="hljs-number">4</span><br><br><span class="hljs-comment">### output</span><br><span class="hljs-attr">output_dir:</span> <span class="hljs-string">/mnt/workspace/LlamaFactory/saves/qwen3-8b/lora/ai_style_test_predictions</span><br><span class="hljs-attr">overwrite_output_dir:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">report_to:</span> <span class="hljs-string">none</span><br><br><span class="hljs-comment">### predict</span><br><span class="hljs-attr">per_device_eval_batch_size:</span> <span class="hljs-number">1</span><br><span class="hljs-attr">predict_with_generate:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">do_sample:</span> <span class="hljs-literal">false</span><br><span class="hljs-attr">max_new_tokens:</span> <span class="hljs-number">1024</span><br></code></pre></td></tr></table></figure>
+
+<p>执行测试命令：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">CUDA_VISIBLE_DEVICES</span>=<span class="hljs-number">0</span> <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>llamafactory-cli train <span class="hljs-punctuation">\</span><br><span class="hljs-punctuation"></span>/mnt/workspace/LlamaFactory/qwen3_8b_ai_style_predict.yaml<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="7-部署模型"><a href="#7-部署模型" class="headerlink" title="7. 部署模型"></a>7. 部署模型</h1><h2 id="7-1-合并模型"><a href="#7-1-合并模型" class="headerlink" title="7.1 合并模型"></a>7.1 合并模型</h2><p>合并原始模型<code>Qwen3-8B</code>和lora训练好的<code>adapter</code></p>
+<p>合并模型的参数配置:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment">### model</span><br><span class="hljs-attr">model_name_or_path:</span> <span class="hljs-string">/mnt/workspace/models/Qwen3-8B</span><br><span class="hljs-attr">adapter_name_or_path:</span> <span class="hljs-string">/mnt/workspace/LlamaFactory/saves/qwen3-8b/lora/ai_style_full</span><br><span class="hljs-attr">trust_remote_code:</span> <span class="hljs-literal">true</span><br><br><span class="hljs-comment">### method</span><br><span class="hljs-attr">finetuning_type:</span> <span class="hljs-string">lora</span><br><br><span class="hljs-comment">### dataset</span><br><span class="hljs-attr">template:</span> <span class="hljs-string">qwen3</span><br><br><span class="hljs-comment">### export</span><br><span class="hljs-attr">export_dir:</span> <span class="hljs-string">/mnt/workspace/models/Qwen3-8B-ai-style-merged</span><br><span class="hljs-attr">export_size:</span> <span class="hljs-number">4</span><br><span class="hljs-attr">export_device:</span> <span class="hljs-string">cpu</span><br><span class="hljs-attr">export_legacy_format:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+
+<p>合并的命令：</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-title">llamafactory</span>-cli ex<span class="hljs-keyword">port</span> \<br>  /mnt/workspace/<span class="hljs-type">LlamaFactory</span>/qwen3_8b_ai_style_ex<span class="hljs-keyword">port</span>.yaml<br></code></pre></td></tr></table></figure>
+
+
+
+<p>合并后模型的产物：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs text">Qwen3-8B-ai-style-merged/<br>├── chat_template.jinja<br>├── config.json<br>├── generation_config.json<br>├── model-00001-of-00005.safetensors<br>├── model-00002-of-00005.safetensors<br>├── model-00003-of-00005.safetensors<br>├── model-00004-of-00005.safetensors<br>├── model-00005-of-00005.safetensors<br>├── model.safetensors.index.json<br>├── tokenizer_config.json<br>└── tokenizer.json<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-2-将-Hugging-Face-模型转换为-F16-GGUF"><a href="#7-2-将-Hugging-Face-模型转换为-F16-GGUF" class="headerlink" title="7.2 将 Hugging Face 模型转换为 F16 GGUF"></a>7.2 将 Hugging Face 模型转换为 F16 GGUF</h2><p>Tokenizer 修复并验证通过后，重新执行转换：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /mnt/workspace/llama.cpp<br><br>python convert_hf_to_gguf.py \<br>  /mnt/workspace/models/Qwen3-8B-ai-style-merged \<br>  --outfile /mnt/workspace/Qwen3-8B-ai-style-F16.gguf \<br>  --outtype f16<br></code></pre></td></tr></table></figure>
+
+
+<p>完成后检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -lh /mnt/workspace/Qwen3-8B-ai-style-F16.gguf<br></code></pre></td></tr></table></figure>
+
+<p>本次生成的 F16 GGUF 约 16 GB。F16 文件主要作为量化输入，不适合直接在 16 GB 内存的 M1 Mac 上运行。</p>
+<h2 id="7-3-编译-llama-cpp-并执行-Q4-K-M-量化"><a href="#7-3-编译-llama-cpp-并执行-Q4-K-M-量化" class="headerlink" title="7.3 编译 llama.cpp 并执行 Q4_K_M 量化"></a>7.3 编译 llama.cpp 并执行 Q4_K_M 量化</h2><p>执行 Q4_K_M 量化：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">./build/bin/llama-quantize \<br>  /mnt/workspace/Qwen3-8B-ai-style-F16.gguf \<br>  /mnt/workspace/Qwen3-8B-ai-style-Q4_K_M.gguf \<br>  Q4_K_M<br></code></pre></td></tr></table></figure>
+
+<p>本次量化统计：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">张量进度：399 / 399<br>原始模型大小：15623.18 MiB，16.00 BPW<br>量化模型大小：4789.19 MiB，4.90 BPW<br>量化耗时：963056.87 ms，约 16 分钟<br></code></pre></td></tr></table></figure>
+
+<p>最终文件：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">/mnt/workspace/Qwen3-8B-ai-style-F16.gguf       约 16 GB<br>/mnt/workspace/Qwen3-8B-ai-style-Q4_K_M.gguf   约 4.7 GB<br></code></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="7-4-在本地电脑使用微调模型"><a href="#7-4-在本地电脑使用微调模型" class="headerlink" title="7.4 在本地电脑使用微调模型"></a>7.4 在本地电脑使用微调模型</h2><ol>
+<li>从 Notebook 直接下载模型: 最终只需迁移 Q4_K_M 文件;</li>
+<li>在 Apple M1 Mac 上部署 llama.cpp</li>
+</ol>
+<p>在本地电脑使用llama.cpp用微调模型进行推理对话</p>
+<p><strong>显示思考过程</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">llama-cli \<br>  -m <span class="hljs-string">&quot;/Users/bilibili/Desktop/llm/Qwen3-8B-ai-style-Q4_K_M.gguf&quot;</span> \<br>  -ngl 99 \<br>  -c 4096<br></code></pre></td></tr></table></figure>
+
+<p><strong>隐藏 Qwen3 思考过程</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">llama-cli \<br>  -m <span class="hljs-string">&quot;/Users/bilibili/Desktop/llm/Qwen3-8B-ai-style-Q4_K_M.gguf&quot;</span> \<br>  -ngl 99 \<br>  -c 4096 \<br>  --reasoning off<br></code></pre></td></tr></table></figure>
+
+
+<p><strong>启动本地网页与 API 服务</strong></p>
+<p>启动 <code>llama-server</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">llama-server \<br>  -m <span class="hljs-string">&quot;/Users/bilibili/Desktop/llm/Qwen3-8B-ai-style-Q4_K_M.gguf&quot;</span> \<br>  -ngl 99 \<br>  -c 4096 \<br>  -np 2 \<br>  --host 127.0.0.1 \<br>  --port 8080 \<br>  --<span class="hljs-built_in">alias</span> qwen3-ai-style \<br>  --reasoning off<br></code></pre></td></tr></table></figure>
+
+<p>浏览器访问：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">http://127.0.0.1:8080<br></code></pre></td></tr></table></figure>
+
+
+<p>OpenAI 兼容接口：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">http://127.0.0.1:8080/v1/chat/completions<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BE%AE%E8%B0%83/" class="category-chain-item">微调</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/AI/" class="print-no-link">#AI</a>
+      
+        <a href="/tags/%E5%BE%AE%E8%B0%83/" class="print-no-link">#微调</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/09/08/FT/Qwen3-8B%E5%BE%AE%E8%B0%83%E6%A8%A1%E5%9E%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/" title="Qwen3-8B 微调模型合并、量化与本地部署总结报告">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Qwen3-8B 微调模型合并、量化与本地部署总结报告</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/08/18/3d/%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3-%E4%BA%94%E7%B1%BB%E5%9B%BE%E7%BA%B8/" title="三维重建项目文档2.0">
+                        <span class="hidden-mobile">三维重建项目文档2.0</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"sj2tGuxMGSDhkN5hNuOIVta1-gzGzoHsz","appKey":"ysR5OTuTzoby2oNvNyGOtXFQ","path":"window.location.pathname","placeholder":"如有问题，欢迎指正~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>AI</span> <i class="iconfont icon-love"></i> <span>LLM</span> <i class="iconfont icon-love"></i> <span>Java</span> <i class="iconfont icon-love"></i> <span>Agent</span> <i class="iconfont icon-love"></i> <span>Python</span> <i class="iconfont icon-love"></i> <span>CyberSec</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/love.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiaoxingxing.js"></script>
+<script src="/js/bubble.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>
