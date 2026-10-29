@@ -29,7 +29,7 @@
 <meta property="og:description" content="\ResumeItem{Novel-Agent \hfill Agent应用开发&#x2F;个人项目 \hfill 2026.08-至今}\textbf{核心技术：}Python、Claude、Context Engineering、FastAPI、Qwen3-8B、QLoRA、LlamaFactory、RAG \textbf{项目简介：}面向数十万字级长篇网络小说创作场景，设计并实现集分层记忆、">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-10-03T12:56:18.000Z">
-<meta property="article:modified_time" content="2026-10-12T03:10:13.000Z">
+<meta property="article:modified_time" content="2026-10-29T12:45:29.534Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="随笔">
 <meta name="twitter:card" content="summary_large_image">
@@ -246,7 +246,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          13k 字
+          34k 字
         
       </span>
     
@@ -257,7 +257,7 @@
         
         
         
-          65 分钟
+          172 分钟
         
       </span>
     
@@ -363,7 +363,386 @@
 <p>答：这是个人项目，我负责需求分析、系统架构、写作流程编排、记忆与一致性机制、CLI 和 Web 接口、本地模型微调及部署。调用第三方模型只是基础能力，主要工作集中在上下文构造、状态管理、失败处理和完整工程闭环上。</p>
 <p><strong>24. 这个项目让你学到的最重要的一点是什么？</strong></p>
 <p>答：大模型应用的可靠性不能只依赖模型变强。对于长流程任务，数据结构、状态边界、校验机制和失败恢复往往比单次 Prompt 优化更重要。模型负责生成可能性，工程系统负责约束和保持一致性。</p>
-<h1 id="1-设计并实现三层记忆体系：短期注入最近-N-章原文保障局部连贯，中期以结构化世界状态与滚动摘要维持全局一致性，长期基于-NumPy-text-embedding-v3-语义检索召回相关情节，解决长篇小说的设定遗忘与剧情断裂问题"><a href="#1-设计并实现三层记忆体系：短期注入最近-N-章原文保障局部连贯，中期以结构化世界状态与滚动摘要维持全局一致性，长期基于-NumPy-text-embedding-v3-语义检索召回相关情节，解决长篇小说的设定遗忘与剧情断裂问题" class="headerlink" title="1. 设计并实现三层记忆体系：短期注入最近 N 章原文保障局部连贯，中期以结构化世界状态与滚动摘要维持全局一致性，长期基于 NumPy + text-embedding-v3 语义检索召回相关情节，解决长篇小说的设定遗忘与剧情断裂问题"></a>1. 设计并实现三层记忆体系：短期注入最近 N 章原文保障局部连贯，中期以结构化世界状态与滚动摘要维持全局一致性，长期基于 NumPy + text-embedding-v3 语义检索召回相关情节，解决长篇小说的设定遗忘与剧情断裂问题</h1><h2 id="1-1-个人问题"><a href="#1-1-个人问题" class="headerlink" title="1.1 个人问题"></a>1.1 个人问题</h2><h2 id="1-2-AI问题"><a href="#1-2-AI问题" class="headerlink" title="1.2 AI问题"></a>1.2 AI问题</h2><p><strong>1. 为什么要设计三层记忆，而不是把历史正文全部放进上下文？</strong></p>
+<h1 id="1-设计并实现三层记忆体系：短期注入最近-N-章原文保障局部连贯，中期以结构化世界状态与滚动摘要维持全局一致性，长期基于-NumPy-text-embedding-v3-语义检索召回相关情节，解决长篇小说的设定遗忘与剧情断裂问题"><a href="#1-设计并实现三层记忆体系：短期注入最近-N-章原文保障局部连贯，中期以结构化世界状态与滚动摘要维持全局一致性，长期基于-NumPy-text-embedding-v3-语义检索召回相关情节，解决长篇小说的设定遗忘与剧情断裂问题" class="headerlink" title="1. 设计并实现三层记忆体系：短期注入最近 N 章原文保障局部连贯，中期以结构化世界状态与滚动摘要维持全局一致性，长期基于 NumPy + text-embedding-v3 语义检索召回相关情节，解决长篇小说的设定遗忘与剧情断裂问题"></a>1. 设计并实现三层记忆体系：短期注入最近 N 章原文保障局部连贯，中期以结构化世界状态与滚动摘要维持全局一致性，长期基于 NumPy + text-embedding-v3 语义检索召回相关情节，解决长篇小说的设定遗忘与剧情断裂问题</h1><h2 id="1-1-个人问题"><a href="#1-1-个人问题" class="headerlink" title="1.1 个人问题"></a>1.1 个人问题</h2><h3 id="1-简单介绍一下这个亮点"><a href="#1-简单介绍一下这个亮点" class="headerlink" title="1. 简单介绍一下这个亮点"></a>1. 简单介绍一下这个亮点</h3><p>这个亮点主要解决的是：<strong>小说越写越长，模型无法同时记住所有内容，容易忘记设定、写断剧情。</strong> 因此，我根据不同信息的用途，设计了三层记忆：</p>
+<ul>
+<li><strong>短期记忆</strong>：直接提供最近 N 章原文，让模型接住上一章的情节、对话和人物行为，保证相邻章节连贯。</li>
+<li><strong>中期记忆</strong>：保存章节摘要和结构化世界状态，例如主角的位置、境界、人物生死和未回收伏笔，让模型掌握整本书当前的发展情况。</li>
+<li><strong>长期记忆</strong>：把历史正文转为向量，写新章节时通过语义检索找回相关片段。例如主角再次遇到某个人物，就召回他们之前的交集，补充具体细节。</li>
+</ul>
+<p><strong>核心思路是：近期内容保留原文，全局信息压缩保存，历史细节按需召回。</strong> 这样可以在有限的上下文窗口内，同时兼顾局部连贯、全局一致和历史细节，减少设定遗忘与剧情断裂。</p>
+<h3 id="2-详细展开说说这三层记忆分别是怎么实现的？"><a href="#2-详细展开说说这三层记忆分别是怎么实现的？" class="headerlink" title="2. 详细展开说说这三层记忆分别是怎么实现的？"></a>2. 详细展开说说这三层记忆分别是怎么实现的？</h3><p>结合仓库代码，这套三层记忆的实现方式是：<strong>把小说内容保存在外部文件中，每次写新章节前，按不同规则选取信息，组装进模型的上下文。</strong></p>
+<p>三层分别采用原文、结构化信息和向量检索，是因为它们承担的任务不同：</p>
+<table>
+<thead>
+<tr>
+<th>记忆层</th>
+<th>保存与使用的内容</th>
+<th>主要作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>短期记忆</td>
+<td>最近几章原文</td>
+<td>接住上一章的情节、对话和人物动作</td>
+</tr>
+<tr>
+<td>中期记忆</td>
+<td>章节摘要、当前世界状态</td>
+<td>掌握剧情进度和必须遵守的事实</td>
+</tr>
+<tr>
+<td>长期记忆</td>
+<td>从历史正文中检索出的相关片段</td>
+<td>找回摘要中没有保留的具体细节</td>
+</tr>
+</tbody></table>
+<p>下面以“准备写第 100 章”为例说明。</p>
+<p><strong>先说短期记忆。它通过直接读取最近章节文件，为新章节提供连续的叙事上下文。</strong></p>
+<p>实现位于 <a href="/D:/dev/novel-agent/novel_agent/memory/short_term.py:26">short_term.py</a>，核心函数是 <code>recent_context()</code>。</p>
+<p>程序先扫描 <code>chapters/</code> 目录，找出章节号小于 100 的已有章节，再取最近 N 章。当前默认 N 为 3，因此通常读取第 97、98、99 章。</p>
+<p>这里同时设置了两个限制：</p>
+<ul>
+<li><strong>章节数限制</strong>：默认最多 3 章。</li>
+<li><strong>字符数预算</strong>：默认约 12,000 字符，用来近似控制上下文长度。</li>
+</ul>
+<p>读取时从最近的一章开始，优先保留第 99 章，再往前加入第 98、97 章。如果预算不够，就截断较早章节，并保留它的结尾。最后再恢复成时间顺序，拼接成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs text">【第 97 章 正文】<br>……<br><br>【第 98 章 正文】<br>……<br><br>【第 99 章 正文】<br>……<br></code></pre></td></tr></table></figure>
+
+<p><strong>优先保留最近章节及其结尾，是因为新章节首先需要接住上一章最后发生的事情。</strong> 比如上一章结束时，主角正在与人对峙，某个人物刚刚负伤，这些即时信息需要尽可能完整地保留。</p>
+<p>另外，项目还从上一章的摘要中单独取出 <code>scene_ending</code>，也就是“收尾场景状态”，明确提醒模型承接最后一幕的地点、在场者、伤势和未完成动作。这部分在 <a href="/D:/dev/novel-agent/novel_agent/generate/chapter_writer.py:283">chapter_writer.py</a> 中注入。</p>
+<p><strong>中期记忆由两部分组成：章节摘要负责记录“发生过什么”，世界状态负责记录“现在是什么情况”。</strong></p>
+<p>这两部分分别保存在每本书的 <code>summaries/chapters.json</code> 和 <code>state.json</code> 中，数据结构定义在 <a href="/D:/dev/novel-agent/novel_agent/memory/state_models.py:14">state_models.py</a>。</p>
+<p>章节摘要除了约 100～200 字的剧情概述，还包含：</p>
+<ul>
+<li><code>events</code>：本章关键事件。</li>
+<li><code>characters</code>：实际出场角色。</li>
+<li><code>foreshadowing</code>：本章新埋下的伏笔。</li>
+<li><code>scene_ending</code>：本章最后一幕的即时状态。</li>
+</ul>
+<p>例如，第 20 章的摘要可能记录：</p>
+<blockquote>
+<p>主角在拍卖会上获得青铜令牌，并与商会约定三个月后交易；离城时发现有人跟踪。</p>
+</blockquote>
+<p>它保留了事件之间的关系和后续可能需要延续的情节，阅读成本远低于整章原文。</p>
+<p>世界状态则是一个随章节更新的结构化快照，主要记录：</p>
+<table>
+<thead>
+<tr>
+<th>信息</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>故事时间</td>
+<td>入门第三年秋</td>
+</tr>
+<tr>
+<td>主角境界或身份</td>
+<td>筑基初期</td>
+</tr>
+<tr>
+<td>主角位置</td>
+<td>青云城</td>
+</tr>
+<tr>
+<td>角色状态</td>
+<td>某角色存活、重伤、死亡或失踪</td>
+</tr>
+<tr>
+<td>关键物品</td>
+<td>主角当前持有青铜令牌</td>
+</tr>
+<tr>
+<td>进行中的任务或冲突</td>
+<td>正在调查商会失踪事件</td>
+</tr>
+<tr>
+<td>未回收伏笔</td>
+<td>令牌背面的符号来源不明</td>
+</tr>
+</tbody></table>
+<p><strong>摘要提供剧情脉络，状态快照提供当前事实约束。</strong> 例如，“第 20 章获得过令牌”属于历史事件；“第 80 章已经把令牌交给别人，现在不再持有”则应该体现在最新状态里。</p>
+<p>中期记忆的更新过程是这里比较有价值的实现，代码位于 <a href="/D:/dev/novel-agent/novel_agent/memory/extractor.py:103">extractor.py</a>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">上一章世界状态 + 本章正文<br>          ↓<br>LLM 抽取本章事实和状态变化<br>          ↓<br>程序校验字段、构造章节摘要<br>          ↓<br>程序将增量合并到旧状态<br>          ↓<br>得到候选的新世界状态<br></code></pre></td></tr></table></figure>
+
+<p>当前实现让 LLM 只返回<strong>本章事实和状态增量</strong>，比如：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;protagonist_location&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;青云城&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;character_updates&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;赵衡&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;重伤&quot;</span><span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;items_add&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;青铜令牌&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;items_remove&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>随后由 Python 程序执行合并：</p>
+<ul>
+<li>没有变化的字段继承旧值。</li>
+<li>已有角色按名称更新，新角色加入列表。</li>
+<li>获得的物品加入，失去的物品移除。</li>
+<li>新伏笔加入，已经回收的伏笔移除。</li>
+<li>章节号、数据结构和默认值由程序控制。</li>
+</ul>
+<p>这样可以减少模型每次重新输出完整世界状态时，遗漏旧人物、旧物品或未解决任务的问题。</p>
+<p>更新结果先作为候选数据，进入一致性校验。<strong>正常启用抽取和审查时，只有最终稿没有未解决的错误，才提交摘要和世界状态。</strong> 如果重写后仍有错误，正文会保存下来供修正，但不提交这些新记忆。</p>
+<p>写第 100 章时，中期记忆通过 <a href="/D:/dev/novel-agent/novel_agent/memory/mid_term.py:15">mid_term_block()</a> 组装进提示词：</p>
+<ul>
+<li>注入最新世界状态。</li>
+<li>跳过最近 3 章的摘要，因为它们已经有原文。</li>
+<li>从更早的章节摘要中，选取最近最多 30 条。</li>
+</ul>
+<p>如果章节齐全，默认就是注入第 67～96 章的摘要。摘要文件会持续保存各章记录，<strong>每次注入的是其中一个有限窗口</strong>。</p>
+<p>此外，伏笔和任务会记录开启的章节号。代码发现它们已经悬置至少 8 章时，会在上下文中加上“宜推进或回收”的提示。这能帮助模型注意长期没有进展的线索，但具体如何推进仍由写作模型决定。</p>
+<p><strong>长期记忆负责从更早的历史正文中找回具体细节，本质上是一条面向小说历史的 RAG 流程。</strong></p>
+<p>实现分为“写完后建索引”和“写新章前做检索”两部分。</p>
+<p>建索引时，首先把章节正文切成文本块，代码位于 <a href="/D:/dev/novel-agent/novel_agent/memory/retrieval.py:11">retrieval.py</a>。</p>
+<p>当前策略是按空行识别段落，再合并相邻段落，目标大小约为 300 字，合并时参考 450 字的上限。这样尽量保留完整段落，也能让检索结果聚焦到某个场景或细节。</p>
+<p>这里没有设置重叠窗口，而且单个超长段落不会被强制切开，所以 450 字并不是严格上限。</p>
+<p>随后调用 DashScope Embedding 接口，将每个文本块转换成向量。当前默认向量维度是 1024，接口调用按每批 10 条文本分批处理。</p>
+<p>每本书的索引保存在两个文件里：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">vectors.npy        向量矩阵，每行对应一个文本块<br>vectors_meta.json  对应文本块的 ID、章节号、原文和类型<br></code></pre></td></tr></table></figure>
+
+<p>例如，一条元数据可以是：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ch20#3&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;chapter&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">20</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;令牌背面刻着三道交错的水纹……&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;kind&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;chapter&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>写第 100 章之前，程序从本章大纲中构造检索问题。当前直接使用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">query = <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;ch.title&#125;</span>。<span class="hljs-subst">&#123;ch.summary&#125;</span> <span class="hljs-subst">&#123;ch.goal&#125;</span>&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>也就是把<strong>章节标题、情节概述、叙事目标</strong>拼接起来。假设本章要写“主角携令牌重返商会，查明令牌来源”，这些信息就用于检索历史正文。</p>
+<p>检索时，将 query 转成向量，对它和历史文本块的向量分别进行 L2 归一化，再用 NumPy 点积计算余弦相似度：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">scores = vectors @ query_vector<br></code></pre></td></tr></table></figure>
+
+<p>代码位于 <a href="/D:/dev/novel-agent/novel_agent/memory/vector.py:137">vector.py</a>。这里采用全量向量扫描，没有引入额外的向量数据库，适合当前单本书规模的简单本地存储需求。</p>
+<p>检索还会应用三个限制：</p>
+<ul>
+<li><strong>章节范围</strong>：排除当前章和未来章节。</li>
+<li><strong>近章排除</strong>：排除最近 N 章，减少与短期原文重复。</li>
+<li><strong>相关性筛选</strong>：默认最多取 4 个片段，再过滤掉相似度低于 0.3 的结果。</li>
+</ul>
+<p>所以写第 100 章、N 为 3 时，长期检索只考虑第 96 章及以前的内容。最终注入的是带章节来源的原文：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">【相关历史片段（语义召回，供保持细节一致）】<br>· [第20章] 令牌背面刻着三道交错的水纹……<br>· [第42章] 商会掌柜见到水纹后，立刻关上了门……<br></code></pre></td></tr></table></figure>
+
+<p>这样，第 20 章摘要里可能只写“获得令牌”，长期召回则可以找回令牌纹样、人物反应等具体细节。</p>
+<p>新章节通过校验后，再切块并加入向量库。如果是重写已有章节，当前实现会先删除该章旧片段，再索引新正文。缺少 Embedding Key 或召回失败时，系统会跳过长期召回，继续使用其他上下文。</p>
+<p>三层记忆最终在 <a href="/D:/dev/novel-agent/novel_agent/generate/chapter_writer.py:269">chapter_writer.py</a> 中汇合。写第 100 章时，模型大致会同时看到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs text">固定设定、人物资料、本卷信息<br>              +<br>当前世界状态、较早章节摘要<br>              +<br>与第 100 章大纲相关的历史原文片段<br>              +<br>上一章收尾场景、最近 3 章原文<br>              +<br>第 100 章细纲、节奏要求和作者要求<br>              ↓<br>生成第 100 章<br></code></pre></td></tr></table></figure>
+
+<p>这套设计的关键在于：<strong>重要的当前事实持续注入，近期叙事保留较高保真度，久远细节按相关性召回。</strong> 当前主要通过章节数、字符数、摘要条数和召回条数控制上下文；世界状态本身尚未设置严格的 token 上限。</p>
+<p>另外，简历中的模型版本需要与你的实际运行环境对齐：你写的是 <code>text-embedding-v3</code>，但当前仓库 <a href="/D:/dev/novel-agent/novel_agent/config.py:26">config.py</a> 默认配置是 <code>text-embedding-v4</code>，也支持通过 <code>EMBED_MODEL</code> 覆盖。</p>
+<h3 id="3-滚动摘要是怎么实现的？"><a href="#3-滚动摘要是怎么实现的？" class="headerlink" title="3. 滚动摘要是怎么实现的？"></a>3. 滚动摘要是怎么实现的？</h3><p>这里的“滚动摘要”，具体实现是：<strong>每写完一章就生成一条结构化摘要并保存；写下一章时，滑动选取一段历史摘要注入上下文。</strong> “滚动”发生在选取范围上，历史摘要仍然保留。</p>
+<p><strong>1. 写完一章，从正文中抽取摘要。</strong></p>
+<p>程序将“本章正文 + 上一章世界状态”交给 LLM，让它抽取本章已经发生的事实，再由 Python 构造 <code>ChapterSummary</code>，例如：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;index&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">20</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;拍卖风波&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;summary&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;主角在拍卖会上获得青铜令牌，与商会约定三个月后交易。离城时发现有人跟踪，决定绕道调查。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;events&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;获得青铜令牌&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;与商会订立交易约定&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;characters&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;主角&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;商会掌柜&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;foreshadowing&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;跟踪者身份不明&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;scene_ending&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;主角停在城外岔路口，跟踪者藏身于后方树林。&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>其中，提示词要求 <code>summary</code> 约 100～200 字；其余字段保留关键事件、人物、伏笔和结尾场景。章节号、标题等字段由程序填写。</p>
+<p>实现见 <a href="/D:/dev/novel-agent/novel_agent/memory/extractor.py:103">extractor.py</a>。</p>
+<p><strong>2. 校验通过后，按章节号保存。</strong></p>
+<p>正常启用记忆固化和一致性审查时，候选摘要通过校验后，才写入每本书的 <code>summaries/chapters.json</code>。</p>
+<p>保存采用 <code>upsert_summary()</code>：</p>
+<ul>
+<li>新章节：新增一条摘要。</li>
+<li>重写已有章节：替换该章旧摘要。</li>
+<li>保存前按章节号排序。</li>
+</ul>
+<p>所以这个文件会逐步积累各章摘要。当前流程也避免了反复根据上一版总摘要进行压缩所带来的信息损失。</p>
+<p><strong>3. 写新章节时，通过滑动窗口选取摘要。</strong></p>
+<p>核心逻辑位于 <a href="/D:/dev/novel-agent/novel_agent/memory/mid_term.py:15">mid_term.py</a>，可以简化为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 最近 N 章已提供原文，摘要区跳过这些章节</span><br>cutoff = current_chapter - recent_n<br><br>earlier = [<br>    s <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> summaries<br>    <span class="hljs-keyword">if</span> s.index &lt; cutoff<br>]<br><br><span class="hljs-comment"># 从剩余摘要中，取最近的 M 条</span><br>selected = <span class="hljs-built_in">sorted</span>(<br>    earlier, key=<span class="hljs-keyword">lambda</span> s: s.index<br>)[-max_summaries:]<br></code></pre></td></tr></table></figure>
+
+<p>当前默认配置是：</p>
+<ul>
+<li>最近 <strong>3 章</strong>提供原文。</li>
+<li>更早的章节最多注入 <strong>30 条摘要</strong>。</li>
+</ul>
+<p>假设章节齐全，窗口会这样移动：</p>
+<table>
+<thead>
+<tr>
+<th>准备写的章节</th>
+<th>短期原文</th>
+<th>注入的历史摘要</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第 100 章</td>
+<td>第 97～99 章</td>
+<td>第 67～96 章</td>
+</tr>
+<tr>
+<td>第 101 章</td>
+<td>第 98～100 章</td>
+<td>第 68～97 章</td>
+</tr>
+<tr>
+<td>第 102 章</td>
+<td>第 99～101 章</td>
+<td>第 69～98 章</td>
+</tr>
+</tbody></table>
+<p><strong>随着写作推进，较近章节从原文区进入摘要区，过于久远的摘要则移出本次上下文。</strong> 这就是这里“滚动”的含义。</p>
+<p>实际注入时，摘要区主要使用章节号、标题和 <code>summary</code> 文本：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">【前情摘要】<br>第67章《……》：……<br>第68章《……》：……<br>……<br>第96章《……》：……<br></code></pre></td></tr></table></figure>
+
+<p>上一章的 <code>scene_ending</code> 会另行注入，强调即时衔接。</p>
+<p><strong>4. 滚动摘要需要和世界状态、长期召回配合。</strong></p>
+<p>30 条摘要只能覆盖一段历史，因此全局一致性还依赖另外两种信息：</p>
+<ul>
+<li><strong>世界状态</strong>持续保留当前有效的事实，例如某角色已经死亡、主角持有哪些物品、哪些伏笔尚未回收，即使相关章节已经移出摘要窗口。</li>
+<li><strong>长期向量召回</strong>按本章内容检索更早的原文，补回具体历史细节。</li>
+</ul>
+<p>面试时可以这样表述：</p>
+<blockquote>
+<p>我采用逐章事实抽取和滑动窗口注入的方式实现滚动摘要。每章写完并通过校验后，生成一条结构化摘要，按章节号持久化；生成下一章时，跳过已经提供原文的最近几章，再选取最多 30 条历史摘要。摘要提供剧情脉络，世界状态保留跨章节有效的事实，长期检索补充窗口之外的历史细节。</p>
+</blockquote>
+<h3 id="4-结构化世界状态是什么意思，这个是怎么实现的？为什么要加入这个东西？"><a href="#4-结构化世界状态是什么意思，这个是怎么实现的？为什么要加入这个东西？" class="headerlink" title="4. 结构化世界状态是什么意思，这个是怎么实现的？为什么要加入这个东西？"></a>4. 结构化世界状态是什么意思，这个是怎么实现的？为什么要加入这个东西？</h3><p><strong>结构化世界状态，就是把“故事发展到当前时刻，哪些事实已经成立”记录成固定字段的数据。</strong> 例如主角现在在哪里、什么境界、持有什么物品，哪些人物已经死亡，哪些任务还没完成。</p>
+<p>你可以把它理解为小说的“当前进度存档”。每写完一章，就根据本章实际发生的事情更新一次，供下一章写作和一致性校验使用。</p>
+<p><strong>为什么需要它？因为摘要擅长记录事件，而写作还需要明确当前事实。</strong></p>
+<p>举个例子：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">第 10 章：主角获得青铜令牌。<br>第 30 章：主角把令牌交给师父。<br>第 50 章：主角准备进入遗迹。<br></code></pre></td></tr></table></figure>
+
+<p>写第 50 章时，如果模型只检索到第 10 章，就可能写成“主角取出令牌打开遗迹”。但令牌已经交出去了。</p>
+<p>世界状态会明确记录：<strong>主角当前持有物品中没有这枚令牌。</strong> 即使第 30 章已经移出滚动摘要窗口，这个事实仍然可以保留下来。</p>
+<p>人物死亡、境界变化、位置迁移也是同样的道理：</p>
+<table>
+<thead>
+<tr>
+<th>信息类型</th>
+<th>回答的问题</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>初始设定、人物资料</td>
+<td>世界和人物原本如何设定？</td>
+<td>主角是青云宗弟子</td>
+</tr>
+<tr>
+<td>章节摘要</td>
+<td>历史上发生过什么？</td>
+<td>主角在大战中突破境界</td>
+</tr>
+<tr>
+<td>世界状态</td>
+<td>现在是什么情况？</td>
+<td>主角当前筑基初期，身处青云城</td>
+</tr>
+</tbody></table>
+<p>这三类信息分别承担不同作用。</p>
+<p><strong>在项目里，“结构化”首先体现在固定的数据模型上。</strong></p>
+<p>仓库通过 Python <code>dataclass</code> 定义 <code>WorldState</code>，再持久化为每本书的 <code>state.json</code>。一个简化示例是：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;last_chapter&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">30</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;timeline&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;入门第三年秋&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;protagonist_tier&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;筑基初期&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;protagonist_location&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;青云城&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;characters&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;赵衡&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;power_tier&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;炼气九层&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;重伤&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;location&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;青云宗&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;note&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;正在养伤&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;items&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;疗伤丹&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;宗门信物&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;open_threads&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;调查商会失踪事件&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;planted_chapter&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">25</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;foreshadowing&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;令牌背面的水纹来源不明&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;planted_chapter&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">10</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>这里的字段有明确含义：</p>
+<ul>
+<li><code>last_chapter</code>：状态更新到哪一章。</li>
+<li><code>protagonist_tier/location</code>：主角当前境界、身份层级和位置。</li>
+<li><code>characters</code>：各角色当前的生死、伤势、位置等状态。</li>
+<li><code>items</code>：主角当前持有的关键物品。</li>
+<li><code>open_threads</code>：尚未完成的任务、冲突或线索。</li>
+<li><code>foreshadowing</code>：尚未回收的伏笔，并记录埋设章节。</li>
+</ul>
+<p>具体定义见 <a href="/D:/dev/novel-agent/novel_agent/memory/state_models.py:81">state_models.py</a>。</p>
+<p>固定字段让程序能够准确读取和更新信息。例如，判断角色状态可以直接读取 <code>status</code>，无需每次从一大段叙述中重新寻找答案。</p>
+<p><strong>状态更新采用“LLM 抽取变化，程序负责合并”的方式。</strong></p>
+<p>每写完一章，程序会把上一章的世界状态和本章正文一起交给事实抽取模型，要求它只提取正文明确发生的变化。</p>
+<p>假设这一章发生了三件事：</p>
+<blockquote>
+<p>主角从青云城返回宗门，获得一把长剑，并把疗伤丹交给赵衡。</p>
+</blockquote>
+<p>模型需要返回的状态增量大致是：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;protagonist_location&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;青云宗&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;items_add&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;长剑&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;items_remove&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;疗伤丹&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;character_updates&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后由 Python 程序确定性地合并：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs text">旧状态<br>  位置：青云城<br>  物品：疗伤丹、宗门信物<br>          +<br>本章变化<br>  位置改为青云宗<br>  新增长剑<br>  移除疗伤丹<br>          ↓<br>候选新状态<br>  位置：青云宗<br>  物品：宗门信物、长剑<br></code></pre></td></tr></table></figure>
+
+<p>核心原则是：<strong>本章没有明确变化的信息，继续继承旧值。</strong></p>
+<p>所以，某个角色本章没有出场，他的状态也会继续保留；某条伏笔本章没有提及，也会继续留在未回收列表里。这能减少模型重新生成整份状态时遗漏历史信息的问题。</p>
+<p>角色按名字匹配更新，物品通过新增和移除列表更新，任务和伏笔通过开启、解决或回收操作更新。章节号、默认值和最终数据结构由程序控制。实现见 <a href="/D:/dev/novel-agent/novel_agent/memory/extractor.py:490">extractor.py</a>。</p>
+<p><strong>抽取出来的状态还要经过校验，才能成为后续使用的正式状态。</strong></p>
+<p>正常启用记忆固化和审查时，流程是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">生成本章正文<br>    ↓<br>抽取本章事实与状态变化<br>    ↓<br>合并出候选新状态<br>    ↓<br>一致性校验<br>    ↓<br>通过后保存 state.json<br></code></pre></td></tr></table></figure>
+
+<p>一致性校验同时拿到旧状态、新状态和正文，可以对照检查变化是否合理。如果发现硬伤，就触发重写，并重新抽取这一稿的状态。</p>
+<p>最终仍有错误时，正文会保存下来供人工修正，但世界状态保留此前的版本，避免错误直接进入正式状态。这个提交控制在 <a href="/D:/dev/novel-agent/novel_agent/engine.py:230">engine.py</a> 中。</p>
+<p><strong>写下一章时，程序会把 JSON 状态转换成模型容易理解的文本，再注入提示词。</strong></p>
+<p>例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">【当前世界状态】（截至第 31 章）<br>主角境界：筑基初期<br>主角位置：青云宗<br>主角持有：宗门信物、长剑<br>在场/相关角色：<br>  · 赵衡（炼气九层，重伤）位于青云宗；正在养伤<br>进行中的冲突/任务：<br>  · 调查商会失踪事件<br>未回收伏笔：<br>  · 令牌背面的水纹来源不明<br></code></pre></td></tr></table></figure>
+
+<p>已死亡角色还会单独列出，明确提醒模型避免让他们再次正常出场。相同的结构化状态也会用于后续审查，因此它同时承担了<strong>生成前提供约束、生成后提供校验依据</strong>的作用。</p>
+<p>面试时可以这样说：</p>
+<blockquote>
+<p>我维护了一份随章节更新的结构化世界状态，记录主角境界、位置、角色状态、关键物品和未完成线索。每章写完后，让 LLM 抽取明确发生的状态增量，由程序合并到旧状态，校验通过后再提交。下一章生成时持续注入这份状态，减少仅靠摘要或语义检索时遗漏关键事实的问题。</p>
+</blockquote>
+<h3 id="5-NumPy-text-embedding-v4-语义检索召回相关情节：为什么使用NumPy-历史片段的召回仅仅使用了语义检索召回吗？"><a href="#5-NumPy-text-embedding-v4-语义检索召回相关情节：为什么使用NumPy-历史片段的召回仅仅使用了语义检索召回吗？" class="headerlink" title="5. NumPy + text-embedding-v4 语义检索召回相关情节：为什么使用NumPy?历史片段的召回仅仅使用了语义检索召回吗？"></a>5. NumPy + text-embedding-v4 语义检索召回相关情节：为什么使用NumPy?历史片段的召回仅仅使用了语义检索召回吗？</h3><p><strong>NumPy 负责保存向量、计算相似度，text-embedding-v4 负责把文本转换成语义向量。当前历史正文片段的召回，确实只使用了语义向量检索，同时加了章节范围过滤和相似度阈值。</strong></p>
+<p>先说为什么使用 NumPy。</p>
+<p>这个项目的向量数据按书隔离，每本书维护自己的向量矩阵。当前检索需求比较简单：根据本章大纲，从历史片段中找到最相关的几段。因此选择 NumPy 做本地全量相似度计算，可以减少部署和维护成本。</p>
+<p>具体有三个考虑：</p>
+<ul>
+<li><strong>数据规模相对有限。</strong> 例如，假设一本书有 5,000 个片段，每个片段是 1,024 维 <code>float32</code> 向量，原始矩阵大约占 20 MB，能够直接放进内存。</li>
+<li><strong>检索操作简单。</strong> 当前只需要余弦相似度、Top-K 和章节过滤，NumPy 就能完成。</li>
+<li><strong>便于本地持久化和迁移。</strong> 每本书只需要一个 <code>vectors.npy</code> 和一个 <code>vectors_meta.json</code>，无需额外启动数据库服务。</li>
+</ul>
+<p>具体实现见 <a href="/D:/dev/novel-agent/novel_agent/memory/vector.py:35">vector.py</a>。入库时先对向量进行 L2 归一化，检索时对查询向量也做归一化：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># vectors：历史片段向量矩阵，形状为 [片段数, 向量维度]</span><br><span class="hljs-comment"># query_vector：当前查询向量，形状为 [向量维度]</span><br>scores = vectors @ query_vector<br></code></pre></td></tr></table></figure>
+
+<p>归一化以后，点积就是余弦相似度。随后使用 <code>np.argpartition()</code> 选出 Top-K，再对这些结果排序。</p>
+<p><strong>这里选择 NumPy 的理由是当前规模下实现简单、依赖较少，不能据此说它的检索性能优于专业向量数据库。</strong> 当前采用全量扫描，相似度计算量随片段数量和向量维度增长，代码中没有建立近似最近邻索引。</p>
+<p>再说“是不是只用了语义检索”。</p>
+<p><strong>如果限定为“从历史正文里召回片段”，答案是：是的，目前是单路向量召回。</strong> 当前流程是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs text">本章标题 + 情节概述 + 叙事目标<br>                ↓<br>text-embedding-v4 转换为查询向量<br>                ↓<br>与历史片段计算余弦相似度<br>                ↓<br>屏蔽当前章、未来章节及最近 N 章<br>                ↓<br>选取 Top-K，过滤低于相似度阈值的结果<br>                ↓<br>将历史片段原文及来源章节注入提示词<br></code></pre></td></tr></table></figure>
+
+<p>查询文本在 <a href="/D:/dev/novel-agent/novel_agent/engine.py:60">engine.py</a> 中构造：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">query = <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;ch.title&#125;</span>。<span class="hljs-subst">&#123;ch.summary&#125;</span> <span class="hljs-subst">&#123;ch.goal&#125;</span>&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>当前默认最多召回 <strong>4 个片段</strong>，相似度阈值为 <strong>0.3</strong>。实际返回数量可能少于 4，甚至为零。</p>
+<p>需要区分两类操作：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>当前是否实现</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>向量语义检索</td>
+<td>是</td>
+<td>找语义相关的历史片段</td>
+</tr>
+<tr>
+<td>章节范围过滤</td>
+<td>是</td>
+<td>排除当前章、未来章和最近 N 章</td>
+</tr>
+<tr>
+<td>相似度阈值过滤</td>
+<td>是</td>
+<td>去掉相关性分数过低的结果</td>
+</tr>
+<tr>
+<td>关键词／BM25 检索</td>
+<td>否</td>
+<td>当前没有独立的关键词召回通道</td>
+</tr>
+<tr>
+<td>多路结果融合</td>
+<td>否</td>
+<td>当前没有混合检索</td>
+</tr>
+<tr>
+<td>独立 Reranker 重排</td>
+<td>否</td>
+<td>当前直接按向量相似度排序</td>
+</tr>
+</tbody></table>
+<p><strong>章节过滤和阈值过滤属于检索约束，不构成新的召回通道。</strong></p>
+<p>不过，写作模型获得的历史信息并不只有这一路：最近章节原文直接读取，滚动摘要按章节窗口选取，世界状态直接加载。这些都与向量召回一起进入上下文，但它们不属于历史正文的语义检索。</p>
+<p>只用语义检索也有边界。例如，本章写“主角向掌柜出示青铜令牌”，检索可能找到另一场语义相似的“出示令牌”情节，却漏掉更早章节对<strong>这枚令牌纹样</strong>的具体描述。人物名、物品名和精确细节，不一定仅凭整体语义相似度就能准确匹配。</p>
+<p>如果后续改进，可以考虑：</p>
+<ul>
+<li>加入关键词检索，补充人物名、地名、物品名等精确匹配。</li>
+<li>为片段增加人物、地点、物品标签，支持实体过滤。</li>
+<li>先扩大候选集，再用 Reranker 判断哪些片段最有助于本章写作。</li>
+</ul>
+<p>这些属于后续改进方向，当前代码尚未实现。</p>
+<p>面试时可以这样回答：</p>
+<blockquote>
+<p>我采用 NumPy，是因为项目按单本书管理向量，当前数据量和检索需求适合直接在内存中计算余弦相似度，可以减少额外服务和维护成本。目前历史片段采用单路语义召回，结合章节过滤、Top-K 和相似度阈值；同时通过结构化状态和滚动摘要补充上下文。后续针对专有名词和具体细节的漏召回，可以加入关键词检索、实体标签和重排。</p>
+</blockquote>
+<h2 id="1-2-AI问题"><a href="#1-2-AI问题" class="headerlink" title="1.2 AI问题"></a>1.2 AI问题</h2><p><strong>1. 为什么要设计三层记忆，而不是把历史正文全部放进上下文？</strong></p>
 <p>答：长篇小说正文会快速超过模型上下文，而且大量历史内容与当前章节无关。三层记忆按信息粒度拆分：短期保留最近章节的高保真文本，中期保存全局状态和剧情摘要，长期按当前章节需求检索历史细节，在连贯性、上下文长度和调用成本之间取得平衡。</p>
 <p><strong>2. 写第 N 章时，三层记忆如何进入生成流程？</strong></p>
 <p>答：系统首先根据本章标题、摘要和叙事目标构造查询，召回相关历史片段；随后读取最近章节、世界状态和历史摘要，将三层记忆分别注入写作 Prompt。生成结束后，再抽取摘要和状态变化，通过校验后持久化并建立向量索引。</p>
@@ -410,7 +789,338 @@
 <p><strong>20. 如何证明三层记忆确实改善了长篇连贯性？</strong></p>
 <p>答：当前实现证明了三层记忆、状态合并和异常保护机制能够形成完整闭环，但还缺少严格的端到端消融实验。</p>
 <p>可以设置“无记忆、仅短期、短期加中期、完整三层”四组实验，在相同大纲和生成参数下连续生成，再比较人物状态冲突率、设定违背率、预埋事实召回率和人工偏好。</p>
-<h1 id="2-构建规则引擎与-LLM-语义审查结合的一致性校验机制，支持自动重写，并通过事务性记忆提交阻断错误状态传播"><a href="#2-构建规则引擎与-LLM-语义审查结合的一致性校验机制，支持自动重写，并通过事务性记忆提交阻断错误状态传播" class="headerlink" title="2. 构建规则引擎与 LLM 语义审查结合的一致性校验机制，支持自动重写，并通过事务性记忆提交阻断错误状态传播"></a>2. 构建规则引擎与 LLM 语义审查结合的一致性校验机制，支持自动重写，并通过事务性记忆提交阻断错误状态传播</h1><h2 id="2-1-个人问题"><a href="#2-1-个人问题" class="headerlink" title="2.1 个人问题"></a>2.1 个人问题</h2><h2 id="2-2-AI问题"><a href="#2-2-AI问题" class="headerlink" title="2.2 AI问题"></a>2.2 AI问题</h2><p><strong>1. 请整体介绍一下这套一致性校验机制。</strong></p>
+<h1 id="2-构建规则引擎与-LLM-语义审查结合的一致性校验机制，支持自动重写，并通过事务性记忆提交阻断错误状态传播"><a href="#2-构建规则引擎与-LLM-语义审查结合的一致性校验机制，支持自动重写，并通过事务性记忆提交阻断错误状态传播" class="headerlink" title="2. 构建规则引擎与 LLM 语义审查结合的一致性校验机制，支持自动重写，并通过事务性记忆提交阻断错误状态传播"></a>2. 构建规则引擎与 LLM 语义审查结合的一致性校验机制，支持自动重写，并通过事务性记忆提交阻断错误状态传播</h1><h2 id="2-1-个人问题"><a href="#2-1-个人问题" class="headerlink" title="2.1 个人问题"></a>2.1 个人问题</h2><h3 id="1-介绍一下这个亮点实现了什么？他解决了什么问题？"><a href="#1-介绍一下这个亮点实现了什么？他解决了什么问题？" class="headerlink" title="1. 介绍一下这个亮点实现了什么？他解决了什么问题？"></a>1. 介绍一下这个亮点实现了什么？他解决了什么问题？</h3><p><strong>这个亮点实现了一个“生成 → 检查 → 修正 → 提交记忆”的闭环，主要解决两件事：发现并修复章节中的设定矛盾，以及防止这些错误被写进记忆、影响后续章节。</strong></p>
+<p>长篇生成中，错误往往会不断累积。例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">第 20 章：赵衡已经死亡<br>          ↓<br>第 30 章：模型误写赵衡再次出场<br>          ↓<br>如果直接更新摘要和世界状态<br>          ↓<br>后续章节可能继续围绕赵衡展开剧情<br></code></pre></td></tr></table></figure>
+
+<p>一处局部错误就可能变成后续生成的依据。因此，除了写作前提供记忆，还需要在写作后检查，并控制哪些内容可以成为新的记忆。</p>
+<p><strong>第一部分是规则校验，用 Python 检查可以明确比较的事实。</strong></p>
+<p>当前项目采用的是轻量规则函数，实现位于 <a href="/D:/dev/novel-agent/novel_agent/editor/checker.py:89">checker.py</a>。它主要对照人物库、上一章世界状态、本章摘要和候选新状态进行检查。</p>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>实现方式</th>
+<th>当前处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>已死亡角色再次出场</td>
+<td>比较旧状态的死亡名单与本章出场名单</td>
+<td>错误</td>
+</tr>
+<tr>
+<td>主角境界倒退</td>
+<td>将境界映射成等级序号，比较新旧等级</td>
+<td>错误</td>
+</tr>
+<tr>
+<td>配角境界疑似倒退</td>
+<td>比较同名角色的新旧境界等级</td>
+<td>警告</td>
+</tr>
+<tr>
+<td>出现未知角色名</td>
+<td>对照人物名、别名及旧状态中的角色</td>
+<td>警告</td>
+</tr>
+</tbody></table>
+<p>未知角色只标记为警告，是因为小说允许引入新人物，需要区分正常创作与人物名字漂移。</p>
+<p>此外，在事实抽取之前，还会检查正文是否为空、结尾是否疑似截断、部分引号是否成对，减少基于残缺正文更新记忆的情况。</p>
+<p><strong>第二部分是 LLM 语义审查，补充代码难以覆盖的情节判断。</strong></p>
+<p>例如设定规定：</p>
+<blockquote>
+<p>主角的能力每天只能使用一次。</p>
+</blockquote>
+<p>本章却写主角在同一天连续使用两次。这种矛盾涉及时间、动作和能力限制之间的关系，适合交给 LLM 阅读正文后判断。</p>
+<p>当前语义审查会提供世界规则、力量体系、金手指限制，以及旧状态中的主角境界、死亡名单和未回收伏笔，要求模型检查：</p>
+<ul>
+<li>时间顺序是否矛盾。</li>
+<li>是否违反世界规则或力量体系。</li>
+<li>能力是否突破既定限制。</li>
+<li>是否与人物生死、伏笔信息冲突。</li>
+</ul>
+<p>模型输出结构化问题，包括严重程度、类别、具体描述和正文证据。规则结果与语义审查结果随后合并。</p>
+<p><strong>两种检查的配合价值在于：规则对明确字段做稳定比较，LLM 处理需要理解上下文的矛盾。</strong> 规则检查本身仍依赖事实抽取是否准确，语义审查也可能误判或漏判。</p>
+<p><strong>第三部分是自动重写，把检查结果变成下一稿的修正要求。</strong></p>
+<p>发现 <code>error</code> 且还有重写额度时，程序将错误描述加入写作提示词，例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">【重写要求】<br>- 已死亡角色“赵衡”在本章再次出场。<br>- 主角境界从筑基期退回炼气期。<br></code></pre></td></tr></table></figure>
+
+<p>随后重新生成整章，并再次执行事实抽取和一致性校验。</p>
+<p>这里有两个实现细节：</p>
+<ul>
+<li><strong>每稿都重新抽取摘要和状态</strong>，避免沿用上一稿的数据。</li>
+<li><strong>每稿都从同一份旧状态出发</strong>，避免错误候选状态成为重写依据。</li>
+</ul>
+<p>当前警告不会单独触发自动重写；硬错误才会。重写次数由 <code>max_rewrites</code> 限制，防止无限循环。</p>
+<p><strong>第四部分是提交控制：候选状态通过检查后，才能进入正式记忆。</strong></p>
+<p>正常启用固化和审查时，流程如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs text">上一章正式状态<br>      ↓<br>生成本章 → 抽取候选摘要、候选新状态<br>      ↓<br>规则检查 + LLM 语义审查<br>      ├─ 存在错误且可重写 → 重新生成<br>      ├─ 最终仍有错误 → 保留正文，阻止新记忆提交<br>      └─ 无未解决错误 → 保存摘要、更新状态、建立向量索引<br></code></pre></td></tr></table></figure>
+
+<p>具体控制在 <a href="/D:/dev/novel-agent/novel_agent/engine.py:230">engine.py</a>。</p>
+<p>例如，第 30 章误写赵衡复活，即使抽取器已经生成了一份候选状态，也不会立即覆盖 <code>state.json</code>。最终错误没有解决时，新的摘要、世界状态和向量索引都不会提交，已有正式状态继续保留。</p>
+<p>这解决的是：<strong>避免把已发现的错误固化成后续章节反复使用的事实。</strong></p>
+<p>这里的“事务性”准确来说是<strong>业务层的先校验、后提交</strong>，当前多个文件的写入并不具备数据库事务那样的整体原子性。另外，失败正文仍会保存，而短期记忆会读取正文，因此错误章节仍需要修正；当前语义审查接口失败时也会跳过该项检查，不能表述为完全杜绝错误传播。</p>
+<p>面试时可以这样介绍：</p>
+<blockquote>
+<p>我为长篇生成增加了写后校验与修复闭环：用确定性规则检查人物生死、境界变化等结构化矛盾，再用 LLM 审查世界规则、能力限制等语义问题。发现硬错误后，将具体问题反馈给写作模型进行有限次数重写。摘要和世界状态先作为候选结果，只有没有未解决错误时才提交，从而减少局部生成错误被固化进记忆、持续影响后续章节的问题。</p>
+</blockquote>
+<h3 id="2-规则引擎与-LLM-语义审查具体是怎么实现的？另外他们审查的内容有哪些？这里使用的对照事实有哪些，是从哪里提取出来的？"><a href="#2-规则引擎与-LLM-语义审查具体是怎么实现的？另外他们审查的内容有哪些？这里使用的对照事实有哪些，是从哪里提取出来的？" class="headerlink" title="2. 规则引擎与 LLM 语义审查具体是怎么实现的？另外他们审查的内容有哪些？这里使用的对照事实有哪些，是从哪里提取出来的？"></a>2. 规则引擎与 LLM 语义审查具体是怎么实现的？另外他们审查的内容有哪些？这里使用的对照事实有哪些，是从哪里提取出来的？</h3><p>结合当前代码，<strong>规则校验主要比较结构化字段，LLM 审查主要阅读“本章正文 + 筛选后的设定和历史状态”，判断是否存在语义矛盾。两者使用的输入并不完全相同。</strong></p>
+<p>先把数据来源说清楚，后面的检查逻辑就容易理解了。</p>
+<p><strong>对照事实分为“预先设定”和“历史记录”，本章抽取结果则是待检查对象。</strong></p>
+<table>
+<thead>
+<tr>
+<th>数据</th>
+<th>从哪里来</th>
+<th>在校验中承担什么作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>bible.json</code> 设定圣经</td>
+<td>初始化时，根据用户创意和题材调用 LLM 生成，也支持人工编辑</td>
+<td>提供力量体系、世界规则、金手指及限制</td>
+</tr>
+<tr>
+<td><code>characters.json</code> 人物库</td>
+<td>根据设定生成初始人物，也支持人工编辑；后续符合条件的新人物可以自动收录</td>
+<td>提供已知人物名和别名</td>
+</tr>
+<tr>
+<td><code>state.json</code> 旧世界状态</td>
+<td>从此前章节正文抽取变化，由程序逐章合并并提交</td>
+<td>提供此前人物生死、境界等历史状态</td>
+</tr>
+<tr>
+<td>本章 <code>ChapterSummary</code></td>
+<td>从本章正文抽取，暂存在内存中</td>
+<td>提供本章实际出场人物等信息，供规则检查</td>
+</tr>
+<tr>
+<td>本章候选 <code>WorldState</code></td>
+<td>将本章抽取的状态变化合并到旧状态</td>
+<td>供程序比较新旧状态</td>
+</tr>
+<tr>
+<td>本章正文</td>
+<td>本次写作模型生成的文本，经过已启用的语言后处理</td>
+<td>供完整性检查和 LLM 语义审查</td>
+</tr>
+</tbody></table>
+<p>这里需要区分：<strong>本章候选状态反映“这一稿写成了什么”，旧状态和设定提供“应该遵守什么”的依据。</strong> 候选状态要接受检查，之后才能成为正式记忆。</p>
+<p>这些数据在 <a href="/D:/dev/novel-agent/novel_agent/engine.py:43">engine.py</a> 中加载和组织。</p>
+<p><strong>规则校验的实现，是一组 Python 函数，根据固定条件生成问题记录。</strong></p>
+<p>当前属于代码实现的轻量规则检查，主要有以下几类，见 <a href="/D:/dev/novel-agent/novel_agent/editor/checker.py:89">rule_checks()</a>。</p>
+<table>
+<thead>
+<tr>
+<th>检查内容</th>
+<th>待检查的数据</th>
+<th>对照依据</th>
+<th>当前判定</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>未知人物名</td>
+<td>本章摘要的 <code>characters</code></td>
+<td>人物库名字、别名，以及旧状态中的人物名</td>
+<td><code>warn</code></td>
+</tr>
+<tr>
+<td>主角境界倒退</td>
+<td>候选状态的主角境界</td>
+<td>旧状态主角境界，以及设定中的境界等级</td>
+<td><code>error</code></td>
+</tr>
+<tr>
+<td>已死亡人物再次出场</td>
+<td>本章摘要的 <code>characters</code></td>
+<td>旧状态中 <code>status == &quot;死亡&quot;</code> 的名单</td>
+<td><code>error</code></td>
+</tr>
+<tr>
+<td>配角境界疑似倒退</td>
+<td>候选状态的角色境界</td>
+<td>同名角色的旧境界，以及设定中的等级</td>
+<td><code>warn</code></td>
+</tr>
+</tbody></table>
+<p>以“死人复活”为例，逻辑可以简化成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">dead_before = &#123;<br>    c.name<br>    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> prev_state.characters<br>    <span class="hljs-keyword">if</span> c.status == <span class="hljs-string">&quot;死亡&quot;</span><br>&#125;<br><br><span class="hljs-keyword">for</span> name <span class="hljs-keyword">in</span> new_summary.characters:<br>    <span class="hljs-keyword">if</span> name <span class="hljs-keyword">in</span> dead_before:<br>        <span class="hljs-comment"># 生成一条 error</span><br>        ...<br></code></pre></td></tr></table></figure>
+
+<p>例如，旧状态记录“赵衡已经死亡”，本章抽取的实际出场名单却包含赵衡，程序就报告生死矛盾。</p>
+<p>这里依赖抽取器正确区分“实际出场”和“被提及、出现在回忆中”。当前规则本身主要做名字匹配，无法独立理解这些叙事区别。</p>
+<p>境界检查则需要先将文本转换成可比较的等级。设定中每个境界都有 <code>name</code> 和 <code>order</code>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">炼气：order = 1<br>筑基：order = 2<br>金丹：order = 3<br></code></pre></td></tr></table></figure>
+
+<p>程序将新旧境界匹配到对应等级，再判断：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> old_rank <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">and</span> new_rank <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>    <span class="hljs-keyword">if</span> new_rank &lt; old_rank:<br>        <span class="hljs-comment"># 报告境界倒退</span><br>        ...<br></code></pre></td></tr></table></figure>
+
+<p>当前采用境界名称的包含匹配，例如“筑基初期”可以匹配“筑基”。如果匹配不到等级，这项比较会跳过。</p>
+<p>因此，这是一条比较直接的约束；像“受伤导致修为下降”这样的特殊剧情，也可能被它标记，需要进一步确认。</p>
+<p><strong>正文完整性还有单独的规则检查，直接读取本章文本。</strong></p>
+<p><a href="/D:/dev/novel-agent/novel_agent/editor/checker.py:27">body_integrity_checks()</a> 会检查：</p>
+<ul>
+<li>正文是否为空。</li>
+<li>结尾是否缺少完整句末标点，疑似生成截断。</li>
+<li>中文双引号、直角引号和书名号的数量是否配对。</li>
+</ul>
+<p>这部分在记忆抽取之前就会执行，避免继续基于明显残缺的文本生成摘要和新状态。它们属于启发式检查，例如标点完整并不能证明正文一定完整。</p>
+<p><strong>LLM 语义审查通过独立的一次模型调用，阅读正文并输出矛盾。</strong></p>
+<p>实现位于 <a href="/D:/dev/novel-agent/novel_agent/editor/checker.py:217">llm_checks()</a>。</p>
+<p>程序先构造审查提示词。当前实际提供给审查模型的内容是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs text">世界硬规则：<br>  力量体系的境界名称顺序<br>  bible.rules<br>  金手指及其限制<br><br>上一章末状态：<br>  主角境界<br>  已死亡人物名单<br>  未回收伏笔<br><br>本章正文：<br>  完整正文<br></code></pre></td></tr></table></figure>
+
+<p>系统提示词要求它担任连续性审校员，只报告有依据的矛盾，并返回 JSON。要求检查的类别包括：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>时间线</td>
+<td>正文中的时间顺序或与已提供事实发生冲突</td>
+</tr>
+<tr>
+<td>设定</td>
+<td>正文违反已经提供的世界硬规则</td>
+</tr>
+<tr>
+<td>金手指</td>
+<td>设定每天只能使用一次，正文却在同一天使用两次</td>
+</tr>
+<tr>
+<td>生死</td>
+<td>已死亡人物再次作为活人参与当前事件</td>
+</tr>
+<tr>
+<td>伏笔</td>
+<td>本章内容与已记录伏笔的明确事实冲突</td>
+</tr>
+</tbody></table>
+<p>例如，提供的设定是“能力每天最多使用一次”，正文明确写同一天连续使用两次，模型应返回类似结果：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;issues&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;severity&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;error&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;category&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;金手指&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;message&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;主角在同一天两次使用能力，违反每天一次的限制&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;evidence&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;他再次发动了能力&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>程序再把它转换成统一的 <code>Issue</code> 对象，补上 <code>source = &quot;llm&quot;</code>。</p>
+<p>这里的“语义审查”就是提示词驱动的 LLM 判断，当前没有为一致性检测单独训练分类模型。模型通过 <code>task=&quot;review&quot;</code> 选择配置；当前仓库默认写作、抽取和审查都配置为同一款 Opus，但使用不同的调用和提示词。</p>
+<p><strong>本章摘要和候选状态，是通过一次专门的事实抽取获得的。</strong></p>
+<p><a href="/D:/dev/novel-agent/novel_agent/memory/extractor.py:103">consolidate()</a> 的输入是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">上一章正式状态 + 本章正文<br></code></pre></td></tr></table></figure>
+
+<p>抽取模型返回两类内容：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">facts：<br>  剧情摘要、关键事件、实际出场人物、新伏笔、结尾场景<br><br>state_changes：<br>  境界变化、位置变化、人物状态变化、<br>  物品增减、任务开启或解决、伏笔回收<br></code></pre></td></tr></table></figure>
+
+<p>随后由程序校验字段、构造 <code>ChapterSummary</code>，并将状态增量合并到旧状态，得到候选 <code>WorldState</code>。这两个对象才交给规则检查。</p>
+<p>所以整个过程是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs text">既定设定、人物库 ─────────────────┐<br>                               │<br>旧世界状态 + 本章正文             │<br>          ↓                    │<br>抽取本章事实和状态变化            │<br>          ↓                    │<br>本章摘要 + 候选新状态 ────────────┤<br>                               ↓<br>                         规则校验<br><br>筛选后的设定 + 旧状态部分字段 + 本章正文<br>                    ↓<br>               LLM 语义审查<br>                    ↓<br>          两路问题合并为 ReviewResult<br></code></pre></td></tr></table></figure>
+
+<p>统一入口是 <a href="/D:/dev/novel-agent/novel_agent/editor/checker.py:260">review_chapter()</a>。两路检查结果会直接合并，当前没有额外的投票或冲突仲裁。存在 <code>error</code> 时，可以触发有限次数的重写；只有 <code>warn</code> 时通常保留提示，不自动重写。</p>
+<p><strong>当前实现的审查范围需要准确表述，尤其是以下几点：</strong></p>
+<ul>
+<li><strong>审查阶段没有额外检索历史正文。</strong> 向量召回用于写作上下文，召回片段没有直接传入当前审查函数。</li>
+<li><strong>LLM 没有收到完整世界状态或滚动摘要。</strong> 当前未注入旧状态的时间、位置、物品、进行中任务等字段，也没有注入历史章节摘要。因此，提示词虽然要求检查时间线，但跨章时间线检查的依据仍然有限。</li>
+<li><strong>“记录了某个字段”不代表“已经针对它实现了校验”。</strong> 例如状态里有物品和位置，当前规则中尚未实现物品守恒、移动距离等专项检查。</li>
+<li><strong>审查也依赖输入事实的质量。</strong> 历史状态来自先前的抽取和提交，抽取可能遗漏；LLM 审查也可能漏判。当前语义接口调用失败时会跳过该项，继续保留规则检查结果。</li>
+</ul>
+<p>因此，面试中比较准确的说法是：</p>
+<blockquote>
+<p>我以设定圣经、人物库和已提交的世界状态作为对照依据。写完一章后，先从正文抽取本章事实和状态变化，用代码检查人物名、生死和境界等结构化矛盾；同时将正文与筛选后的设定、历史状态交给 LLM，补充检查能力限制和伏笔等语义冲突。最后统一汇总问题，驱动重写，并控制候选记忆是否提交。</p>
+</blockquote>
+<h3 id="3-自动重写是怎么实现的？"><a href="#3-自动重写是怎么实现的？" class="headerlink" title="3. 自动重写是怎么实现的？"></a>3. 自动重写是怎么实现的？</h3><p><strong>自动重写由程序里的循环控制：发现硬错误后，把错误描述加入下一次写作提示词，重新生成整章，再重新抽取和校验，直到没有硬错误或达到次数上限。</strong></p>
+<p>核心逻辑在 <a href="/D:/dev/novel-agent/novel_agent/engine.py:110">write_one_chapter()</a> 中。</p>
+<p><strong>1. 先生成一稿，再检查这一稿。</strong></p>
+<p>每轮依次执行：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">生成章节正文<br>    ↓<br>段落语言后处理（启用时）<br>    ↓<br>正文完整性检查<br>    ↓<br>抽取本章摘要、候选世界状态<br>    ↓<br>规则校验 + LLM 语义审查<br></code></pre></td></tr></table></figure>
+
+<p>校验结果统一保存在 <code>ReviewResult</code> 中，其中 <code>error</code> 表示硬错误，<code>warn</code> 表示疑点。<strong>当前只有硬错误会触发自动重写，单独的警告不会。</strong></p>
+<p><strong>2. 将具体错误整理成重写要求。</strong></p>
+<p>例如本轮检查发现：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">[生死] 已死亡角色“赵衡”在本章再次出场。<br>[境界] 主角境界从筑基期退回炼气期。<br></code></pre></td></tr></table></figure>
+
+<p>程序会把这些错误的类别和描述拼成 <code>revision_note</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">revision_note = <span class="hljs-string">&quot;\n&quot;</span>.join(<br>    <span class="hljs-string">f&quot;- [<span class="hljs-subst">&#123;issue.category&#125;</span>] <span class="hljs-subst">&#123;issue.message&#125;</span>&quot;</span><br>    <span class="hljs-keyword">for</span> issue <span class="hljs-keyword">in</span> review.errors<br>)<br></code></pre></td></tr></table></figure>
+
+<p>下一次调用写作函数时，传入这个参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">text = chapter_writer.write_chapter(<br>    gateway,<br>    project,<br>    index=chapter,<br>    revision_note=revision_note,<br>    recall_text=recall_text,<br>    pacing_text=pacing_text,<br>    <span class="hljs-comment"># 其他参数省略</span><br>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>3. 写作函数把修正要求追加到原有上下文后。</strong></p>
+<p><a href="/D:/dev/novel-agent/novel_agent/generate/chapter_writer.py:325">chapter_writer.py</a> 中的提示词大致变为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs text">既定设定、人物资料<br>世界状态、历史摘要<br>相关历史片段、最近章节原文<br>本章大纲、节奏要求<br>……<br><br>【重写要求】<br>上一稿存在以下连贯性问题，请在重写时严格避免：<br>- [生死] 已死亡角色“赵衡”在本章再次出场。<br>- [境界] 主角境界从筑基期退回炼气期。<br><br>务必使用既定角色名、不让已死角色出场、不让境界倒退。<br></code></pre></td></tr></table></figure>
+
+<p>模型随后重新生成这一章。</p>
+<p><strong>当前实现是整章重新生成，上一稿全文没有作为修改底稿传入。</strong> 因此，正确段落也可能发生变化；它不保证只修改报错位置。</p>
+<p><strong>4. 每次重写后，重新抽取、重新校验。</strong></p>
+<p>每轮开始都会清空上一稿的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">summary = new_state = <span class="hljs-literal">None</span><br>review = <span class="hljs-literal">None</span><br></code></pre></td></tr></table></figure>
+
+<p>而作为对照依据的 <code>prev_state</code>，在进入循环前就已经加载好。</p>
+<p>因此各稿之间的关系是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">同一份正式旧状态<br>    ├─ 第 1 稿 → 候选状态 A → 检查<br>    ├─ 第 2 稿 → 候选状态 B → 检查<br>    └─ 第 3 稿 → 候选状态 C → 检查<br></code></pre></td></tr></table></figure>
+
+<p>上一稿的错误候选状态不会成为下一稿的起点。每一稿都需要重新证明自己可以提交。</p>
+<p><strong>5. 用次数上限决定何时停止。</strong></p>
+<p>程序维护两个变量：</p>
+<ul>
+<li><code>attempt</code>：当前是第几稿。</li>
+<li><code>max_rewrites</code>：最多允许额外重写几次。</li>
+</ul>
+<p>例如 <code>max_rewrites = 2</code>，最多生成 <strong>3 稿：初稿一次，重写两次</strong>。</p>
+<p>主循环可以简化为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python">attempt = <span class="hljs-number">0</span><br>revision_note = <span class="hljs-string">&quot;&quot;</span><br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    attempt += <span class="hljs-number">1</span><br>    text = write_chapter(revision_note=revision_note)<br><br>    summary, candidate_state = extract(text, prev_state)<br>    review = check(text, summary, candidate_state, prev_state)<br><br>    <span class="hljs-keyword">if</span> review.has_errors <span class="hljs-keyword">and</span> attempt &lt;= max_rewrites:<br>        revision_note = format_errors(review.errors)<br>        <span class="hljs-keyword">continue</span><br><br>    <span class="hljs-keyword">break</span><br></code></pre></td></tr></table></figure>
+
+<p>实际代码还会提前检查空正文、疑似截断和引号不配对等问题，这些情况可以直接触发重写，无需先调用事实抽取。</p>
+<p>循环结束后：</p>
+<table>
+<thead>
+<tr>
+<th>最终结果</th>
+<th>后续处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>没有硬错误</td>
+<td>保存正文，按配置提交摘要、世界状态和向量索引</td>
+</tr>
+<tr>
+<td>仍有硬错误，重写额度耗尽</td>
+<td>保存正文和审查记录，阻止本轮新记忆提交，提示人工修正</td>
+</tr>
+</tbody></table>
+<p>另外，<strong>事实抽取接口失败或返回无效数据时，当前不会通过重写正文来解决</strong>，而是保留正文、阻止记忆提交。因为这类问题属于抽取故障，重新创作一章通常无法解决。</p>
+<p>这套机制的关键是让<strong>具体错误反馈指导下一稿生成</strong>，并让每一稿都经过相同的检查流程。</p>
+<h3 id="4-并阻止未通过校验的章节写入记忆是如何实现的？"><a href="#4-并阻止未通过校验的章节写入记忆是如何实现的？" class="headerlink" title="4. 并阻止未通过校验的章节写入记忆是如何实现的？"></a>4. 并阻止未通过校验的章节写入记忆是如何实现的？</h3><p><strong>具体就是在写文件之前增加一道条件判断：本章有未解决的硬错误，就不执行更新记忆的代码。</strong></p>
+<p>实现分为三步。</p>
+<p><strong>1. 先生成候选记忆，暂存在内存中。</strong></p>
+<p>本章正文生成后，调用事实抽取：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">summary, new_state = consolidate(<br>    gateway,<br>    body=text,<br>    prev_state=prev_state,<br>    <span class="hljs-comment"># 其他参数省略</span><br>)<br></code></pre></td></tr></table></figure>
+
+<p>返回的 <code>summary</code> 和 <code>new_state</code> 都是 Python 对象。此时还没有更新摘要文件和 <code>state.json</code>，旧状态保持不变。</p>
+<p><strong>2. 对正文和候选结果进行校验。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">review = review_chapter(<br>    gateway,<br>    bible=bible,<br>    characters=characters,<br>    prev_state=prev_state,<br>    new_summary=summary,<br>    new_state=new_state,<br>    body=text,<br>)<br></code></pre></td></tr></table></figure>
+
+<p>如果发现硬错误且还有重写次数，就进入下一轮。每轮都会重新生成、抽取和检查，上一稿的候选记忆被丢弃。</p>
+<p><strong>3. 最终保存时，检查是否允许提交。</strong></p>
+<p>核心代码位于 <a href="/D:/dev/novel-agent/novel_agent/engine.py:228">engine.py</a>，摘要和状态的提交条件是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python">has_unresolved_errors = (<br>    review <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">and</span> review.has_errors<br>)<br><br><span class="hljs-keyword">if</span> (<br>    consolidate_mem<br>    <span class="hljs-keyword">and</span> summary <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span><br>    <span class="hljs-keyword">and</span> new_state <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span><br>    <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> has_unresolved_errors<br>):<br>    project.upsert_summary(summary)<br><br>    <span class="hljs-keyword">if</span> update_world_state:<br>        project.save_state(new_state)<br></code></pre></td></tr></table></figure>
+
+<p>也就是说，只有同时满足以下条件，才会更新这些记忆：</p>
+<ul>
+<li>开启了记忆固化。</li>
+<li>摘要和候选状态抽取成功。</li>
+<li>最终没有未解决的硬错误。</li>
+</ul>
+<p>向量索引也有类似判断：存在未解决的硬错误时，不执行本章的新索引操作。</p>
+<p>例如，本章误写已死亡的赵衡再次出场：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">校验结果：error<br>       ↓<br>重写后仍未修复<br>       ↓<br>不保存本章新摘要<br>不覆盖世界状态<br>不提交本章新向量索引<br></code></pre></td></tr></table></figure>
+
+<p><strong>这属于“检查后才提交”，失败时旧状态本来就没有被覆盖，因此不需要再把它回滚。</strong></p>
+<p>不过，“阻止章节写入记忆”略显宽泛：当前失败正文仍会保存，而短期记忆会读取章节原文。更准确的简历写法是：</p>
+<blockquote>
+<p><strong>构建规则与 LLM 双重一致性校验，支持自动重写，并阻止未通过校验的摘要与状态提交。</strong></p>
+</blockquote>
+<h2 id="2-2-AI问题"><a href="#2-2-AI问题" class="headerlink" title="2.2 AI问题"></a>2.2 AI问题</h2><p><strong>1. 请整体介绍一下这套一致性校验机制。</strong></p>
 <p>答：章节生成后，系统先检查正文是否完整，再从正文中抽取章节摘要和候选世界状态。之后执行确定性规则检查与 LLM 语义检查；如果存在 <code>error</code> 级问题，就把错误反馈给写作模型重新生成。最终通过校验才提交摘要、世界状态和向量索引。</p>
 <p><strong>2. 为什么采用“规则引擎 + LLM”，而不是全部交给 LLM？</strong></p>
 <p>答：境界倒退、死人复活等问题可以结构化比较，规则判断更稳定、便宜且可解释。时间线矛盾、世界规则违背和能力越界很难完全枚举，适合交给 LLM。两者结合可以兼顾确定性和语义覆盖范围。</p>
@@ -473,7 +1183,360 @@
 <p>系统层面还要比较启用和关闭校验后的章节冲突率、平均重写次数、成功修复率、额外延迟和 token 成本。</p>
 <p><strong>26. 如果继续迭代，你会优先改进什么？</strong></p>
 <p>答：我会优先做四件事：为角色和剧情线引入稳定 ID；向 LLM 审查注入更完整的世界状态；增加严格模式避免审查失败时静默放行；将“未通过章节”从后续短期记忆中隔离。之后再考虑规则配置化和真正的跨文件事务。</p>
-<h1 id="3-微调去-AI-腔改写模型：基于-LlamaFactory-框架，以人工构造的-1000-条-Alpaca-格式数据集对-Qwen3-8B-中文模型进行-QLoRA-微调，模型在测试集上达到-90-以上的改写优化通过率"><a href="#3-微调去-AI-腔改写模型：基于-LlamaFactory-框架，以人工构造的-1000-条-Alpaca-格式数据集对-Qwen3-8B-中文模型进行-QLoRA-微调，模型在测试集上达到-90-以上的改写优化通过率" class="headerlink" title="3. 微调去 AI 腔改写模型：基于 LlamaFactory 框架，以人工构造的 1000 条 Alpaca 格式数据集对 Qwen3-8B 中文模型进行 QLoRA 微调，模型在测试集上达到 90%以上的改写优化通过率"></a>3. 微调去 AI 腔改写模型：基于 LlamaFactory 框架，以人工构造的 1000 条 Alpaca 格式数据集对 Qwen3-8B 中文模型进行 QLoRA 微调，模型在测试集上达到 90%以上的改写优化通过率</h1><h2 id="3-1-个人问题"><a href="#3-1-个人问题" class="headerlink" title="3.1 个人问题"></a>3.1 个人问题</h2><h2 id="3-2-AI问题"><a href="#3-2-AI问题" class="headerlink" title="3.2 AI问题"></a>3.2 AI问题</h2><p><strong>1. 你所说的“去 AI 腔”具体是什么任务？</strong></p>
+<h1 id="3-微调去-AI-腔改写模型：基于-LlamaFactory-框架，以人工构造的-1000-条-Alpaca-格式数据集对-Qwen3-8B-中文模型进行-QLoRA-微调，模型在测试集上达到-90-以上的改写优化通过率"><a href="#3-微调去-AI-腔改写模型：基于-LlamaFactory-框架，以人工构造的-1000-条-Alpaca-格式数据集对-Qwen3-8B-中文模型进行-QLoRA-微调，模型在测试集上达到-90-以上的改写优化通过率" class="headerlink" title="3. 微调去 AI 腔改写模型：基于 LlamaFactory 框架，以人工构造的 1000 条 Alpaca 格式数据集对 Qwen3-8B 中文模型进行 QLoRA 微调，模型在测试集上达到 90%以上的改写优化通过率"></a>3. 微调去 AI 腔改写模型：基于 LlamaFactory 框架，以人工构造的 1000 条 Alpaca 格式数据集对 Qwen3-8B 中文模型进行 QLoRA 微调，模型在测试集上达到 90%以上的改写优化通过率</h1><h2 id="3-1-个人问题"><a href="#3-1-个人问题" class="headerlink" title="3.1 个人问题"></a>3.1 个人问题</h2><h3 id="1-为什么要微调这样一个去AI味的模型？"><a href="#1-为什么要微调这样一个去AI味的模型？" class="headerlink" title="1. 为什么要微调这样一个去AI味的模型？"></a>1. 为什么要微调这样一个去AI味的模型？</h3><p>核心动机是：<strong>长篇小说生成除了情节连贯，还需要稳定的文风；我希望把反复出现的表达问题，做成一个独立、可控的后处理能力。</strong></p>
+<p>面试时可以这样回答：</p>
+<blockquote>
+<p>Claude 主要负责章节创作，需要同时处理世界设定、人物状态、剧情推进和节奏等约束。即使内容逻辑成立，生成文本也可能出现一些模式化表达，比如反复解释人物情绪、使用空泛的比喻，或者在段落末尾机械地总结和升华。这些问题在长篇小说里不断累积，会影响阅读体验。</p>
+<p>我所说的“去 AI 味”，不是让文本绕过 AI 检测，而是在保留人物、事件和设定的前提下，减少这些模式化表达，让叙述更具体、自然。</p>
+<p>我选择把它拆成段落级改写任务，是因为它的输入和输出比较明确：输入已有段落，输出事实不变、表达更自然的段落。相比让一个模型同时承担剧情创作和风格修正，拆开后更方便单独训练、评测，也能独立调整改写力度。</p>
+<p>微调的目的，是把人工样例中的修改偏好固化成模型行为，减少每次都依赖长提示词描述风格要求的需要。选择本地小模型，则是希望在这个范围明确的任务上，获得可控的部署方式和推理成本。</p>
+</blockquote>
+<p>这里最容易被追问的是：<strong>“为什么不用提示词直接让 Claude 改？”</strong></p>
+<p>你需要承认：提示词是合理的基线，微调是否值得，要通过对比证明。能够支撑微调的证据包括：</p>
+<ul>
+<li>相同测试段落下，微调模型能否更稳定地修正目标表达。</li>
+<li>是否保留事实，避免为了润色增加动作、心理或设定。</li>
+<li>加入训练、部署和维护成本后，是否仍有延迟或成本收益。</li>
+</ul>
+<p><strong>如果你还没做过这些对照，就把微调描述为一次针对专门任务的探索，不要说成“提示词解决不了，所以必须微调”。</strong> 这样的动机更可信，也更经得起追问。</p>
+<h3 id="2-使用提示词或者那些去AI味的skill不行吗？"><a href="#2-使用提示词或者那些去AI味的skill不行吗？" class="headerlink" title="2. 使用提示词或者那些去AI味的skill不行吗？"></a>2. 使用提示词或者那些去AI味的skill不行吗？</h3><p><strong>可以，而且应该先尝试提示词或现成的去 AI 味 skill。微调不是唯一方案，需要证明它带来的收益值得额外成本。</strong></p>
+<p>这几种方式的区别是：</p>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>如何控制改写风格</th>
+<th>适用情况</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>提示词</td>
+<td>每次提供规则和示例</td>
+<td>快速验证、需求经常变化</td>
+</tr>
+<tr>
+<td>Skill</td>
+<td>封装提示词、示例，也可以包含脚本和处理流程</td>
+<td>复用改写流程、统一规范</td>
+</tr>
+<tr>
+<td>微调</td>
+<td>通过训练样例调整模型参数</td>
+<td>改写偏好较稳定，需要反复批量执行</td>
+</tr>
+</tbody></table>
+<p>Skill 本身并不会自动改变模型权重，效果仍然取决于底层模型、规则和示例。<strong>但一个设计好的 skill 完全可能满足需求，甚至优于微调的小模型。</strong></p>
+<p>所以，面试时不要回答“提示词不行”，可以这样说：</p>
+<blockquote>
+<p>可以用，提示词和 skill 都是合理方案。我考虑微调，是因为这个项目需要对生成章节反复做段落级改写，任务比较固定：保留情节事实，减少模式化表达。我希望通过成对的改写数据，让本地小模型学习这些具体修改偏好，减少每次提供大量规则和示例的需要。</p>
+<p>但微调是否更合适，不能只看模型是否训练成功。我需要比较原始模型加提示词、微调模型加简短提示词，以及 Claude 配合改写规则的表现，重点看表达改善、事实保留、延迟和成本。如果提示词已经能稳定达到要求，就没有必要为了微调而微调。</p>
+</blockquote>
+<p>还要注意：<strong>“人工规则很难描述，但可以用样例展示”也不能单独证明需要微调</strong>，因为提示词同样可以加入 few-shot 示例。真正需要验证的是：训练后能否在未见过的段落上，更稳定地复现这些偏好。</p>
+<p>如果你目前只做了微调后的测试，没有基线对照，最诚实的表述是：<strong>“我完成了专用改写模型的训练和部署，验证了方案可行；它相对提示词方案的收益，还需要对照实验。”</strong></p>
+<h3 id="3-LlamaFactory-框架是什么？"><a href="#3-LlamaFactory-框架是什么？" class="headerlink" title="3. LlamaFactory 框架是什么？"></a>3. LlamaFactory 框架是什么？</h3><p>**LLaMA-Factory 是一个开源的大模型微调工具框架。**它把模型加载、数据处理、训练、评估和模型导出等步骤封装起来，让你通过配置文件或可视化界面完成微调，减少自己编写训练代码的工作。虽然名字里有 LLaMA，但它也支持 Qwen 等模型，以及 LoRA、QLoRA 等微调方式。<a target="_blank" rel="noopener" href="https://github.com/hiyouga/LlamaFactory">官方仓库</a></p>
+<p>结合你的项目，可以先区分这几个概念：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>在项目中的角色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Qwen3-8B</strong></td>
+<td>被训练的基础模型</td>
+</tr>
+<tr>
+<td><strong>Alpaca 格式数据集</strong></td>
+<td>训练样例的组织方式，通常包含 instruction、input、output</td>
+</tr>
+<tr>
+<td><strong>QLoRA</strong></td>
+<td>微调方法：量化加载并冻结基础模型，训练额外的 LoRA 参数</td>
+</tr>
+<tr>
+<td><strong>LLaMA-Factory</strong></td>
+<td>组织和执行上述训练流程的工具框架</td>
+</tr>
+<tr>
+<td><strong>llama.cpp</strong></td>
+<td>你后续用于本地推理部署的工具</td>
+</tr>
+</tbody></table>
+<p>例如，你准备一条这样的训练数据：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;改写下面的小说段落，减少空泛表达，保留人物和事件。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;他心中涌起一股难以言喻的愤怒，双拳不由自主地紧握。&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;他攥紧拳头。&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>你负责准备样例、选择基础模型、设置学习率和训练轮数等参数；LLaMA-Factory 负责把数据转换成模型需要的输入，执行前向计算、计算损失、反向传播，并保存训练结果。**如果采用 QLoRA，主要训练产物是 LoRA 适配器权重，并不天然是一份可以直接交给 llama.cpp 的完整模型。**框架也提供适配器合并和模型导出能力。<a target="_blank" rel="noopener" href="https://github.com/hiyouga/LlamaFactory">官方使用说明</a></p>
+<p>面试时可以这样概括：</p>
+<blockquote>
+<p>我使用 LLaMA-Factory 作为微调框架，加载 Qwen3-8B 和 Alpaca 格式的改写数据，通过 QLoRA 完成监督微调。框架负责底层训练流程，我主要负责数据构造、训练配置和效果评估。</p>
+</blockquote>
+<h3 id="4-Alpaca-格式数据集是什么样式的？为什么选这种格式的数据集？"><a href="#4-Alpaca-格式数据集是什么样式的？为什么选这种格式的数据集？" class="headerlink" title="4. Alpaca 格式数据集是什么样式的？为什么选这种格式的数据集？"></a>4. Alpaca 格式数据集是什么样式的？为什么选这种格式的数据集？</h3><p>**Alpaca 是一种组织指令微调数据的格式。**每条样本描述“让模型做什么、处理什么内容、期望输出什么”，通常用 JSON 数组保存。</p>
+<p>结合你的去 AI 腔改写任务，一条样本可以这样写：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你是中文网络小说局部编辑器。仅修改语言表达，不得改变剧情事实、人物关系、专名、数字和对白归属。不得续写或解释。只输出最终文本。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;instruction&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请进行最小必要的去AI腔改写；原文自然则保持原样。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;input&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;他缓缓地抬起了自己的右手，然后轻轻地擦拭了一下嘴角的鲜血。&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;output&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;他缓缓抬起右手，轻轻擦了擦嘴角的血。&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<p>四个字段的作用是：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+<th>在你的项目中</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>system</code></td>
+<td>全局角色和行为约束，可选</td>
+<td>只修改表达，不改变事实</td>
+</tr>
+<tr>
+<td><code>instruction</code></td>
+<td>本次任务指令</td>
+<td>做最小必要的去 AI 腔改写</td>
+</tr>
+<tr>
+<td><code>input</code></td>
+<td>待处理内容，可选</td>
+<td>小说原始段落</td>
+</tr>
+<tr>
+<td><code>output</code></td>
+<td>期望模型生成的答案</td>
+<td>人工确认后的改写段落</td>
+</tr>
+</tbody></table>
+<p>训练时，前三部分构成输入，<code>output</code> 提供监督目标。**模型学习的是：面对这样的指令和原文，应该生成怎样的改写结果。**实际输入还会经过你配置的 <code>qwen3</code> 聊天模板处理，并不是把原始 JSON 直接交给模型。</p>
+<p>你选它，主要有三个原因：</p>
+<ol>
+<li><p>**符合单轮改写任务。**你的任务是“输入一个段落，输出可直接替换的段落”，不需要复杂的多轮对话结构，用这几个字段就能表达清楚。</p>
+</li>
+<li><p>**方便固定约束、维护样本。**你的数据中 <code>system</code> 和 <code>instruction</code> 固定，主要变化的是 <code>input</code>、<code>output</code>，便于检查改写前后是否保留事实，也方便加入“输入输出完全相同”的原样保留样本。</p>
+</li>
+<li><p>**LLaMA-Factory 已支持，接入简单。**你只需在 <code>dataset_info.json</code> 中注册文件和字段映射：</p>
+</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;ai_style_editing&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;file_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ai_style_editing/train.json&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;formatting&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;alpaca&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;columns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;system&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;system&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;prompt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;instruction&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;query&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;input&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;response&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;output&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>这里的 Alpaca 指的是<strong>数据格式</strong>，不意味着你用了公开的 Alpaca 数据集。你的项目使用的是按这种格式组织的自定义小说改写数据。</p>
+<p>面试时可以概括为：</p>
+<blockquote>
+<p>我的任务是单轮、段落级的监督改写，所以选择了结构简单、LLaMA-Factory 原生支持的 Alpaca 格式。通过 system 固定事实保留约束，instruction 描述改写任务，input 和 output 保存原文与目标文本。格式主要解决数据组织和接入问题，实际效果取决于样本质量和任务覆盖。</p>
+</blockquote>
+<h3 id="5-你是如何构造这1000条数据的？"><a href="#5-你是如何构造这1000条数据的？" class="headerlink" title="5. 你是如何构造这1000条数据的？"></a>5. 你是如何构造这1000条数据的？</h3><p>根据你的文章和仓库，构造思路是：**从项目实际生成的小说章节中抽取段落，再构造“原文—改写结果”配对数据，最后整理成 Alpaca 格式。**这里要区分数据构造流程和最终人工审核情况。</p>
+<p>具体可以从五个方面讲。</p>
+<p><strong>1. 从真实章节中采集原文</strong></p>
+<p><a href="D:/dev/novel-agent/scripts/build_dataset.py">数据构建脚本</a> 选取了《大秦我在岭南种田称霸》和《1642：南明北伐录》的章节。</p>
+<p>这样做是为了让训练输入贴近实际使用场景：模型上线后处理的也是 Novel-Agent 生成的小说段落，里面包含对白、动作、心理描写，以及人物、地名和数量等需要保留的信息。</p>
+<p>目前这些来源主要是历史题材，文章中提到的多题材覆盖属于扩充方向。</p>
+<p><strong>2. 清洗并抽取完整段落</strong></p>
+<p>按空行分段，过滤章节标题、分隔线、卷终说明、空段和不完整文本。首版脚本主要保留 <strong>15～220 字、具有完整句末标点的段落</strong>，避免为了凑长度截断句子。</p>
+<p>同时保留书名、章节号和段落位置，方便回查上下文；这些来源信息不放进最终训练输入。</p>
+<p><strong>3. 构造改写和原样保留两类样本</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>输入与输出</th>
+<th>训练目的</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>rewrite</code></td>
+<td>原文与修改后的段落</td>
+<td>学习修正明确的表达问题</td>
+</tr>
+<tr>
+<td><code>keep</code></td>
+<td>输入和输出完全相同</td>
+<td>学习判断何时不需要修改</td>
+</tr>
+</tbody></table>
+<p>改写关注空泛心理、机械转折、重复表达、过度解释和不自然对白等问题，要求只做必要修改。</p>
+<p>你的文章建议保留约 30% 的 <code>keep</code> 样本。不过，<strong>当前训练文件实际是 1000 条，其中 48 条输入输出完全相同</strong>，因此不能把建议比例说成最终训练集的实际比例。</p>
+<p><strong>4. 检查表达是否改善、事实是否保留</strong></p>
+<p>仓库中的自动检查包括数字和计量单位、专名、对白结构、输出格式及改写幅度等。人工复核规范则要求结合前后文，确认没有新增动作、删掉信息或改变因果关系。</p>
+<p>例如，“尖锐刺耳”改成“扎得人耳朵生疼”，虽然更口语化，却增加了人物身体感受。仓库的质检脚本就把它列为需要修正的样本。这说明，<strong>“更口语化”不能直接等同于“更好的训练答案”。</strong></p>
+<p><strong>5. 去重、划分并导出</strong></p>
+<p>构建脚本采用按章节划分训练、验证和测试集的方式，避免同章相似段落同时进入训练和测试，再导出固定的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">system + instruction + input + output<br></code></pre></td></tr></table></figure>
+
+<p>需要注意版本差异：早期脚本目标是总计 1000 条，按 <code>800/100/100</code> 划分；当前目录则是训练集 1000 条、测试集 100 条，不能混用这两个版本的统计。</p>
+<p>面试时可以先这样概括：</p>
+<blockquote>
+<p>我从 Novel-Agent 实际生成的小说章节中抽取完整段落，清洗标题和无效文本，构造原文与目标改写的配对数据，并加入原样保留样本，让模型同时学习“怎么改”和“什么时候不改”。数据重点约束事实保留，通过自动规则预检和人工复核规范控制质量，最终导出为 Alpaca 格式。</p>
+</blockquote>
+<p><strong>“1000 条全部由我人工改写并逐条审核”目前还不能由这些材料确认。</strong><a href="D:/dev/novel-agent/datasets/ai_style_editing/README.md">数据说明</a> 将早期导出标记为待审核草稿；最终训练版本的输出如何生成、你实际审核了哪些记录，需要以你当时的操作为准。</p>
+<h3 id="6-为什么选择Qwen3-8B-中文模型这个模型？相比于其他模型他有什么优点？"><a href="#6-为什么选择Qwen3-8B-中文模型这个模型？相比于其他模型他有什么优点？" class="headerlink" title="6. 为什么选择Qwen3-8B 中文模型这个模型？相比于其他模型他有什么优点？"></a>6. 为什么选择Qwen3-8B 中文模型这个模型？相比于其他模型他有什么优点？</h3><p>**选择 Qwen3-8B，主要是它在中文表达、指令遵循能力和本地训练部署成本之间，符合这个项目的需求。**你的目标是段落级局部改写，因此选型重点是：能理解原文、遵守修改边界，同时能在现有硬件上运行。</p>
+<p>可以从四点解释。</p>
+<p><strong>1. 中文表达与任务适配</strong></p>
+<p>你的输入是中文网文，包含对白、人物称谓、古代官职和玄幻设定等内容。模型既要判断表达是否自然，也要理解哪些信息不能改。</p>
+<p>Qwen3 官方将创意写作、角色扮演和指令遵循列为其能力特点，因此它是这个任务的合理候选。但这只能支持选型，不能直接证明它比其他模型更擅长中文小说改写。<a target="_blank" rel="noopener" href="https://qwenlm.github.io/blog/qwen3/">Qwen3 官方介绍</a></p>
+<p><strong>2. 8B 的规模适合现有硬件</strong></p>
+<p>你的训练环境是 A10、约 22GB 显存，本地部署设备是 M1、16GB 统一内存。</p>
+<ul>
+<li>相比 3B、4B 模型，选择 8B 是希望给语义理解和约束遵循留出更多能力余量。</li>
+<li>相比 14B、32B 模型，8B 更容易控制训练和本地推理的资源开销。</li>
+</ul>
+<p>你的部署记录也提供了实际依据：模型经过 Q4_K_M 量化后约为 <strong>4.7GB</strong>，在 M1 上记录的生成速度约为 <strong>10～12 tokens&#x2F;s</strong>。这证明部署方案在你的设备上可行；至于是否足够快，还要结合整章处理耗时判断。</p>
+<p><strong>3. 已经过后训练，适合在小规模数据上学习编辑偏好</strong></p>
+<p>你的 1000 条数据主要用于教模型：</p>
+<blockquote>
+<p>哪些表达需要修改、怎么修改，以及什么时候保持原样。</p>
+</blockquote>
+<p>因此，希望模型原本就具备对话和指令遵循能力，微调主要调整编辑行为。</p>
+<p>这里需要修正文章里的一个说法：**你使用的 <code>Qwen/Qwen3-8B</code> 是经过后训练、支持思考与非思考模式的模型，不能简单称为一个名称带 <code>Instruct</code> 的版本，也不是 <code>Qwen3-8B-Base</code>。**你的训练配置使用 <code>enable_thinking: false</code>，与“直接输出可替换段落”的任务形式相符。<a target="_blank" rel="noopener" href="https://huggingface.co/Qwen/Qwen3-8B">官方模型卡</a></p>
+<p><strong>4. 工具链能够覆盖训练到部署</strong></p>
+<p>你已经用它跑通了：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">LLaMA-Factory QLoRA 微调<br>→ 合并 LoRA<br>→ GGUF 转换与量化<br>→ llama.cpp 本地 API<br>→ 接入 Novel-Agent<br></code></pre></td></tr></table></figure>
+
+<p>这对个人项目很有价值：选型不仅要考虑模型能力，也要考虑训练、导出和应用集成能否完成。不过，这种工具链支持并非 Qwen3 独有。</p>
+<p>相比其他方案，可以这样概括：</p>
+<table>
+<thead>
+<tr>
+<th>对比对象</th>
+<th>选择 Qwen3-8B 的主要考虑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Qwen2.5-3B、Qwen3-4B</td>
+<td>希望获得更多语义理解和编辑能力余量，但需要对照实验验证</td>
+</tr>
+<tr>
+<td>Qwen2.5-7B-Instruct</td>
+<td>两者都是合理候选；目前材料不足以证明 Qwen3 在你的任务上更好</td>
+</tr>
+<tr>
+<td>14B、32B 等更大模型</td>
+<td>更符合你的训练和本地部署资源预算</td>
+</tr>
+<tr>
+<td>Claude 等 API 模型</td>
+<td>支持自行微调和本地运行，便于独立控制后处理环节</td>
+</tr>
+</tbody></table>
+<p>面试时可以这样回答：</p>
+<blockquote>
+<p>我主要从任务适配、资源预算和工具链三个方面选择 Qwen3-8B。任务要求模型理解中文小说段落，并在保留事实的前提下做局部修改，所以需要一定的语言理解和指令遵循能力；同时我只有约 22GB 显存的训练环境，最终还要部署到 M1 16GB 设备，8B 是比较合适的折中。实际也跑通了 QLoRA 微调、GGUF 量化和本地 API 集成。但我没有做完整的多模型对照，因此不会声称它在去 AI 腔任务上优于所有候选模型。</p>
+</blockquote>
+<h3 id="7-QLoRA微调是什么？为什么使用QLoRA？"><a href="#7-QLoRA微调是什么？为什么使用QLoRA？" class="headerlink" title="7. QLoRA微调是什么？为什么使用QLoRA？"></a>7. QLoRA微调是什么？为什么使用QLoRA？</h3><p>**QLoRA 是把“低比特量化”和“LoRA 微调”结合起来的方法：用较少显存加载基础模型，冻结基础权重，只训练额外添加的一小部分参数。**你的项目采用的是 <strong>4-bit 量化底座 + LoRA 适配器训练</strong>。<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.14314">QLoRA 原论文</a></p>
+<p>理解它，可以拆成两部分。</p>
+<p><strong>1. LoRA：减少需要训练的参数</strong></p>
+<p>全参数微调会更新模型的全部权重。LoRA 则冻结原始权重 (W)，额外添加两个较小的可训练矩阵 (A、B)，学习权重的变化量：</p>
+<p>[<br>W’ &#x3D; W + \Delta W,\qquad \Delta W &#x3D; BA<br>]</p>
+<p>例如，原始矩阵是 (4096\times4096)，约有 <strong>1678 万个参数</strong>。如果 LoRA 的秩 <code>rank=8</code>，两个小矩阵分别是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">A：8 × 4096<br>B：4096 × 8<br></code></pre></td></tr></table></figure>
+
+<p>合计只需要训练 <strong>65,536 个参数</strong>，约为原矩阵参数量的 <strong>0.39%</strong>。这是单个矩阵的示例，不是你整个模型的可训练参数比例。</p>
+<p><strong>2. QLoRA：进一步减少底座权重占用</strong></p>
+<p>普通 LoRA 虽然不更新底座，但底座仍需要加载到显存中。</p>
+<p>QLoRA 将基础模型的主要权重以 4-bit 形式存储；计算时按需反量化到较高精度参与运算，梯度通过模型传递，用来更新 LoRA 参数。<strong>它并不是把整个模型都用 4-bit 精度进行训练。</strong><a target="_blank" rel="noopener" href="https://huggingface.co/docs/peft/developer_guides/quantization">Hugging Face 量化微调说明</a></p>
+<p>三种方法可以这样比较：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>基础权重的常见存储精度</th>
+<th>更新哪些参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>全参数微调</td>
+<td>BF16 &#x2F; FP16 等</td>
+<td>全部模型参数</td>
+</tr>
+<tr>
+<td>普通 LoRA</td>
+<td>BF16 &#x2F; FP16 等</td>
+<td>添加的 LoRA 参数</td>
+</tr>
+<tr>
+<td>4-bit QLoRA</td>
+<td>主要权重以 4-bit 存储</td>
+<td>添加的 LoRA 参数</td>
+</tr>
+</tbody></table>
+<p><strong>你为什么使用 QLoRA？</strong></p>
+<p>最直接的原因是：<strong>在 A10 约 22GB 显存的条件下，为 Qwen3-8B 的训练留出足够空间。</strong></p>
+<p>按约 80 亿参数粗略计算，仅权重的理论存储量就是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">16-bit：约 16GB<br> 4-bit：约  4GB<br></code></pre></td></tr></table></figure>
+
+<p>这还没有包含量化元数据、未量化层、激活值、LoRA 参数及其梯度和优化器状态，<strong>所以不能说“QLoRA 训练只需要 4GB 显存”</strong>。但底座权重占用下降后，就能给其他训练开销留出更多空间。</p>
+<p>另外，你的任务是学习一种明确的编辑偏好：减少模板化表达、保留事实、自然时不修改。采用 LoRA 来调整这种行为，是一个合理的起点，可以降低训练和保存适配器的成本。它是否达到所需效果，仍要通过测试验证。</p>
+<p>你的配置正好体现了这个组合：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">quantization_bit:</span> <span class="hljs-number">4</span><br><span class="hljs-attr">quantization_method:</span> <span class="hljs-string">bitsandbytes</span><br><br><span class="hljs-attr">finetuning_type:</span> <span class="hljs-string">lora</span><br><span class="hljs-attr">lora_rank:</span> <span class="hljs-number">8</span><br><span class="hljs-attr">lora_target:</span> <span class="hljs-string">all</span><br><br><span class="hljs-attr">bf16:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">gradient_checkpointing:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<p>其中，4-bit 控制底座量化存储，<code>rank=8</code> 控制低秩适配器规模；BF16 和梯度检查点则是另外的训练配置。</p>
+<p>还要区分你项目中的<strong>两次量化</strong>：</p>
+<ul>
+<li><strong>训练阶段的 4-bit QLoRA</strong>：为了降低 GPU 微调显存需求。</li>
+<li><strong>部署阶段的 Q4_K_M GGUF</strong>：为了让合并后的模型更适合在 M1 上运行。</li>
+</ul>
+<p>面试时可以这样回答：</p>
+<blockquote>
+<p>QLoRA 结合了量化和 LoRA：将基础模型以 4-bit 形式加载并冻结，只训练额外的低秩适配器。我使用它主要是受单卡约 22GB 显存限制，希望降低 Qwen3-8B 的权重占用，给激活值和反向传播留出空间。同时，我的目标是学习段落编辑偏好，适合先采用参数高效微调。它的核心收益是节省显存，并不能保证比普通 LoRA 更快，也不能直接保证与全参数微调效果相同。</p>
+</blockquote>
+<h3 id="8-测试集是怎么构造的？90-这个数值是怎么得到的？"><a href="#8-测试集是怎么构造的？90-这个数值是怎么得到的？" class="headerlink" title="8. 测试集是怎么构造的？90%这个数值是怎么得到的？"></a>8. 测试集是怎么构造的？90%这个数值是怎么得到的？</h3><p>**测试集的构造流程有记录，但目前材料不足以还原“90%”这个数值。**需要把测试集、模型预测和最终评分分开说明。</p>
+<p><strong>1. 测试集是怎么构造的？</strong></p>
+<p>根据<a href="D:/dev/novel-agent/datasets/ai_style_editing/README.md">数据说明</a>和<a href="D:/dev/novel-agent/scripts/build_dataset.py">构建脚本</a>，采用的是<strong>先按章节划分，再抽取完整段落</strong>的方式：</p>
+<ul>
+<li>训练集使用较早章节，测试集使用较后章节，避免同章上下文同时进入训练和测试。</li>
+<li>清除标题、分隔线和不完整文本，保留完整小说段落。</li>
+<li>包含需要修改的 <code>rewrite</code> 样本，以及应该保持原样的 <code>keep</code> 样本。</li>
+<li>按相同的 Alpaca 格式保存，固定系统约束和任务指令。</li>
+</ul>
+<p>我刚核对了当前 <a href="D:/dev/novel-agent/datasets/ai_style_editing/test.json">test.json</a>：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th align="right">实际数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>测试样本</td>
+<td align="right">100 条</td>
+</tr>
+<tr>
+<td>原样保留样本，即 <code>input == output</code></td>
+<td align="right">35 条</td>
+</tr>
+<tr>
+<td>改写样本，即 <code>input != output</code></td>
+<td align="right">65 条</td>
+</tr>
+<tr>
+<td>与当前训练集输入完全重复</td>
+<td align="right">0 条</td>
+</tr>
+<tr>
+<td>Unicode 规范化、移除空白后重复</td>
+<td align="right">0 条</td>
+</tr>
+</tbody></table>
+<p>这说明当前文件没有上述形式的直接重复，<strong>但还不能据此证明不存在语义近重复，或所有参考答案都已人工确认</strong>。数据说明仍将早期导出标记为待审核草稿。</p>
+<p><strong>2. 文章中的“测试”做了什么？</strong></p>
+<p>你的微调教程记录的是：加载基础模型和 LoRA 适配器，对最多 100 条测试数据运行生成预测，配置包括：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">do_predict:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">predict_with_generate:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">do_sample:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+
+<p>这一步得到的是<strong>模型对测试输入的实际输出</strong>，并不会直接计算“去 AI 腔通过率”。测试文件中的 <code>output</code> 是参考答案，也不能把它当成模型预测结果。</p>
+<p><strong>3. “90%”应该怎么计算？</strong></p>
+<p>首先要定义“通过”。对于你的任务，合理的判定应同时覆盖：</p>
+<ul>
+<li><strong>事实保留</strong>：没有新增、遗漏或改变人物、事件、数字、专名、因果和对白归属。</li>
+<li><strong>表达改善</strong>：需要修改的段落确实改善了目标问题，没有变得更生硬。</li>
+<li><strong>编辑克制</strong>：没有过度扩写、强行口语化；自然段落能够保持原样。</li>
+<li><strong>输出可用</strong>：没有解释、思考内容、续写或截断，可以直接替换原段。</li>
+</ul>
+<p>改写可以有多个合理答案，因此不能只用“是否与参考文本逐字一致”来判断效果。</p>
+<p>如果采用整体通过率，公式应是：</p>
+<p>[<br>\text{整体通过率}&#x3D;\frac{\text{满足既定标准的样本数}}{100}<br>]</p>
+<p>只有保存了逐条评分、明确其中至少 90 条通过，才能支持“90% 以上”的表述。还应分别报告：</p>
+<p>[<br>\text{改写通过率}&#x3D;\frac{\text{65 条改写样本中通过的数量}}{65}<br>]</p>
+<p>[<br>\text{原样保留准确率}&#x3D;\frac{\text{35 条保留样本中正确保持原样的数量}}{35}<br>]</p>
+<p>**整体通过率和改写通过率不是同一个指标。**自动事实规则通过，也不代表表达一定改善。</p>
+<p>目前这三篇文章没有保存逐条预测评分、通过标准和汇总结果，所以不能确定你的“90%”属于哪一种统计。如果当时只是试用后主观估计，简历暂时改成“完成 100 条测试样本的生成验证”会更准确；有实际人工评分记录后，再补充明确的通过率。</p>
+<h2 id="3-2-AI问题"><a href="#3-2-AI问题" class="headerlink" title="3.2 AI问题"></a>3.2 AI问题</h2><p><strong>1. 你所说的“去 AI 腔”具体是什么任务？</strong></p>
 <p>答：它不是判断文本是否由 AI 生成，而是一个受约束的段落编辑任务。模型只消除机械转折、重复表达、过度解释和不自然句式，不得改变人物、数字、时间、地点、因果关系和对白归属；原文自然时应原样返回。</p>
 <p><strong>2. 为什么要微调小模型，而不是继续优化 Claude Prompt？</strong></p>
 <p>答：Prompt 可以改善单次效果，但这个任务会对每章大量段落重复执行。本地微调模型能够降低长期调用成本和数据外发风险，并把“最小修改、事实不变、自然段落不修改”等行为固化下来。它负责窄任务，不取代 Claude 的创作能力。</p>
@@ -529,7 +1592,177 @@
 <p>答：微调只能降低错误概率，不能提供确定性保证。小说中的人数、境界和人物名称属于高风险事实，因此需要把模型当作不可信候选生成器，通过程序规则决定是否接受结果。</p>
 <p><strong>24. 这项工作的最大局限是什么？</strong></p>
 <p>答：当前数据主要来自两本历史题材小说，规模小、题材单一，而且实际数据文件和设计文档没有完全对齐。自动规则能够保证部分事实安全，但无法判断所有语义变化；90% 指标也缺少仓库内的可复现证据。</p>
-<h1 id="4-基于-llama-cpp-将微调模型部署为本地-OpenAI-兼容服务，对-Claude-生成的章节初稿进行并发段落级去-AI-腔优化"><a href="#4-基于-llama-cpp-将微调模型部署为本地-OpenAI-兼容服务，对-Claude-生成的章节初稿进行并发段落级去-AI-腔优化" class="headerlink" title="4. 基于 llama.cpp 将微调模型部署为本地 OpenAI 兼容服务，对 Claude 生成的章节初稿进行并发段落级去 AI 腔优化"></a>4. 基于 llama.cpp 将微调模型部署为本地 OpenAI 兼容服务，对 Claude 生成的章节初稿进行并发段落级去 AI 腔优化</h1><h2 id="4-1-个人问题"><a href="#4-1-个人问题" class="headerlink" title="4.1 个人问题"></a>4.1 个人问题</h2><h2 id="4-2-AI问题"><a href="#4-2-AI问题" class="headerlink" title="4.2 AI问题"></a>4.2 AI问题</h2><p><strong>1. 请介绍一下本地去 AI 腔服务的完整调用链。</strong></p>
+<h1 id="4-基于-llama-cpp-将微调模型部署为本地-OpenAI-兼容服务，对-Claude-生成的章节初稿进行并发段落级去-AI-腔优化"><a href="#4-基于-llama-cpp-将微调模型部署为本地-OpenAI-兼容服务，对-Claude-生成的章节初稿进行并发段落级去-AI-腔优化" class="headerlink" title="4. 基于 llama.cpp 将微调模型部署为本地 OpenAI 兼容服务，对 Claude 生成的章节初稿进行并发段落级去 AI 腔优化"></a>4. 基于 llama.cpp 将微调模型部署为本地 OpenAI 兼容服务，对 Claude 生成的章节初稿进行并发段落级去 AI 腔优化</h1><h2 id="4-1-个人问题"><a href="#4-1-个人问题" class="headerlink" title="4.1 个人问题"></a>4.1 个人问题</h2><h3 id="1-llama-cpp是什么？"><a href="#1-llama-cpp是什么？" class="headerlink" title="1. llama.cpp是什么？"></a>1. llama.cpp是什么？</h3><p>**llama.cpp 是一个用 C&#x2F;C++ 实现的开源大模型推理引擎，主要作用是把训练好的模型加载起来，在本地设备上运行并生成文本。**它支持 CPU、多种 GPU 后端和低比特量化，并针对 Apple Silicon 提供了 Metal 等加速支持，因此适合你在 M1 Mac 上部署模型。<a target="_blank" rel="noopener" href="https://github.com/ggml-org/llama.cpp">官方仓库</a></p>
+<p>结合你的项目，几个组件的分工是：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Qwen3-8B</td>
+<td>提供文本理解和生成能力的模型</td>
+</tr>
+<tr>
+<td>LLaMA-Factory</td>
+<td>执行 QLoRA 微调，学习改写偏好</td>
+</tr>
+<tr>
+<td>GGUF</td>
+<td>保存模型权重和相关元数据的文件格式</td>
+</tr>
+<tr>
+<td>llama.cpp</td>
+<td>加载模型并执行推理</td>
+</tr>
+<tr>
+<td>Novel-Agent</td>
+<td>调用本地服务，完成章节的段落级改写</td>
+</tr>
+</tbody></table>
+<p>你当时的部署流程是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs text">Qwen3-8B + 训练得到的 LoRA<br>          ↓ 合并<br>完整的 Hugging Face 模型<br>          ↓ 转换格式<br>F16 GGUF<br>          ↓ Q4_K_M 量化<br>约 4.7GB 的 GGUF 文件<br>          ↓ llama.cpp 加载<br>M1 本地推理服务<br>          ↓<br>Novel-Agent 调用，改写小说段落<br></code></pre></td></tr></table></figure>
+
+<p>其中，<strong>GGUF 是文件格式，Q4_K_M 是量化方案</strong>，两者不是同一个概念。GGUF 也能保存未做低比特量化的 F16 权重，你的中间产物就是这种情况。</p>
+<p>你在部署过程中用到了 llama.cpp 的几类工具：</p>
+<ul>
+<li><code>convert_hf_to_gguf.py</code>：将 Hugging Face 模型转换为 GGUF。</li>
+<li><code>llama-quantize</code>：执行量化，降低模型文件大小和权重内存占用。</li>
+<li><code>llama-cli</code>：在终端中测试模型生成。</li>
+<li><code>llama-server</code>：启动本地 HTTP 服务，供项目通过 OpenAI 兼容接口调用。</li>
+</ul>
+<p>对你的项目来说，<strong>它最关键的价值是把微调产物变成应用能够调用的本地服务</strong>。Novel-Agent 把段落发给服务，拿到改写结果，无须在业务代码里处理模型加载和底层计算。</p>
+<p>面试时可以这样回答：</p>
+<blockquote>
+<p>llama.cpp 是一个支持本地部署和量化模型推理的开源引擎。我将微调后的 Qwen3-8B 合并、转换并量化为 Q4_K_M GGUF，在 M1 上通过 Metal 加速运行，再用 llama-server 暴露 OpenAI 兼容接口，供 Novel-Agent 调用，完成段落级去 AI 腔改写。</p>
+</blockquote>
+<h3 id="2-你能讲一下你是怎么部署的吗？模型部署的大概流程是什么样的？"><a href="#2-你能讲一下你是怎么部署的吗？模型部署的大概流程是什么样的？" class="headerlink" title="2. 你能讲一下你是怎么部署的吗？模型部署的大概流程是什么样的？"></a>2. 你能讲一下你是怎么部署的吗？模型部署的大概流程是什么样的？</h3><p>**我的部署分为云端模型准备、本地推理服务和项目接入三部分。**因为训练得到的主要是 LoRA 适配器，所以先把它与底座合并，再转换、量化，最后部署到 M1 Mac。</p>
+<p>整体流程是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs text">Qwen3-8B 底座 + LoRA 适配器<br>        ↓ 合并<br>完整 Hugging Face 模型，约 16GB<br>        ↓ 转换<br>F16 GGUF，约 16GB<br>        ↓ Q4_K_M 量化<br>量化 GGUF，约 4.7GB<br>        ↓ 下载到 M1 Mac<br>llama.cpp + Metal 推理<br>        ↓ llama-server<br>OpenAI 兼容接口<br>        ↓<br>Novel-Agent 段落级改写<br></code></pre></td></tr></table></figure>
+
+<p><strong>1. 在云端合并底座和 LoRA</strong></p>
+<p>训练完成后，我使用 LLaMA-Factory 的导出功能，将 Qwen3-8B 原始模型与训练得到的 LoRA 适配器合并。</p>
+<p>合并时加载原始底座，不带训练阶段的 4-bit 量化配置。导出的完整模型包含权重分片、模型配置、Tokenizer 和聊天模板，大小约 16GB。</p>
+<p><strong>2. 转换为 llama.cpp 使用的 GGUF 格式</strong></p>
+<p>使用 llama.cpp 提供的 <code>convert_hf_to_gguf.py</code>，将完整模型转换为 F16 GGUF。</p>
+<p>这一阶段主要改变模型的存储格式，得到的文件仍约为 16GB，还需要进一步量化才能更适合我的本地设备。</p>
+<p><strong>3. 执行 Q4_K_M 量化</strong></p>
+<p>使用 <code>llama-quantize</code> 将 F16 GGUF 量化为 Q4_K_M，最终文件约 4.7GB。</p>
+<p>选择这个方案，是考虑到本地只有 <strong>16GB 统一内存</strong>，除了权重，还需要给 KV Cache、运行缓冲区和系统留出空间。这里的量化用于部署，与训练阶段的 QLoRA 是两个步骤。</p>
+<p><strong>4. 下载到 Mac，验证本地推理</strong></p>
+<p>在云端先验证量化模型可以加载并生成中文，再下载到 M1 Mac。文章中也记录了 SHA-256 校验方法，用于确认传输后的文件完整性。</p>
+<p>本地通过 Homebrew 安装 llama.cpp，使用 <code>llama-cli</code> 加载模型，通过 Metal 使用 GPU 加速。部署记录中的生成速度约为 <strong>10～12 tokens&#x2F;s</strong>；这是当时的生成速度记录，不代表并发处理整章的吞吐率。</p>
+<p><strong>5. 启动本地 API 服务</strong></p>
+<p>验证命令行推理正常后，使用 <code>llama-server</code> 启动服务。你当时的配置主要是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">llama-server \<br>  -m <span class="hljs-string">&quot;/Users/bilibili/Desktop/llm/Qwen3-8B-ai-style-Q4_K_M.gguf&quot;</span> \<br>  -ngl 99 \<br>  -c 4096 \<br>  -np 2 \<br>  --host 127.0.0.1 \<br>  --port 8080 \<br>  --<span class="hljs-built_in">alias</span> qwen3-ai-style<br></code></pre></td></tr></table></figure>
+
+<p>其中，<code>-ngl 99</code> 表示尽可能将模型层卸载到 GPU，<code>-np 2</code> 配置两个并行处理槽位。服务通过本机地址提供 OpenAI 兼容的 <code>/v1/chat/completions</code> 接口。</p>
+<p><strong>6. 接入 Novel-Agent</strong></p>
+<p>项目使用 OpenAI Python 客户端访问本地服务，将符合条件的完整段落发送给模型，默认并发数为 2。</p>
+<p>收到改写结果后，先检查数字、专名、对白结构和改写幅度等。触发保护规则就保留原段；服务不可用则保留 Claude 初稿。处理后的章节再进入记忆抽取和一致性校验流程。</p>
+<p>部署中一个具体问题是 <strong>Tokenizer 兼容性</strong>：<code>extra_special_tokens</code> 保存为列表，但当时的 Transformers 代码按字典处理。我备份配置后，将其迁移到 <code>additional_special_tokens</code>，验证特殊 token 保留且 Tokenizer 能加载，再继续转换。</p>
+<p>面试时可以压缩成这段：</p>
+<blockquote>
+<p>我先在云端用 LLaMA-Factory 将 LoRA 与 Qwen3-8B 底座合并，再通过 llama.cpp 转成 F16 GGUF，并量化为约 4.7GB 的 Q4_K_M 文件。随后下载到 M1 16GB 的 Mac，使用 Metal 加速验证推理，再启动 llama-server 提供 OpenAI 兼容接口。最后在 Novel-Agent 中接入段落级并发改写，并加入结果校验和失败回退，避免本地模型异常影响写章流程。</p>
+</blockquote>
+<h3 id="3-模型部署的过程中有遇到什么问题吗？"><a href="#3-模型部署的过程中有遇到什么问题吗？" class="headerlink" title="3. 模型部署的过程中有遇到什么问题吗？"></a>3. 模型部署的过程中有遇到什么问题吗？</h3><p>有。根据你的部署记录，**最值得讲的是 Tokenizer 兼容性、转换环境依赖，以及 llama.cpp 的命令版本差异。**其中 Tokenizer 问题最能体现排查过程。</p>
+<p><strong>1. Tokenizer 配置不兼容，导致 GGUF 转换失败</strong></p>
+<p>第一次转换时，模型权重已经开始处理，但在加载 Tokenizer 的阶段出现了：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">FileNotFoundError: tokenizer.model<br>AttributeError: &#x27;list&#x27; object has no attribute &#x27;keys&#x27;<br></code></pre></td></tr></table></figure>
+
+<p>排查后发现：</p>
+<ul>
+<li>Qwen3 使用 <code>tokenizer.json</code>，没有 <code>tokenizer.model</code> 本身不代表文件缺失，转换器可以回退到相应的 BPE 加载路径。</li>
+<li>真正阻断转换的是 <code>tokenizer_config.json</code>：其中 <code>extra_special_tokens</code> 是列表，而当时安装的 Transformers 相关代码把它当成字典，调用了 <code>.keys()</code>。</li>
+</ul>
+<p>解决方式是先备份配置，再将列表中的 token 迁移到 <code>additional_special_tokens</code>，与已有列表合并去重。随后重新加载 Tokenizer，检查 <code>&lt;|im_start|&gt;</code>、<code>&lt;|im_end|&gt;</code> 等特殊 token 的 ID，确认正常后再执行转换。</p>
+<p><strong>这里的关键不是让报错消失，而是确保修复配置后没有丢失模型需要的特殊 token。</strong></p>
+<p><strong>2. 转换依赖安装慢，并且可能影响训练环境</strong></p>
+<p>安装 llama.cpp 转换依赖时，requirements 指定下载一个较大的 CPU 版 PyTorch，下载速度很慢，最终超时。但云端原本已经安装了可以使用的 PyTorch。</p>
+<p>你的处理方式是：</p>
+<ul>
+<li>创建专门用于模型转换的虚拟环境。</li>
+<li>通过 <code>--system-site-packages</code> 复用已有 PyTorch。</li>
+<li>从转换依赖列表中排除固定的 PyTorch 版本，安装其余依赖。</li>
+<li>验证关键库能够导入，并运行转换脚本的 <code>--help</code> 检查入口是否正常。</li>
+</ul>
+<p>这样避免了重复下载，也减少了直接修改训练环境带来的影响。这套环境是为当次转换准备的，不代表所有依赖版本都通用兼容。</p>
+<p><strong>3. llama.cpp 命令参数与参考教程不一致</strong></p>
+<p>你当时安装的 <code>llama-cli</code> 已经默认进入聊天模式，而一些旧教程使用的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">-cnv<br>-i<br>--interactive<br>--conversation<br></code></pre></td></tr></table></figure>
+
+<p>在该版本中不可用。</p>
+<p>解决方式是检查实际版本和帮助信息，按照当前安装版本调整命令，直接加载模型运行。部署报告也记录了版本和 commit，方便以后复现。</p>
+<p>面试时建议重点讲第一个问题，可以这样回答：</p>
+<blockquote>
+<p>有，最典型的是模型转 GGUF 时的 Tokenizer 兼容问题。开始出现了找不到 tokenizer.model 的提示，但继续看异常栈，真正导致失败的是特殊 token 配置的类型不兼容：配置中是列表，Transformers 按字典调用了 keys。我先备份文件，将这些 token 迁移到兼容的配置字段，再验证 Tokenizer 加载和关键特殊 token ID，最后重新转换成功。另外还遇到转换依赖重复下载 PyTorch、llama.cpp 新旧命令参数不一致的问题，分别通过单独准备转换环境和核对实际版本解决。</p>
+</blockquote>
+<h3 id="4-对-Claude-生成的章节初稿进行并发段落级去-AI-腔优化-这是怎么实现的？如何并发处理的？"><a href="#4-对-Claude-生成的章节初稿进行并发段落级去-AI-腔优化-这是怎么实现的？如何并发处理的？" class="headerlink" title="4. 对 Claude 生成的章节初稿进行并发段落级去 AI 腔优化: 这是怎么实现的？如何并发处理的？"></a>4. 对 Claude 生成的章节初稿进行并发段落级去 AI 腔优化: 这是怎么实现的？如何并发处理的？</h3><p>**实现方式是：将章节拆成完整段落，用线程池并发请求本地 Qwen 服务，逐段校验结果，再按原位置拼回章节。**核心代码在 <a href="D:/dev/novel-agent/novel_agent/editor/style_polisher.py:179">style_polisher.py</a>。</p>
+<p>这里的并发发生在<strong>同一章内部的段落之间</strong>。章节之间仍然顺序写作，避免同时修改世界状态。</p>
+<p><strong>1. 在章节生成后插入处理步骤</strong></p>
+<p><a href="D:/dev/novel-agent/novel_agent/engine.py:131">写章流程</a>的执行顺序是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">Claude 生成完整章节<br>        ↓<br>拆段、筛选、并发改写、校验并拼回<br>        ↓<br>抽取摘要和候选世界状态<br>        ↓<br>一致性审查<br>        ↓<br>保存正文，并根据审查结果决定是否提交记忆<br></code></pre></td></tr></table></figure>
+
+<p>把改写放在记忆抽取之前，是为了让后续摘要和审查基于最终候选正文。</p>
+<p><strong>2. 按空行拆段，同时保留原来的排版</strong></p>
+<p>代码使用带捕获组的正则拆分：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">parts = re.split(<span class="hljs-string">r&quot;(\n[ \t]*\n+)&quot;</span>, text)<br></code></pre></td></tr></table></figure>
+
+<p>拆分结果类似：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">[<span class="hljs-string">&quot;段落A&quot;</span>, <span class="hljs-string">&quot;\n\n&quot;</span>, <span class="hljs-string">&quot;段落B&quot;</span>, <span class="hljs-string">&quot;\n\n&quot;</span>, <span class="hljs-string">&quot;段落C&quot;</span>]<br></code></pre></td></tr></table></figure>
+
+<p>正文段落和空行都保留在数组中，只替换符合条件的正文位置，最后执行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;</span>.join(parts)<br></code></pre></td></tr></table></figure>
+
+<p>因此能够保留原有段落顺序和空行。</p>
+<p>当前默认筛选 <strong>15～220 字、以句末标点结束的完整段落</strong>，跳过标题、分隔线和不符合条件的文本。这里筛的是“适合局部编辑的段落”，<strong>代码没有先用分类器判断哪些段落有 AI 腔</strong>；是否需要修改，交给改写模型判断。</p>
+<p><strong>3. 用线程池同时发送多个改写请求</strong></p>
+<p>核心并发代码是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> ThreadPoolExecutor(<br>    max_workers=<span class="hljs-built_in">min</span>(<span class="hljs-variable language_">self</span>.concurrency, <span class="hljs-built_in">len</span>(indices)),<br>    thread_name_prefix=<span class="hljs-string">&quot;style-polish&quot;</span>,<br>) <span class="hljs-keyword">as</span> pool:<br>    results = <span class="hljs-built_in">list</span>(pool.<span class="hljs-built_in">map</span>(process, indices))<br></code></pre></td></tr></table></figure>
+
+<p>默认 <code>concurrency=2</code>，表示这个章节最多有两个段落任务同时执行。某个任务完成后，线程就继续处理下一个段落。</p>
+<p>每个任务内部做三件事：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">process</span>(<span class="hljs-params">index</span>):<br>    source = parts[index]<br><br>    <span class="hljs-keyword">try</span>:<br>        candidate = editor.rewrite(source)<br>    <span class="hljs-keyword">except</span> Exception:<br>        <span class="hljs-keyword">return</span> index, source, <span class="hljs-string">&quot;failed&quot;</span><br><br>    <span class="hljs-keyword">if</span> validate_rewrite(source, candidate, protected_terms):<br>        <span class="hljs-keyword">return</span> index, source, <span class="hljs-string">&quot;rolled_back&quot;</span><br><br>    <span class="hljs-keyword">return</span> index, candidate, <span class="hljs-string">&quot;accepted&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>上面是简化代码，实际实现还会返回和统计失败原因。</p>
+<p>使用线程池，是因为 Python 侧主要在发送 HTTP 请求、等待本地服务返回；真正的模型计算发生在 llama.cpp 进程里，不需要每个 Python 线程加载一份模型。</p>
+<p><strong>4. 每个请求如何调用模型？</strong></p>
+<p>每个段落通过本地 OpenAI 兼容接口单独发送，请求包含：</p>
+<ul>
+<li>固定的系统约束：只改表达，不改变事实，不续写、不解释。</li>
+<li>固定的改写指令。</li>
+<li>当前目标段落。</li>
+</ul>
+<p>当前代码的默认温度为 <code>0.2</code>，最大输出为 <code>512 tokens</code>。</p>
+<p>**需要准确说明：当前实现只发送目标段落，没有额外注入前后段落或整章上下文。**这与训练数据的单段输入形式一致，但也限制了模型对跨段指代和语气的判断能力。</p>
+<p><strong>5. 如何避免并发导致乱序或写入冲突？</strong></p>
+<p>每个任务都携带原始段落索引。工作线程读取原文、请求模型并返回结果，<strong>不直接修改章节数组或世界状态</strong>。</p>
+<p>全部任务结束后，由调用线程统一替换：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> index, output, status, problems <span class="hljs-keyword">in</span> results:<br>    parts[index] = output<br><br><span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>.join(parts), stats<br></code></pre></td></tr></table></figure>
+
+<p>另外，<code>pool.map()</code> 按输入顺序产出结果；即使后面的段落先完成，也不会按完成时间打乱章节。<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.Executor.map">Python 官方文档</a></p>
+<p><strong>6. 本地服务也需要支持并发处理</strong></p>
+<p>你的部署配置使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">llama-server ... -np 2<br></code></pre></td></tr></table></figure>
+
+<p><code>-np 2</code> 配置两个服务端处理槽位，与客户端默认两个工作线程相匹配。llama-server 支持并行解码和连续批处理，让多个请求共享已加载的模型。<a target="_blank" rel="noopener" href="https://github.com/ggml-org/llama.cpp/tree/master/tools/server">llama.cpp 服务文档</a></p>
+<p>**这不代表速度一定提升两倍。**多个请求仍共享同一块 M1 GPU 和内存带宽，实际收益需要比较并发数为 1、2 时的整章耗时。</p>
+<p><strong>7. 如何防止改坏章节？</strong></p>
+<p>每个改写结果都会检查数字、计量单位、已知专名、引号结构、否定词数量、段落格式和改写幅度等：</p>
+<ul>
+<li>请求失败或输出为空：保留原段。</li>
+<li>触发保护规则：保留原段，并记录原因。</li>
+<li>服务整体不可用：保留 Claude 生成的章节。</li>
+<li>通过段落检查：拼回后继续走章节一致性审查。</li>
+</ul>
+<p>这些规则能拦截明显风险，但不能证明所有语义都保持不变，因此仍需要后续审查。</p>
+<p>面试时可以概括为：</p>
+<blockquote>
+<p>我按空行拆分章节并保留原始排版，筛选完整段落，通过 ThreadPoolExecutor 以默认两个工作线程并发调用本地 llama-server。每个任务独立完成改写和规则校验，失败就返回原文。最后由调用线程按段落索引统一拼回，避免乱序和共享写入，再进入摘要抽取与一致性审查。</p>
+</blockquote>
+<h2 id="4-2-AI问题"><a href="#4-2-AI问题" class="headerlink" title="4.2 AI问题"></a>4.2 AI问题</h2><p><strong>1. 请介绍一下本地去 AI 腔服务的完整调用链。</strong></p>
 <p>答：Claude先生成章节初稿，系统按空行拆分段落，筛选符合条件的段落，并发调用本地 Qwen 服务。每个输出经过事实安全校验，通过后回填原位置，否则恢复原段。最终文本再进入完整性检查、记忆抽取和一致性审查。</p>
 <p><strong>2. 为什么选择 llama.cpp，而不是直接使用 Transformers？</strong></p>
 <p>答：部署产物是量化后的 GGUF 模型，llama.cpp 对单机量化推理支持成熟，部署依赖少，并且可以直接提供 OpenAI 兼容接口。业务端不需要管理 tokenizer、模型加载和 GPU 推理细节，只需要调用标准 HTTP API。</p>
