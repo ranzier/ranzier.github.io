@@ -21,15 +21,15 @@
   <meta name="author" content="ranzier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="\ResumeItem{哔哩哔哩（B站） \hfill  OGV技术部  \hfill 开发实习生 \hfill  2026.05-2026.10}\textbf{工作概述：}参与B站专业生产长视频内容（OGV）的业务开发建设，覆盖番剧、电影、电视剧等视频播放业务，主要负责OGV的C端（如播放页、播放器）等页面的业务功能的后端开发与维护 \begin{itemize}	 \item \textbf">
+    <meta name="description" content="\section{实习经历} \ResumeItem{哔哩哔哩（B站） \hfill  OGV技术部  \hfill 后端开发实习生 \hfill  2026.05-2026.10} \textbf{工作概述：}参与哔哩哔哩 OGV（专业长视频内容）业务的后端研发与维护，面向番剧、影视、纪录片等内容场景，主要负责播放页、播放器等C端核心服务开展业务功能建设、接口性能优化与服务稳定性保障  \beg">
 <meta property="og:type" content="article">
 <meta property="og:title" content="工作内容">
 <meta property="og:url" content="http://example.com/2026/10/01/bilibili/%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AE%B9/index.html">
 <meta property="og:site_name" content="RANZIER">
-<meta property="og:description" content="\ResumeItem{哔哩哔哩（B站） \hfill  OGV技术部  \hfill 开发实习生 \hfill  2026.05-2026.10}\textbf{工作概述：}参与B站专业生产长视频内容（OGV）的业务开发建设，覆盖番剧、电影、电视剧等视频播放业务，主要负责OGV的C端（如播放页、播放器）等页面的业务功能的后端开发与维护 \begin{itemize}	 \item \textbf">
+<meta property="og:description" content="\section{实习经历} \ResumeItem{哔哩哔哩（B站） \hfill  OGV技术部  \hfill 后端开发实习生 \hfill  2026.05-2026.10} \textbf{工作概述：}参与哔哩哔哩 OGV（专业长视频内容）业务的后端研发与维护，面向番剧、影视、纪录片等内容场景，主要负责播放页、播放器等C端核心服务开展业务功能建设、接口性能优化与服务稳定性保障  \beg">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-10-01T12:56:18.000Z">
-<meta property="article:modified_time" content="2026-10-23T09:19:28.202Z">
+<meta property="article:modified_time" content="2026-10-30T07:23:13.615Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="随笔">
 <meta name="twitter:card" content="summary_large_image">
@@ -257,7 +257,7 @@
         
         
         
-          498 分钟
+          501 分钟
         
       </span>
     
@@ -312,13 +312,26 @@
             
               <div class="markdown-body">
                 
-                <p>\ResumeItem{哔哩哔哩（B站） \hfill  OGV技术部  \hfill 开发实习生 \hfill  2026.05-2026.10}<br>\textbf{工作概述：}参与B站专业生产长视频内容（OGV）的业务开发建设，覆盖番剧、电影、电视剧等视频播放业务，主要负责OGV的C端（如播放页、播放器）等页面的业务功能的后端开发与维护</p>
-<p>\begin{itemize}	</p>
-<p>\item \textbf{SLO 异常自动化诊断工具}：针对服务请求可用率 SLO 抖动或不达标问题，构建从异常发现到根因定位的自动化诊断系统。打通质量平台与日志平台数据链路，采用 MAD 识别异常日与异常窗口加权采样等方法，并通过线程池并行采集提升效率，经多维度聚合后交由大模型生成根因报告，保障核心服务可用率连续多日达 99.999%</p>
-<p>\item \textbf{DRM 投屏提示改造}：针对遗漏单集 DRM 导致购买后投屏失败的问题，扩展剧集分节统计能力，实现兼容新老剧集模型的 DRM_STATUS分桶统计，通过批量统计接口聚合全分节 DRM 桶计数，结合 Redis&#x2F;Caffeine 分层缓存复用统计结果，实现单集 DRM 场景的收银台不可投屏提示</p>
-<p>\item  \textbf{大追番列表空数据治理}：定位追番列表分页前全量处理导致的超时问题，短期通过动态配置调高 RPC deadline，覆盖样本内95.6%的尾部慢请求；进一步实现日番&#x2F;国创按 seasonType 分区异步查询，将分区过滤前移至下游，合并结果后按 mtime 全局排序分页，配套动态开关与深分页回退，减少无关数据处理，大追番用户请求耗时降低约30%</p>
-<p>\item \textbf{凡人修仙传复播压测与扩容}：基于 moni 批量采集并分析播放页服务及核心下游 RPC 的 QPS 变化，结合调用链放大比例定位限流与容量瓶颈，推动补齐下游限流配置，并落地 Caffeine 本地缓存、批量 miss 回源及空结果保护等优化，最终保障播放链路稳定承载峰值 140k+ QPS的流量</p>
-<p>\end{itemize}</p>
+                <pre><code class="hljs">\section{实习经历}
+\ResumeItem{哔哩哔哩（B站） \hfill  OGV技术部  \hfill 后端开发实习生 \hfill  2026.05-2026.10}
+\textbf{工作概述：}参与哔哩哔哩 OGV（专业长视频内容）业务的后端研发与维护，面向番剧、影视、纪录片等内容场景，主要负责播放页、播放器等C端核心服务开展业务功能建设、接口性能优化与服务稳定性保障
+
+\begin{itemize}	
+	\item \textbf{SLO 异常自动化诊断工具}：针对服务请求可用率 SLO 抖动或不达标问题，构建从异常发现到根因定位的自动化诊断系统。打通质量平台与日志平台数据链路，采用 MAD 识别异常日与异常窗口加权采样等方法，并通过线程池并行采集提升效率，经多维度聚合后交由大模型生成根因报告，保障核心服务可用率连续多日达 99.999\%
+	
+	\item  \textbf{大追番列表空数据治理}：定位追番列表分页前全量处理导致的超时问题，短期通过动态配置调高 RPC deadline为180ms，覆盖样本内95.6\%的尾部慢请求；进一步实现日番/国创按 seasonType 分区异步查询，下游按分区过滤后再补充信息，合并结果后按 mtime 全局排序分页，配套动态开关与深分页回退，大追番用户请求耗时降低约30\%
+	
+	\item \textbf{凡人修仙传复播压测与扩容}：基于监控平台批量采集播放页服务及核心下游 RPC 的 QPS，结合调用链建立流量放大基线，对比逐级升压过程中的流量变化及错误指标，定位限流与容量瓶颈，推动补齐下游限流配置，并落地 Caffeine 本地缓存、批量 miss 回源及空结果保护等优化，最终保障播放链路稳定承载峰值 140k+ QPS的流量
+	
+	\item \textbf{DRM 投屏提示改造}：针对单集 DRM 限制未在购买前告知的问题，扩展剧集分节通用统计框架，实现兼容新老剧集模型的 DRM\_STATUS分桶统计，批量查询全分节统计结果，结合 Redis + Caffeine 分层缓存，实现单集 DRM 限制场景的收银台不可投屏提示
+	
+\end{itemize}
+</code></pre>
+<h1 id="0-总体工作"><a href="#0-总体工作" class="headerlink" title="0. 总体工作"></a>0. 总体工作</h1><h3 id="1-你们主要负责的业务是什么？你主要做了哪些工作？"><a href="#1-你们主要负责的业务是什么？你主要做了哪些工作？" class="headerlink" title="1. 你们主要负责的业务是什么？你主要做了哪些工作？"></a>1. 你们主要负责的业务是什么？你主要做了哪些工作？</h3><p>我们部门主要负责 B 站 OGV，也就是番剧、影视、纪录片等专业长视频内容的生产和分发。组内分工主要包括 B 端业务、C 端流量和活动支持几个方向。</p>
+<p>我主要参与 <strong>C 端应用服务的后端研发</strong>，涉及播放页、播放器等面向用户的核心场景。日常会在 Mentor 的指导下参与需求开发、线上问题排查和修复。</p>
+<h3 id="2-介绍一下你们的播放页和播放器这种服务？"><a href="#2-介绍一下你们的播放页和播放器这种服务？" class="headerlink" title="2. 介绍一下你们的播放页和播放器这种服务？"></a>2. 介绍一下你们的播放页和播放器这种服务？</h3><p>面向客户端有播放页和播放器各自的应用网关，提供 HTTP 或 gRPC 接口；应用网关负责请求处理、业务编排和数据聚合，下面再调用剧集、追番、进度、支付、鉴权等服务。</p>
+<p><strong>播放页主要解决“页面需要展示什么”</strong>。 比如用户点开一部番剧，需要展示剧集资料、选集列表、追番状态、观看进度和运营活动等信息。请求进来后，会先根据 seasonId、epId 获取并校验基础信息，再通过统一的依赖管理器发起异步查询。可以并行的下游请求用 Future 并行执行，存在依赖的查询按依赖关系衔接，最后汇总结果、组装页面，并根据场景裁剪数据</p>
+<p><strong>播放器主要解决“用户能不能播，以及怎么播”</strong>。 它会结合用户身份、设备和播放场景，请求统一鉴权服务，获得观看权益和限制信息，再调整试看、清晰度等播放参数。之后根据普通播放、DRM 或投屏等场景调用视频云获取流信息，组装流地址、清晰度列表和播放器配置；受到限制时，则按业务规则返回相应提示</p>
 <h1 id="1-SLO-异常自动化诊断工具"><a href="#1-SLO-异常自动化诊断工具" class="headerlink" title="1. SLO 异常自动化诊断工具"></a>1. SLO 异常自动化诊断工具</h1><p>\item \textbf{SLO 异常自动化诊断工具}：针对服务请求可用率 SLO 抖动或不达标问题，构建从异常发现到根因定位的自动化诊断系统。打通质量平台与日志平台数据链路，采用 MAD 识别异常日与异常窗口加权采样等方法，并通过线程池并行采集提升效率，经多维度聚合后交由大模型生成根因报告，保障核心服务可用率连续多日达 99.999%</p>
 <h2 id="1-1-工作概述"><a href="#1-1-工作概述" class="headerlink" title="1.1 工作概述"></a>1.1 工作概述</h2><p><strong>背景与目标:</strong></p>
 <p>这个项目主要是解决线上服务 SLO 出问题后（<strong>连续多天SLO达不到五个9的指标</strong>），排查过程比较依赖人工的问题。以前要先去质量平台找哪一天异常，再看哪个接口错误最多，然后到日志平台按时间和错误码查询大量日志，最后再靠经验判断到底是下游服务、某个实例、可用区，还是业务数据导致的。  </p>
