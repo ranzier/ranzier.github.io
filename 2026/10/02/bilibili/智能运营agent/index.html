@@ -21,15 +21,15 @@
   <meta name="author" content="ranzier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="\ResumeItem{OGV 智能运营 Agent 平台 \hfill Agent应用开发 \hfill 2026.07-2026.09}\textbf{核心技术：}Java、Spring Boot、AgentScope、DashScope、Redis、Reactor、Paladin、BFS、PDFBox、EasyExcel \textbf{项目简介：}参与面向 OGV 运营场景的多 Agent">
+    <meta name="description" content="\ResumeItem{OGV 智能运营助手 \hfill Agent应用开发 \hfill 2026.07-2026.09}\textbf{核心技术：}Java、Spring Boot、Multi-Agent、AgentScope、Harness、ReAct、Redis、Paladin	\textbf{项目简介：}参与面向 OGV 运营场景的多 Agent 智能操作平台建设，主要参与长任务执行与">
 <meta property="og:type" content="article">
 <meta property="og:title" content="智能运营agent">
 <meta property="og:url" content="http://example.com/2026/10/02/bilibili/%E6%99%BA%E8%83%BD%E8%BF%90%E8%90%A5agent/index.html">
 <meta property="og:site_name" content="RANZIER">
-<meta property="og:description" content="\ResumeItem{OGV 智能运营 Agent 平台 \hfill Agent应用开发 \hfill 2026.07-2026.09}\textbf{核心技术：}Java、Spring Boot、AgentScope、DashScope、Redis、Reactor、Paladin、BFS、PDFBox、EasyExcel \textbf{项目简介：}参与面向 OGV 运营场景的多 Agent">
+<meta property="og:description" content="\ResumeItem{OGV 智能运营助手 \hfill Agent应用开发 \hfill 2026.07-2026.09}\textbf{核心技术：}Java、Spring Boot、Multi-Agent、AgentScope、Harness、ReAct、Redis、Paladin	\textbf{项目简介：}参与面向 OGV 运营场景的多 Agent 智能操作平台建设，主要参与长任务执行与">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-10-02T12:56:18.000Z">
-<meta property="article:modified_time" content="2026-10-23T09:19:15.482Z">
+<meta property="article:modified_time" content="2026-10-30T08:50:58.419Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="随笔">
 <meta name="twitter:card" content="summary_large_image">
@@ -312,14 +312,8 @@
             
               <div class="markdown-body">
                 
-                <p>\ResumeItem{OGV 智能运营 Agent 平台 \hfill Agent应用开发 \hfill 2026.07-2026.09}<br>\textbf{核心技术：}Java、Spring Boot、AgentScope、DashScope、Redis、Reactor、Paladin、BFS、PDFBox、EasyExcel</p>
-<p>\textbf{项目简介：}参与面向 OGV 运营场景的多 Agent 智能操作平台建设；本人主要负责长任务执行与恢复、业务子 Agent 动态配置及多格式文档理解模块<br>\begin{itemize}<br>    \item 负责 Agent 长任务执行机制，将复杂任务抽象为计划、步骤和批次，基于 Redis 持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动续跑以及暂停、继续、停止、重试与服务重启恢复</p>
-<pre><code class="hljs">\item 为计划内写操作设计稳定操作标识和结果记录机制，并通过执行守卫限制未创建任务、未提交计划或未经确认时执行批量写操作，降低模型重试和网络异常导致的重复执行及越权调用风险
-
-\item 负责业务子 Agent 配置化改造，支持通过 Paladin 动态配置系统提示词、Tool、Skill 和权限码；实现配置解析、合法性校验、热更新及 Agent 缓存失效，降低新增业务域 Agent 的代码改动成本
-
-\item 负责多格式文档理解链路，支持 XLSX、CSV、DOCX、PDF、PPTX、TXT、JSON 等 7 类文件的异步解析、内容分片、内嵌图片提取、BFS 上传和 Redis 临时存储，使 Agent 能按需读取文档而非一次性注入全文
-</code></pre>
+                <p>\ResumeItem{OGV 智能运营助手 \hfill Agent应用开发 \hfill 2026.07-2026.09}<br>\textbf{核心技术：}Java、Spring Boot、Multi-Agent、AgentScope、Harness、ReAct、Redis、Paladin<br>	<br>\textbf{项目简介：}参与面向 OGV 运营场景的多 Agent 智能操作平台建设，主要参与长任务执行与恢复、业务子 Agent 动态配置及多格式文档理解等模块<br>\begin{itemize}<br>	\item 负责 Agent 长任务执行机制，将复杂任务抽象为计划、步骤和批次，并基于 Redis 持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动推进以及暂停、继续、重试与服务重启恢复<br>		<br>	\item 为计划内写操作分配固定标识并记录执行结果，降低模型重试及网络异常导致的重复执行风险；构建执行守卫在工具调用前校验任务、计划和用户确认状态，防止 Agent 绕过确认直接执行批量操作<br>		<br>	\item 负责业务子 Agent 配置化改造，支持通过 Paladin 动态配置系统提示词、Tool、Skill 和权限码；实现配置解析、合法性校验、热更新及 Agent 缓存失效，降低新增业务域 Agent 的代码改动成本<br>		<br>	\item 负责多格式文档理解链路，支持 XLSX、CSV、DOCX、PDF、PPTX、TXT、JSON 等 7 类文件的异步解析、内容分片、内嵌图片提取、BFS 上传和 Redis 临时存储，使 Agent 能按需读取文档而非一次性注入全文
+		</p>
 <h1 id="0-总体"><a href="#0-总体" class="headerlink" title="0. 总体"></a>0. 总体</h1><h2 id="0-1-个人问题"><a href="#0-1-个人问题" class="headerlink" title="0.1 个人问题"></a>0.1 个人问题</h2><h3 id="1-简单介绍一下你这个项目的作用吧？"><a href="#1-简单介绍一下你这个项目的作用吧？" class="headerlink" title="1. 简单介绍一下你这个项目的作用吧？"></a>1. 简单介绍一下你这个项目的作用吧？</h3><p>这是一个面向 OGV 运营场景的多 Agent 智能操作平台，主要目的是把运营人员原来需要在多个系统中手动完成的查询、分析和批量操作，统一转化为自然语言驱动的智能任务。</p>
 <p>平台以主 Agent 作为统一入口，负责理解用户意图、拆解任务，并根据业务场景调度不同的子 Agent。各个子 Agent 可以通过配置动态加载提示词、工具、技能和权限，因此新增业务场景时通常不需要重新开发整套流程。</p>
 <p>项目重点解决了三类问题：一是通过计划、步骤和批次机制执行耗时较长的任务，支持暂停、继续、重试以及服务重启后的恢复；二是对批量写操作增加用户确认、权限校验和幂等保护，避免模型重复调用或越权执行；三是支持 Excel、PDF、Word、PPT 等多种文件的异步解析，让 Agent 能够按需读取文档内容，而不是把整个文件一次性塞进模型上下文。</p>
@@ -390,7 +384,7 @@
 <p>我们没有追求完全自主的 Agent，而是选择“模型规划加确定性执行”的方式。这样灵活性会受到一定限制，但更适合涉及真实业务写操作的场景。配置化也不是无限开放，而是在可校验的 Tool、Skill 和权限范围内提供动态能力。</p>
 <p><strong>20. 如果重新做一次，你会改进什么？</strong></p>
 <p>我会更早建立统一的任务事件模型和评测体系。任务事件模型可以降低状态排查和审计成本；评测体系可以通过固定用例持续衡量路由、计划和工具调用效果，而不是主要依赖人工体验。另外，长期任务数据应进一步区分临时状态与持久化审计数据。</p>
-<h1 id="1-负责-Agent-长任务执行机制，将复杂任务抽象为计划、步骤和批次，基于-Redis-持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动续跑以及暂停、继续、停止、重试与服务重启恢复"><a href="#1-负责-Agent-长任务执行机制，将复杂任务抽象为计划、步骤和批次，基于-Redis-持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动续跑以及暂停、继续、停止、重试与服务重启恢复" class="headerlink" title="1. 负责 Agent 长任务执行机制，将复杂任务抽象为计划、步骤和批次，基于 Redis 持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动续跑以及暂停、继续、停止、重试与服务重启恢复"></a>1. 负责 Agent 长任务执行机制，将复杂任务抽象为计划、步骤和批次，基于 Redis 持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动续跑以及暂停、继续、停止、重试与服务重启恢复</h1><h2 id="1-1-具体实现方式"><a href="#1-1-具体实现方式" class="headerlink" title="1.1 具体实现方式"></a>1.1 具体实现方式</h2><h4 id="1-背景与目标"><a href="#1-背景与目标" class="headerlink" title="1. 背景与目标"></a>1. 背景与目标</h4><p>普通 Agent 通常在一次请求中完成“推理、调用 Tool、返回结果”。但批量运营任务可能包含多个步骤、几十个对象、异步等待和真实写操作，单轮请求无法可靠完成。</p>
+<h1 id="1-负责-Agent-长任务执行机制，将复杂任务抽象为计划、步骤和批次，并基于-Redis-持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动推进以及暂停、继续、重试与服务重启恢复"><a href="#1-负责-Agent-长任务执行机制，将复杂任务抽象为计划、步骤和批次，并基于-Redis-持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动推进以及暂停、继续、重试与服务重启恢复" class="headerlink" title="1. 负责 Agent 长任务执行机制，将复杂任务抽象为计划、步骤和批次，并基于 Redis 持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动推进以及暂停、继续、重试与服务重启恢复"></a>1. 负责 Agent 长任务执行机制，将复杂任务抽象为计划、步骤和批次，并基于 Redis 持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动推进以及暂停、继续、重试与服务重启恢复</h1><h2 id="1-1-具体实现方式"><a href="#1-1-具体实现方式" class="headerlink" title="1.1 具体实现方式"></a>1.1 具体实现方式</h2><h4 id="1-背景与目标"><a href="#1-背景与目标" class="headerlink" title="1. 背景与目标"></a>1. 背景与目标</h4><p>普通 Agent 通常在一次请求中完成“推理、调用 Tool、返回结果”。但批量运营任务可能包含多个步骤、几十个对象、异步等待和真实写操作，单轮请求无法可靠完成。</p>
 <p>这套机制的核心目标是：</p>
 <blockquote>
 <p>将模型生成的长任务转换为服务端可持久化、可确认、可分批推进、可恢复的状态机。</p>
@@ -1189,7 +1183,7 @@
 <li><strong>你认为当前方案还有哪些改进空间？</strong></li>
 </ol>
 <p>参考回答：第一，可以推动所有写接口统一支持幂等键，让平台生成的操作标识真正贯穿下游系统。第二，可以把关键操作流水写入数据库，增强审计、追踪和长期恢复能力。第三，需要补充 Redis 故障、重复通知、网络超时和服务宕机等故障注入测试。第四，可以增加任务积压、租约超时、结果核对数量和无进展轮次等监控指标，方便及时发现异常任务。</p>
-<h1 id="2-为计划内写操作设计稳定操作标识和结果记录机制，并通过执行守卫限制未创建任务、未提交计划或未经确认时执行批量写操作，降低模型重试和网络异常导致的重复执行及越权调用风险"><a href="#2-为计划内写操作设计稳定操作标识和结果记录机制，并通过执行守卫限制未创建任务、未提交计划或未经确认时执行批量写操作，降低模型重试和网络异常导致的重复执行及越权调用风险" class="headerlink" title="2. 为计划内写操作设计稳定操作标识和结果记录机制，并通过执行守卫限制未创建任务、未提交计划或未经确认时执行批量写操作，降低模型重试和网络异常导致的重复执行及越权调用风险"></a>2. 为计划内写操作设计稳定操作标识和结果记录机制，并通过执行守卫限制未创建任务、未提交计划或未经确认时执行批量写操作，降低模型重试和网络异常导致的重复执行及越权调用风险</h1><h2 id="2-1-具体实现方式"><a href="#2-1-具体实现方式" class="headerlink" title="2.1 具体实现方式"></a>2.1 具体实现方式</h2><h4 id="一、问题背景"><a href="#一、问题背景" class="headerlink" title="一、问题背景"></a>一、问题背景</h4><p>Agent 与普通后端接口不同：模型可能因为超时、上下文续跑或服务重启重复生成同一个 Tool 调用；网络异常时，也无法仅根据“没有收到响应”判断请求是否已经到达下游。如果直接重试写操作，可能重复创建卡片、重复提交图片任务或重复回滚生产任务。</p>
+<h1 id="2-为计划内写操作分配固定标识并记录执行结果，降低模型重试及网络异常导致的重复执行风险；构建执行守卫在工具调用前校验任务、计划和用户确认状态，防止-Agent-绕过确认直接执行批量操作"><a href="#2-为计划内写操作分配固定标识并记录执行结果，降低模型重试及网络异常导致的重复执行风险；构建执行守卫在工具调用前校验任务、计划和用户确认状态，防止-Agent-绕过确认直接执行批量操作" class="headerlink" title="2. 为计划内写操作分配固定标识并记录执行结果，降低模型重试及网络异常导致的重复执行风险；构建执行守卫在工具调用前校验任务、计划和用户确认状态，防止 Agent 绕过确认直接执行批量操作"></a>2. 为计划内写操作分配固定标识并记录执行结果，降低模型重试及网络异常导致的重复执行风险；构建执行守卫在工具调用前校验任务、计划和用户确认状态，防止 Agent 绕过确认直接执行批量操作</h1><h2 id="2-1-具体实现方式"><a href="#2-1-具体实现方式" class="headerlink" title="2.1 具体实现方式"></a>2.1 具体实现方式</h2><h4 id="一、问题背景"><a href="#一、问题背景" class="headerlink" title="一、问题背景"></a>一、问题背景</h4><p>Agent 与普通后端接口不同：模型可能因为超时、上下文续跑或服务重启重复生成同一个 Tool 调用；网络异常时，也无法仅根据“没有收到响应”判断请求是否已经到达下游。如果直接重试写操作，可能重复创建卡片、重复提交图片任务或重复回滚生产任务。</p>
 <p>因此，这部分工作的核心不是简单增加一个重试，而是把写操作改造成受服务端状态机约束的协议：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">创建任务 -&gt; 提交完整计划 -&gt; 用户确认计划<br>       -&gt; 开启受租约保护的运行轮次<br>       -&gt; 为最小写操作生成 operationId<br>       -&gt; 执行业务 Tool<br>       -&gt; 记录确定结果或进入只读核对<br></code></pre></td></tr></table></figure>
 

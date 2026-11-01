@@ -21,15 +21,15 @@
   <meta name="author" content="ranzier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="\section{实习经历} \ResumeItem{哔哩哔哩（B站） \hfill  OGV技术部  \hfill 后端开发实习生 \hfill  2026.05-2026.10} \textbf{工作概述：}参与哔哩哔哩 OGV（专业长视频内容）业务的后端研发与维护，面向番剧、影视、纪录片等内容场景，主要负责播放页、播放器等C端核心服务开展业务功能建设、接口性能优化与服务稳定性保障  \beg">
+    <meta name="description" content="\section{实习经历}\ResumeItem{哔哩哔哩（B站） \hfill  OGV技术部  \hfill 后端开发实习生 \hfill  2026.05-2026.10}\textbf{工作概述：}参与哔哩哔哩 OGV（专业长视频内容）业务的后端研发与维护，面向番剧、影视、纪录片等内容场景，主要负责播放页、播放器等C端核心服务开展业务功能建设、接口性能优化与服务稳定性保障	\begin{">
 <meta property="og:type" content="article">
 <meta property="og:title" content="工作内容">
 <meta property="og:url" content="http://example.com/2026/10/01/bilibili/%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AE%B9/index.html">
 <meta property="og:site_name" content="RANZIER">
-<meta property="og:description" content="\section{实习经历} \ResumeItem{哔哩哔哩（B站） \hfill  OGV技术部  \hfill 后端开发实习生 \hfill  2026.05-2026.10} \textbf{工作概述：}参与哔哩哔哩 OGV（专业长视频内容）业务的后端研发与维护，面向番剧、影视、纪录片等内容场景，主要负责播放页、播放器等C端核心服务开展业务功能建设、接口性能优化与服务稳定性保障  \beg">
+<meta property="og:description" content="\section{实习经历}\ResumeItem{哔哩哔哩（B站） \hfill  OGV技术部  \hfill 后端开发实习生 \hfill  2026.05-2026.10}\textbf{工作概述：}参与哔哩哔哩 OGV（专业长视频内容）业务的后端研发与维护，面向番剧、影视、纪录片等内容场景，主要负责播放页、播放器等C端核心服务开展业务功能建设、接口性能优化与服务稳定性保障	\begin{">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-10-01T12:56:18.000Z">
-<meta property="article:modified_time" content="2026-10-30T07:23:13.615Z">
+<meta property="article:modified_time" content="2026-11-01T13:32:58.943Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="随笔">
 <meta name="twitter:card" content="summary_large_image">
@@ -246,7 +246,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          100k 字
+          105k 字
         
       </span>
     
@@ -257,7 +257,7 @@
         
         
         
-          501 分钟
+          525 分钟
         
       </span>
     
@@ -312,21 +312,7 @@
             
               <div class="markdown-body">
                 
-                <pre><code class="hljs">\section{实习经历}
-\ResumeItem{哔哩哔哩（B站） \hfill  OGV技术部  \hfill 后端开发实习生 \hfill  2026.05-2026.10}
-\textbf{工作概述：}参与哔哩哔哩 OGV（专业长视频内容）业务的后端研发与维护，面向番剧、影视、纪录片等内容场景，主要负责播放页、播放器等C端核心服务开展业务功能建设、接口性能优化与服务稳定性保障
-
-\begin{itemize}	
-	\item \textbf{SLO 异常自动化诊断工具}：针对服务请求可用率 SLO 抖动或不达标问题，构建从异常发现到根因定位的自动化诊断系统。打通质量平台与日志平台数据链路，采用 MAD 识别异常日与异常窗口加权采样等方法，并通过线程池并行采集提升效率，经多维度聚合后交由大模型生成根因报告，保障核心服务可用率连续多日达 99.999\%
-	
-	\item  \textbf{大追番列表空数据治理}：定位追番列表分页前全量处理导致的超时问题，短期通过动态配置调高 RPC deadline为180ms，覆盖样本内95.6\%的尾部慢请求；进一步实现日番/国创按 seasonType 分区异步查询，下游按分区过滤后再补充信息，合并结果后按 mtime 全局排序分页，配套动态开关与深分页回退，大追番用户请求耗时降低约30\%
-	
-	\item \textbf{凡人修仙传复播压测与扩容}：基于监控平台批量采集播放页服务及核心下游 RPC 的 QPS，结合调用链建立流量放大基线，对比逐级升压过程中的流量变化及错误指标，定位限流与容量瓶颈，推动补齐下游限流配置，并落地 Caffeine 本地缓存、批量 miss 回源及空结果保护等优化，最终保障播放链路稳定承载峰值 140k+ QPS的流量
-	
-	\item \textbf{DRM 投屏提示改造}：针对单集 DRM 限制未在购买前告知的问题，扩展剧集分节通用统计框架，实现兼容新老剧集模型的 DRM\_STATUS分桶统计，批量查询全分节统计结果，结合 Redis + Caffeine 分层缓存，实现单集 DRM 限制场景的收银台不可投屏提示
-	
-\end{itemize}
-</code></pre>
+                <p>\section{实习经历}<br>\ResumeItem{哔哩哔哩（B站） \hfill  OGV技术部  \hfill 后端开发实习生 \hfill  2026.05-2026.10}<br>\textbf{工作概述：}参与哔哩哔哩 OGV（专业长视频内容）业务的后端研发与维护，面向番剧、影视、纪录片等内容场景，主要负责播放页、播放器等C端核心服务开展业务功能建设、接口性能优化与服务稳定性保障<br>	<br>\begin{itemize}	<br>	\item \textbf{SLO 异常自动化诊断工具}：针对服务请求可用率 SLO 抖动或不达标问题，构建从异常发现到根因定位的自动化诊断系统。打通质量平台与日志平台数据链路，采用 MAD 识别异常日与异常窗口加权采样等方法，并通过线程池并行采集提升效率，经多维度聚合后交由大模型生成根因报告，保障核心服务可用率连续多日达 99.999%<br>		<br>	\item  \textbf{大追番列表空数据治理}：定位追番列表分页前全量处理导致的超时问题，短期通过动态配置调高 RPC deadline为180ms，覆盖样本内95.6%的尾部慢请求；进一步实现日番&#x2F;国创按 seasonType 分区异步查询，下游按分区过滤后再补充信息，合并结果后按 mtime 全局排序分页，配套动态开关与深分页回退，大追番用户请求耗时降低约30%<br>		<br>	\item \textbf{凡人修仙传复播压测与扩容}：基于监控平台批量采集播放页服务及核心下游 RPC 的 QPS，结合调用链建立流量放大基线，对比逐级升压过程中的流量变化及错误指标，定位限流与容量瓶颈，推动补齐下游限流配置，并落地 Caffeine 本地缓存、批量 miss 回源及空结果保护等优化，最终保障播放链路稳定承载峰值 140k+ QPS的流量<br>		<br>	\item \textbf{DRM 投屏提示改造}：针对单集 DRM 限制未在购买前告知的问题，扩展剧集分节通用统计框架，实现兼容新老剧集模型的 DRM_STATUS分桶统计，批量查询全分节统计结果，结合 Redis + Caffeine 分层缓存，实现单集 DRM 限制场景的收银台不可投屏提示<br>		<br>\end{itemize}</p>
 <h1 id="0-总体工作"><a href="#0-总体工作" class="headerlink" title="0. 总体工作"></a>0. 总体工作</h1><h3 id="1-你们主要负责的业务是什么？你主要做了哪些工作？"><a href="#1-你们主要负责的业务是什么？你主要做了哪些工作？" class="headerlink" title="1. 你们主要负责的业务是什么？你主要做了哪些工作？"></a>1. 你们主要负责的业务是什么？你主要做了哪些工作？</h3><p>我们部门主要负责 B 站 OGV，也就是番剧、影视、纪录片等专业长视频内容的生产和分发。组内分工主要包括 B 端业务、C 端流量和活动支持几个方向。</p>
 <p>我主要参与 <strong>C 端应用服务的后端研发</strong>，涉及播放页、播放器等面向用户的核心场景。日常会在 Mentor 的指导下参与需求开发、线上问题排查和修复。</p>
 <h3 id="2-介绍一下你们的播放页和播放器这种服务？"><a href="#2-介绍一下你们的播放页和播放器这种服务？" class="headerlink" title="2. 介绍一下你们的播放页和播放器这种服务？"></a>2. 介绍一下你们的播放页和播放器这种服务？</h3><p>面向客户端有播放页和播放器各自的应用网关，提供 HTTP 或 gRPC 接口；应用网关负责请求处理、业务编排和数据聚合，下面再调用剧集、追番、进度、支付、鉴权等服务。</p>
@@ -974,6 +960,73 @@
 </tr>
 </tbody></table>
 <p>只看异常日，会首先注意到 A，因为它有 950 次错误；与正常日对比后，会发现 B 才是本次错误增长的主要贡献者。B 仍需要进一步验证，但排查优先级会更清楚。</p>
+<h4 id="15-仅仅通过日志平台收集到的这些日志数据就能得到这一天SLO不达标的原因吗？有一些日志数据缺失了会有影响吗？"><a href="#15-仅仅通过日志平台收集到的这些日志数据就能得到这一天SLO不达标的原因吗？有一些日志数据缺失了会有影响吗？" class="headerlink" title="15. 仅仅通过日志平台收集到的这些日志数据就能得到这一天SLO不达标的原因吗？有一些日志数据缺失了会有影响吗？"></a>15. 仅仅通过日志平台收集到的这些日志数据就能得到这一天SLO不达标的原因吗？有一些日志数据缺失了会有影响吗？</h4><p><strong>日志可以帮助提出并缩小根因范围，但仅靠采样错误日志，通常不足以确认“这一天 SLO 为什么不达标”。日志缺失也会影响结论，尤其是缺失集中在特定时间、实例或服务时。</strong></p>
+<p>面试中可以先这样回答：</p>
+<blockquote>
+<p>我们把日志作为归因证据，结合质量平台的 SLO 指标和错误时序逐层分析。工具先定位贡献较大的接口和时间窗口，再通过日志聚合提出根因候选，最后结合下游监控、调用链或发布记录验证。日志缺失会降低分析可信度，因此证据不足时需要追加查询，并在报告中说明缺口。</p>
+</blockquote>
+<p>这里需要分清三个层次。</p>
+<p><strong>第一，证明这一天确实不达标，要依赖 SLO 指标。</strong></p>
+<p>如果采用请求可用率口径，基本关系是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">可用率 = 符合成功定义的请求数 / 纳入统计的请求总数<br></code></pre></td></tr></table></figure>
+
+<p>具体哪些请求算失败、哪些请求被排除，要遵循质量平台的统计规则。<strong>采样错误日志缺少完整分母，不能据此计算全天可用率。</strong></p>
+<p>另外，找到一个异常窗口，还需要核对它对全天失败量的贡献，才能说明它是不是当天不达标的主要来源。项目中的 MAD 主要根据每日错误数发现异常，也不等同于直接判断可用率是否达标。</p>
+<p><strong>第二，日志里的异常分布能提供线索，但需要进一步验证因果。</strong></p>
+<p>例如，聚合发现：</p>
+<blockquote>
+<p>超时日志主要集中在下游 B，涉及多个实例，耗时接近超时阈值。</p>
+</blockquote>
+<p>这支持“下游 B 相关调用可能是主要问题”的判断。但要进一步确认，还需要看：</p>
+<ul>
+<li>B 的延迟、流量、资源和依赖监控是否同步异常。</li>
+<li>Trace 中时间到底消耗在哪个环节。</li>
+<li>是否发生发布、配置变更或流量变化。</li>
+<li>修复或回滚后，错误量与 SLO 是否恢复。</li>
+</ul>
+<p>特别注意：<strong>某个下游占错误样本的 80%，不代表它自身的失败率是 80%</strong>；它可能本来就承接了大部分流量，需要结合调用量判断。</p>
+<p><strong>第三，日志缺失的方式会直接影响结论。</strong></p>
+<table>
+<thead>
+<tr>
+<th>缺失情况</th>
+<th>可能造成的影响</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>少量随机缺失</td>
+<td>样本减少，统计不稳定，稀有错误可能漏掉</td>
+</tr>
+<tr>
+<td>故障最严重的时间段查询失败</td>
+<td>低估故障，漏掉关键现场</td>
+</tr>
+<tr>
+<td>某个实例或服务没有日志</td>
+<td>错误分布产生偏差，可能误判问题范围</td>
+</tr>
+<tr>
+<td>缺少 trace、下游或耗时字段</td>
+<td>难以关联调用链、区分超时发生位置</td>
+</tr>
+<tr>
+<td>基线日和异常日采集质量不同</td>
+<td>分布变化可能来自采集差异</td>
+</tr>
+</tbody></table>
+<p>结合当前代码，已经实现了<strong>分时采样、异常窗口加权采样，以及失败窗口拆分重试</strong>。但仍失败的窗口会被跳过，目前没有完整记录查询覆盖率、字段缺失率和结果完整性。因此，<strong>程序运行完成，并不代表证据完整</strong>。</p>
+<p>后续可以为每次分析记录成功与失败窗口、样本量、字段缺失情况，并对关键窗口追加查询。如果故障期间根本没有产生日志，就需要依靠指标、Trace 或其他现场证据；大模型也无法从缺失的数据中可靠还原根因。</p>
+<h4 id="16-你这个用线程池并行采集的方式里面涉及到一些线程安全的问题吗？你是怎么解决的？"><a href="#16-你这个用线程池并行采集的方式里面涉及到一些线程安全的问题吗？你是怎么解决的？" class="headerlink" title="16. 你这个用线程池并行采集的方式里面涉及到一些线程安全的问题吗？你是怎么解决的？"></a>16. 你这个用线程池并行采集的方式里面涉及到一些线程安全的问题吗？你是怎么解决的？</h4><p>可以这样回答面试官：</p>
+<blockquote>
+<p>有，主要涉及多个并发任务共享基线缓存时的线程安全问题。</p>
+<p>在 V2 中，我们用四线程池并行采集不同接口的基线日志。每个任务完成日志聚合后，会把结果放进同一张缓存表：Key 是接口标识，Value 是该接口的基线聚合结果。多个任务可能同时执行 <code>put()</code>，所以即使写入的是不同 Key，也不能直接使用普通 <code>HashMap</code>。</p>
+<p>我的处理方式是使用 <code>ConcurrentHashMap</code>，保证这些并发写入和后续读取操作的线程安全：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">Map&lt;String, Map&lt;String, Object&gt;&gt; baselineAggCache =<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConcurrentHashMap</span>&lt;&gt;();<br></code></pre></td></tr></table></figure>
+
+<p>同时，我把处理分为两个阶段：先并行准备基线，通过 <code>CompletableFuture.allOf(...).join()</code> 等待基线任务结束，再并行分析异常日。异常日任务直接读取对应接口的基线聚合结果进行对比，避免一边准备基线、一边依赖尚未完成的数据。</p>
+<p>还有一个细节：<code>ConcurrentHashMap</code> 只保证外层映射操作安全，不会自动让里面的聚合 <code>Map</code> 也变成线程安全。所以每个任务使用自己的局部对象完成聚合，构建好后再放入缓存，后续只读取，不再并发修改内部数据。</p>
+</blockquote>
+<p>这段回答的重点是：<strong>并发写入用 <code>ConcurrentHashMap</code>，阶段衔接用 <code>join()</code>，聚合对象通过“独立构建、发布后只读”避免共享修改。</strong></p>
 <h3 id="1-3-2-AI想到的问题"><a href="#1-3-2-AI想到的问题" class="headerlink" title="1.3.2 AI想到的问题"></a>1.3.2 AI想到的问题</h3><h4 id="P0"><a href="#P0" class="headerlink" title="P0"></a>P0</h4><h5 id="1-请用两分钟介绍系统完整链路，你具体实现了什么？"><a href="#1-请用两分钟介绍系统完整链路，你具体实现了什么？" class="headerlink" title="1. 请用两分钟介绍系统完整链路，你具体实现了什么？"></a>1. 请用两分钟介绍系统完整链路，你具体实现了什么？</h5><p><strong>参考回答：</strong></p>
 <p>这个项目解决的是 SLO 异常后需要人工跨质量平台和日志平台排查的问题。我把排查过程拆成了一条确定性诊断流水线：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">质量平台 SLO 日指标<br>→ MAD 识别异常日<br>→ 获取接口错误时序<br>→ 基线日与异常日接口增量对比<br>→ 定位异常时间窗口<br>→ 日志平台分窗采样<br>→ 16 维日志聚合<br>→ 基线 Diff<br>→ 结构化 JSON 证据<br>→ 外部大模型或人工生成根因报告<br></code></pre></td></tr></table></figure>
@@ -1365,7 +1418,7 @@
 <p>Cookie 通过本地配置或环境变量注入，不应提交仓库。日志产物包含内部服务名、IP、Trace、用户和业务 ID，应限制目录权限、设置保留周期并脱敏；如果发送给外部模型，还需要字段白名单和合规审批。</p>
 <h5 id="25-如果只允许你优先改三个问题，会改什么？"><a href="#25-如果只允许你优先改三个问题，会改什么？" class="headerlink" title="25. 如果只允许你优先改三个问题，会改什么？"></a>25. 如果只允许你优先改三个问题，会改什么？</h5><p><strong>简要回答：</strong></p>
 <p>第一，修复聚合字段名称不一致导致 Diff 为空的问题；第二，补充任务状态、缓存版本和失败覆盖率，保证结果可信；第三，建立单元测试和历史故障评测集。前两项保证工程正确性，第三项才能量化诊断效果。</p>
-<h1 id="2-DRM不可投屏"><a href="#2-DRM不可投屏" class="headerlink" title="2. DRM不可投屏"></a>2. DRM不可投屏</h1><p>\item \textbf{DRM 投屏提示改造}：针对遗漏单集 DRM 导致投屏失败的问题，扩展剧集分节统计能力，实现兼容新老剧集模型的 DRM_STATUS分桶统计，通过批量统计接口聚合全分节 DRM 桶计数，结合 Redis + Caffeine 分层缓存复用统计结果，实现单集 DRM 场景的收银台不可投屏提示</p>
+<h1 id="2-DRM不可投屏"><a href="#2-DRM不可投屏" class="headerlink" title="2. DRM不可投屏"></a>2. DRM不可投屏</h1><p>\item \textbf{DRM 投屏提示改造}：针对单集 DRM 限制未在购买前告知的问题，扩展剧集分节通用统计框架，实现兼容新老剧集模型的 DRM_STATUS分桶统计，批量查询全分节统计结果，结合 Redis + Caffeine 分层缓存，实现单集 DRM 限制场景的收银台不可投屏提示</p>
 <h2 id="2-1-工作概述"><a href="#2-1-工作概述" class="headerlink" title="2.1 工作概述"></a>2.1 工作概述</h2><p>需求的根因不是投屏拦截失效，而是“告知链路”和“执行链路”读取 DRM 的粒度不同。DRM 可以配置在 Season 和 Episode 两个层级：Season 级属性进入 Season 的 <code>configAttrs</code>，EP 级属性进入 Episode 的动态规则属性。Player-Gateway 判断的是 Season DRM 或 EP DRM，而 Pay-Service 的 <code>buildBuyDesc</code> 历史上只执行 <code>checkDrm(season)</code>，所以遗漏了单集配置。</p>
 <p>我先梳理了数据生产、统计和消费链路，再比较两种方案。方案一是 Pay 拉回全量 EP Proto 并遍历 <code>configAttrs</code>，优点是直观，但数据量大、重复组装多，而且会把剧集模型兼容逻辑带到 Pay。方案二是复用 Season-Service 的 <code>countEpisodesBySection</code>：它按 <code>(sectionId, dimension)</code> 缓存分桶结果，内部通过 SPI Counter 计算不同维度，并已处理新老剧集模型。最终选择方案二，让领域数据仍由 Season-Service 负责。</p>
 <p>在 Pay 中，<code>buildBuyDesc</code> 先判断 Season DRM；由于 Java <code>||</code> 短路，Season 已开启 DRM 时不会再访问 EP 统计。未命中才通过 <code>profile</code> 拿所有 Section ID，然后批量请求 <code>DRM_STATUS</code>。<code>bucket=1</code> 是开启 DRM，<code>bucket=0</code> 是未开启；任一 <code>bucket=1</code> 的计数大于 0 就给所有 SKU 追加“本片由于版权方限制暂不支持投屏”。</p>
@@ -2055,7 +2108,7 @@
 <li><p><strong>问：这个方案最大的遗留问题是什么？</strong><br><strong>答：</strong> 50 个 Section 的接口上限、全 Section 统计口径，以及依赖 TTL 保证缓存最终一致性。面试中应主动说明这些边界及改进方案。</p>
 </li>
 </ol>
-<h1 id="3-大追番用户列表空数据治理"><a href="#3-大追番用户列表空数据治理" class="headerlink" title="3. 大追番用户列表空数据治理"></a>3. 大追番用户列表空数据治理</h1><p>\item  \textbf{大追番列表空数据治理}：定位追番列表分页前全量处理导致的超时问题，短期通过动态配置调高 RPC deadline，覆盖样本内95.6%的尾部慢请求；进一步实现日番&#x2F;国创按 seasonType 分区异步查询，将分区过滤前移至下游，合并结果后按 mtime 全局排序分页，配套动态开关与深分页回退，减少无关数据处理，大追番用户请求耗时降低约30%</p>
+<h1 id="3-大追番用户列表空数据治理"><a href="#3-大追番用户列表空数据治理" class="headerlink" title="3. 大追番用户列表空数据治理"></a>3. 大追番用户列表空数据治理</h1><p>\item  \textbf{大追番列表空数据治理}：定位追番列表分页前全量处理导致的超时问题，短期通过动态配置调高 RPC deadline为180ms，覆盖样本内95.6%的尾部慢请求；进一步实现日番&#x2F;国创按 seasonType 分区异步查询，下游按分区过滤后再补充信息，合并结果后按 mtime 全局排序分页，配套动态开关与深分页回退，大追番用户请求耗时降低约30%</p>
 <h2 id="3-1-工作概述"><a href="#3-1-工作概述" class="headerlink" title="3.1 工作概述"></a>3.1 工作概述</h2><p>手机空间页的 <code>AppCard/MyFollows</code> 在大追番用户上偶发返回空列表，而 Web 端通常正常。沿移动端调用链排查后确认：card-service 调用 follow-service 的 <code>Follow/MyFollows</code> 原来只有 <code>100ms</code> deadline；follow-service 对大用户会分页拉取全部收藏关系，再对全量追番补充 <code>miniSeason</code>、过滤和排序，最后才分页。当下游耗时越过 deadline 时，card-service 捕获 RPC 异常并返回 <code>MyFollowsReply.getDefaultInstance()</code>，真实的超时被折叠成了业务空列表。</p>
 <p>治理分三层：</p>
 <ol>
@@ -2422,78 +2475,7 @@
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">追番关系更新时间：10月1日<br>最近观看时间：    10月20日<br>最新一话发布时间：10月18日<br>    ↓<br>最终 mtime：10月20日<br></code></pre></td></tr></table></figure>
 
 <p>这样，<strong>最近追番、最近看过或最近更新的番剧，都有机会排到前面</strong>。</p>
-<h4 id="13-配套动态开关，为什么想到要配置一个动态开关呢？"><a href="#13-配套动态开关，为什么想到要配置一个动态开关呢？" class="headerlink" title="13. 配套动态开关，为什么想到要配置一个动态开关呢？"></a>13. 配套动态开关，为什么想到要配置一个动态开关呢？</h4><p><strong>动态开关：控制是否使用新方案</strong></p>
-<p>配置类新增两个参数：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 默认关闭分区并发查询</span><br><span class="hljs-keyword">private</span> <span class="hljs-type">boolean</span> <span class="hljs-variable">enableSplitAnimeFollowsBySeasonType</span> <span class="hljs-operator">=</span> <span class="hljs-literal">false</span>;<br><br><span class="hljs-comment">// 每个分区最多查询的候选数量</span><br><span class="hljs-keyword">private</span> <span class="hljs-type">int</span> <span class="hljs-variable">splitAnimeFollowsMaxQuerySize</span> <span class="hljs-operator">=</span> <span class="hljs-number">100</span>;<br></code></pre></td></tr></table></figure>
-
-<p>这两个参数接入项目已有的 Paladin 动态配置机制，可以在运行时调整，无需重新发布：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">app:</span><br>  <span class="hljs-attr">enableSplitAnimeFollowsBySeasonType:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">splitAnimeFollowsMaxQuerySize:</span> <span class="hljs-number">100</span><br></code></pre></td></tr></table></figure>
-
-<p>每次请求都会读取当前配置。因此，启用后可以观察新方案的表现；需要关闭时，将开关改为 <code>false</code>，后续请求就恢复原流程。</p>
-<p><strong>为什么想到要配置一个动态开关呢</strong>？</p>
-<p>因为这次改动<strong>改变了跨服务调用方式和分页处理逻辑</strong>，需要能小范围验证，也能在发现问题时快速恢复原流程。</p>
-<p>主要考虑三个方面：</p>
-<ol>
-<li><p><strong>控制结果正确性风险。</strong> 原来是下游统一排序分页，现在拆成两个分区，再由上游合并。需要验证排序、分页、总数是否与原流程一致，避免漏数据或顺序异常。</p>
-</li>
-<li><p><strong>观察下游负载变化。</strong> 单次请求变成两路 RPC，虽然可以缩短等待时间，但也会增加请求数，并重复读取用户追番关系。实际收益和资源开销需要在线上观察。</p>
-</li>
-<li><p><strong>快速止损。</strong> 如果上线后发现超时增加、下游负载升高或结果异常，可以通过 Paladin 关闭开关，让后续请求恢复原流程，无需等待重新发版。</p>
-</li>
-</ol>
-<h4 id="14-深分页回退是怎么做的？"><a href="#14-深分页回退是怎么做的？" class="headerlink" title="14. 深分页回退是怎么做的？"></a>14. 深分页回退是怎么做的？</h4><p><strong>1. 深分页回退：候选数量超过上限时走旧流程</strong></p>
-<p>分区合并要保证分页正确，每个分区都需要取前 <code>pn × ps</code> 条。页码越深，查询和合并的数据越多，因此设置上限：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">shouldSplitAnimeFollows</span><span class="hljs-params">(<span class="hljs-type">int</span> followType, <span class="hljs-type">int</span> pn, <span class="hljs-type">int</span> ps)</span> &#123;<br>    <span class="hljs-type">long</span> <span class="hljs-variable">querySize</span> <span class="hljs-operator">=</span> (<span class="hljs-type">long</span>) pn * ps;<br><br>    <span class="hljs-comment">// 配置可以调小，但代码限制最大为 100</span><br>    <span class="hljs-type">int</span> <span class="hljs-variable">maxQuerySize</span> <span class="hljs-operator">=</span> Math.min(<br>        app.getSplitAnimeFollowsMaxQuerySize(), <span class="hljs-number">100</span>);<br><br>    <span class="hljs-keyword">return</span> app.isEnableSplitAnimeFollowsBySeasonType()<br>        &amp;&amp; followType == FollowTypeEnum.ANIME.code<br>        &amp;&amp; querySize &gt; <span class="hljs-number">0</span><br>        &amp;&amp; querySize &lt;= maxQuerySize;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>例如，每页 20 条、上限为 100：</p>
-<table>
-<thead>
-<tr>
-<th>请求</th>
-<th align="right">每个分区需要取的数量</th>
-<th>处理方式</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>第 1 页</td>
-<td align="right">20</td>
-<td>分区并发查询</td>
-</tr>
-<tr>
-<td>第 5 页</td>
-<td align="right">100</td>
-<td>分区并发查询</td>
-</tr>
-<tr>
-<td>第 6 页</td>
-<td align="right">120</td>
-<td>回退原查询</td>
-</tr>
-</tbody></table>
-<p>所以这里的“深分页”是用 <strong><code>pn × ps</code> 是否超过上限</strong>判断的，不是单独判断页码。</p>
-<p><strong>2. 在查询入口选择执行路径</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java">MyFollowsReply myFollows;<br><br><span class="hljs-keyword">if</span> (shouldSplitAnimeFollows(followReq.getFollowType(), pn, ps)) &#123;<br>    <span class="hljs-comment">// 新流程：日番、国创并发查询，再合并排序分页</span><br>    myFollows = splitAnimeFollows(<br>        tid, pn, ps, followSortTypeEnum.code);<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// 原流程：单次请求下游，直接按原 pn、ps 查询</span><br>    myFollows = followRPCService.getFollows(<br>        tid,<br>        followReq.getFollowType(),<br>        FollowStatusEnum.ALL.code,<br>        pn, ps,<br>        followSortTypeEnum.code,<br>        <span class="hljs-literal">false</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>整体逻辑就是：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">收到请求<br>    ↓<br>开关开启 + 属于追番场景 + pn×ps 未超过上限？<br>    ├─ 是 → 日番/国创并发查询 → 合并排序分页<br>    └─ 否 → 原来的单次查询流程<br></code></pre></td></tr></table></figure>
-
-<p>需要注意：<strong>这里的回退是在请求发出前选择旧流程，并非某一路 RPC 失败后再重试旧流程。</strong> 它用于控制新方案的适用范围和额外开销，并没有解决旧流程本身的深分页性能问题。</p>
-<h4 id="15-为什么用深分页回退？另外你保留原来的单次查询流程了吗？"><a href="#15-为什么用深分页回退？另外你保留原来的单次查询流程了吗？" class="headerlink" title="15. 为什么用深分页回退？另外你保留原来的单次查询流程了吗？"></a>15. 为什么用深分页回退？另外你保留原来的单次查询流程了吗？</h4><p><strong>保留了原来的单次查询路径。</strong></p>
-<p>这里容易混淆：<strong>下游内部处理全量数据，不等于把全量数据返回给上游。</strong> 我前面说“全量补充信息”指的是内部处理过程。</p>
-<p>原流程是：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">follow-service 内部：<br>读取全部追番 → 补充信息 → 过滤排序 → 按 pn/ps 截取<br>                                            ↓<br>返回 card-service：只有当前页，通常 20 条<br></code></pre></td></tr></table></figure>
-
-<p>分区方案则是：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">日番：处理该分区全部追番 → 排序 → 返回前 pn×ps 条<br>国创：处理该分区全部追番 → 排序 → 返回前 pn×ps 条<br>                                  ↓<br>card-service 合并 → 全局排序 → 截取当前页<br></code></pre></td></tr></table></figure>
-
-<p><strong>深分页回退，是为了限制分区方案随页码增长带来的额外开销。</strong></p>
-<p>分区方案为了保证全局分页正确，每个分区都要取前 <code>pn × ps</code> 条，而不是只取当前页：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">每页 20 条：<br><br>第 1 页：每个分区取 20 条，合并最多 40 条<br>第 5 页：每个分区取 100 条，合并最多 200 条<br>第 50 页：每个分区取 1000 条，合并最多 2000 条<br></code></pre></td></tr></table></figure>
-
-<p>页码越深，两路 RPC 的返回数据量、上游反序列化、内存占用和合并排序开销都会增长。另外，两路请求还会重复读取用户追番关系，因此不能假设分区并发在所有页码下都更快。</p>
-<p>当前实现把每个分区的候选数量限制在 <strong>100 条以内</strong>，超过上限就走原来的单次查询：</p>
-<p>原路径只向上游返回当前页，避免深分页时传回大量候选数据。<strong>不过，下游分页前全量处理的成本仍然存在，回退只是控制新方案的额外开销，并没有解决深分页本身的性能问题。</strong> 100 也是当前的保护阈值，并非经过实测确认的最佳性能分界点。</p>
-<h4 id="16-大追番用户请求耗时降低约30-，这个30-是怎么得到的？"><a href="#16-大追番用户请求耗时降低约30-，这个30-是怎么得到的？" class="headerlink" title="16. 大追番用户请求耗时降低约30%，这个30%是怎么得到的？"></a>16. 大追番用户请求耗时降低约30%，这个30%是怎么得到的？</h4><p>选取同一批追番数量超过 1000 的用户，固定查询第一页、每页 20 条，在相同环境、负载及可比缓存条件下，对比新旧方案：</p>
+<h4 id="13-大追番用户请求耗时降低约30-，这个30-是怎么得到的？"><a href="#13-大追番用户请求耗时降低约30-，这个30-是怎么得到的？" class="headerlink" title="13. 大追番用户请求耗时降低约30%，这个30%是怎么得到的？"></a>13. 大追番用户请求耗时降低约30%，这个30%是怎么得到的？</h4><p>选取同一批追番数量超过 1000 的用户，固定查询第一页、每页 20 条，在相同环境、负载及可比缓存条件下，对比新旧方案：</p>
 <table>
 <thead>
 <tr>
@@ -2515,7 +2497,7 @@
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">优化前：<br>其他处理 15ms + 单路追番查询 135ms = 150ms<br><br>优化后：<br>其他处理 15ms + 两路并发查询 max(85ms, 80ms)<br>             + 合并排序分页 5ms = 105ms<br></code></pre></td></tr></table></figure>
 
 
-<h4 id="17-还有其他可以解决这个问题的办法吗？"><a href="#17-还有其他可以解决这个问题的办法吗？" class="headerlink" title="17. 还有其他可以解决这个问题的办法吗？"></a>17. 还有其他可以解决这个问题的办法吗？</h4><p>其中，建立排序索引更接近根本解决方案。</p>
+<h4 id="14-还有其他可以解决这个问题的办法吗？"><a href="#14-还有其他可以解决这个问题的办法吗？" class="headerlink" title="14. 还有其他可以解决这个问题的办法吗？"></a>14. 还有其他可以解决这个问题的办法吗？</h4><p>其中，建立排序索引更接近根本解决方案。</p>
 <p><strong>1. 建立排序索引，先分页，再补充信息</strong></p>
 <p>例如，使用 Redis ZSet 保存用户追番列表：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">member：seasonId<br>score：排序时间 mtime<br></code></pre></td></tr></table></figure>
@@ -2526,6 +2508,49 @@
 <p>这样就不必每次都读取、补充和排序全部追番。</p>
 <p><strong>难点是索引维护。</strong> 本需求的排序时间可能取追番时间、最近观看时间、最新一话发布时间的最大值，因此追番、观看、番剧更新和下架都可能影响索引。尤其番剧更新会影响大量追番用户，需要考虑批量更新成本、最终一致性和索引重建。</p>
 <p>这是之前讨论的方案三，适合作为长期方案，但实现复杂度明显高于分区并发。</p>
+<h4 id="15-传统的典型的深分页问题有哪些常用的解决方案？"><a href="#15-传统的典型的深分页问题有哪些常用的解决方案？" class="headerlink" title="15. 传统的典型的深分页问题有哪些常用的解决方案？"></a>15. 传统的典型的深分页问题有哪些常用的解决方案？</h4><p>典型深分页通常指这种查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span> orders<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> created_at <span class="hljs-keyword">DESC</span>, id <span class="hljs-keyword">DESC</span><br>LIMIT <span class="hljs-number">100000</span>, <span class="hljs-number">20</span>;<br></code></pre></td></tr></table></figure>
+
+<p>即使只返回 20 条，数据库仍需要处理被跳过的大量记录。偏移量越大，成本往往越高。<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/current/queries-limit.html">官方说明</a></p>
+<p>常用方案主要有以下几种。</p>
+<p><strong>1. 游标分页，也叫 Keyset &#x2F; Seek 分页</strong></p>
+<p>记录上一页最后一条数据的排序字段，下一次从这个位置继续查：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span> orders<br><span class="hljs-keyword">WHERE</span> user_id <span class="hljs-operator">=</span> :uid<br>  <span class="hljs-keyword">AND</span> (<br>    created_at <span class="hljs-operator">&lt;</span> :last_time<br>    <span class="hljs-keyword">OR</span> (created_at <span class="hljs-operator">=</span> :last_time <span class="hljs-keyword">AND</span> id <span class="hljs-operator">&lt;</span> :last_id)<br>  )<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> created_at <span class="hljs-keyword">DESC</span>, id <span class="hljs-keyword">DESC</span><br>LIMIT <span class="hljs-number">20</span>;<br></code></pre></td></tr></table></figure>
+
+<p>配套建立与过滤、排序匹配的索引，例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> INDEX idx_user_time_id<br><span class="hljs-keyword">ON</span> orders(user_id, created_at, id);<br></code></pre></td></tr></table></figure>
+
+<p>这样可以通过索引定位边界，避免反复跳过前面的记录。<code>id</code> 用来区分创建时间相同的数据，保证排序唯一。</p>
+<ul>
+<li>适合“下一页”、信息流、批量遍历。</li>
+<li>不方便直接跳到任意第 N 页。</li>
+<li>如果排序字段会变化，还要考虑跨页一致性，必要时使用快照。<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/ef/core/querying/pagination">官方说明</a></li>
+</ul>
+<p><strong>2. 覆盖索引 + 延迟关联</strong></p>
+<p>先在索引中找出当前页的 ID，再查询完整数据：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> o.<span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span> orders o<br><span class="hljs-keyword">JOIN</span> (<br>    <span class="hljs-keyword">SELECT</span> id, created_at<br>    <span class="hljs-keyword">FROM</span> orders<br>    <span class="hljs-keyword">WHERE</span> status <span class="hljs-operator">=</span> <span class="hljs-number">1</span><br>    <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> created_at <span class="hljs-keyword">DESC</span>, id <span class="hljs-keyword">DESC</span><br>    LIMIT <span class="hljs-number">100000</span>, <span class="hljs-number">20</span><br>) page <span class="hljs-keyword">ON</span> o.id <span class="hljs-operator">=</span> page.id<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> page.created_at <span class="hljs-keyword">DESC</span>, page.id <span class="hljs-keyword">DESC</span>;<br></code></pre></td></tr></table></figure>
+
+<p>子查询可以使用覆盖索引：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> INDEX idx_status_time_id<br><span class="hljs-keyword">ON</span> orders(status, created_at, id);<br></code></pre></td></tr></table></figure>
+
+<p>这里的目标是：<strong>扫描前面大量记录时只读较小的索引，确定当前页后再取完整行。</strong> 覆盖索引可以减少访问表数据的成本。<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.4/en/optimizing-innodb-queries.html">MySQL 官方说明</a></p>
+<p>它仍然存在大偏移量扫描，所以属于缓解方案；实际是否按预期执行，需要检查执行计划。</p>
+<p><strong>3. 缓存分页锚点或查询结果快照</strong></p>
+<p>如果业务必须跳页，可以考虑：</p>
+<ul>
+<li>每隔一定页数缓存排序边界，跳页时从最近的锚点继续查询。</li>
+<li>缓存某次查询的有序 ID 列表，后续直接截取对应范围。</li>
+</ul>
+<p>这样可以减少重复的大偏移量扫描，但需要维护查询条件、快照版本和有效期。它更适合结果相对稳定、重复访问较多的场景。</p>
+<p><strong>4. 缩小查询范围，限制无意义的深页访问</strong></p>
+<p>例如要求选择时间范围、限制最大页码；全量数据需求改成后台导出，再使用游标分批读取。</p>
+<p>这是从业务需求上控制查询规模，适合管理后台、日志检索和报表场景。单纯按 ID 数值计算“第 N 页起点”通常不可行，因为 ID 可能有空洞，也可能与过滤后的排序不一致。</p>
+<p><strong>5. Elasticsearch 使用 <code>search_after + PIT</code></strong></p>
+<p>ES 的深分页也不宜无限增大 <code>from + size</code>。常见做法是用上一页末尾的排序值作为 <code>search_after</code>，配合 PIT 保持分页期间的索引视图。<a target="_blank" rel="noopener" href="https://www.elastic.co/docs/reference/elasticsearch/rest-apis/paginate-search-results">Elastic 官方文档</a></p>
+<p>面试时可以概括为：</p>
+<blockquote>
+<p>连续翻页优先考虑游标分页和匹配索引；必须支持任意跳页时，可以通过覆盖索引、延迟关联降低成本，或维护分页锚点、结果快照。对于全量遍历，通常采用游标分批处理，而不是不断增大 OFFSET。</p>
+</blockquote>
 <h3 id="3-3-2-AI想到的问题"><a href="#3-3-2-AI想到的问题" class="headerlink" title="3.3.2 AI想到的问题"></a>3.3.2 AI想到的问题</h3><h4 id="P0：项目真实性与核心原理"><a href="#P0：项目真实性与核心原理" class="headerlink" title="P0：项目真实性与核心原理"></a>P0：项目真实性与核心原理</h4><h5 id="1-这个问题的用户现象是什么？"><a href="#1-这个问题的用户现象是什么？" class="headerlink" title="1. 这个问题的用户现象是什么？"></a>1. 这个问题的用户现象是什么？</h5><p>大追番用户在手机空间页看到空列表，但用户实际存在数千条追番记录，Web 端通常可以正常展示。</p>
 <h5 id="2-为什么超时最终表现为空列表，而不是接口报错？"><a href="#2-为什么超时最终表现为空列表，而不是接口报错？" class="headerlink" title="2. 为什么超时最终表现为空列表，而不是接口报错？"></a>2. 为什么超时最终表现为空列表，而不是接口报错？</h5><p>card-service 捕获下游 RPC 异常后返回 <code>MyFollowsReply.getDefaultInstance()</code>，上层将其中的空 <code>followsList</code> 当成正常空数据返回，导致技术异常被转换成业务空结果。</p>
 <h5 id="3-完整调用链是什么？"><a href="#3-完整调用链是什么？" class="headerlink" title="3. 完整调用链是什么？"></a>3. 完整调用链是什么？</h5><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">AppCard/MyFollows<br>-&gt; card-service FollowService<br>-&gt; card-service FollowRPCService<br>-&gt; follow-service FollowRPCController<br>-&gt; follow-service FollowService<br>-&gt; favorite-service / season-service / Redis<br></code></pre></td></tr></table></figure>
@@ -2597,7 +2622,7 @@
 <h5 id="62-数据在翻页期间发生更新怎么办？"><a href="#62-数据在翻页期间发生更新怎么办？" class="headerlink" title="62. 数据在翻页期间发生更新怎么办？"></a>62. 数据在翻页期间发生更新怎么办？</h5><p>offset 分页可能出现重复或遗漏。可以使用固定快照、版本号或基于复合排序键的 cursor pagination 改善一致性。</p>
 <h5 id="63-如果让你重新设计异常语义，你会怎么做？"><a href="#63-如果让你重新设计异常语义，你会怎么做？" class="headerlink" title="63. 如果让你重新设计异常语义，你会怎么做？"></a>63. 如果让你重新设计异常语义，你会怎么做？</h5><p>不会把所有异常都转成正常空列表。至少应在内部区分真实空、超时降级和部分失败，并通过错误码、标志位或指标保留异常语义。</p>
 <h5 id="64-这个项目最值得总结的工程经验是什么？"><a href="#64-这个项目最值得总结的工程经验是什么？" class="headerlink" title="64. 这个项目最值得总结的工程经验是什么？"></a>64. 这个项目最值得总结的工程经验是什么？</h5><p>分页接口需要重点检查是否在分页前进行了全量 enrich 和 sort；动态配置必须同时具备安全默认值、硬上限、灰度指标和快速回退；性能结果必须区分实测数据与理论估算。</p>
-<h1 id="4-凡人修仙传复播压测与扩容"><a href="#4-凡人修仙传复播压测与扩容" class="headerlink" title="4. 凡人修仙传复播压测与扩容"></a>4. 凡人修仙传复播压测与扩容</h1><p>\item \textbf{凡人修仙传复播压测与扩容}：基于 moni 批量采集并分析播放页服务及核心下游 RPC 的 QPS 变化，结合调用链放大比例定位限流与容量瓶颈，推动补齐下游限流配置，并落地 Caffeine 本地缓存、批量 miss 回源及空结果保护等优化，最终保障播放链路稳定承载峰值 140k+ QPS的流量</p>
+<h1 id="4-凡人修仙传复播压测与扩容"><a href="#4-凡人修仙传复播压测与扩容" class="headerlink" title="4. 凡人修仙传复播压测与扩容"></a>4. 凡人修仙传复播压测与扩容</h1><p>\item \textbf{凡人修仙传复播压测与扩容}：基于监控平台批量采集播放页服务及核心下游 RPC 的 QPS，结合调用链建立流量放大基线，对比逐级升压过程中的流量变化及错误指标，定位限流与容量瓶颈，推动补齐下游限流配置，并落地 Caffeine 本地缓存、批量 miss 回源及空结果保护等优化，最终保障播放链路稳定承载峰值 140k+ QPS的流量</p>
 <h2 id="4-1-工作概述"><a href="#4-1-工作概述" class="headerlink" title="4.1 工作概述"></a>4.1 工作概述</h2><p>凡人修仙传复播前，我们对播放页和播放地址两条核心链路做了专项压测。我的主要工作是通过 moni 批量拉取 <code>view-gateway</code>、<code>player-gateway</code> 及其下游 RPC 的 QPS 和错误变化，以低错误率窗口建立调用放大基线，再在逐级升压过程中判断下游流量是否符合预期，并区分限流、超时和熔断问题。针对发现的热点回源和配置瓶颈，我们补齐了限流配置，在 view、player、season、pay 等模块增加短 TTL 本地缓存、批量 miss 回源和空结果保护。最终两条核心入口按双机房各 <code>70k QPS</code> 的目标完成保障，合计口径为 <code>140k+ QPS</code>。</p>
 <h2 id="4-2-具体工作内容"><a href="#4-2-具体工作内容" class="headerlink" title="4.2 具体工作内容"></a>4.2 具体工作内容</h2><h3 id="4-2-1-需求背景"><a href="#4-2-1-需求背景" class="headerlink" title="4.2.1 需求背景"></a>4.2.1 需求背景</h3><p>凡人修仙传第五季计划于 2026-06-13 开播。历史上该 IP 更新时曾出现突发流量打满播放链路、核心应用实例批量 unhealthy、播放页白屏的问题，因此本次开播前需要对播放链路进行专项扩容和压测。</p>
 <p>播放链路不是一个单体服务：</p>
@@ -3213,6 +3238,386 @@
 <p>**player-gateway 负责播放相关信息和鉴权。**用户开始播放时，它会根据剧集标识、用户身份和客户端能力，判断是否已开播、是否具有观看权益、是否受地区或平台限制，再调用视频云获取可播放的音视频流地址，同时组装清晰度、物料和播放提示等信息。典型入口是 <code>PlayView</code>，核心职责是“确定用户能播放什么，并提供播放所需的信息”。</p>
 <p>播放器拿到地址后，直接向 CDN 拉取音视频数据。</p>
 <p>这次两个网关都是压测重点，因为<strong>它们分别承接播放页和播放请求，又会把流量放大到多个共享下游</strong>。因此既要验证网关自身容量，也要一起检查下游 RPC 的限流、耗时和承载能力。</p>
+<h4 id="8-逐步增大请求QPS的过程中，上下游的流量和错误率变化大概分为哪几类？"><a href="#8-逐步增大请求QPS的过程中，上下游的流量和错误率变化大概分为哪几类？" class="headerlink" title="8. 逐步增大请求QPS的过程中，上下游的流量和错误率变化大概分为哪几类？"></a>8. 逐步增大请求QPS的过程中，上下游的流量和错误率变化大概分为哪几类？</h4><p>可以大致分为 <strong>6 类</strong>。判断时，把“入口是否升高、下游是否按基线增长、错误和延迟如何变化”放在一起看。</p>
+<p>假设健康基线是：<strong>入口 1 次请求，平均触发某个下游 2 次调用</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>随着入口升压，下游如何变化</th>
+<th>错误、延迟表现</th>
+<th>优先考虑什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>正常增长</strong></td>
+<td>入口翻倍，下游约翻倍，倍率稳定</td>
+<td>错误率、P99 基本稳定</td>
+<td>当前水位下符合预期</td>
+</tr>
+<tr>
+<td><strong>调用被有效削减</strong></td>
+<td>下游增长慢于入口，倍率下降</td>
+<td>错误率稳定，延迟正常</td>
+<td>缓存命中提高、请求合并等，需要命中率佐证</td>
+</tr>
+<tr>
+<td><strong>调用异常放大</strong></td>
+<td>下游增长快于入口，倍率上升</td>
+<td>可能暂时无错误，也可能错误同步增长</td>
+<td>重试、重复调用、缓存失效，以及请求模型变化</td>
+</tr>
+<tr>
+<td><strong>触发限流</strong></td>
+<td>成功通过的请求量接近阈值；总调用量仍可能增长</td>
+<td>509 增长、限流 usage 接近 100%，延迟可能仍很低</td>
+<td>限流配置是否与目标匹配、提供方是否有容量</td>
+</tr>
+<tr>
+<td><strong>接近或超过容量</strong></td>
+<td>下游成功吞吐增长变慢，甚至下降</td>
+<td>通常先出现 P99、排队上升，随后超时和错误增多</td>
+<td>CPU、线程池、连接池及更深层依赖</td>
+</tr>
+<tr>
+<td><strong>触发熔断</strong></td>
+<td>实际到达下游的请求减少或波动，倍率可能下降</td>
+<td>调用方 breaker 错误增多，可能快速失败</td>
+<td>是什么错误或慢请求触发熔断，以及恢复情况</td>
+</tr>
+</tbody></table>
+<p>其中最容易混淆的是这两种：</p>
+<p><strong>第一，下游 QPS 下降，不一定是优化成功。</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">缓存生效 → 回源减少，错误率和延迟正常<br>熔断生效 → 实际请求减少，但调用方出现大量 breaker 错误<br></code></pre></td></tr></table></figure>
+
+<p><strong>第二，下游 QPS 持续增长，不一定意味着承载正常。</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">入口升高 → 下游总 QPS 跟着升高<br>         → 但新增请求大量被限流或超时，成功吞吐已经不再增长<br></code></pre></td></tr></table></figure>
+
+<p>因此取数时最好区分 <strong>Client 总调用 QPS、Server 收到的 QPS、成功 QPS、错误 QPS</strong>，并确认监控是否统计限流拒绝和熔断短路。</p>
+<p>还有一个特别有价值的观察是<strong>降压后的恢复</strong>：压力下降后，错误、延迟和队列是否迅速回落。如果仍然持续异常，就要继续检查积压、资源未释放或熔断恢复过程。</p>
+<h4 id="9-重试导致下游QPS放大、限流导致下游错误QPS增大、CPU容量导致下游504超时错误增加同时P99增大。"><a href="#9-重试导致下游QPS放大、限流导致下游错误QPS增大、CPU容量导致下游504超时错误增加同时P99增大。" class="headerlink" title="9. 重试导致下游QPS放大、限流导致下游错误QPS增大、CPU容量导致下游504超时错误增加同时P99增大。"></a>9. 重试导致下游QPS放大、限流导致下游错误QPS增大、CPU容量导致下游504超时错误增加同时P99增大。</h4><p>**这三类确实是升压时值得优先检查的常见现象，但它们不完全独立，可能先后发生：调用放大增加压力，随后触发限流；放开限流后，又暴露真实容量不足。**具体哪类最常见，还取决于调用模型、保护配置和容量余量。注释 1</p>
+<p>先统一下面的口径：</p>
+<ul>
+<li><strong>入口 QPS</strong>：网关收到的请求量。</li>
+<li><strong>下游调用 QPS</strong>：网关对某个下游接口的调用量，包含成功和失败；重试如果实际发起，也计入调用次数。</li>
+<li><strong>错误 QPS</strong>：每秒失败的调用次数。</li>
+<li><strong>错误率</strong>：错误调用数 ÷ 总调用数。同一统计窗口内，可以用错误 QPS ÷ 总调用 QPS 计算。</li>
+</ul>
+<p>以下都是<strong>假设示例</strong>：健康倍率为 2 倍，各档位保持相对稳定。实际取数还需统一时间窗口，并核对面板统计口径。</p>
+<h5 id="1-调用异常放大：下游调用增长快于入口"><a href="#1-调用异常放大：下游调用增长快于入口" class="headerlink" title="1. 调用异常放大：下游调用增长快于入口"></a>1. 调用异常放大：下游调用增长快于入口</h5><p>正常情况下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">入口 5k → 下游 10k<br>入口 10k → 下游应当约 20k<br></code></pre></td></tr></table></figure>
+
+<p>如果入口升到 10k，下游却达到 25k，倍率从 2 上升到 2.5，就需要解释额外调用来自哪里。</p>
+<p><strong>一种典型情况是失败触发重试，前提是该链路配置了重试：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="right">入口 QPS</th>
+<th align="right">不含重试的预期调用 QPS</th>
+<th align="right">实际调用 QPS</th>
+<th align="right">错误 QPS</th>
+<th align="right">错误率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">5k</td>
+<td align="right">10k</td>
+<td align="right">10k</td>
+<td align="right">0</td>
+<td align="right">0%</td>
+</tr>
+<tr>
+<td align="right">10k</td>
+<td align="right">20k</td>
+<td align="right">25k</td>
+<td align="right">5k</td>
+<td align="right">20%</td>
+</tr>
+<tr>
+<td align="right">15k</td>
+<td align="right">30k</td>
+<td align="right">45k</td>
+<td align="right">15k</td>
+<td align="right">33.3%</td>
+</tr>
+</tbody></table>
+<p>以第二行为例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">原始调用 20k：15k 成功、5k 失败<br>失败后重试 5k：假设全部成功<br><br>总调用：25k<br>成功调用：20k<br>失败调用：5k<br>错误率：5k ÷ 25k = 20%<br></code></pre></td></tr></table></figure>
+
+<p>这里有两个关键点：</p>
+<p>**第一，重试可能让最终业务请求成功，但 RPC 层仍然记录过失败。**因此下游 RPC 错误率与网关最终错误率可能不同。</p>
+<p>**第二，倍率上升也可能完全没有错误。**例如缓存失效让更多请求回源，或用户、端、业务分支发生变化，下游调用增加，但暂时仍有容量承接。</p>
+<p>因此，这类现象通常表现为：</p>
+<blockquote>
+<p>下游调用倍率上升；错误数和错误率可能上升，也可能保持正常。需要结合重试量、缓存命中率及请求模型解释，不能直接认定为故障。</p>
+</blockquote>
+<h5 id="2-触发限流：调用继续增长，放行量接近阈值"><a href="#2-触发限流：调用继续增长，放行量接近阈值" class="headerlink" title="2. 触发限流：调用继续增长，放行量接近阈值"></a>2. 触发限流：调用继续增长，放行量接近阈值</h5><p>假设下游针对该调用方的限流阈值是 <strong>20k QPS</strong>，放行的请求都能成功处理，暂不考虑重试。</p>
+<table>
+<thead>
+<tr>
+<th align="right">入口 QPS</th>
+<th align="right">下游总调用 QPS</th>
+<th align="right">放行并成功的 QPS</th>
+<th align="right">限流错误 QPS</th>
+<th align="right">错误率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">5k</td>
+<td align="right">10k</td>
+<td align="right">10k</td>
+<td align="right">0</td>
+<td align="right">0%</td>
+</tr>
+<tr>
+<td align="right">10k</td>
+<td align="right">20k</td>
+<td align="right">20k</td>
+<td align="right">0</td>
+<td align="right">0%</td>
+</tr>
+<tr>
+<td align="right">15k</td>
+<td align="right">30k</td>
+<td align="right">20k</td>
+<td align="right">10k</td>
+<td align="right">33.3%</td>
+</tr>
+<tr>
+<td align="right">20k</td>
+<td align="right">40k</td>
+<td align="right">20k</td>
+<td align="right">20k</td>
+<td align="right">50%</td>
+</tr>
+</tbody></table>
+<p>达到阈值后：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">入口继续增加<br>  → 总调用量继续增加<br>  → 放行量约维持在 20k<br>  → 超出的调用被拒绝<br>  → 限流错误数、错误率持续上升<br></code></pre></td></tr></table></figure>
+
+<p>例如入口 15k 时，下游每秒出现 10k 次限流错误，持续一分钟就是约 <strong>60 万次错误调用</strong>。</p>
+<p>**此时倍率仍然可能一直是正常的 2 倍。**异常体现在成功量不再增长、限流错误增加，而不一定体现在总调用倍率上。</p>
+<p>此外，限流拒绝通常比较快，所以可能出现：</p>
+<blockquote>
+<p>错误率很高，但平均延迟不高，下游 CPU 也没有打满。</p>
+</blockquote>
+<p>需要核对 Navigator usage、阈值、caller 和机房配置。还要注意：<strong>Server 面板是否包含被拒绝请求，取决于监控埋点位置</strong>，不能笼统地说 Server 总 QPS 一定停在阈值。</p>
+<h5 id="3-接近或超过容量：先变慢，再出现失败，成功吞吐趋于平台或下降"><a href="#3-接近或超过容量：先变慢，再出现失败，成功吞吐趋于平台或下降" class="headerlink" title="3. 接近或超过容量：先变慢，再出现失败，成功吞吐趋于平台或下降"></a>3. 接近或超过容量：先变慢，再出现失败，成功吞吐趋于平台或下降</h5><p>这时限制请求的主要因素是实际处理能力，例如 CPU、线程池、连接池或更深层依赖。</p>
+<p>可能出现这样的过程：</p>
+<table>
+<thead>
+<tr>
+<th align="right">入口 QPS</th>
+<th align="right">下游总调用 QPS</th>
+<th align="right">成功 QPS</th>
+<th align="right">错误 QPS</th>
+<th align="right">错误率</th>
+<th align="right">P99</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">5k</td>
+<td align="right">10k</td>
+<td align="right">10k</td>
+<td align="right">0</td>
+<td align="right">0%</td>
+<td align="right">30ms</td>
+</tr>
+<tr>
+<td align="right">8k</td>
+<td align="right">16k</td>
+<td align="right">16k</td>
+<td align="right">0</td>
+<td align="right">0%</td>
+<td align="right">200ms</td>
+</tr>
+<tr>
+<td align="right">10k</td>
+<td align="right">20k</td>
+<td align="right">18k</td>
+<td align="right">2k</td>
+<td align="right">10%</td>
+<td align="right">1s</td>
+</tr>
+<tr>
+<td align="right">12k</td>
+<td align="right">24k</td>
+<td align="right">16k</td>
+<td align="right">8k</td>
+<td align="right">33.3%</td>
+<td align="right">2s</td>
+</tr>
+</tbody></table>
+<p>这里可以分成三个阶段：</p>
+<ol>
+<li><strong>接近容量上限</strong>：QPS 仍正常增长，错误率可能还很低，但 P99、排队和资源等待已经上升。</li>
+<li><strong>超过容量上限</strong>：更多请求无法在 deadline 内完成，超时错误数、错误率上升，成功吞吐增长放缓。</li>
+<li><strong>持续过载</strong>：请求积压、资源竞争加重，成功吞吐甚至下降；如果触发熔断，实际到达下游的请求还可能减少。</li>
+</ol>
+<p>因此，<strong>错误出现之前，延迟往往已经给出预警</strong>。只等错误率上升才停止升压，可能已经进入过载。</p>
+<p>也存在另一种表现：压测工具或调用方并发数固定，请求变慢后无法继续发出足够多的新请求，导致<strong>入口或下游 QPS 本身就升不上去</strong>。此时也应检查延迟和并发限制，不能把 QPS 平台直接理解为限流。</p>
+<h5 id="三类现象怎么快速区分"><a href="#三类现象怎么快速区分" class="headerlink" title="三类现象怎么快速区分"></a>三类现象怎么快速区分</h5><table>
+<thead>
+<tr>
+<th>观察重点</th>
+<th>调用异常放大</th>
+<th>触发限流</th>
+<th>容量不足</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>下游调用倍率</td>
+<td>通常上升</td>
+<td>可以保持正常</td>
+<td>可以保持正常，后期也可能变化</td>
+</tr>
+<tr>
+<td>错误特征</td>
+<td>不固定；重试可能伴随错误增长</td>
+<td>限流错误明显增长</td>
+<td>超时、资源拒绝等错误增长</td>
+</tr>
+<tr>
+<td>延迟</td>
+<td>不一定升高</td>
+<td>快速拒绝时可能较低</td>
+<td>通常明显升高</td>
+</tr>
+<tr>
+<td>关键佐证</td>
+<td>重试量、缓存命中率、调用分支</td>
+<td>限流阈值、usage</td>
+<td>排队、CPU、连接池、线程池及下游耗时</td>
+</tr>
+</tbody></table>
+<p>最后要同时看<strong>错误数和错误率</strong>：入口翻倍、错误数也翻倍但错误率不变，与错误数增长得更快、错误率持续上升，是两种不同的信号。前者可能只是原有错误随流量增长，后者更说明系统状态随着压力恶化。</p>
+<h4 id="10-批量请求-miss-回源：这个能举个具体的例子说明吗？"><a href="#10-批量请求-miss-回源：这个能举个具体的例子说明吗？" class="headerlink" title="10. 批量请求 miss 回源：这个能举个具体的例子说明吗？"></a>10. 批量请求 miss 回源：这个能举个具体的例子说明吗？</h4><p>比如用户A支付了第1、2、3集，用户B支付了2、3、4集。那播放器请求鉴权服务查询的时候，用户A第一次需要查询list{1\2\3}集，并按单个ID进行本地缓存；用户B第二次查询就只需要查询第4集就行了，再到本地缓存中找到2、3集的数据。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs css">用户 <span class="hljs-selector-tag">A</span> 请求鉴权：<span class="hljs-selector-attr">[1、2、3]</span><br>  → 本地都没有<br>  → 批量查询这三集的基础信息<br>  → 按单个 episode ID 分别缓存<br><br>用户 <span class="hljs-selector-tag">B</span> 请求鉴权：<span class="hljs-selector-attr">[2、3、4]</span><br>  → 第 <span class="hljs-number">2</span>、<span class="hljs-number">3</span> 集的基础信息命中缓存<br>  → 只回源查询第 <span class="hljs-number">4</span> 集<br>  → 合并三集的基础信息，继续完成用户 <span class="hljs-selector-tag">B</span> 的鉴权<br></code></pre></td></tr></table></figure>
+
+
+<p>可以。<strong>核心就是：逐个 ID 查缓存，把没命中的 ID 收集起来，再发一次批量 RPC。</strong></p>
+<p>假设要查询四个剧集的信息：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">请求：episodeIds = [101, 102, 103, 104]<br><br>本地缓存：<br>101 → 已缓存<br>102 → 已缓存<br>103 → 没有<br>104 → 没有<br></code></pre></td></tr></table></figure>
+
+<p>处理过程是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs text">① 查本地缓存<br>   命中：[101, 102]<br>   miss：[103, 104]<br><br>② 只对 miss 发一次批量 RPC<br>   下游查询：[103, 104]<br><br>③ 将回源结果分别写入缓存<br>   103 → 剧集信息<br>   104 → 剧集信息<br><br>④ 合并缓存命中与回源结果<br>   返回：[101, 102, 103, 104] 的完整信息<br></code></pre></td></tr></table></figure>
+
+<p>如果紧接着又来一个请求：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">请求：[102, 103, 105]<br></code></pre></td></tr></table></figure>
+
+<p>那么 102、103 都可以复用缓存，只需要回源查询 105。<strong>缓存按单个 ID 保存，因此不同批次之间也能复用相同的数据。</strong></p>
+<p>它和另外两种处理方式的区别是：</p>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>查询 <code>[101,102,103,104]</code>，其中前两个已缓存</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>部分 miss 就整批回源</td>
+<td>下游仍查询四个 ID</td>
+</tr>
+<tr>
+<td>每个 miss 单独回源</td>
+<td>分别查询 103、104，发两次 RPC</td>
+</tr>
+<tr>
+<td><strong>批量 miss 回源</strong></td>
+<td><strong>一次 RPC，只查询 103、104</strong></td>
+</tr>
+</tbody></table>
+<p>这里要准确区分收益：<strong>部分命中时，主要减少下游处理的 ID 数量和返回数据量，RPC 次数仍可能是一次；全部命中时，这一批才完全不需要 RPC。</strong></p>
+<h4 id="11-批量请求-miss-回源实际业务为什么使用的原因？"><a href="#11-批量请求-miss-回源实际业务为什么使用的原因？" class="headerlink" title="11. 批量请求 miss 回源实际业务为什么使用的原因？"></a>11. 批量请求 miss 回源实际业务为什么使用的原因？</h4><p>有，**这次改造里，<code>pay-service</code> 批量查询剧集基础信息，就是一个实际例子。**我核对了 6 月 4 日的“凡人本地缓存优化”提交，里面确实增加了按 episode ID 缓存、只对 miss ID 批量回源的逻辑。</p>
+<p><strong>1. 业务为什么需要查这些数据？</strong></p>
+<p>播放鉴权收到视频 ID 后，需要先查询剧集基础信息，补齐对应的 aid、season 等信息，供后续权益判断使用。实际代码中，<code>PayAuthService.convertVideoId()</code> 会收集请求里的 episode ID，然后调用 <code>seasonService.epList(epids)</code> 批量查询。</p>
+<p>见 <a href="/D:/dev/ogv/app/pay/service/src/main/java/pleiades/business/service/pay/service/PayAuthService.java:124">PayAuthService.java</a>。</p>
+<p>调用关系可以简化为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">播放鉴权请求<br>  → pay-service<br>  → 批量获取剧集基础信息<br>  → season-service 的 Episode/List<br>  → 使用剧集信息继续鉴权<br></code></pre></td></tr></table></figure>
+
+<p><strong>2. 原来的问题是什么？</strong></p>
+<p>提交前，<code>epList()</code> 会直接将这一批 ID 发给下游查询；另一个批量入口 <code>epInfoListFuture()</code> 虽然有缓存注解，但缓存的是<strong>整批参数对应的结果</strong>。</p>
+<p>热点场景下，不同请求可能查询相同或部分重叠的剧集：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">请求 A：查询 [剧集甲、剧集乙]<br>请求 B：查询 [剧集乙、剧集丙]<br></code></pre></td></tr></table></figure>
+
+<p>虽然 A 已经查过“剧集乙”，B 仍可能再次向下游查询它。<strong>业务上重复的是单个剧集，整批缓存却无法充分复用这些重复数据。</strong></p>
+<p>复播时，大量请求集中访问少量热点剧集，这种重复回源就会持续增加 season-service 的压力。</p>
+<p><strong>3. 改造后怎么处理？</strong></p>
+<p>这次提交增加了 <strong>3 秒的 episode 本地缓存</strong>，并让这些查询入口复用同一套按 ID 查缓存的逻辑。下面假设请求落到同一实例、查询条件一致，且缓存未过期：</p>
+<table>
+<thead>
+<tr>
+<th>请求</th>
+<th>本地命中</th>
+<th>实际向下游查询</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A：<code>[甲、乙]</code></td>
+<td>无</td>
+<td>批量查询 <code>[甲、乙]</code>，分别写缓存</td>
+</tr>
+<tr>
+<td>B：<code>[乙、丙]</code></td>
+<td>乙</td>
+<td>只查询 <code>[丙]</code></td>
+</tr>
+<tr>
+<td>C：<code>[甲、乙]</code></td>
+<td>甲、乙</td>
+<td>不调用下游</td>
+</tr>
+</tbody></table>
+<p>对应实现见 <a href="/D:/dev/ogv/app/pay/service/src/main/java/pleiades/business/service/pay/service/rpc/SeasonService.java:273">SeasonService.java</a>。工具方法负责拆分命中项和 miss ID、批量回源、写缓存并合并结果，见 <a href="/D:/dev/ogv/app/pay/service/src/main/java/pleiades/business/service/pay/utils/BackSourceUtil.java:158">BackSourceUtil.java</a>。</p>
+<p>这里缓存的是<strong>剧集基础信息</strong>，用户是否有播放权益仍然继续单独判断。</p>
+<h4 id="12-空结果保护这个优化起因是什么？怎么实现的？"><a href="#12-空结果保护这个优化起因是什么？怎么实现的？" class="headerlink" title="12. 空结果保护这个优化起因是什么？怎么实现的？"></a>12. 空结果保护这个优化起因是什么？怎么实现的？</h4><p><strong>这项优化是为了堵住“查不到数据也不断回源”的缺口，实际场景是播放页按 section（分节）批量查询剧集列表。</strong></p>
+<p><strong>1. 起因：加了普通缓存，空结果仍然会穿透</strong></p>
+<p>假设播放页需要查询两个分节：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">请求：[section 100、section 200]<br><br>下游正常返回：<br>100 → 剧集列表<br>200 → 没有返回数据<br></code></pre></td></tr></table></figure>
+
+<p>原来的缓存工具只会缓存返回 Map 中存在的项，因此：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">100 → 写入缓存<br>200 → 没有对应项，不写缓存<br></code></pre></td></tr></table></figure>
+
+<p>下一次请求进来，100 命中，200 仍然 miss，又去查下游。即使每次都正常查不到，200 也会一直回源。</p>
+<p>**热点请求反复携带这个 section，就会持续产生没有收益的 RPC。**代码里也明确说明了这个原因：缺失 ID 必须补占位值，才能形成空缓存，见 <a href="/D:/dev/ogv/app/view/gateway/src/main/java/pleiades/business/gateway/view/module/rpc/EpisodeRpcService.java:593">EpisodeRpcService.java</a>。</p>
+<p>这里的“没有数据”是<strong>当前查询条件下没有返回剧集</strong>，不一定代表这个 section 在业务上不存在。</p>
+<p><strong>2. 实现：给正常空结果写一个内部哨兵</strong></p>
+<p>改造后的流程是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">逐 ID 查缓存<br>  → 对 miss ID 批量回源<br>      → 正常返回：为缺失的 ID 补上 EMPTY 哨兵<br>      → 异常返回：本次降级为空，不补哨兵<br>  → 缓存工具写回结果<br>  → 返回业务层前过滤掉哨兵<br></code></pre></td></tr></table></figure>
+
+<p>上面的例子就变成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">本地缓存：<br>100 → 真实剧集列表<br>200 → EMPTY 哨兵<br></code></pre></td></tr></table></figure>
+
+<p>后续请求命中 200 的哨兵，就知道短时间内不必重复查询。返回业务层时移除 200，仍保持原来的“结果 Map 中没有该项”的语义。</p>
+<p>当前这份缓存的 TTL 是 <strong>2 秒</strong>，过期后允许重新查询，避免新数据出现后长期不可见，见 <a href="/D:/dev/ogv/app/view/gateway/src/main/java/pleiades/business/gateway/view/module/rpc/EpisodeRpcService.java:71">缓存定义</a>。</p>
+<p><strong>3. 最关键的边界：正常空结果和查询失败必须分开</strong></p>
+<table>
+<thead>
+<tr>
+<th>回源情况</th>
+<th>是否写空哨兵</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>正常完成，但没有返回某个 section</td>
+<td>是</td>
+<td>短时间内复用“本次查询无结果”</td>
+</tr>
+<tr>
+<td>RPC 超时、连接失败或其他异常</td>
+<td>否</td>
+<td>查询失败不能证明没有数据</td>
+</tr>
+</tbody></table>
+<p>否则一次超时就可能变成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">下游临时超时 → 被缓存为空 → 下游恢复后，仍持续返回空结果直到缓存过期<br></code></pre></td></tr></table></figure>
+
+<p>因此实现把<strong>补哨兵放在成功回调 <code>thenApply</code> 中，异常处理放在后面的 <code>exceptionally</code> 中</strong>；RPC 失败会跳过补哨兵步骤。见 <a href="/D:/dev/ogv/app/view/gateway/src/main/java/pleiades/business/gateway/view/module/rpc/EpisodeRpcService.java:535">成功与异常处理</a>。</p>
+<p>Git 记录也能对应这次迭代：6 月 8 日先增加空结果缓存，随后补充“RPC 失败不写负缓存”的修正。</p>
+<p>面试时可以这样说：</p>
+<blockquote>
+<p>普通缓存只能减少有数据的热点查询，对于正常返回空的 section，缓存里一直没有记录，后续请求仍会反复回源。我们因此增加了短 TTL 空结果哨兵，并在返回业务层前过滤；同时严格区分正常空结果与 RPC 异常，避免把临时故障缓存成业务无数据。</p>
+</blockquote>
 <h3 id="4-3-2-AI想到的问题"><a href="#4-3-2-AI想到的问题" class="headerlink" title="4.3.2 AI想到的问题"></a>4.3.2 AI想到的问题</h3><p>下面按面试重要性分为：</p>
 <ul>
 <li><code>P0</code>：几乎必问，回答不好会直接质疑项目真实性。</li>
