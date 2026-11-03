@@ -29,7 +29,7 @@
 <meta property="og:description" content="\section{实习经历}\ResumeItem{哔哩哔哩（B站） \hfill  OGV技术部  \hfill 后端开发实习生 \hfill  2026.05-2026.10}\textbf{工作概述：}参与哔哩哔哩 OGV（专业长视频内容）业务的后端研发与维护，面向番剧、影视、纪录片等内容场景，主要负责播放页、播放器等C端核心服务开展业务功能建设、接口性能优化与服务稳定性保障	\begin{">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-10-01T12:56:18.000Z">
-<meta property="article:modified_time" content="2026-11-01T13:32:58.943Z">
+<meta property="article:modified_time" content="2026-11-03T12:23:08.892Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="随笔">
 <meta name="twitter:card" content="summary_large_image">
@@ -2086,7 +2086,7 @@
 <li><p><strong>问：如何监控业务正确性？</strong><br><strong>答：</strong> 分别统计 Season DRM 命中、Episode DRM 命中、提示展示、空结果和异常降级，并与播放器 DRM 拦截数据抽样对账。</p>
 </li>
 </ol>
-<h2 id="P3：架构与开放题"><a href="#P3：架构与开放题" class="headerlink" title="P3：架构与开放题"></a>P3：架构与开放题</h2><ol start="61">
+<h4 id="P3：架构与开放题"><a href="#P3：架构与开放题" class="headerlink" title="P3：架构与开放题"></a>P3：架构与开放题</h4><ol start="61">
 <li><p><strong>问：如果重新设计，会不会直接提供 Season 级 DRM 聚合接口？</strong><br><strong>答：</strong> 可以对 Pay 提供更直接的 Season 级接口，但服务内部仍可复用 Section 统计，避免重复实现模型兼容逻辑。</p>
 </li>
 <li><p><strong>问：如何扩展新的统计维度？</strong><br><strong>答：</strong> 在协议中新增维度枚举，实现新的 <code>EpisodeStatCounter</code>，注册后即可复用模型路由、缓存和聚合流程。</p>

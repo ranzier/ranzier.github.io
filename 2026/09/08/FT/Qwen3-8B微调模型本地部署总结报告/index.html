@@ -21,16 +21,16 @@
   <meta name="author" content="ranzier">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Qwen3-8B 微调模型合并、量化与本地部署总结报告1. 项目概述本次部署的目标，是将在魔搭（ModelScope）Notebook 环境中使用 LoRA 微调得到的 Qwen3-8B 模型，合并为完整 Hugging Face 模型，转换并量化为适合个人电脑运行的 GGUF 文件，最后迁移到 Apple M1、16 GB 内存的 MacBook Pro，通过 llama.cpp 实现命令行聊天">
+    <meta name="description" content="Qwen3-8B 微调模型合并、量化与本地部署总结报告   1. 项目概述本次部署的目标，是将在魔搭（ModelScope）Notebook 环境中使用 LoRA 微调得到的 Qwen3-8B 模型，合并为完整 Hugging Face 模型，转换并量化为适合个人电脑运行的 GGUF 文件，最后迁移到 Apple M1、16 GB 内存的 MacBook Pro，通过 llama.cpp 实现命令">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Qwen3-8B 微调模型合并、量化与本地部署总结报告">
 <meta property="og:url" content="http://example.com/2026/09/08/FT/Qwen3-8B%E5%BE%AE%E8%B0%83%E6%A8%A1%E5%9E%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/index.html">
 <meta property="og:site_name" content="RANZIER">
-<meta property="og:description" content="Qwen3-8B 微调模型合并、量化与本地部署总结报告1. 项目概述本次部署的目标，是将在魔搭（ModelScope）Notebook 环境中使用 LoRA 微调得到的 Qwen3-8B 模型，合并为完整 Hugging Face 模型，转换并量化为适合个人电脑运行的 GGUF 文件，最后迁移到 Apple M1、16 GB 内存的 MacBook Pro，通过 llama.cpp 实现命令行聊天">
+<meta property="og:description" content="Qwen3-8B 微调模型合并、量化与本地部署总结报告   1. 项目概述本次部署的目标，是将在魔搭（ModelScope）Notebook 环境中使用 LoRA 微调得到的 Qwen3-8B 模型，合并为完整 Hugging Face 模型，转换并量化为适合个人电脑运行的 GGUF 文件，最后迁移到 Apple M1、16 GB 内存的 MacBook Pro，通过 llama.cpp 实现命令">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/bg/76.png">
 <meta property="article:published_time" content="2026-09-08T11:37:24.000Z">
-<meta property="article:modified_time" content="2026-10-29T12:25:49.254Z">
+<meta property="article:modified_time" content="2026-11-03T13:14:03.561Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="微调">
@@ -315,7 +315,10 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Qwen3-8B-微调模型合并、量化与本地部署总结报告"><a href="#Qwen3-8B-微调模型合并、量化与本地部署总结报告" class="headerlink" title="Qwen3-8B 微调模型合并、量化与本地部署总结报告"></a>Qwen3-8B 微调模型合并、量化与本地部署总结报告</h1><h2 id="1-项目概述"><a href="#1-项目概述" class="headerlink" title="1. 项目概述"></a>1. 项目概述</h2><p>本次部署的目标，是将在魔搭（ModelScope）Notebook 环境中使用 LoRA 微调得到的 Qwen3-8B 模型，合并为完整 Hugging Face 模型，转换并量化为适合个人电脑运行的 GGUF 文件，最后迁移到 Apple M1、16 GB 内存的 MacBook Pro，通过 <code>llama.cpp</code> 实现命令行聊天、本地网页以及 OpenAI 兼容 API 服务。</p>
+                <h1 align="center">Qwen3-8B 微调模型合并、量化与本地部署总结报告</h1>
+
+
+<h2 id="1-项目概述"><a href="#1-项目概述" class="headerlink" title="1. 项目概述"></a>1. 项目概述</h2><p>本次部署的目标，是将在魔搭（ModelScope）Notebook 环境中使用 LoRA 微调得到的 Qwen3-8B 模型，合并为完整 Hugging Face 模型，转换并量化为适合个人电脑运行的 GGUF 文件，最后迁移到 Apple M1、16 GB 内存的 MacBook Pro，通过 <code>llama.cpp</code> 实现命令行聊天、本地网页以及 OpenAI 兼容 API 服务。</p>
 <p>最终结果：部署成功。模型已能在本地通过 Apple Metal 加速运行，命令行聊天和 <code>llama-server</code> 均验证通过。关闭思考输出时，本地实测生成速度约为 10～12 tokens&#x2F;s。</p>
 <p>本次流程如下：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">LoRA 微调产物<br>  → 与 Qwen3-8B 底座模型合并<br>  → Hugging Face 完整模型（约 16 GB）<br>  → 转换为 F16 GGUF（约 16 GB）<br>  → Q4_K_M 量化（约 4.7 GB）<br>  → 从魔搭 Notebook 下载到 Mac<br>  → llama.cpp + Metal 本地推理<br></code></pre></td></tr></table></figure>
