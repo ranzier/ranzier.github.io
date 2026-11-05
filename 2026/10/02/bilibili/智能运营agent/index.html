@@ -29,7 +29,7 @@
 <meta property="og:description" content="\ResumeItem{OGV 智能运营助手 \hfill Agent应用开发 \hfill 2026.07-2026.09}\textbf{核心技术：}Java、Spring Boot、Multi-Agent、AgentScope、Harness、ReAct、Redis、Paladin	\textbf{项目简介：}参与面向 OGV 运营场景的多 Agent 智能操作平台建设，主要参与长任务执行与">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-10-02T12:56:18.000Z">
-<meta property="article:modified_time" content="2026-10-30T08:50:58.419Z">
+<meta property="article:modified_time" content="2026-11-05T07:32:34.423Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="随笔">
 <meta name="twitter:card" content="summary_large_image">
@@ -246,7 +246,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          52k 字
+          69k 字
         
       </span>
     
@@ -257,7 +257,7 @@
         
         
         
-          260 分钟
+          347 分钟
         
       </span>
     
@@ -314,7 +314,9 @@
                 
                 <p>\ResumeItem{OGV 智能运营助手 \hfill Agent应用开发 \hfill 2026.07-2026.09}<br>\textbf{核心技术：}Java、Spring Boot、Multi-Agent、AgentScope、Harness、ReAct、Redis、Paladin<br>	<br>\textbf{项目简介：}参与面向 OGV 运营场景的多 Agent 智能操作平台建设，主要参与长任务执行与恢复、业务子 Agent 动态配置及多格式文档理解等模块<br>\begin{itemize}<br>	\item 负责 Agent 长任务执行机制，将复杂任务抽象为计划、步骤和批次，并基于 Redis 持久化任务状态、计划版本、执行游标和操作结果，实现用户一次确认后的自动推进以及暂停、继续、重试与服务重启恢复<br>		<br>	\item 为计划内写操作分配固定标识并记录执行结果，降低模型重试及网络异常导致的重复执行风险；构建执行守卫在工具调用前校验任务、计划和用户确认状态，防止 Agent 绕过确认直接执行批量操作<br>		<br>	\item 负责业务子 Agent 配置化改造，支持通过 Paladin 动态配置系统提示词、Tool、Skill 和权限码；实现配置解析、合法性校验、热更新及 Agent 缓存失效，降低新增业务域 Agent 的代码改动成本<br>		<br>	\item 负责多格式文档理解链路，支持 XLSX、CSV、DOCX、PDF、PPTX、TXT、JSON 等 7 类文件的异步解析、内容分片、内嵌图片提取、BFS 上传和 Redis 临时存储，使 Agent 能按需读取文档而非一次性注入全文
 		</p>
-<h1 id="0-总体"><a href="#0-总体" class="headerlink" title="0. 总体"></a>0. 总体</h1><h2 id="0-1-个人问题"><a href="#0-1-个人问题" class="headerlink" title="0.1 个人问题"></a>0.1 个人问题</h2><h3 id="1-简单介绍一下你这个项目的作用吧？"><a href="#1-简单介绍一下你这个项目的作用吧？" class="headerlink" title="1. 简单介绍一下你这个项目的作用吧？"></a>1. 简单介绍一下你这个项目的作用吧？</h3><p>这是一个面向 OGV 运营场景的多 Agent 智能操作平台，主要目的是把运营人员原来需要在多个系统中手动完成的查询、分析和批量操作，统一转化为自然语言驱动的智能任务。</p>
+<h1 id="0-总体"><a href="#0-总体" class="headerlink" title="0. 总体"></a>0. 总体</h1><h2 id="0-1-个人问题"><a href="#0-1-个人问题" class="headerlink" title="0.1 个人问题"></a>0.1 个人问题</h2><p><strong>使用的是什么模型？</strong></p>
+<p><strong>qwen3.7-plus</strong></p>
+<h3 id="1-简单介绍一下你这个项目的作用吧？"><a href="#1-简单介绍一下你这个项目的作用吧？" class="headerlink" title="1. 简单介绍一下你这个项目的作用吧？"></a>1. 简单介绍一下你这个项目的作用吧？</h3><p>这是一个面向 OGV 运营场景的多 Agent 智能操作平台，主要目的是把运营人员原来需要在多个系统中手动完成的查询、分析和批量操作，统一转化为自然语言驱动的智能任务。</p>
 <p>平台以主 Agent 作为统一入口，负责理解用户意图、拆解任务，并根据业务场景调度不同的子 Agent。各个子 Agent 可以通过配置动态加载提示词、工具、技能和权限，因此新增业务场景时通常不需要重新开发整套流程。</p>
 <p>项目重点解决了三类问题：一是通过计划、步骤和批次机制执行耗时较长的任务，支持暂停、继续、重试以及服务重启后的恢复；二是对批量写操作增加用户确认、权限校验和幂等保护，避免模型重复调用或越权执行；三是支持 Excel、PDF、Word、PPT 等多种文件的异步解析，让 Agent 能够按需读取文档内容，而不是把整个文件一次性塞进模型上下文。</p>
 <p>简单来说，它不是一个只负责问答的聊天机器人，而是一个能够理解运营需求、调用业务工具、处理文档，并且安全、持续地完成复杂运营任务的 Agent 执行平台。</p>
@@ -331,6 +333,611 @@
 <li><strong>处理异常并汇总结果。</strong> 任务执行过程中可以暂停、继续；发生中断时，根据已保存的进度恢复。最后向用户汇报成功、失败及需要人工处理的记录。</li>
 </ol>
 <p>原来运营人员需要自己读表、逐条查询、进入业务系统修改，再手动统计结果；这个平台把这些步骤串成一个可以通过对话发起和管理的任务。具体能修改哪些配置，取决于平台已经接入的业务工具和用户权限。</p>
+<h3 id="3-多Agent的系统架构图"><a href="#3-多Agent的系统架构图" class="headerlink" title="3. 多Agent的系统架构图"></a>3. 多Agent的系统架构图</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs text">                 用户（Web / 企业微信）<br>                          │<br>                          ▼<br>              接入层：身份权限、会话上下文<br>                          │<br>                          ▼<br>                主 Agent（HarnessAgent）<br>              意图理解、领域路由、任务编排<br>                          ▲<br>                          │ 装配<br>       Paladin ──→ AgentFactory<br>     动态配置       权限过滤、能力注册<br>                         <br>                主 Agent 通过工具委派<br>                          │<br>            ┌─────────────┴─────────────┐<br>            ▼                           ▼<br>     公共域 Agent                 业务子 Agent<br>     （ReActAgent）               （ReActAgent）<br>     · 长任务规划                 · 活动业务<br>     · 任务状态协调               · 投放业务<br>     · 文档理解                   · 创作激励等<br>     · 图片生成与处理             · 按配置和权限开放<br>            │                           │<br>            └─────────────┬─────────────┘<br>                          ▼<br>                    Tool / Skill<br>                执行守卫、操作确认<br>                          │<br>                          ▼<br>               任务、文档及业务集成服务<br>                          │<br>      ┌───────────────────┼───────────────────┐<br>      ▼                   ▼                   ▼<br>外部业务能力            Redis                BFS<br>· 业务接口          · 会话与记忆          · 原始文件<br>· 物料 MCP          · 任务计划与进度      · 文档图片<br>· 图片生成服务      · 文档分片与通知      · 处理后图片<br></code></pre></td></tr></table></figure>
+
+<p>主 Agent 负责协调，子 Agent 负责领域处理，工具和服务完成实际操作。业务域的开放范围由配置和权限决定</p>
+<h3 id="4-你这个多Agent包括哪些Agent？每个Agent的功能和作用分别是什么？"><a href="#4-你这个多Agent包括哪些Agent？每个Agent的功能和作用分别是什么？" class="headerlink" title="4. 你这个多Agent包括哪些Agent？每个Agent的功能和作用分别是什么？"></a>4. 你这个多Agent包括哪些Agent？每个Agent的功能和作用分别是什么？</h3><p>当前系统可以准确概括为：<strong>1 个主 Agent + 1 个固定公共域 Agent + N 个配置化业务子 Agent</strong>。</p>
+<p>业务 Agent 的实际数量和能力由 <strong>Paladin 配置、已注册 Tool&#x2F;Skill 和用户权限</strong>共同决定，不能仅根据 Java 类的数量统计。</p>
+<table>
+<thead>
+<tr>
+<th>Agent</th>
+<th>主要功能</th>
+<th>在系统中的作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>主 Agent</strong></td>
+<td>理解用户意图、选择领域、判断是否需要规划、编排跨领域调用、汇总结果</td>
+<td>统一入口和协调者，决定“交给谁处理、下一步做什么”</td>
+</tr>
+<tr>
+<td><strong>公共域 Agent</strong></td>
+<td>长任务规划与状态协调、文档理解、图片生成与处理、BV 号转换等</td>
+<td>承载通用能力，以及任务计划、确认、暂停、恢复和进度记录等协调能力</td>
+</tr>
+<tr>
+<td><strong>活动域 Agent</strong></td>
+<td>活动查询、创建、规则配置</td>
+<td>处理活动运营相关需求</td>
+</tr>
+<tr>
+<td><strong>投放域 Agent</strong></td>
+<td>投放项目查询与创建、预算查询、搜索导航卡创建</td>
+<td>处理投放及相关物料操作</td>
+</tr>
+<tr>
+<td><strong>创作激励域 Agent</strong></td>
+<td>UP 动画剧场、AI 影视片场的列表查询与准入诊断，以及稿件聚合信息查询等</td>
+<td>处理已接入的创作激励业务需求</td>
+</tr>
+</tbody></table>
+<p><strong>1. 主 Agent：负责理解与编排</strong></p>
+<p>主 Agent 使用 <code>HarnessAgent</code> 构建，结合用户请求、会话上下文和当前可用领域能力，选择对应的委派工具。</p>
+<p>例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">查询活动配置 → 委派活动域<br>分析上传文档 → 委派公共域<br>需要跨轮处理 → 先委派公共域规划，再按计划执行<br></code></pre></td></tr></table></figure>
+
+<p>各领域返回结果后，主 Agent 决定直接回复、继续调用其他领域，还是综合多个结果。</p>
+<p><strong>2. 公共域 Agent：负责通用能力与任务协调</strong></p>
+<p>公共域使用 <code>ReActAgent</code> 构建，代码中固定注册，主要包含：</p>
+<ul>
+<li><strong>任务协调</strong>：创建任务、保存计划、处理整体确认、暂停、继续、重试、记录进度。</li>
+<li><strong>文档理解</strong>：检查文档结构、按分片读取内容、读取内嵌图片。</li>
+<li><strong>图片能力</strong>：查询生成参数、提交图片生成、查询结果、调整图片尺寸。</li>
+<li><strong>辅助能力</strong>：BV 号转换、受控临时状态读写等。</li>
+</ul>
+<p>具体状态转换与持久化由它调用的服务端工具完成。公共域的定义见 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/domainagent/CommonDomainAgent.java:41">CommonDomainAgent.java</a>。</p>
+<p><strong>3. 业务子 Agent：负责领域内的具体操作</strong></p>
+<p>业务子 Agent 同样使用 <code>ReActAgent</code>，按配置绑定领域提示词、Tool、Skill 和权限。</p>
+<p>主 Agent 负责把需求交给合适的领域；业务子 Agent 负责在本领域内选择工具、组织参数、执行并解释结果。</p>
+<p>当前代码有两点需要区分：</p>
+<ul>
+<li><strong>活动域的查询、创建、配置工具，以及投放项目查询、创建、预算工具，仍返回 mock 数据。</strong></li>
+<li><strong>搜索导航卡工具、上述创作激励查询与诊断工具，已有真实接口调用实现。</strong></li>
+</ul>
+<p>同时，活动、投放、创作激励的静态 Agent 装配类已经标记为弃用。当前业务域由 Paladin 动态生成，所以这三个领域应理解为<strong>代码中已有的业务划分和能力示例</strong>；线上实际开放哪些领域，需要看实际配置。注册逻辑见 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/AgentFactory.java:698">AgentFactory.java</a>。</p>
+<p>另外，<strong>意图识别、Planner、Aggregator 是当前 Agent 承担的职责</strong>：路由和汇总主要由主 Agent完成，长任务规划由公共域承担，没有分别独立注册成三个 Agent。</p>
+<h3 id="5-当用户请求一个问题之后，整个系统是怎么执行的？分成简单和复杂两种情况说明。"><a href="#5-当用户请求一个问题之后，整个系统是怎么执行的？分成简单和复杂两种情况说明。" class="headerlink" title="5. 当用户请求一个问题之后，整个系统是怎么执行的？分成简单和复杂两种情况说明。"></a>5. 当用户请求一个问题之后，整个系统是怎么执行的？分成简单和复杂两种情况说明。</h3><p>两种情况都由 <strong>主 Agent 理解需求并选择处理方式</strong>，区别在于：简单请求通常在单轮完成；需要跨轮、异步依赖或批量处理的复杂请求，会先保存计划，确认后按状态推进。</p>
+<p><strong>一、共同的准备过程</strong></p>
+<p>用户发起请求后，系统先完成以下工作：</p>
+<ol>
+<li><strong>获取身份和权限</strong>：确定用户可以使用哪些能力。</li>
+<li><strong>准备上下文</strong>：结合当前消息、会话历史、附件引用及已有任务状态。</li>
+<li><strong>装配可用 Agent</strong>：根据 Paladin 配置和用户权限，过滤各领域的 Tool、Skill，生成领域能力描述及委派工具列表。</li>
+<li><strong>主 Agent 调用大模型</strong>：结合上下文和能力描述，判断直接回答、追问、委派领域，还是先进行长任务规划。</li>
+</ol>
+<p>已有待确认操作、部分任务恢复等请求，可以先由服务端专用逻辑处理。</p>
+<p><strong>二、简单请求：选择领域，调用工具，返回结果</strong></p>
+<p>例如：</p>
+<blockquote>
+<p>“查询这个 UP 主的待签约列表。”</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs text">用户请求<br>    ↓<br>主 Agent 理解需求，选择创作激励域<br>    ↓<br>生成对应的子 Agent 委派工具调用<br>    ↓<br>执行守卫校验，通过后调用子 Agent<br>    ↓<br>子 Agent 提取参数，选择列表查询工具<br>    ↓<br>调用真实业务接口<br>    ↓<br>子 Agent 整理结果<br>    ↓<br>结果直返，或由主 Agent 整理后回复<br></code></pre></td></tr></table></figure>
+
+<p>具体来说：</p>
+<ol>
+<li><strong>主 Agent 选择领域</strong>：根据能力描述判断该请求属于创作激励业务，通过 <code>SubAgentTool</code> 委派。</li>
+<li><strong>子 Agent 选择业务工具</strong>：检查 UP 主标识、分页参数等；缺少必要信息时追问。</li>
+<li><strong>程序执行调用</strong>：完成相应参数与权限校验，通过集成层访问业务接口。</li>
+<li><strong>根据结果决定下一步</strong>：结果足够就形成答案；需要补充查询时继续调用工具。</li>
+<li><strong>输出结果</strong>：满足直返条件时使用领域答案，否则由主 Agent 汇总回复，并保存会话状态。</li>
+</ol>
+<p>简单请求也可能包含多次工具调用，<strong>关键是能否在当前轮次可靠完成</strong>。如果只是欢迎语或能力说明，也可能由主 Agent直接回答。</p>
+<p><strong>三、复杂请求：先规划和确认，再分步执行</strong></p>
+<p>例如：</p>
+<blockquote>
+<p>“先生成一张符合规格的宣传图，再用它创建搜索导航卡。”</p>
+</blockquote>
+<p>这包含“等待图片生成结果，再创建卡片”的异步依赖。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs text">用户请求<br>    ↓<br>主 Agent 判断需要长任务处理<br>    ↓<br>公共域查询必要信息，创建任务并保存完整计划<br>    ↓<br>展示计划，等待用户整体确认<br>    ↓<br>确认当前计划版本，安排执行轮次<br>    ↓<br>公共域提交图片生成任务<br>    ↓<br>保存任务引用，等待并取得生成结果<br>    ↓<br>主 Agent 委派具备导航卡能力的业务域<br>    ↓<br>校验参数并创建导航卡<br>    ↓<br>记录完成状态，返回图片及卡片创建结果<br></code></pre></td></tr></table></figure>
+
+<p>具体分为七步：</p>
+<ol>
+<li><p><strong>判断是否需要长任务流程</strong><br>主 Agent 综合任务规模、步骤依赖、异步等待和单轮预算判断；明显批量场景还会由规则标记，并通过执行守卫要求先规划。</p>
+</li>
+<li><p><strong>委派公共域制定计划</strong><br>公共域加载长任务工作流，完成必要的只读查询，创建任务，再提交包含完整步骤、处理领域和主要副作用的结构化计划。</p>
+</li>
+<li><p><strong>持久化并等待确认</strong><br>服务端将计划、版本和任务状态保存到 Redis，进入等待整体确认状态。本轮展示计划，确认后的后续请求才开始执行业务。</p>
+</li>
+<li><p><strong>绑定确认版本，启动执行</strong><br>用户确认后，服务端记录已确认的计划版本，安排续跑事件；开始运行时再次检查任务状态、事件和版本是否有效。</p>
+</li>
+<li><p><strong>按步骤执行</strong><br>普通步骤由主 Agent 委派对应领域执行；包含已注册批次动作的步骤，可以由服务端批次执行器逐项推进。</p>
+</li>
+<li><p><strong>记录结果并跨轮推进</strong><br>保存真实结果、步骤位置、执行游标和异步任务引用。达到本轮预算时结束当前轮次，后续重新读取状态继续处理，无需用户按批次反复回复“继续”。</p>
+</li>
+<li><p><strong>完成或处理异常</strong><br>全部完成后返回业务结果。执行结果不确定时先核对已有操作；计划实质变化时重新确认；无法安全继续时请求用户介入。</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>简单请求</th>
+<th>复杂长任务</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>处理单位</td>
+<td>当前轮次内的业务调用</td>
+<td>持久化任务、计划和步骤</td>
+</tr>
+<tr>
+<td>是否先规划</td>
+<td>通常直接委派</td>
+<td>先保存完整计划</td>
+</tr>
+<tr>
+<td>用户确认</td>
+<td>按具体操作策略决定</td>
+<td>先整体确认计划，必要时另有操作确认</td>
+</tr>
+<tr>
+<td>执行推进</td>
+<td>当前轮次内完成</td>
+<td>根据保存状态和续跑事件跨轮推进</td>
+</tr>
+<tr>
+<td>最终输出</td>
+<td>查询答案或操作结果</td>
+<td>阶段进度、待确认内容、最终结果或异常说明</td>
+</tr>
+</tbody></table>
+<h3 id="6-当前这个多Agent可以帮助用户做哪些事情？除了知识问答之外还可以帮运营干些什么？"><a href="#6-当前这个多Agent可以帮助用户做哪些事情？除了知识问答之外还可以帮运营干些什么？" class="headerlink" title="6. 当前这个多Agent可以帮助用户做哪些事情？除了知识问答之外还可以帮运营干些什么？"></a>6. 当前这个多Agent可以帮助用户做哪些事情？除了知识问答之外还可以帮运营干些什么？</h3><p><strong>除了知识问答，当前系统还可以帮助运营读取业务数据、诊断问题、处理文档、生成素材，以及执行已接入的业务操作。</strong></p>
+<ol>
+<li>查询业务相关的信息或者配置</li>
+<li>根据标题、按钮、跳转地址和图片等信息，调用真实物料 MCP 创建搜索导航卡</li>
+<li><strong>运营素材生成与修改</strong>：根据文字生成图片、基于参考图修改图片、调整尺寸或倍率、查询生成结果；支持多个独立图片任务的批量提交</li>
+</ol>
+<p>从当前仓库看，以下能力已有真实接口或服务实现；用户实际能使用哪些，还取决于 Paladin 配置和权限。</p>
+<table>
+<thead>
+<tr>
+<th>运营场景</th>
+<th>可以做什么</th>
+<th>用户可以这样提需求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>业务数据查询与准入诊断</strong></td>
+<td>查询 UP 动画剧场待签约列表、AI 影视片场可签约混排列表；诊断指定 UP 主的稿件或合集能否进入对应列表；查询稿件标题、封面、播放等聚合信息</td>
+<td>“查一下这个 UP 主的待签约列表”“这个稿件为什么进不了名单？”</td>
+</tr>
+<tr>
+<td><strong>运营素材生成与修改</strong></td>
+<td>根据文字生成图片、基于参考图修改图片、调整尺寸或倍率、查询生成结果；支持多个独立图片任务的批量提交</td>
+<td>“按这几个主题分别生成海报”“基于这张参考图修改，并保持原比例”</td>
+</tr>
+<tr>
+<td><strong>搜索导航卡创建</strong></td>
+<td>根据标题、按钮、跳转地址和图片等信息，调用真实物料 MCP 创建搜索导航卡</td>
+<td>“用这张封面和这几个稿件创建一张搜索导航卡”</td>
+</tr>
+<tr>
+<td><strong>生产任务排查与处理</strong></td>
+<td>查询任务状态变更流水，展示状态变化、时间、操作人和备注；用户确认后，将支持的任务回滚到对应类型的初始状态</td>
+<td>“这个生产任务经历了哪些状态变化？”“把这几个任务回滚到初始状态”</td>
+</tr>
+<tr>
+<td><strong>运营文档理解</strong></td>
+<td>读取 XLSX、CSV、DOCX、PDF、PPTX、TXT、JSON，按需查看内容、提取信息、总结要求，以及读取内嵌图片</td>
+<td>“总结这份活动方案的执行要求”“根据这张表汇总信息”“展示文档里的图片”</td>
+</tr>
+<tr>
+<td><strong>批量与长任务处理</strong></td>
+<td>将复杂请求拆成计划，整体确认后分步执行，保存进度，支持暂停、继续、重试和跨轮恢复；已注册批次可由服务端自动推进</td>
+<td>“这批参考图分别处理，确认计划后自动执行，最后按原编号汇总结果”</td>
+</tr>
+</tbody></table>
+<p>还有 BV 号与 AV 号转换、图片尺寸检查等辅助能力。</p>
+<p><strong>其中，最能体现“帮助运营干活”的是以下几类：</strong></p>
+<ol>
+<li><strong>替代重复查询和人工核对</strong>：直接按 UP 主、稿件或任务编号查询，将返回信息整理成业务可读的结果。</li>
+<li><strong>执行明确的业务动作</strong>：例如创建搜索导航卡、确认后回滚生产任务，不只给用户操作说明。</li>
+<li><strong>自动推进多步骤工作</strong>：例如批量生成或编辑图片，保存每项任务与结果的对应关系，跨轮继续处理剩余工作。</li>
+<li><strong>组合不同领域的能力</strong>：在相关工具、权限和参数齐备时，可以衔接文档理解、图片处理和物料创建，由主 Agent 分步协调。</li>
+</ol>
+<p>这里有两个实际边界需要讲清楚：</p>
+<ul>
+<li><strong>活动查询、创建、规则配置，以及投放项目查询、创建、预算查询，目前相关工具仍返回 mock 数据</strong>，不能算已打通真实业务操作。</li>
+<li><strong>生产任务回滚只支持回到对应任务类型的初始状态</strong>，不是任意修改状态；单次最多 50 个任务，执行前需要确认。<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/tool/productiontask/ProductionTaskRollbackTool.java:60">回滚工具实现</a></li>
+</ul>
+<p>面试时可以这样介绍：</p>
+<blockquote>
+<p>我们的助手既支持知识问答，也接入了运营查询、业务诊断、图片生成编辑、搜索导航卡创建和生产任务处理等工具。运营可以用自然语言发起需求，系统完成参数组织、领域路由和工具调用；涉及批量或跨轮处理时，先生成完整计划，确认后自动推进并保存执行进度。</p>
+</blockquote>
+<h3 id="7-帮助运营生成业务相关的导航卡或者生成相关的图片是怎么实现的？最后返回什么结果？"><a href="#7-帮助运营生成业务相关的导航卡或者生成相关的图片是怎么实现的？最后返回什么结果？" class="headerlink" title="7. 帮助运营生成业务相关的导航卡或者生成相关的图片是怎么实现的？最后返回什么结果？"></a>7. 帮助运营生成业务相关的导航卡或者生成相关的图片是怎么实现的？最后返回什么结果？</h3><p><strong>最终是在物料系统中创建一条“搜索导航卡”记录，返回卡片 ID 和管理页面链接。</strong></p>
+<p>流程是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">封面图片 + 稿件 BV 号 + 标题等信息<br>                 ↓<br>Agent 组织导航卡的结构化参数<br>                 ↓<br>调用物料 MCP 创建导航卡<br>                 ↓<br>返回 card_id 和导航卡管理页面链接<br></code></pre></td></tr></table></figure>
+
+<p>导航卡的展示样式由已有业务系统负责渲染。Agent 负责填写配置并调用创建接口，<strong>不会生成独立的 HTML 文件</strong>。</p>
+<p>创建成功也不代表已经投放上线；当前工具只执行“创建导航卡”。具体返回逻辑见 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/tool/delivery/NaviCardCreateTool.java:79">NaviCardCreateTool.java</a>。</p>
+<p>两类需求分别通过真实工具链完成：<strong>导航卡由物料系统创建，图片由下游图像生成服务产出；Agent 负责理解需求、组织参数、调用工具和整理结果。</strong></p>
+<p><strong>1. 创建业务导航卡</strong></p>
+<p>例如，运营提出：</p>
+<blockquote>
+<p>“用这张封面，给这几个稿件创建一张搜索导航卡。”</p>
+</blockquote>
+<p>处理过程是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs text">主 Agent 理解需求，委派具备导航卡能力的业务域<br>        ↓<br>子 Agent 整理标题、样式、封面、按钮和跳转信息<br>        ↓<br>缺少必要信息时追问，按操作确认策略取得确认<br>        ↓<br>调用 create_navi_card<br>        ↓<br>校验参数、登录态及图片规格<br>        ↓<br>通过 MCP 调用物料系统创建导航卡<br>        ↓<br>检查返回的 card_id，向用户反馈结果<br></code></pre></td></tr></table></figure>
+
+<p>这里有两层工具调用：</p>
+<ul>
+<li>Agent 调用我们封装的 <strong><code>create_navi_card</code></strong>。</li>
+<li>Java 集成层再调用下游 MCP 工具 <strong><code>material_navi_card_create</code></strong>。</li>
+</ul>
+<p>代码会校验卡片样式、按钮数量、跳转类型等。需要图片的样式还会检查尺寸，例如封面图为 <code>981×90</code>、按钮图标为 <code>90×90</code>；符合等比例缩放条件的图片，可以自动调整并上传 BFS，使用新 URL 创建卡片。</p>
+<p><strong>成功后返回的是业务对象的创建结果：</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">搜索导航卡创建成功<br><br>- 卡片 ID：&lt;下游返回的真实 card_id&gt;<br>- 打开导航卡管理页面<br></code></pre></td></tr></table></figure>
+
+<p>当前返回的是<strong>卡片 ID 和管理页面入口</strong>。创建结果是否进一步上线投放，需要根据业务系统的实际状态确认。</p>
+<p>对应代码：<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/tool/delivery/NaviCardCreateTool.java:50">NaviCardCreateTool.java</a>、<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/integration/material/NaviCardMcpIntegration.java:84">NaviCardMcpIntegration.java</a>。</p>
+<p><strong>2. 生成或编辑业务图片</strong></p>
+<p>例如，运营提出：</p>
+<blockquote>
+<p>“生成一张动画活动宣传图。”<br>“基于这张参考图修改背景，保持原比例。”</p>
+</blockquote>
+<p>处理过程是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs text">主 Agent 委派公共域<br>        ↓<br>加载图片工作流，查询可用模型及合法参数<br>        ↓<br>整理提示词、参考图、比例、分辨率和数量<br>        ↓<br>必要时分析原图尺寸<br>        ↓<br>调用 submit_image_generate_edit<br>        ↓<br>通过 HTTP 提交给下游图像生成服务<br>        ↓<br>先返回 openSessionId，建立后台结果监控<br>        ↓<br>生成结束后查询结果，展示图片<br></code></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li><strong>没有参考图</strong>：按文字描述生成图片。</li>
+<li><strong>提供参考图</strong>：按指令执行图片编辑。</li>
+<li>模型、比例和分辨率根据查询到的可用参数选择。</li>
+<li>多个独立任务，或后续步骤依赖生成结果时，先进入长任务规划和整体确认流程。</li>
+</ul>
+<p>图片生成采用<strong>异步方式</strong>，返回分为两个阶段：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>返回内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>提交成功</td>
+<td>已受理的状态和 <code>openSessionId</code>，此时图片尚未生成完成</td>
+</tr>
+<tr>
+<td>生成完成</td>
+<td>结果说明、图片数量及图片 URL；回复可以使用 Markdown 图片语法，前端据此展示图片</td>
+</tr>
+<tr>
+<td>失败或超时</td>
+<td>对应状态、原因或提示，以及可用于后续查询的任务标识</td>
+</tr>
+</tbody></table>
+<p>结果查询工具返回的内容类似：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs text">任务处理完成。<br><br>结果说明：<br>&lt;下游返回的说明&gt;<br><br>图片共 2 张：<br>&lt;图片 URL 1&gt;<br>&lt;图片 URL 2&gt;<br></code></pre></td></tr></table></figure>
+
+<p>后台由轮询服务监控任务状态，结束后通过会话通知链路触发结果获取，用户通常不需要反复询问。</p>
+<p>对应代码：<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/tool/common/ImageGenerateSubmitTool.java:140">ImageGenerateSubmitTool.java</a>、<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/tool/common/ImageResultQueryTool.java:46">ImageResultQueryTool.java</a>。</p>
+<p><strong>3. 如果需求是“先生成图片，再创建导航卡”</strong></p>
+<p>在相关能力、权限和参数齐备时，主 Agent 可以串联这两条链路：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs text">公共域制定完整计划 → 用户整体确认<br>        ↓<br>公共域提交图片生成任务<br>        ↓<br>等待生成完成，取得真实图片 URL<br>        ↓<br>主 Agent 将图片 URL 和卡片需求委派给业务域<br>        ↓<br>校验图片及卡片参数，调用物料 MCP 创建<br>        ↓<br>返回图片结果、卡片 ID 和管理页面入口<br></code></pre></td></tr></table></figure>
+
+<p>这个场景存在异步依赖，需要保存任务进度，取得真实图片结果后再执行卡片创建。</p>
+<h3 id="8-为什么不使用只做成一个Agent，而是做成多Agent系统？"><a href="#8-为什么不使用只做成一个Agent，而是做成多Agent系统？" class="headerlink" title="8. 为什么不使用只做成一个Agent，而是做成多Agent系统？"></a>8. 为什么不使用只做成一个Agent，而是做成多Agent系统？</h3><p><strong>结合我们当前的业务范围，多 Agent 的主要价值是划分职责、控制每次推理的能力范围，以及方便不同业务域独立扩展。</strong> 单 Agent 也能实现这些功能，但需要把更多领域规则和工具放进同一个执行上下文。</p>
+<p><strong>1. 不同业务域的规则差异较大</strong></p>
+<p>我们的系统既处理活动、投放、创作激励，也处理文档、图片和长任务。</p>
+<p>如果全部放在一个 Agent 中，它需要同时理解所有领域的提示词、工具参数和执行规则。拆分后：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">主 Agent：判断需求属于哪个领域，协调处理顺序<br>    ↓<br>领域 Agent：理解本领域规则，选择具体工具完成任务<br></code></pre></td></tr></table></figure>
+
+<p>这样，每个领域 Agent 只需要关注当前开放给它的能力，有利于减少无关规则和工具对决策的干扰。</p>
+<p><strong>2. 分开“跨域编排”和“领域执行”</strong></p>
+<p>例如“生成宣传图，再创建导航卡”：</p>
+<ul>
+<li>主 Agent 负责协调图片生成与导航卡创建的先后关系。</li>
+<li>公共域负责规划、图片生成和异步结果处理。</li>
+<li>业务域负责导航卡参数组织及物料接口调用。</li>
+</ul>
+<p>这些职责分开后，主 Agent 可以根据真实中间结果继续委派，领域 Agent 专注完成自己的业务步骤。</p>
+<p><strong>3. 方便业务域独立配置和扩展</strong></p>
+<p>我们已经通过 Paladin 配置业务子 Agent 的提示词、Tool、Skill 和权限绑定。</p>
+<p>新增业务域时，如果需要的工具已经存在，可以通过新增域配置完成装配；新增业务能力则补充对应工具实现。修改某个领域的规则，也能将影响集中在该领域。</p>
+<p><strong>4. 让能力边界更清楚</strong></p>
+<p>系统先按用户权限过滤能力，再为各子 Agent 组装工具集。</p>
+<p>例如，活动域只持有配置给它的活动能力，公共域持有任务协调和通用能力。这样更方便审查“哪个 Agent 能调用哪些工具”。</p>
+<p>这里要注意：<strong>真正的权限保障来自代码中的权限过滤、执行守卫和操作确认。</strong> 多 Agent 的职责划分帮助我们组织边界，不能代替这些程序校验。</p>
+<p><strong>多 Agent 也有成本。</strong> 主 Agent 委派子 Agent 会增加模型调用、延迟和 Token 消耗，还需要处理上下文传递、结果汇总及委派错误。当前系统的主 Agent 每次只委派一个领域，因此也不能把“多个 Agent 并行加速”作为主要选型理由。</p>
+<p>面试时可以这样回答：</p>
+<blockquote>
+<p>我们覆盖多个运营业务域，各领域的规则和工具差异比较大，所以采用主 Agent 加领域子 Agent 的结构。主 Agent 负责意图理解、路由和跨域编排，子 Agent 负责领域内执行。这样可以控制单次推理涉及的工具范围，并支持业务域独立配置和扩展。代价是增加调用成本和协作复杂度，因此我们保留统一主入口，并通过权限过滤和执行守卫约束实际执行。</p>
+</blockquote>
+<h3 id="9-你们的会话记忆保存到了哪里？是怎么组织对话记忆的？"><a href="#9-你们的会话记忆保存到了哪里？是怎么组织对话记忆的？" class="headerlink" title="9. 你们的会话记忆保存到了哪里？是怎么组织对话记忆的？"></a>9. 你们的会话记忆保存到了哪里？是怎么组织对话记忆的？</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs text">                   用户发起请求<br>                        │<br>                        ▼<br>              根据 userId、sessionId<br>                   准备会话上下文<br>                        │<br>        ┌───────────────┴───────────────┐<br>        ▼                               ▼<br> 当前会话上下文                    用户长期记忆<br> RedisAgentStateStore              远程 Workspace<br> 按用户 + 会话隔离                  按用户隔离<br>        │                               │<br> · 用户与助手消息                  读取 MEMORY.md<br> · 工具调用及结果                  作为只读上下文注入<br> · 相关运行状态                    按预算限制加载体积<br>        │                               │<br> 上下文过长时压缩                        │<br> 生成摘要、保留部分消息                   │<br>        └───────────────┬───────────────┘<br>                        ▼<br>                   主 Agent<br>             结合上下文进行理解与执行<br>                        │<br>                        ▼<br>                   回复用户<br>                        │<br>     ┌──────────────────┼──────────────────┐<br>     ▼                  ▼                  ▼<br>更新会话状态       异步记忆维护         记录聊天历史<br>     │                  │               成功轮次<br>     ▼                  ▼                  │<br>   Redis          归档会话消息             ▼<br>保存 AgentState         │          ConversationHistoryService<br>                        ▼                  │<br>                 模型提炼记忆       ┌──────┴──────┐<br>                 按日期组织记录     ▼             ▼<br>                        │       Taishan         Redis<br>                        ▼       消息与会话详情  索引与缓存<br>                 合并整理长期记忆<br>                        │<br>                        ▼<br>                   MEMORY.md<br>                        │<br>                        ▼<br>               Redis 远程 Workspace<br>                        │<br>                        └────→ 后续会话加载<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>会话上下文</strong>：用于当前对话的连续理解。</li>
+<li><strong>长期记忆</strong>：回复后异步提炼，供同一用户后续会话使用；更新受节流控制。</li>
+<li><strong>聊天历史</strong>：用于用户回看，不会每次全部注入模型。</li>
+<li><strong>长任务进度</strong>：另存 Redis 任务检查点，恢复执行时读取真实任务状态。</li>
+</ul>
+<p><strong>会话运行上下文和长期记忆保存在 Redis；供用户查看的聊天历史，详情保存在 Taishan，Redis 保存索引和缓存。</strong> 这几类数据的用途不同。</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>保存位置</th>
+<th>主要作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>当前会话上下文</td>
+<td>Redis，<code>RedisAgentStateStore</code></td>
+<td>支持同一会话连续对话和执行恢复</td>
+</tr>
+<tr>
+<td>用户长期记忆</td>
+<td>Redis 支撑的远程 Workspace</td>
+<td>跨会话保留提炼后的有用信息</td>
+</tr>
+<tr>
+<td>聊天历史记录</td>
+<td>Taishan 详情 + Redis 索引、缓存</td>
+<td>展示历史会话、翻页查看聊天内容</td>
+</tr>
+<tr>
+<td>长任务检查点</td>
+<td>独立的 Redis 任务存储</td>
+<td>保存计划、确认版本、步骤、游标和结果</td>
+</tr>
+</tbody></table>
+<p><strong>1. 当前会话：按用户和会话组织消息上下文</strong></p>
+<p>主 Agent 配置了 <code>RedisAgentStateStore</code>。会话状态通过 <code>userId + sessionId</code> 定位，保存 <code>AgentState</code>，其中包含消息上下文。</p>
+<p>逻辑上可以理解为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs text">用户 A<br>├── 会话 1<br>│   └── 用户消息 → Agent 回复 → 工具调用及结果 → 后续消息……<br>└── 会话 2<br>    └── 另一组独立的上下文<br><br>用户 B<br>└── 自己的会话上下文<br></code></pre></td></tr></table></figure>
+
+<p>例如用户先说“查询这几个稿件”，随后说“只看第二个”，Agent 可以结合当前会话中的消息理解“第二个”指什么。</p>
+<p>这部分默认 Redis key 前缀为 <code>ogv:agent:gateway:session:</code>。具体存取由框架的状态存储实现完成。见 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/config/RedisConfig.java:85">RedisConfig.java</a>。</p>
+<p><strong>2. 长期记忆：按用户隔离，在回复后异步提炼</strong></p>
+<p>长期记忆采用 Harness 的远程 Workspace，设置为 <code>IsolationScope.USER</code>，底层存储由 Redis 提供。</p>
+<p>虽然表现为 <code>MEMORY.md</code> 等文件形式，实际使用的是远程存储抽象。其逻辑组织包括：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">用户工作区<br>├── 会话消息归档<br>├── 按日期组织的记忆记录<br>│   ├── YYYY-MM-DD.md<br>│   └── archive/……<br>└── MEMORY.md：整理后的长期记忆<br></code></pre></td></tr></table></figure>
+
+<p>回复完成后，<code>AsyncMemoryPostProcessorMiddleware</code> 会把消息快照提交到独立线程池，依次尝试：</p>
+<ol>
+<li>归档会话消息。</li>
+<li>调用模型提炼记忆。</li>
+<li>整理、合并长期记忆，并维护旧归档。</li>
+</ol>
+<p>它采用<strong>尽力而为的异步处理</strong>，不保证每轮都完成记忆更新；还有节流和用户级并发控制。默认提炼间隔为 10 分钟，整理间隔为 2 小时，均可配置。</p>
+<p>见 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/middleware/AsyncMemoryPostProcessorMiddleware.java:302">AsyncMemoryPostProcessorMiddleware.java</a>。</p>
+<p><strong>3. 下次对话：读取会话状态，并加载长期记忆</strong></p>
+<p>再次请求时，同一会话继续使用对应的运行上下文；长期记忆则通过 <code>ReadOnlyMemoryContextMiddleware</code> 读取用户的 <code>MEMORY.md</code>，在预算允许的范围内注入系统提示词。</p>
+<p>因此两者分别解决：</p>
+<ul>
+<li><strong>会话上下文</strong>：当前对话已经说了什么、工具返回了什么。</li>
+<li><strong>长期记忆</strong>：跨会话仍值得保留的信息。</li>
+</ul>
+<p>前台主 Agent 的记忆写工具已关闭，长期记忆由后台流程维护。记忆注入有字符预算，不会无条件加载全部内容。见 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/middleware/ReadOnlyMemoryContextMiddleware.java:33">ReadOnlyMemoryContextMiddleware.java</a>。</p>
+<p><strong>4. 上下文过长：通过压缩控制体积</strong></p>
+<p>主 Agent 还配置了 Harness 的上下文压缩能力，依据预算和配置生成摘要、保留部分消息，控制后续模型输入体积。</p>
+<p>压缩提示词和记忆提炼提示词明确要求：<strong>不把临时文档全文、表格内容或大段工具结果写入长期记忆或摘要</strong>；需要时通过文档引用重新按需读取。</p>
+<p><strong>5. 聊天历史：保存用户可以回看的记录</strong></p>
+<p>聊天记录有独立的 <code>ConversationHistoryService</code>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">成功轮次的用户消息、助手回复及附件引用<br>                    ↓<br>          Taishan 保存消息和会话详情<br>                    ↓<br>          Redis 保存索引并缓存详情<br></code></pre></td></tr></table></figure>
+
+<p>查看历史时先读 Redis 缓存，未命中再读 Taishan。消息详情通过 <code>userId + sessionId + messageId</code> 组织。</p>
+<p><strong>聊天历史保存了，不代表每次推理都会把全部历史重新发给模型。</strong> 推理主要使用 Agent 会话状态、加载的长期记忆和压缩后的上下文。长任务恢复则另外依赖任务检查点，不能只靠对话摘要判断执行进度。</p>
+<h3 id="10-子Agent之间会互相调用吗，比如活动域子Agent会在模型理解之后去调用投放域子Agent吗？"><a href="#10-子Agent之间会互相调用吗，比如活动域子Agent会在模型理解之后去调用投放域子Agent吗？" class="headerlink" title="10. 子Agent之间会互相调用吗，比如活动域子Agent会在模型理解之后去调用投放域子Agent吗？"></a>10. 子Agent之间会互相调用吗，比如活动域子Agent会在模型理解之后去调用投放域子Agent吗？</h3><p><strong>当前实现中，子 Agent 之间不会直接互相调用，跨领域协作统一由主 Agent 协调。</strong></p>
+<p>所以，活动域子 Agent 即使判断需要投放能力，也没有直接调用投放域子 Agent 的委派入口。流程是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs text">主 Agent<br>    ↓ 委派<br>活动域子 Agent<br>    ↓ 返回处理结果及后续需求<br>主 Agent<br>    ↓ 判断是否需要投放能力，组织必要上下文<br>投放域子 Agent<br>    ↓ 返回结果<br>主 Agent<br>    ↓<br>继续编排或汇总回复<br></code></pre></td></tr></table></figure>
+
+<p>代码上有两个明确的边界：</p>
+<ul>
+<li><strong>主 Agent 的工具集</strong>：注册了调用各领域的 <code>SubAgentTool</code>，所以能选择和委派子 Agent。</li>
+<li><strong>子 Agent 的工具集</strong>：只注册配置给本域的 Tool、Skill，没有其他领域的委派工具。模型判断需要跨域，也必须通过已有工具边界执行。</li>
+</ul>
+<p>对应实现：<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/AgentFactory.java:392">AgentFactory.java</a>、<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/DomainAgentSupport.java:99">DomainAgentSupport.java</a>。</p>
+<p>这种组织方式让主 Agent 统一掌握调用顺序、依赖和结果，方便约束执行范围、避免领域之间形成循环委派。<strong>子 Agent 可以调用下游业务服务，但调用下游服务与调用另一个 Agent 是两回事。</strong></p>
+<h3 id="11-为什么使用AgentScope这个框架？"><a href="#11-为什么使用AgentScope这个框架？" class="headerlink" title="11. 为什么使用AgentScope这个框架？"></a>11. 为什么使用AgentScope这个框架？</h3><p>使用 AgentScope Java 构建 Agent 系统，核心优势在于它专为 <strong>Java 企业级生产环境</strong>设计，将多智能体协作所需的工程化能力（如分布式部署、状态恢复、安全隔离）封装成了开箱即用的组件，而非仅仅提供基础的模型调用封装。</p>
+<h3 id="🏢-贴合-Java-企业技术栈，降低集成成本"><a href="#🏢-贴合-Java-企业技术栈，降低集成成本" class="headerlink" title="🏢 贴合 Java 企业技术栈，降低集成成本"></a>🏢 贴合 Java 企业技术栈，降低集成成本</h3><p>对于以 Java 为主的技术团队，AgentScope Java 提供了原生支持，避免了为了构建 Agent 而被迫引入并维护 Python 技术栈的问题。它可以直接以 Maven 依赖的形式嵌入现有的 Spring Boot 工程，利用 Java 生态成熟的监控、部署和并发模型。该框架已在阿里集团内部 13+ 业务线生产使用，经过了企业级场景的检验。</p>
+<h3 id="🧠-工程化的“外壳”：HarnessAgent-保障长任务稳定"><a href="#🧠-工程化的“外壳”：HarnessAgent-保障长任务稳定" class="headerlink" title="🧠 工程化的“外壳”：HarnessAgent 保障长任务稳定"></a>🧠 工程化的“外壳”：HarnessAgent 保障长任务稳定</h3><p>单纯的 ReActAgent 只能处理单轮推理，而生产环境的 Agent 往往需要长时间运行。AgentScope 提供的 <strong>HarnessAgent</strong> 在推理内核外增加了一层工程基础设施，解决了长任务中的常见痛点：</p>
+<ul>
+<li><strong>状态可恢复</strong>：通过稳定的 <code>sessionId</code>，即使进程重启或跨节点部署，也能完整恢复对话和任务状态，避免“失忆”。</li>
+<li><strong>上下文可控</strong>：内置自动压缩策略，当工具调用结果过大时，会自动将内容转存到磁盘并在上下文中保留引用，防止超出模型的上下文窗口限制。</li>
+<li><strong>工作区持久化</strong>：Agent 的人格设定、长期记忆和技能都存储在文件系统中，修改配置或记忆无需重新编译代码，实现了 Agent 的“自我进化”。</li>
+</ul>
+<h3 id="12-主agent和子agent之间的调度和请求响应是怎么实现的？"><a href="#12-主agent和子agent之间的调度和请求响应是怎么实现的？" class="headerlink" title="12. 主agent和子agent之间的调度和请求响应是怎么实现的？"></a>12. 主agent和子agent之间的调度和请求响应是怎么实现的？</h3><p><strong>当前采用“主 Agent 统一编排、子 Agent 工具化”的调度方式。主子 Agent 在同一个 Java 应用内，由 AgentScope 执行调用；子 Agent 访问下游业务时，才使用 HTTP、RPC 或 MCP。</strong></p>
+<p><strong>1. 先把子 Agent 注册为主 Agent 的工具</strong></p>
+<p><code>AgentFactory</code> 按配置和权限生成领域能力，再通过 <code>SubAgentTool</code> 包装子 Agent：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">AgentTool</span> <span class="hljs-variable">delegate</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SubAgentTool</span>(<br>        agentSpec.getProvider(),<br>        SubAgentConfig.builder()<br>                .toolName(spec.getToolName())<br>                .description(agentSpec.getSubAgentDescription())<br>                .forwardEvents(...)<br>                .build());<br><br>supervisorToolkit.registerAgentTool(<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">DirectReturnAgentTool</span>(delegate));<br></code></pre></td></tr></table></figure>
+
+<p>注册后，主 Agent 可以看到各委派工具的名称、描述和参数定义，例如 <code>delegate_to_delivery_domain</code>。</p>
+<p><code>SubAgentProvider</code> 提供子 Agent 的创建入口，框架根据注册关系执行对应领域 Agent。</p>
+<p>对应代码：<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/AgentFactory.java:386">AgentFactory.java</a>。</p>
+<p><strong>2. 主 Agent 通过结构化工具调用发起委派</strong></p>
+<p>用户请求进入主 Agent 后，大模型结合上下文和领域能力描述，选择目标工具并填写参数。</p>
+<p>下面是逻辑示意：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;delegate_to_delivery_domain&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;arguments&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;message&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;根据已确认的标题、封面和按钮参数创建搜索导航卡&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;direct_return&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li><code>message</code>：交给子 Agent 的具体任务及必要上下文。</li>
+<li><code>direct_return</code>：本次领域结果是否预计可以直接回答用户。</li>
+</ul>
+<p>业务任务放在委派参数中；用户、会话及任务控制等运行信息通过 <code>RuntimeContext</code> 传递或关联。子 Agent 可用的工具权限则在装配阶段过滤。</p>
+<p><strong>3. 框架执行调度，守卫约束实际调用</strong></p>
+<p>模型生成调用后，AgentScope 将其交给工具执行链路。执行守卫检查任务状态、规划阶段及本次调用是否符合约束。</p>
+<p>通过后，由注册的 <code>SubAgentTool</code> 调用目标子 Agent。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">主 Agent 模型输出工具调用<br>            ↓<br>框架解析工具名与参数<br>            ↓<br>执行守卫校验<br>            ↓<br>SubAgentTool 调用目标子 Agent<br></code></pre></td></tr></table></figure>
+
+<p>当前主 Agent <strong>每次只允许委派一个领域</strong>。跨域任务需要先取得当前领域结果，再判断下一次委派。</p>
+<p><strong>4. 子 Agent 执行本域任务，返回工具结果</strong></p>
+<p>子 Agent 使用自己的领域提示词、Tool 和 Skill 运行 ReAct 循环：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">理解委派任务<br>    ↓<br>选择本域工具、组织参数<br>    ↓<br>调用下游服务<br>    ↓<br>观察结果<br>    ↓<br>继续调用或形成领域答案<br></code></pre></td></tr></table></figure>
+
+<p>委派入口的异步返回类型是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">Mono&lt;ToolResultBlock&gt; <span class="hljs-title function_">callAsync</span><span class="hljs-params">(ToolCallParam param)</span><br></code></pre></td></tr></table></figure>
+
+<p>对主 Agent 来说，<strong>子 Agent 的输出就是一次工具调用结果</strong>。框架通过调用 ID 将结果与原委派关联，供主 Agent 后续判断。</p>
+<p><strong>5. 结果有“继续编排”和“直接返回”两条路径</strong></p>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>处理方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>继续编排</td>
+<td>主 Agent 读取领域结果，再调用其他领域、补充信息或汇总答案</td>
+</tr>
+<tr>
+<td>直接返回</td>
+<td><code>direct_return=true</code> 且程序检查通过时，使用子 Agent 的完整答案，停止主 Agent 的二次生成</td>
+</tr>
+</tbody></table>
+<p>直返不是仅凭一个布尔值就生效。当前还要求首个工具批次只有一次调用、结果成功、答案有效，并且不存在长任务或待确认操作等优先处理状态。</p>
+<p>对应代码：<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/middleware/DirectReturnMiddleware.java:34">DirectReturnMiddleware.java</a>。</p>
+<p><strong>6. 流式事件通过统一出口响应用户</strong></p>
+<p>流式接口由 <code>ChatService</code> 调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">supervisor.streamEvents(userMsg, runtimeContext)<br></code></pre></td></tr></table></figure>
+
+<p>取得 <code>Flux&lt;AgentEvent&gt;</code>，再转换成前端事件，由 Controller 通过 SSE 输出。</p>
+<p>当前业务域开启子 Agent 事件转发，公共域关闭该转发选项；服务端还会筛选、整理事件，处理最终结果和确认提示，并非所有内部事件都直接展示。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs text">用户请求<br>    ↓<br>ChatService → 主 Agent<br>                  ↓ 工具调用<br>              子 Agent<br>                  ↓<br>             本域工具 → 下游服务<br>                  ↑ 返回结果<br>              子 Agent<br>                  ↑ ToolResultBlock<br>               主 Agent<br>                  ↓<br>       ChatService → SSE / 普通响应 → 用户<br></code></pre></td></tr></table></figure>
+
+<p>另外，<strong>普通委派等待的是本次子 Agent 执行的结果</strong>。如果子 Agent 提交的是异步图片任务，本次可能只返回受理状态和任务 ID；真正生成完成后，再由监控、通知及续跑机制衔接后续处理。</p>
+<h3 id="13-你们面对海量的tool是如何治理的？才能让模型准确的选择相应的工具的？"><a href="#13-你们面对海量的tool是如何治理的？才能让模型准确的选择相应的工具的？" class="headerlink" title="13. 你们面对海量的tool是如何治理的？才能让模型准确的选择相应的工具的？"></a>13. 你们面对海量的tool是如何治理的？才能让模型准确的选择相应的工具的？</h3><p>我们一共有40个tool</p>
+<p><strong>当前实现通过“分域缩小选择范围、动态能力描述、结构化工具参数、Skill 流程指引、执行前校验”提高调用准确性，但不能保证模型每次都选对。</strong></p>
+<p>以用户说“查询某个投放项目”为例，链路是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">主 Agent 根据能力描述选择投放域<br>→ 投放子 Agent 根据工具描述选择 query_delivery_project<br>→ 模型生成 keyword 参数<br>→ 框架找到对应方法并执行<br>→ 工具结果返回模型，模型继续推理或回答<br></code></pre></td></tr></table></figure>
+
+<p>具体有五层设计。</p>
+<p><strong>1. 主 Agent 先选业务域，子 Agent 再选具体工具</strong></p>
+<p>主 Agent 注册的是 <code>delegate_to_delivery_domain</code> 等委托工具，而不是一次性面对<strong>全部 40 个业务工具</strong>。</p>
+<p>投放子 Agent 再从当前装配的投放工具中选择。这样每一层的候选范围更小。对应 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/AgentFactory.java:386">AgentFactory.java</a>。</p>
+<p><strong>2. 能力描述随权限过滤结果生成</strong></p>
+<p>代码先筛选用户有权使用的 Tool、Skill，再生成：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">subAgentDescription</span> <span class="hljs-operator">=</span><br>        baseDescription + <span class="hljs-string">&quot;可用能力：&quot;</span> + promptCapability;<br><br><span class="hljs-type">String</span> <span class="hljs-variable">sysPrompt</span> <span class="hljs-operator">=</span> baseSysPrompt + executionGuidance + languageGuidance<br>        + <span class="hljs-string">&quot;\n当前可用能力：\n&quot;</span> + capabilityBlock;<br></code></pre></td></tr></table></figure>
+
+<p>因此，主 Agent 看到的域描述、子 Agent 看到的能力清单，都来自实际装配结果，减少“提示词说能做，实际没有工具”的情况。对应 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/DomainAgentSupport.java:232">DomainAgentSupport.java</a>。</p>
+<p><strong>3. 用工具名、描述和参数说明帮助模型选择</strong></p>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Tool(name = &quot;query_delivery_project&quot;,</span><br><span class="hljs-meta">      description = &quot;查询投放项目，当前返回 mock 结果。&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">queryDeliveryProject</span><span class="hljs-params">(</span><br><span class="hljs-params">        <span class="hljs-meta">@ToolParam(name = &quot;keyword&quot;,</span></span><br><span class="hljs-meta"><span class="hljs-params">                   description = &quot;投放项目ID或项目名称&quot;)</span></span><br><span class="hljs-params">        String keyword)</span><br></code></pre></td></tr></table></figure>
+
+<p>AgentScope 根据这些声明向模型提供工具定义。模型输出结构化的工具名和参数，框架再将工具名映射到已注册的方法。</p>
+<p>这里要区分三个名字：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>deliveryProjectQueryTool</code></td>
+<td>配置中的能力 ID</td>
+</tr>
+<tr>
+<td><code>query_delivery_project</code></td>
+<td>模型调用的工具名</td>
+</tr>
+<tr>
+<td><code>queryDeliveryProject</code></td>
+<td>Java 实现方法</td>
+</tr>
+</tbody></table>
+<p><strong>4. Skill 指导多步骤工具的调用顺序</strong></p>
+<p>例如文档读取 Skill 要求：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">先 inspect 查看结构<br>→ 再 read 读取正文<br>→ 问题需要图片时才 image_read<br></code></pre></td></tr></table></figure>
+
+<p>这类规则帮助模型决定“什么时候用哪个工具”。它属于模型行为指引，实际参数和业务约束还需要代码校验。</p>
+<p><strong>5. 调用前用代码限制不合法执行</strong></p>
+<p>工具实现检查参数和业务条件；长任务守卫检查任务状态、计划确认及操作引用；声明了执行确认风险的工具，还会进入确认流程。</p>
+<p>这些措施能拦住特定的不合法调用，但<strong>无法判断所有语义上的选错</strong>。例如两个只读工具都有权限、参数也合法，模型却选了与问题不相关的一个，仍然可能发生。</p>
+<p>面试时可以说：</p>
+<blockquote>
+<p>我们通过分层路由和权限过滤缩小工具候选集，以动态能力描述、工具 Schema 和 Skill 提高选择准确性，再通过服务端校验约束执行边界。工具语义选择仍由模型完成，不能承诺百分之百正确。</p>
+</blockquote>
+<h3 id="14-Tool-skill总结"><a href="#14-Tool-skill总结" class="headerlink" title="14. Tool&#x2F;skill总结"></a>14. Tool&#x2F;skill总结</h3><table>
+<thead>
+<tr>
+<th>工具类别</th>
+<th>代表工具</th>
+<th>主要作用</th>
+<th>实现方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>知识检索</td>
+<td><code>zhiliao_search_knowledge</code>、<code>zhiliao_get_document</code></td>
+<td>搜索知识库、读取文档并提供回答依据</td>
+<td>HTTP</td>
+</tr>
+<tr>
+<td>文档与图片处理</td>
+<td><code>document_read</code>、<code>submit_image_generate_edit</code>、<code>resize_image_url</code></td>
+<td>文档按需读取、图片生成编辑、尺寸调整</td>
+<td>文档服务、HTTP、BFS</td>
+</tr>
+<tr>
+<td>业务查询与诊断</td>
+<td><code>query_ai_creator_mix_list</code>、<code>preview_ai_creator_mix_list_entry</code>、<code>query_production_task_status_log</code></td>
+<td>查询业务数据、诊断准入条件、排查任务状态</td>
+<td>HTTP &#x2F; RPC</td>
+</tr>
+<tr>
+<td>业务操作</td>
+<td><code>create_navi_card</code>、<code>rollback_production_task</code></td>
+<td>创建导航卡、确认后回滚生产任务</td>
+<td>MCP &#x2F; HTTP &#x2F; RPC</td>
+</tr>
+<tr>
+<td>通用辅助</td>
+<td><code>convert_aid_to_bvid</code>、<code>convert_bvid_to_aid</code></td>
+<td>稿件编号转换</td>
+<td>本地计算</td>
+</tr>
+<tr>
+<td>活动与投放</td>
+<td><code>config_activity</code>、<code>create_delivery_project</code> 等</td>
+<td>活动查询与配置、投放项目及预算管理</td>
+<td>当前为 Mock</td>
+</tr>
+<tr>
+<td>任务与状态管理</td>
+<td><code>agent_task_*</code>、<code>agent_temporary_state_*</code></td>
+<td>计划保存、任务控制、进度记录、续跑和中间状态读写</td>
+<td>任务服务 &#x2F; Redis</td>
+</tr>
+</tbody></table>
+<p><strong>Skill：4 个</strong></p>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>使用场景</th>
+<th>核心工作流</th>
+<th>主要关联工具</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><code>knowledge-query-workflow</code></strong></td>
+<td>知了知识库问答</td>
+<td>加载工作流 → 按原始问题搜索一次 → 读取最高相关文档 → 基于原文回答并展示相关原始图片</td>
+<td><code>zhiliao_search_knowledge</code>、<code>zhiliao_get_document</code></td>
+</tr>
+<tr>
+<td><strong><code>document-reading-workflow</code></strong></td>
+<td>理解临时上传的 7 类文档</td>
+<td>使用准确文件引用 → 检查结构 → 按需分页读取 → 必要时读取图片 → 形成结论</td>
+<td><code>document_inspect</code>、<code>document_read</code>、<code>document_image_read</code></td>
+</tr>
+<tr>
+<td><strong><code>image-generation-workflow</code></strong></td>
+<td>图片生成、参考图编辑、批量图片任务</td>
+<td>查询模型及参数 → 必要时分析尺寸 → 提交任务 → 异步获取结果；存在批量或结果依赖时先规划</td>
+<td>图片参数、尺寸分析、提交、结果查询工具，以及任务工具</td>
+</tr>
+<tr>
+<td><strong><code>long-running-task-workflow</code></strong></td>
+<td>无法单轮可靠完成的复杂或长周期任务</td>
+<td>必要查询 → 创建任务 → 保存完整计划 → 整体确认 → 分步／分批执行 → 记录进度和续跑</td>
+<td><code>agent_task_*</code>、临时状态工具及具体业务工具</td>
+</tr>
+</tbody></table>
 <h2 id="0-2-AI问题"><a href="#0-2-AI问题" class="headerlink" title="0.2 AI问题"></a>0.2 AI问题</h2><p>下面的问题更关注“整个项目为什么做、怎么设计、如何落地、你的贡献是什么”，适合作为项目整体介绍后的面试追问。回答是示例话术，涉及数据的部分需要替换成真实情况。</p>
 <p><strong>1. 这个平台主要解决什么业务问题？</strong></p>
 <p>OGV 运营工作中存在大量跨系统、重复且步骤较长的操作，例如读取运营材料、生成执行方案、调用业务工具并批量落地。传统方式依赖人工串联，效率较低，也容易出现遗漏。平台希望通过多个业务 Agent 协作，把自然语言需求转换为可确认、可执行、可恢复的任务。</p>
@@ -551,7 +1158,8 @@
 </ol>
 <h2 id="1-2-提问"><a href="#1-2-提问" class="headerlink" title="1.2 提问"></a>1.2 提问</h2><h3 id="1-2-1-自己想到的问题"><a href="#1-2-1-自己想到的问题" class="headerlink" title="1.2.1 自己想到的问题"></a>1.2.1 自己想到的问题</h3><h4 id="1-没有这个长任务机制之前，你的agent是怎么执行的？也就是为什么你要设计一个长任务执行机制？"><a href="#1-没有这个长任务机制之前，你的agent是怎么执行的？也就是为什么你要设计一个长任务执行机制？" class="headerlink" title="1. 没有这个长任务机制之前，你的agent是怎么执行的？也就是为什么你要设计一个长任务执行机制？"></a>1. 没有这个长任务机制之前，你的agent是怎么执行的？也就是为什么你要设计一个长任务执行机制？</h4><p><strong>没有长任务机制之前，Agent 主要在一次聊天请求中，通过多次“模型推理—调用工具—观察结果”来完成工作。设计长任务机制，是为了让复杂任务在跨请求、异步等待和服务重启之后，仍能有依据地继续执行。</strong></p>
 <p>我核对了引入长任务前的代码。当时已经有多 Agent 调度、会话状态持久化和图片生成结果轮询，所以面试时不能说“以前什么状态都不保存”或者“以前只能调用一次工具”。真正缺少的是<strong>独立于聊天上下文的业务任务进度管理</strong>。</p>
-<p>你可以按下面的思路回答。</p>
+<p>以前系统已经能进行多 Agent 调度和多次工具调用，但复杂任务的推进主要依赖当前请求里的模型循环，以及后续请求加载的会话上下文。</p>
+<p>引入长任务机制后，我们把完整计划、步骤、批次和执行进度保存为服务端任务状态。模型仍然负责理解需求和选择能力，但执行时需要遵循已确认的计划，每轮记录结果，再依据保存的进度继续；中断后也有明确的恢复依据。</p>
 <p><strong>1. 之前的 Agent 是怎么执行的？</strong></p>
 <p>用户发送一条消息后，后端加载对应的会话上下文，由主 Agent 判断交给哪个业务子 Agent。子 Agent 根据需求调用工具，拿到结果后继续推理，必要时再调用其他工具，最后返回答案。</p>
 <p>例如用户问“搜索卡片的准入条件和申请流程”，Agent 可以先搜索规范，再打开相关文档，最后整理答案。虽然内部调用了多次模型和工具，但整体仍是在这一次请求中完成的。</p>
@@ -1095,6 +1703,270 @@
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs text">任务尚未结束<br>      │<br>      ├─ 用户取消 ──────────→ 已取消<br>      │<br>      ├─ 出现可重试异常 ────→ 等待重试<br>      │                           │<br>      │                           │ 用户重试，检查已有执行记录<br>      │                           ↓<br>      │                    安排续跑或先核对结果<br>      │<br>      ├─ 无法继续的失败 ────→ 已失败<br>      │<br>      └─ 超过任务期限 ──────→ 已过期<br></code></pre></td></tr></table></figure>
 
 <p>这里最关键的是：<strong>“继续”或“重试”都不是直接回到执行中，而是先根据已有记录决定下一步。</strong> 暂停也需要等控制指令被处理后生效，已经发出的下游请求不会被瞬间冻结。</p>
+<h4 id="10-假如用户请求：帮我生成5个某个番剧的封面图片，然后再挑选其中一个图片并结合该番剧的相关物料去制作投放的搜索栏卡片。那这个请求在当前的长任务执行流程下是怎么执行的？"><a href="#10-假如用户请求：帮我生成5个某个番剧的封面图片，然后再挑选其中一个图片并结合该番剧的相关物料去制作投放的搜索栏卡片。那这个请求在当前的长任务执行流程下是怎么执行的？" class="headerlink" title="10. 假如用户请求：帮我生成5个某个番剧的封面图片，然后再挑选其中一个图片并结合该番剧的相关物料去制作投放的搜索栏卡片。那这个请求在当前的长任务执行流程下是怎么执行的？"></a>10. 假如用户请求：帮我生成5个某个番剧的封面图片，然后再挑选其中一个图片并结合该番剧的相关物料去制作投放的搜索栏卡片。那这个请求在当前的长任务执行流程下是怎么执行的？</h4><p><strong>这个请求属于“带异步结果依赖的跨域长任务”：先生成图片，后面的选图和制卡必须使用真实生成结果，所以必须在首次图片提交前建立完整计划。</strong></p>
+<p>下面假设番剧已经明确、用户有相关权限，且物料能够取得。这里的“搜索栏卡片”按项目已有的<strong>搜索导航卡</strong>能力理解。</p>
+<p><strong>1. 主 Agent 识别依赖关系，委托公共域规划</strong></p>
+<p>主 Agent 需要识别出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">生成 5 张封面<br>    ↓ 等待真实图片结果<br>选定其中 1 张<br>    ↓ 结合番剧物料、按钮文案和跳转地址<br>创建搜索导航卡<br></code></pre></td></tr></table></figure>
+
+<p>因此不能先调用图片生成工具，等图片出来后再临时决定要不要建立任务。</p>
+<p>公共域先加载长任务和图片工作流，查询可用图片模型、合法参数，并明确必要信息，比如图片风格、卡片样式、选图规则和物料来源。</p>
+<p><strong>2. 公共域创建任务，提交完整计划</strong></p>
+<p>面向用户的计划可以是：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>工作内容</th>
+<th>完成依据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>生成 5 张番剧封面候选图</td>
+<td>获得真实图片结果及 URL</td>
+</tr>
+<tr>
+<td>2</td>
+<td>按约定规则选定一张</td>
+<td>明确选中图片和选择依据</td>
+</tr>
+<tr>
+<td>3</td>
+<td>结合番剧物料准备导航卡参数，必要时适配图片</td>
+<td>标题、图片、按钮和跳转地址完整</td>
+</tr>
+<tr>
+<td>4</td>
+<td>创建搜索导航卡</td>
+<td>下游返回真实卡片 ID</td>
+</tr>
+</tbody></table>
+<p>这份计划会保存到 Redis，并进入待确认状态。</p>
+<p><strong>注意，“5 张图片”不一定是 5 个独立任务。</strong> 如果模型支持一次生成 5 张，可以是一次提交、返回多张图；如果是 5 个不同创意的独立生成任务，才分别建项。由于本例还有后续结果依赖，不能只建立“提交 5 次图片请求”的计划就认为覆盖了整个任务。</p>
+<p><strong>3. 用户确认后，系统启动执行轮次</strong></p>
+<p>用户确认对应版本的完整计划后，服务端安排执行，建立 <code>runId</code> 和运行租约。</p>
+<p>执行写操作前，需要准备稳定的操作标识；执行守卫校验任务、计划确认状态和当前运行身份。通过校验后，公共域才提交图片生成请求。</p>
+<p>下游返回 <code>openSessionId</code> 时，代表<strong>请求已受理</strong>，还不能认为图片已经生成完成。</p>
+<p><strong>4. 保存异步引用，等待图片结果，再自动继续</strong></p>
+<p>系统保存图片任务与父任务、计划版本、步骤和操作标识的关联，交给结果监控处理，当前聊天请求可以结束。</p>
+<p>图片完成后，系统根据保存的关联核对结果，再安排后续执行。恢复时读取 checkpoint 和真实结果，继续后面的选图、制卡步骤。</p>
+<p>如果中途重启：</p>
+<ul>
+<li>已有图片任务引用，就恢复结果查询或监控。</li>
+<li>已确认成功的图片提交，不重新提交。</li>
+<li>请求是否成功无法确定时，先核对，不能直接重试。</li>
+</ul>
+<p>这就是长任务机制在这个例子中的价值：<strong>把“图片生成完以后还要做什么”保存下来，而不是只通知用户图片生成好了。</strong></p>
+<p><strong>5. 选图和物料准备完成后，由主 Agent 委托制卡业务域</strong></p>
+<p>这里存在两个实际边界：</p>
+<ul>
+<li><strong>选图：</strong> 如果用户指定自己选，就展示候选图等待选择；如果授权 Agent 选，也必须有明确标准和实际图片理解能力。我目前没有在代码中找到专门的“自动图片选优”工具，不能仅凭返回了 URL 就声称已经完成视觉评选。</li>
+<li><strong>物料：</strong> 当前搜索范围内没有找到专门的番剧物料检索工具。需要使用实际开放的能力，或由用户提供，不能假设系统天然能取得全部物料。</li>
+</ul>
+<p>条件满足后，公共域返回明确的后续业务步骤，主 Agent 委托拥有 <code>create_navi_card</code> 的业务域执行。</p>
+<p>如果使用自定义封面样式，当前工具要求图片为 <strong>981×90</strong>；已有适配逻辑只支持等比例缩放，所以普通番剧海报不一定可以直接用。需要的图片适配应纳入计划。依据：<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/tool/delivery/NaviCardCreateTool.java:50">NaviCardCreateTool.java:50</a>。</p>
+<p><strong>6. 当前创建导航卡还会触发工具参数确认</strong></p>
+<p>这里需要修正我前面“计划确认后不再确认”的绝对说法：<strong>当前代码中，创建导航卡属于需要执行确认的工具。整体计划确认后，实际制卡参数形成时，仍会触发一次工具参数确认。</strong></p>
+<p>确认记录会绑定当前长任务，用户确认后执行原参数快照，再恢复任务。依据：<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/ToolExecutionConfirmationCoordinator.java:318">ToolExecutionConfirmationCoordinator.java:318</a>。</p>
+<p>收到真实卡片 ID 后，系统记录结果并完成父任务。这里完成的是<strong>创建导航卡物料</strong>；是否已经上线投放，还要看是否存在相应的发布能力，不能把创建成功直接描述为投放成功。</p>
+<h4 id="11-任务状态、计划版本、执行游标和操作结果-这些分别是什么？"><a href="#11-任务状态、计划版本、执行游标和操作结果-这些分别是什么？" class="headerlink" title="11. 任务状态、计划版本、执行游标和操作结果;这些分别是什么？"></a>11. 任务状态、计划版本、执行游标和操作结果;这些分别是什么？</h4><p>可以把它们理解为四个问题：</p>
+<table>
+<thead>
+<tr>
+<th>数据</th>
+<th>回答的问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>任务状态</strong></td>
+<td>任务现在处于什么阶段，允许做什么？</td>
+</tr>
+<tr>
+<td><strong>计划版本</strong></td>
+<td>现在执行的是哪一版计划，用户确认过吗？</td>
+</tr>
+<tr>
+<td><strong>执行游标</strong></td>
+<td>具体执行到了哪里，下次从哪里继续？</td>
+</tr>
+<tr>
+<td><strong>操作结果</strong></td>
+<td>已经执行的动作发生了什么，后续可以使用什么结果？</td>
+</tr>
+</tbody></table>
+<p>结合“生成 5 张封面，再选图制卡”的例子来看。</p>
+<p><strong>1. 任务状态：当前处境和允许的动作</strong></p>
+<p>它对应代码中的 <code>status</code>，例如：</p>
+<ul>
+<li><code>AWAITING_PLAN_CONFIRMATION</code>：计划已保存，等待用户确认，不能开始生成图片。</li>
+<li><code>RUNNING</code>：正在执行当前步骤。</li>
+<li><code>WAITING_ASYNC_RESULT</code>：图片请求已提交，等待生成结果。</li>
+<li><code>AWAITING_TOOL_CONFIRMATION</code>：制卡参数已准备好，等待工具执行确认。</li>
+<li><code>PAUSED</code>：用户暂停了任务。</li>
+<li><code>RECONCILIATION_REQUIRED</code>：某个写操作结果不确定，需要先核对。</li>
+<li><code>COMPLETED</code>：整个任务完成。</li>
+</ul>
+<p><strong>状态决定当前能不能执行，不能仅根据“还有工作没做完”就继续调用工具。</strong></p>
+<p><strong>2. 计划版本：当前按哪份方案执行</strong></p>
+<p>假设第一次保存的计划是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">planVersion = 1<br>生成 5 张封面 → 选定 1 张 → 制作导航卡<br></code></pre></td></tr></table></figure>
+
+<p>用户确认后：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">confirmedPlanVersion = 1<br></code></pre></td></tr></table></figure>
+
+<p>两个版本一致，说明当前计划已经得到确认。</p>
+<p>如果计划修订为“生成 10 张，并制作两张导航卡”，重新提交后：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">planVersion = 2<br>confirmedPlanVersion = 0<br></code></pre></td></tr></table></figure>
+
+<p>需要重新确认，不能拿用户对第一版的确认执行第二版。</p>
+<p>这里要区分：<strong><code>planVersion</code> 是方案版本；<code>version</code> 是整条 checkpoint 的并发更新版本。</strong> 保存进度会更新 <code>version</code>，不意味着计划发生变化。</p>
+<p><strong>3. 执行游标：当前步骤内部执行到哪里</strong></p>
+<p>执行位置分两层：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">currentStepNo：当前执行第几个高层步骤<br>stepCursor：这个步骤内部执行到哪里<br></code></pre></td></tr></table></figure>
+
+<p>假设把 5 个独立图片提交放在第 1 步的批次中，前 3 项已经提交成功并建立监控：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">currentStepNo = 1<br>stepCursor = &quot;batch:1:3&quot;<br></code></pre></td></tr></table></figure>
+
+<p>含义是：<strong>第 1 步已经处理了前 3 项，下次从第 4 项开始。</strong></p>
+<p>这里记录的是批次工作项的处理位置，<strong>不代表前 3 张图片已经生成完成</strong>。图片最终是否完成，还要看异步结果。</p>
+<p>如果是一次请求生成 5 张图，就不需要为这 5 张图维护这样的逐项提交游标。服务端批次推进依据：<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/DeterministicBatchCoordinator.java:94">DeterministicBatchCoordinator.java:94</a>。</p>
+<p><strong>4. 操作结果：执行后留下的事实和引用</strong></p>
+<p>它不只是“成功&#x2F;失败”，还包括后续恢复需要的信息，例如：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>需要记录的信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>提交图片生成</td>
+<td>是否受理、返回的 <code>openSessionId</code></td>
+</tr>
+<tr>
+<td>等待图片生成</td>
+<td>异步状态、完成后的图片 URL</td>
+</tr>
+<tr>
+<td>选定图片</td>
+<td>选中的图片引用，供后续制卡使用</td>
+</tr>
+<tr>
+<td>创建导航卡</td>
+<td>真实返回的卡片 ID，或者失败信息</td>
+</tr>
+<tr>
+<td>请求超时且结果未知</td>
+<td>保留操作标识和已有引用，先核对是否执行成功</td>
+</tr>
+</tbody></table>
+<p>在当前实现中，这些信息由多个字段和记录共同承载，包括 <code>operationRef</code>、<code>asyncTaskRef</code>、<code>asyncResultStatus</code>、<code>progressDigest</code>，以及工具确认记录等。<strong>不是 checkpoint 中有一张保存所有历史操作完整响应的结果表。</strong></p>
+<p>其中，<code>operationId</code> 标识“这是哪一次逻辑操作”；操作结果记录“这次操作实际发生了什么”。当前步骤闭合后，一些操作字段会被清理，必要结果需要保留在进度摘要或相应结果记录中。字段定义见：<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/model/task/AgentTaskCheckpoint.java:61">AgentTaskCheckpoint.java:61</a>。</p>
+<h4 id="12-长任务下的上下文在运行的过程中是如何保存的呢？"><a href="#12-长任务下的上下文在运行的过程中是如何保存的呢？" class="headerlink" title="12. 长任务下的上下文在运行的过程中是如何保存的呢？"></a>12. 长任务下的上下文在运行的过程中是如何保存的呢？</h4><p><strong>当前实现把上下文分成三部分保存：聊天上下文、任务执行状态、任务中间结果。下一轮运行时，再根据会话和任务标识重新加载。</strong></p>
+<p>这样既能让模型理解前面的对话，也能让后端明确知道任务执行到了哪里。</p>
+<p><strong>1. 聊天上下文：保存“之前说了什么、工具返回了什么”</strong></p>
+<p>主 Agent 接入了 <code>RedisAgentStateStore</code>，按 <code>userId + sessionId</code> 保存会话状态，供后续调用恢复上下文。</p>
+<p>这里承载的是模型继续理解需求所需的消息，例如：</p>
+<ul>
+<li>用户要求生成 5 张番剧封面并制作导航卡。</li>
+<li>用户补充的风格、文案和选图要求。</li>
+<li>Agent 的领域委托、工具返回和回答等上下文消息。</li>
+</ul>
+<p>正常运行由框架管理状态保存；流式执行异常结束时，<code>ChatService</code> 还会尝试调用 <code>saveAgentState</code> 补存已有状态。依据：<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/AgentFactory.java:650">AgentFactory.java:650</a>、<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/ChatService.java:849">ChatService.java:849</a>。</p>
+<p><strong>2. 任务 checkpoint：保存“任务的真实执行进度”</strong></p>
+<p>这就是前面讨论的任务状态、计划版本、步骤、游标和操作引用。它独立于聊天消息，按具体任务保存到 Redis。</p>
+<p>它在关键动作发生时更新，例如：</p>
+<table>
+<thead>
+<tr>
+<th>时机</th>
+<th>保存内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>提交计划</td>
+<td>完整步骤、计划版本、待确认状态</td>
+</tr>
+<tr>
+<td>用户确认</td>
+<td>已确认计划版本、后续运行安排</td>
+</tr>
+<tr>
+<td>写操作前</td>
+<td>稳定操作标识、对应步骤和游标</td>
+</tr>
+<tr>
+<td>图片请求受理后</td>
+<td>下游任务引用、异步监控关联</td>
+</tr>
+<tr>
+<td>一项或一步完成后</td>
+<td>真实进度摘要、新游标或下一步骤</td>
+</tr>
+<tr>
+<td>暂停或异常时</td>
+<td>当前状态、恢复或核对所需信息</td>
+</tr>
+</tbody></table>
+<p>这些更新经过版本校验，通过 Redis 脚本原子保存，防止旧请求覆盖新进度。</p>
+<p><strong>因此，任务进度不是等整轮聊天结束后才统一保存。</strong> 比如第 3 项处理成功后，就记录进度，再继续第 4 项。依据：<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/DeterministicBatchCoordinator.java:127">DeterministicBatchCoordinator.java:127</a>。</p>
+<p><strong>3. 临时状态：保存“后面还要使用的业务数据”</strong></p>
+<p>有些中间数据不适合全部塞进 checkpoint，例如候选图片列表、后续需要的物料信息。</p>
+<p>项目提供了临时状态读写工具，可以按：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">用户 + 会话 + taskId + logicalKey<br></code></pre></td></tr></table></figure>
+
+<p>把必要数据写入 Redis，并设置 TTL 和大小限制。</p>
+<p>例如可以保存“选中的图片 URL、对应版本和选择依据”，下一轮制卡时再读取。<strong>这是需要显式调用工具保存的能力，不代表所有中间结果都会自动写入。</strong> 依据：<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/AgentTemporaryStateService.java:54">AgentTemporaryStateService.java:54</a>。</p>
+<p><strong>下一轮具体怎么接上？</strong></p>
+<p>以“图片已经生成，接下来选图制卡”为例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">系统发起续跑请求，携带会话和任务标识<br>    ↓<br>服务端重新读取 checkpoint，校验通知并启动合法运行轮次<br>    ↓<br>恢复会话上下文，向模型提供当前任务和步骤约束<br>    ↓<br>需要时通过任务工具、结果查询或临时状态工具读取详细数据<br>    ↓<br>执行当前步骤，记录结果和新进度<br></code></pre></td></tr></table></figure>
+
+<p>每轮的 <code>RuntimeContext</code> 会重新构建，任务身份和运行身份从持久状态恢复。<strong>恢复的是足够继续工作的消息、业务数据和执行事实，不是把上一次进程的内存现场整体保存下来。</strong></p>
+<p>如果聊天里写着“图片生成失败”，但 checkpoint 已保存下游受理引用，系统就应该先查询已有任务，不能只根据聊天文字重新生成。</p>
+<h4 id="13-比如生成5张图片时，生成到第2张图片暂停了，那后续继续恢复，大模型是如何知道第一张图片已经生成的-并且第一张图片保存在了哪里的？"><a href="#13-比如生成5张图片时，生成到第2张图片暂停了，那后续继续恢复，大模型是如何知道第一张图片已经生成的-并且第一张图片保存在了哪里的？" class="headerlink" title="13. 比如生成5张图片时，生成到第2张图片暂停了，那后续继续恢复，大模型是如何知道第一张图片已经生成的,并且第一张图片保存在了哪里的？"></a>13. 比如生成5张图片时，生成到第2张图片暂停了，那后续继续恢复，大模型是如何知道第一张图片已经生成的,并且第一张图片保存在了哪里的？</h4><p><strong>大模型通过重新读取任务记录和查询结果，知道第一张图的情况。图片文件本身由下游生成服务管理，网关主要保存任务 ID、结果引用和 URL。</strong></p>
+<p>按 <strong>5 个独立图片任务</strong>举例，假设第一张已经生成，第二张已提交后暂停。</p>
+<p><strong>1. 暂停前，已经保存了第一张的“查找线索”</strong></p>
+<p>每次图片请求受理后，下游会返回 <code>openSessionId</code>。批次执行器把它和图片编号、标签一起累计到 checkpoint 的进度摘要中，例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">任务状态：PAUSED<br>当前步骤：第 1 步，生成候选封面<br>批次游标：batch:1:2<br><br>进度摘要：<br>[1/5] 封面1，图片任务已提交，openSessionId=S1<br>[2/5] 封面2，图片任务已提交，openSessionId=S2<br></code></pre></td></tr></table></figure>
+
+<p>这表示前两项已提交并建立监控，<strong>不是两张图片都已生成完成</strong>。这段摘要会随 checkpoint 保存到 Redis。依据：<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/tool/common/ImageGenerateSubmitTool.java:108">ImageGenerateSubmitTool.java:108</a>。</p>
+<p><strong>2. 用户继续时，先恢复任务记录</strong></p>
+<p>服务端读取 checkpoint，知道：</p>
+<ul>
+<li>第一、二项已经提交。</li>
+<li>下次提交应从第三项开始。</li>
+<li>第一张的结果可以通过 <code>S1</code> 查询，第二张通过 <code>S2</code> 查询。</li>
+</ul>
+<p>对于服务端管理的参数化批次，<strong>从第三项继续由协调器决定，不需要模型自己从聊天里推断。</strong></p>
+<p><strong>3. 如何知道第一张已经生成，以及在哪里？</strong></p>
+<p>如果此前已取得图片 URL，可以从已保存的上下文或中间结果读取；如果目前只有 <code>S1</code>，就查询已有任务：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">使用 S1 查询下游<br>    ↓<br>返回 COMPLETED，以及图片 URL<br>    ↓<br>工具把状态和 URL 返回给 Agent<br>    ↓<br>Agent 据此知道第一张已完成，并能引用这张图<br></code></pre></td></tr></table></figure>
+
+<p>当前结果查询代码会调用下游查询接口，从返回结果中提取图片 URL。依据：<a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/integration/image/AiImageHttpIntegration.java:133">AiImageHttpIntegration.java:133</a>。</p>
+<p>所以要区分三个东西：</p>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>在哪里</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第一张的生成任务 ID，如 <code>S1</code></td>
+<td>网关保存的任务进度、监控等记录</td>
+</tr>
+<tr>
+<td>第一张的访问 URL</td>
+<td>下游查询结果；取得后可进入会话上下文或显式保存的中间结果</td>
+</tr>
+<tr>
+<td>图片文件本身</td>
+<td>下游管理的图片存储，网关通过返回的 URL 访问</td>
+</tr>
+</tbody></table>
+<p><strong>仅有游标，确实无法找回第一张图；还必须保留“图片编号 → 下游任务 ID → 图片结果”的关联。</strong> 当前批次进度摘要保留的是提交引用，并没有自动把每张图片的完整最终结果都存成独立结果表。</p>
+<p>另外，暂停任务控制的是后续推进，<strong>不等于撤销已提交给下游的图片生成</strong>。因此暂停期间第一、二张仍可能生成完成，恢复时应查询它们，不能重新提交。</p>
 <h3 id="1-2-2-AI想到的问题"><a href="#1-2-2-AI想到的问题" class="headerlink" title="1.2.2 AI想到的问题"></a>1.2.2 AI想到的问题</h3><ol>
 <li><strong>为什么需要单独设计长任务机制，直接让 Agent 连续调用 Tool 不行吗？</strong></li>
 </ol>
@@ -1875,6 +2747,215 @@
 <p>因此，当前实现是<strong>配置变化后整体失效、后续按需重建</strong>，并不是只精准删除某一个子 Agent 的缓存。用户权限配置变化时，也会触发主 Agent 缓存清理。</p>
 <p>对应实现见 <a href="/Users/bilibili/Desktop/develop/agent/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/AgentFactory.java:272">缓存获取与重建</a>。</p>
 <p>这里的生效边界是：<strong>更新完成后重新获取 Agent 的请求使用新配置；已经拿到旧实例、正在执行的请求，不会被强行替换或中断。</strong></p>
+<h4 id="4-权限码有哪些？"><a href="#4-权限码有哪些？" class="headerlink" title="4. 权限码有哪些？"></a>4. 权限码有哪些？</h4><p>每个工具对应一个权限码</p>
+<p>投放域历史装配类绑定了 <strong>4 个工具权限码</strong>，定义在 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/common/AgentConstants.java:17">AgentConstants.java</a>：</p>
+<table>
+<thead>
+<tr>
+<th>权限码</th>
+<th>对应工具</th>
+<th>能力</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>delivery:project:query</code></td>
+<td><code>DeliveryProjectQueryTool</code></td>
+<td>查询投放项目</td>
+</tr>
+<tr>
+<td><code>delivery:project:create</code></td>
+<td><code>DeliveryProjectCreateTool</code></td>
+<td>创建投放项目</td>
+</tr>
+<tr>
+<td><code>delivery:budget:view</code></td>
+<td><code>BudgetOverviewTool</code></td>
+<td>查看预算</td>
+</tr>
+<tr>
+<td><code>delivery:navi-card:create</code></td>
+<td><code>NaviCardCreateTool</code></td>
+<td>创建导航卡</td>
+</tr>
+</tbody></table>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">ToolBinding.tool(<br>    DeliveryProjectQueryTool.class,<br>    AgentConstants.DELIVERY_PROJECT_QUERY_PERMISSION<br>)<br></code></pre></td></tr></table></figure>
+
+<p>含义是：用户拥有 <code>delivery:project:query</code>，装配时才会把查询工具提供给 Agent。权限不足，该工具就不会进入模型可调用的工具集合。</p>
+<p>另外还保留了域级权限码 <code>agent:delivery</code>，但<strong>这个历史装配类没有用它作为工具准入条件</strong>；这里按上述四个具体能力权限筛选。</p>
+<h4 id="5-配置解析器的代码长啥样，简要概括他的能力？"><a href="#5-配置解析器的代码长啥样，简要概括他的能力？" class="headerlink" title="5. 配置解析器的代码长啥样，简要概括他的能力？"></a>5. 配置解析器的代码长啥样，简要概括他的能力？</h4><p>本地对应代码在 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/config/DomainAgentConfigParser.java:65">DomainAgentConfigParser.java</a>。</p>
+<p>它负责：<strong>把 Paladin 的 JSON 配置转换成经过校验、可供 Agent 装配使用的不可变域定义。</strong></p>
+<p>核心流程可以简化成下面这样（省略具体校验代码）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> List&lt;ConfiguredDomain&gt; <span class="hljs-title function_">parse</span><span class="hljs-params">(String rawConfig)</span> &#123;<br>    <span class="hljs-comment">// 1. JSON 反序列化</span><br>    <span class="hljs-type">BusinessDomainAgentConfig</span> <span class="hljs-variable">root</span> <span class="hljs-operator">=</span><br>            objectMapper.readValue(rawConfig, BusinessDomainAgentConfig.class);<br><br>    <span class="hljs-comment">// 2. 检查 domains、域数量、enabled 等</span><br>    <span class="hljs-comment">// 3. 跳过禁用域，逐个解析启用域</span><br>    <span class="hljs-comment">// 4. 检查 agentCode 和委托工具名是否重复</span><br>    <span class="hljs-comment">// 5. 返回不可变结果</span><br>    <span class="hljs-keyword">return</span> List.copyOf(result);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>每个域内部主要做这些事：</p>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>具体检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>基础字段校验</td>
+<td>Agent 编码格式、保留名称、描述和提示词非空及长度限制</td>
+</tr>
+<tr>
+<td>能力关联</td>
+<td>根据 <code>capabilityId</code> 查找已注册的 Tool &#x2F; Skill，生成权限绑定</td>
+</tr>
+<tr>
+<td>能力有效性校验</td>
+<td>Tool 是否有有效 <code>@Tool</code> 方法；Skill 资源是否可读或具备运行时实现</td>
+</tr>
+<tr>
+<td>冲突检查</td>
+<td>重复绑定、Skill ID 重复、Tool 名与 Skill Action 名冲突</td>
+</tr>
+<tr>
+<td>权限与系统隔离</td>
+<td>权限码不能为空且格式合法；禁止业务域引用 SYSTEM 能力</td>
+</tr>
+</tbody></table>
+<p>校验失败就抛异常；全部通过才返回 <code>ConfiguredDomain</code>，里面包含 Agent 标识、委托工具名、提示词及 Tool&#x2F;Skill 绑定。</p>
+<p>面试时可以概括为：</p>
+<blockquote>
+<p>我实现了一层配置解析与校验，将 Paladin JSON 转成可装配的业务域定义，在配置生效前检查字段、能力引用、命名冲突和系统能力边界，提前拦截错误配置。</p>
+</blockquote>
+<p><strong>热更新监听、快照替换和缓存失效由 <code>AgentFactory</code> 负责；解析器负责产出合法配置。</strong></p>
+<h4 id="6-Tool和Skill是怎么注册的？他们原本是已经在代码中实现了吗"><a href="#6-Tool和Skill是怎么注册的？他们原本是已经在代码中实现了吗" class="headerlink" title="6. Tool和Skill是怎么注册的？他们原本是已经在代码中实现了吗"></a>6. Tool和Skill是怎么注册的？他们原本是已经在代码中实现了吗</h4><p><strong>是的，Tool 和 Skill 都要先在项目里实现并部署，Paladin 再配置某个业务 Agent 使用哪些能力、绑定什么权限。</strong></p>
+<p>可以把注册过程分成三步。</p>
+<p><strong>1. 注册成 Spring Bean</strong></p>
+<p>Tool 是 Java 类，用 <code>@Component</code> 注册，用 <code>@Tool</code> 声明模型可调用的方法。比如 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/tool/delivery/DeliveryProjectQueryTool.java:12">DeliveryProjectQueryTool.java</a>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DeliveryProjectQueryTool</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">OgvToolBase</span> &#123;<br><br>    <span class="hljs-meta">@Tool(name = &quot;query_delivery_project&quot;,</span><br><span class="hljs-meta">          description = &quot;查询投放项目，当前返回 mock 结果。&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">queryDeliveryProject</span><span class="hljs-params">(</span><br><span class="hljs-params">            <span class="hljs-meta">@ToolParam(name = &quot;keyword&quot;, description = &quot;投放项目ID或项目名称&quot;)</span></span><br><span class="hljs-params">            String keyword)</span> &#123;<br>        <span class="hljs-comment">// 具体实现</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里有两个名字：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>deliveryProjectQueryTool</code></td>
+<td>Spring 默认 Bean 名，也是当前实现中的配置 <code>capabilityId</code></td>
+</tr>
+<tr>
+<td><code>query_delivery_project</code></td>
+<td>模型实际调用的工具名</td>
+</tr>
+</tbody></table>
+<p>Skill 也通过 Spring 注册，但内容可以来自 Markdown 资源。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@ClasspathSkillResource(&quot;document-reading-workflow&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DocumentReadingWorkflowSkill</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">OgvSkillBase</span> &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>它关联的是项目中的 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/resources/skills/document-reading-workflow/SKILL.md">文档读取 SKILL.md</a>，用来描述文档读取流程。项目也支持运行时解析 Skill，以及附带可执行 Action 的 Skill。</p>
+<p><strong>2. 自动汇总到能力目录</strong></p>
+<p><a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/capability/AgentCapabilityCatalog.java:28">AgentCapabilityCatalog.java</a> 通过构造器接收：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">Map&lt;String, OgvToolBase&gt; toolsById<br>Map&lt;String, OgvSkillBase&gt; skillsById<br></code></pre></td></tr></table></figure>
+
+<p>Spring 自动注入对应类型的全部 Bean，Map 的键就是 Bean 名。因此配置解析器可以根据 <code>capabilityId</code> 找到已有实现；找不到就拒绝配置。</p>
+<p><strong>3. 按配置和权限注册到 Agent</strong></p>
+<p>配置例如：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;capabilityId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;deliveryProjectQueryTool&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;permissionCodes&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;delivery:project:query&quot;</span><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>解析器将它转换成能力绑定；装配时再按用户权限筛选：</p>
+<ul>
+<li>Tool：注册到 Agent 的 <code>Toolkit</code>。</li>
+<li>Skill：关联 Skill 仓库并限制可见 Skill；如果有 Action，也注册进 <code>Toolkit</code>。</li>
+</ul>
+<p>所以你的亮点可以这样讲：</p>
+<blockquote>
+<p>我把已有 Tool、Skill 的业务域归属、权限绑定和提示词改成动态配置。复用已有能力新增 Agent 时，可以只修改配置；新增实际业务能力时，仍需要实现并发布对应的 Tool 或 Skill。</p>
+</blockquote>
+<p>顺便校正前面一点：<strong>当前代码里的 <code>capabilityId</code> 就是 Spring Bean 名</strong>，并没有独立于 Bean 名建立另一套 ID。</p>
+<h4 id="7-如何监听配置更新的？"><a href="#7-如何监听配置更新的？" class="headerlink" title="7. 如何监听配置更新的？"></a>7. 如何监听配置更新的？</h4><p>通过 <strong>Paladin SDK 的 <code>ConfigSource.watch()</code> 注册配置变更回调</strong>，代码在 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/AgentFactory.java:188">AgentFactory.java</a>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">watched = configSource.watch(<br>        BUSINESS_DOMAIN_CONFIG_KEY,<br>        <span class="hljs-built_in">this</span>::onBusinessDomainConfigChanged,<br>        Runnable::run);<br></code></pre></td></tr></table></figure>
+
+<p>三个参数分别是：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>BUSINESS_DOMAIN_CONFIG_KEY</code></td>
+<td>监听配置项 <code>ogv_agent_business_domain_config</code></td>
+</tr>
+<tr>
+<td><code>this::onBusinessDomainConfigChanged</code></td>
+<td>配置变化时执行的回调方法</td>
+</tr>
+<tr>
+<td><code>Runnable::run</code></td>
+<td>直接在提交回调任务的线程执行，不另开线程</td>
+</tr>
+</tbody></table>
+<p>服务启动时，<code>@PostConstruct</code> 方法完成监听注册。之后 SDK 检测到该配置项变化，就调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onBusinessDomainConfigChanged</span><span class="hljs-params">(ConfigEvent event)</span> &#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">rawConfig</span> <span class="hljs-operator">=</span> event == <span class="hljs-literal">null</span><br>            ? <span class="hljs-string">&quot;&quot;</span><br>            : event.getNewValue().orElse(<span class="hljs-string">&quot;&quot;</span>);<br><br>    refreshBusinessDomainConfig(rawConfig);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>也就是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">Paladin 配置变更<br>  → SDK 触发回调，传入 ConfigEvent<br>  → 从事件中获取新配置<br>  → 校验配置、替换快照、清除 Agent 缓存<br></code></pre></td></tr></table></figure>
+
+<p>此外，代码在<strong>注册监听后还会主动读取一次当前配置</strong>，用于初始化；监听注册失败会阻止服务正常启动。</p>
+<p>面试里可以说：</p>
+<blockquote>
+<p>我使用 Paladin SDK 的 watch 接口订阅指定配置项，启动时加载当前配置，后续通过变更事件回调触发刷新。</p>
+</blockquote>
+<p>至于 SDK 底层采用长轮询还是服务端推送，当前仓库只有调用代码，需查看 SDK 实现才能确定。</p>
+<h4 id="8-Agent缓存失效：仅更新配置对象还不够，因为已经创建好的-Agent-内部，可能仍然保留旧提示词、旧工具集合和旧的业务域委托定义。"><a href="#8-Agent缓存失效：仅更新配置对象还不够，因为已经创建好的-Agent-内部，可能仍然保留旧提示词、旧工具集合和旧的业务域委托定义。" class="headerlink" title="8. Agent缓存失效：仅更新配置对象还不够，因为已经创建好的 Agent 内部，可能仍然保留旧提示词、旧工具集合和旧的业务域委托定义。"></a>8. Agent缓存失效：仅更新配置对象还不够，因为已经创建好的 Agent 内部，可能仍然保留旧提示词、旧工具集合和旧的业务域委托定义。</h4><p>意思是：<strong>配置对象和已经创建好的 Agent，是两份不同的东西。修改配置，不会自动重新组装 Agent。</strong></p>
+<p>比如原来的投放域配置是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">提示词：你是投放域助手<br>工具：查询项目、创建项目<br></code></pre></td></tr></table></figure>
+
+<p>程序根据这份配置创建了 Agent A。创建时，提示词、工具以及主 Agent 的“委托给投放域”入口，都已经装配好了。</p>
+<p>随后你在 Paladin 修改配置：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">提示词：你是投放预算分析助手<br>工具：查询项目、查看预算<br></code></pre></td></tr></table></figure>
+
+<p>此时配置对象更新了，但缓存中的 Agent A 仍然可能是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">旧提示词 + 查询项目、创建项目<br></code></pre></td></tr></table></figure>
+
+<p>因为它是在更新前创建的，内部没有自动跟着配置重新装配。</p>
+<p>所以代码要做两件事：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">domainConfigSnapshot = snapshot;        <span class="hljs-comment">// 更新后续装配使用的配置</span><br>supervisorAgentCache.invalidateAll();   <span class="hljs-comment">// 清除按旧配置创建的 Agent 缓存</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>下一次获取 Agent 时，缓存未命中，才会按新配置重新创建。</strong></p>
+<p>“旧的业务域委托定义”也是同理：假设配置新增了活动域，旧主 Agent 的工具集合里还没有 <code>delegate_to_activity_domain</code>，需要重新装配，它才知道可以把任务交给活动域。</p>
+<p>这里的缓存失效影响后续获取；已经拿到旧 Agent、正在执行的请求，不会因此被自动替换。</p>
+<h4 id="9-针对某一个业务域子Agent，比如投放域的，服务器会只创建一个实例对象Agent吗？那不同权限的用户是如何获得自己相应权限的agent的？"><a href="#9-针对某一个业务域子Agent，比如投放域的，服务器会只创建一个实例对象Agent吗？那不同权限的用户是如何获得自己相应权限的agent的？" class="headerlink" title="9. 针对某一个业务域子Agent，比如投放域的，服务器会只创建一个实例对象Agent吗？那不同权限的用户是如何获得自己相应权限的agent的？"></a>9. 针对某一个业务域子Agent，比如投放域的，服务器会只创建一个实例对象Agent吗？那不同权限的用户是如何获得自己相应权限的agent的？</h4><p><strong>投放域子 Agent 不是全服务器只创建一个实例。当前实现是：主 Agent 按权限集合缓存，子 Agent 通过工厂函数按需创建。</strong></p>
+<p>这里需要区分三层：</p>
+<table>
+<thead>
+<tr>
+<th>对象</th>
+<th>如何复用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>投放域配置</td>
+<td>共用一份 Paladin 配置</td>
+</tr>
+<tr>
+<td>主 Agent</td>
+<td>按用户的有效权限集合缓存</td>
+</tr>
+<tr>
+<td>投放子 Agent 实例</td>
+<td>通过对应的 <code>provider</code> 创建新实例</td>
+</tr>
+</tbody></table>
+<p>例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">用户 A：只有查询权限<br>  → 权限指纹 A<br>  → 主 Agent A<br>  → 投放域 provider A：只包含查询工具<br><br>用户 B：有查询、创建权限<br>  → 权限指纹 B<br>  → 主 Agent B<br>  → 投放域 provider B：包含查询、创建工具<br></code></pre></td></tr></table></figure>
+
+<p>关键在 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/DomainAgentSupport.java:251">DomainAgentSupport.java</a>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java">SubAgentProvider&lt;ReActAgent&gt; provider = () -&gt; create(<br>        model,<br>        boundTools,       <span class="hljs-comment">// 已按这组用户权限筛选好的工具</span><br>        visibleSkills,    <span class="hljs-comment">// 已筛选好的 Skill</span><br>        agentCode,<br>        subAgentDescription,<br>        sysPrompt,<br>        parallelExecutionEnabled,<br>        parallelMaxCalls,<br>        agentTracingLogEnabled);<br></code></pre></td></tr></table></figure>
+
+<p>这里保存的是一个<strong>创建子 Agent 的函数</strong>。每次调用 <code>provider.provide()</code>，都会按它捕获的工具集合、提示词创建新的 <code>ReActAgent</code>。主 Agent 的 <code>SubAgentTool</code> 持有这个 provider。</p>
+<p>仓库已有测试明确验证：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">ReActAgent</span> <span class="hljs-variable">first</span> <span class="hljs-operator">=</span> spec.get().getProvider().provide();<br><span class="hljs-type">ReActAgent</span> <span class="hljs-variable">second</span> <span class="hljs-operator">=</span> spec.get().getProvider().provide();<br><br>assertNotSame(first, second);<br></code></pre></td></tr></table></figure>
+
+<p>所以，不同权限用户通过不同的权限缓存入口，拿到对应的主 Agent 和子 Agent 创建定义；<strong>相同有效权限的用户可以复用主 Agent，但子 Agent 的 provider 每次创建的实例仍是新的。</strong></p>
 <h3 id="3-2-2-AI想到的问题"><a href="#3-2-2-AI想到的问题" class="headerlink" title="3.2.2 AI想到的问题"></a>3.2.2 AI想到的问题</h3><ol>
 <li><strong>为什么要做业务子 Agent 配置化？</strong></li>
 </ol>
@@ -2454,6 +3535,77 @@
 <p>解析失败时，会尝试删除已经写入的分片和索引。清理成功后，失败状态默认最多再保留十分钟，供前端查询失败原因。</p>
 <p>数据过期或必要分片缺失后，读取接口会提示文件数据已过期，需要重新上传。</p>
 <p>需要区分的是：<strong>Redis 数据过期不等于 BFS 文件同时删除。</strong> 当前这条链路没有实现随 Redis TTL 删除 BFS 原文件和图片的联动清理；本地临时文件则在处理结束后清理，并有定时清理兜底。</p>
+<h4 id="4-Agent是如何读取自己想要的文档分块的？"><a href="#4-Agent是如何读取自己想要的文档分块的？" class="headerlink" title="4. Agent是如何读取自己想要的文档分块的？"></a>4. Agent是如何读取自己想要的文档分块的？</h4><p>核心分成两部分：<strong>Skill 告诉模型怎样选择读取范围，Java 工具负责执行读取。</strong>“根据问题决定读哪里”这一步由模型完成，代码提供结构信息和读取接口。</p>
+<p><strong>1. Skill 约定读取流程</strong></p>
+<p><a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/resources/skills/document-reading-workflow/SKILL.md:10">文档读取 Skill</a> 的主要规则是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">先调用 document_inspect 获取结构<br>→ 根据用户问题调用 document_read<br>→ XLSX/CSV 指定 sheetNo，其他格式按顺序项读取<br>→ 按需继续分页，基于读取结果回答<br></code></pre></td></tr></table></figure>
+
+<p>模型结合这些规则、工具参数说明和用户问题，生成调用参数，例如：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;fileId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;文档UUID&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;sheetNo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;offset&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;limit&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">100</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>2. Tool 接收模型选择的范围</strong></p>
+<p><a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/agent/tool/common/DocumentReadTool.java:29">DocumentReadTool.java</a> 的核心如下，省略参数注解和异常处理：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Tool(name = &quot;document_read&quot;,</span><br><span class="hljs-meta">      description = &quot;读取临时文档。XLSX/CSV必须指定sheetNo；其他格式忽略sheetNo；行号和顺序项编号从0开始。&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">read</span><span class="hljs-params">(String fileId,</span><br><span class="hljs-params">                   Integer sheetNo,</span><br><span class="hljs-params">                   Long offset,</span><br><span class="hljs-params">                   Integer limit,</span><br><span class="hljs-params">                   RuntimeContext context)</span> &#123;<br><br>    <span class="hljs-keyword">return</span> documentService.read(<br>            context.getUserId(),<br>            fileId,<br>            sheetNo,<br>            offset == <span class="hljs-literal">null</span> ? <span class="hljs-number">0L</span> : offset,<br>            limit == <span class="hljs-literal">null</span> ? <span class="hljs-number">100</span> : limit);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>注意，<strong>用户身份取自运行时上下文</strong>，模型只提供文件和读取范围。</p>
+<p><strong>3. Service 将范围映射到实际分块</strong></p>
+<p><a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/DocumentService.java:283">DocumentService.read()</a> 先检查参数、读取当前用户的文件元数据和 Manifest，再取目标 Sheet 或文档的分块列表。</p>
+<p>下面是定位、取数和筛选的核心片段，省略校验及结果封装：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">long</span> <span class="hljs-variable">endExclusive</span> <span class="hljs-operator">=</span> Math.addExact(offset, limit);<br><br><span class="hljs-comment">// 找出与请求范围重叠的存储分块</span><br>List&lt;DocumentManifest.Part&gt; selected = candidates.stream()<br>        .filter(part -&gt;<br>                part.getItemEnd() &gt;= offset<br>                &amp;&amp; part.getItemStart() &lt; endExclusive)<br>        .toList();<br><br><span class="hljs-comment">// 批量读取 Redis 分块</span><br>List&lt;<span class="hljs-type">byte</span>[]&gt; values = store.loadParts(username, ready.meta, selected);<br><br>List&lt;Object&gt; records = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br><span class="hljs-keyword">for</span> (<span class="hljs-type">byte</span>[] value : values) &#123;<br>    <span class="hljs-keyword">for</span> (Map&lt;String, Object&gt; record : decodePart(value)) &#123;<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">rawNo</span> <span class="hljs-operator">=</span> record.get(<br>                ready.meta.getFileType().isTabular()<br>                        ? <span class="hljs-string">&quot;rowNo&quot;</span> : <span class="hljs-string">&quot;itemNo&quot;</span>);<br>        <span class="hljs-type">long</span> <span class="hljs-variable">number</span> <span class="hljs-operator">=</span> rawNo <span class="hljs-keyword">instanceof</span> Number<br>                ? ((Number) rawNo).longValue() : -<span class="hljs-number">1L</span>;<br><br>        <span class="hljs-comment">// 一个存储分块可能比请求范围大，所以再筛选一次</span><br>        <span class="hljs-keyword">if</span> (number &gt;= offset &amp;&amp; number &lt; endExclusive) &#123;<br>            records.add(record);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>底层 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/DocumentRedisStore.java:224">DocumentRedisStore.loadParts()</a> 根据用户、文件、Sheet 和分块编号生成 Redis key，然后通过 <code>mget</code> 批量读取。</p>
+<p>例如请求第 <code>150～249</code> 行，即使 Redis 实际需要读取覆盖 <code>0～199</code>、<code>200～399</code> 的两个分块，最终也只向模型返回 <code>150～249</code> 行。模型再根据返回内容，决定继续读取还是直接回答。</p>
+<h4 id="5-内容分片是怎么分片的？"><a href="#5-内容分片是怎么分片的？" class="headerlink" title="5. 内容分片是怎么分片的？"></a>5. 内容分片是怎么分片的？</h4><p>当前实现采用的是：<strong>先按文件结构生成记录，再按累计字节大小，把多条记录打包成存储分片。</strong></p>
+<p>可以分成两层理解。</p>
+<p><strong>1. 不同格式先转换成不同的记录</strong></p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>一条记录的单位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>XLSX &#x2F; CSV</td>
+<td>一行，保留 <code>rowNo</code> 和单元格</td>
+</tr>
+<tr>
+<td>DOCX</td>
+<td>一个段落或一个表格行，保留 <code>itemNo</code></td>
+</tr>
+<tr>
+<td>PDF</td>
+<td>一页，保留页序号和文本</td>
+</tr>
+<tr>
+<td>PPTX</td>
+<td>一张幻灯片，包含文本、表格和备注</td>
+</tr>
+<tr>
+<td>TXT</td>
+<td>一行；超长行进一步切成有长度限制的文本块</td>
+</tr>
+<tr>
+<td>JSON</td>
+<td>一个带 JSON Pointer 路径的标量值；空对象、空数组也会记录</td>
+</tr>
+</tbody></table>
+<p><strong>2. 将记录累计到约 256 KiB，再写成一个分片</strong></p>
+<p>当前配置是：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">part-target-bytes:</span> <span class="hljs-number">262144</span>  <span class="hljs-comment"># 目标大小：256 KiB</span><br><span class="hljs-attr">part-max-bytes:</span> <span class="hljs-number">524288</span>     <span class="hljs-comment"># 硬上限：512 KiB</span><br></code></pre></td></tr></table></figure>
+
+<p>通用逻辑在 <a href="/D:/dev/ai-agent/app/ogv-agent-gateway/src/main/java/app/ogv/agent/gateway/servant/service/document/DocumentPartAccumulator.java:60">DocumentPartAccumulator.java</a>，简化如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">byte</span>[] encoded = objectMapper.writeValueAsBytes(record);<br><br><span class="hljs-comment">// 放入新记录会超过目标大小，先写出已有记录</span><br><span class="hljs-keyword">if</span> (!buffer.isEmpty()<br>        &amp;&amp; estimatedBytes + encoded.length + <span class="hljs-number">1</span> &gt; partTargetBytes) &#123;<br>    flush();<br>&#125;<br><br>buffer.add(record);<br>estimatedBytes += encoded.length + <span class="hljs-number">1</span>;<br><br><span class="hljs-keyword">if</span> (estimatedBytes &gt;= partTargetBytes) &#123;<br>    flush();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>XLSX、DOCX 使用各自的累积实现，基本原则相同，但在加入记录后检查目标大小。<strong>目标大小允许浮动，实际分片超过硬上限会报错。</strong></p>
+<p>写出分片时：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 记录列表 → JSON → GZIP</span><br><span class="hljs-type">byte</span>[] value =<br>        DocumentPartCodec.gzipJson(objectMapper, buffer, partMaxBytes);<br><br><span class="hljs-comment">// 写入 Redis</span><br>writer.write(sheetNo, partNo, value);<br><br><span class="hljs-comment">// 在 Manifest 保存该分片覆盖的逻辑范围</span><br>parts.add(<span class="hljs-keyword">new</span> <span class="hljs-title class_">DocumentManifest</span>.Part(<br>        partNo, partStart, end, sheetNo));<br></code></pre></td></tr></table></figure>
+
+<p>例如，一张表可能形成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">part 0：第 0～800 行，约 256 KiB<br>part 1：第 801～1300 行，约 256 KiB<br>part 2：剩余行<br></code></pre></td></tr></table></figure>
+
+<p>每行内容长度不同，所以每片行数不同；XLSX 切换 Sheet 时也会结束当前分片，避免混装。</p>
+<p>这里的 <strong>256 KiB 是 Redis 存储分片的目标大小</strong>。Agent 实际读取时仍按 <code>offset + limit</code> 选择记录范围，服务端取出相关分片后，再筛选出需要的记录返回。</p>
 <h3 id="4-2-2-AI想到的问题"><a href="#4-2-2-AI想到的问题" class="headerlink" title="4.2.2 AI想到的问题"></a>4.2.2 AI想到的问题</h3><ol>
 <li><strong>为什么不直接把文件或者全文交给大模型？</strong></li>
 </ol>
