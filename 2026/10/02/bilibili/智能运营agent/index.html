@@ -29,7 +29,7 @@
 <meta property="og:description" content="\ResumeItem{OGV 智能运营助手 \hfill Agent应用开发 \hfill 2026.07-2026.09}\textbf{核心技术：}Java、Spring Boot、Multi-Agent、AgentScope、Harness、ReAct、Redis、Paladin	\textbf{项目简介：}参与面向 OGV 运营场景的多 Agent 智能操作平台建设，主要参与长任务执行与">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-10-02T12:56:18.000Z">
-<meta property="article:modified_time" content="2026-11-05T07:32:34.423Z">
+<meta property="article:modified_time" content="2026-11-07T10:52:25.328Z">
 <meta property="article:author" content="ranzier">
 <meta property="article:tag" content="随笔">
 <meta name="twitter:card" content="summary_large_image">
@@ -246,7 +246,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          69k 字
+          70k 字
         
       </span>
     
@@ -257,7 +257,7 @@
         
         
         
-          347 分钟
+          351 分钟
         
       </span>
     
@@ -316,6 +316,40 @@
 		</p>
 <h1 id="0-总体"><a href="#0-总体" class="headerlink" title="0. 总体"></a>0. 总体</h1><h2 id="0-1-个人问题"><a href="#0-1-个人问题" class="headerlink" title="0.1 个人问题"></a>0.1 个人问题</h2><p><strong>使用的是什么模型？</strong></p>
 <p><strong>qwen3.7-plus</strong></p>
+<h3 id="0-你们这个agent的效果评测是怎么做的呢？有没有出现过什么badcase？你是怎么解决的？"><a href="#0-你们这个agent的效果评测是怎么做的呢？有没有出现过什么badcase？你是怎么解决的？" class="headerlink" title="0. 你们这个agent的效果评测是怎么做的呢？有没有出现过什么badcase？你是怎么解决的？"></a>0. 你们这个agent的效果评测是怎么做的呢？有没有出现过什么badcase？你是怎么解决的？</h3><p>我之前就说的我在的时候是mvp 1期的建设，只开放给部门内部用</p>
+<p>后续效果 好的话考虑在公司的技术分享会中展示给全公司用</p>
+<p>然后最后可能再作为公司的开源项目</p>
+<p><strong>目前已有：记录调用链，支持分析失败原因和成本</strong></p>
+<p><code>ModelCallObservationMiddleware</code> 已记录：</p>
+<ul>
+<li>模型、Agent 名称、会话 ID、调用 ID 和 Trace ID。</li>
+<li>输入、输出及总 Token。</li>
+<li>首个模型内容事件耗时、单次模型调用总耗时。</li>
+<li>调用结束状态和异常类型。</li>
+</ul>
+<p>任务服务还记录计划状态、执行进度、失败原因和续跑状态。这些信息可以帮助定位问题发生在路由、工具调用、下游服务还是任务推进阶段。</p>
+<p><strong>这些是评测的数据基础，还不等于已经形成效果评分。</strong> 其中“首个模型内容事件”也可能是思考或工具调用事件，并非用户看到最终答案的首字时间。</p>
+<p>可以用 <strong>“下游已执行成功，但响应超时，模型重试导致重复创建导航卡”</strong> 这个 bad case。下面是符合项目逻辑的示例，是否作为真实经历讲述，需要与你实际遇到的情况一致。</p>
+<p><strong>用户需求</strong></p>
+<blockquote>
+<p>“生成一张活动宣传图，再用它创建搜索导航卡。”</p>
+</blockquote>
+<p>用户确认计划后，Agent 执行到创建导航卡这一步。</p>
+<p><strong>完善前的执行过程</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs text">Agent 调用创建导航卡工具<br>          ↓<br>下游成功创建卡片 A<br>          ↓<br>响应途中超时，Agent 没拿到卡片 ID<br>          ↓<br>模型认为创建失败，重新调用相同工具<br>          ↓<br>下游又创建了卡片 B<br>          ↓<br>用户只要求创建一张，实际产生两张<br></code></pre></td></tr></table></figure>
+
+<p>问题在于：<strong>系统没有把两次调用关联到同一个计划内操作，也没有可靠区分“执行失败”和“已执行但结果未知”。</strong></p>
+<p><strong>完善后如何处理</strong></p>
+<ul>
+<li>写操作前，根据任务、计划版本、步骤和批次游标生成稳定标识。</li>
+<li>已记录成功结果时，复用已有结果，避免再次执行。</li>
+<li>请求已发出但结果未知时，保留操作标识及引用，先核对结果；无法核实时请求用户介入。</li>
+</ul>
+<p>面试时可以这样说：</p>
+<blockquote>
+<p>一个典型风险是，创建导航卡时下游已经成功，但返回超时，模型把它当作失败再次调用，导致重复创建。我们为计划内写操作建立稳定标识并记录执行状态和结果，将模型的多次调用关联到同一次业务操作。已有结果就复用，结果不确定就先核对，避免直接重放写操作。</p>
+</blockquote>
+<p>这里应强调的是<strong>降低重复执行风险</strong>：稳定标识和本地结果记录本身不能保证下游严格只执行一次。</p>
 <h3 id="1-简单介绍一下你这个项目的作用吧？"><a href="#1-简单介绍一下你这个项目的作用吧？" class="headerlink" title="1. 简单介绍一下你这个项目的作用吧？"></a>1. 简单介绍一下你这个项目的作用吧？</h3><p>这是一个面向 OGV 运营场景的多 Agent 智能操作平台，主要目的是把运营人员原来需要在多个系统中手动完成的查询、分析和批量操作，统一转化为自然语言驱动的智能任务。</p>
 <p>平台以主 Agent 作为统一入口，负责理解用户意图、拆解任务，并根据业务场景调度不同的子 Agent。各个子 Agent 可以通过配置动态加载提示词、工具、技能和权限，因此新增业务场景时通常不需要重新开发整套流程。</p>
 <p>项目重点解决了三类问题：一是通过计划、步骤和批次机制执行耗时较长的任务，支持暂停、继续、重试以及服务重启后的恢复；二是对批量写操作增加用户确认、权限校验和幂等保护，避免模型重复调用或越权执行；三是支持 Excel、PDF、Word、PPT 等多种文件的异步解析，让 Agent 能够按需读取文档内容，而不是把整个文件一次性塞进模型上下文。</p>
